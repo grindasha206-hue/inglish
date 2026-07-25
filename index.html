@@ -500,8 +500,46 @@ function b64ToStr(b64){
   return new TextDecoder().decode(bytes);
 }
 
+/* PUT с обработкой гонки версий: при 409 берём свежую sha и пробуем снова */
+async function ghPutFile(path, contentB64, message){
+  for (let attempt = 0; ; attempt++) {
+    const cur = await gh(`/repos/${REPO.owner}/${REPO.name}/contents/${path}?ref=${REPO.branch}`);
+    try {
+      return await gh(`/repos/${REPO.owner}/${REPO.name}/contents/${path}`, {
+        method: 'PUT',
+        body: JSON.stringify({ message, content: contentB64, branch: REPO.branch, ...(cur ? { sha: cur.sha } : {}) })
+      });
+    } catch(e){
+      if (/409/.test(e.message) && attempt < 3) { await new Promise(r => setTimeout(r, 1500)); continue; }
+      throw e;
+    }
+  }
+}
+/* Обновление course.json: при конфликте перечитываем свежий курс и применяем правку заново */
+async function ghUpdateCourse(mutate, message){
+  for (let attempt = 0; ; attempt++) {
+    const cj = await gh(`/repos/${REPO.owner}/${REPO.name}/contents/course.json?ref=${REPO.branch}`);
+    if (!cj) throw new Error('course.json не найден в репозитории');
+    const course = JSON.parse(b64ToStr(cj.content));
+    mutate(course);
+    try {
+      return await gh(`/repos/${REPO.owner}/${REPO.name}/contents/course.json`, {
+        method: 'PUT',
+        body: JSON.stringify({ message, content: strToB64(JSON.stringify(course, null, 2)), branch: REPO.branch, sha: cj.sha })
+      });
+    } catch(e){
+      if (/409/.test(e.message) && attempt < 3) { await new Promise(r => setTimeout(r, 1500)); continue; }
+      throw e;
+    }
+  }
+}
+
+let uploading = false;
 async function uploadLesson(){
   const st = (cls, t) => show('addStatus', cls, t);
+  if (uploading) return;
+  const btn = document.getElementById('uploadBtn');
+  uploading = true; btn.disabled = true; btn.style.opacity = '.5';
   try {
     if (!pickedFile) return st('err','Сначала выбери HTML-файл урока.');
     const title = document.getElementById('addTitle').value.trim();
@@ -523,55 +561,47 @@ async function uploadLesson(){
     const existing = await gh(`/repos/${REPO.owner}/${REPO.name}/contents/${path}?ref=${REPO.branch}`);
     if (existing && !confirm('Файл ' + slug + '.html уже есть на сайте. Заменить его новой версией?')) { st('err','Отменено.'); return; }
     const fileB64 = bufToB64(await pickedFile.arrayBuffer());
-    await gh(`/repos/${REPO.owner}/${REPO.name}/contents/${path}`, {
-      method: 'PUT',
-      body: JSON.stringify({ message: 'Урок: ' + title, content: fileB64, branch: REPO.branch, ...(existing ? { sha: existing.sha } : {}) })
-    });
+    await ghPutFile(path, fileB64, 'Урок: ' + title);
 
     st('busy','2/3 · Обновляю структуру курса…');
-    const cj = await gh(`/repos/${REPO.owner}/${REPO.name}/contents/course.json?ref=${REPO.branch}`);
-    if (!cj) throw new Error('course.json не найден в репозитории');
-    const course = JSON.parse(b64ToStr(cj.content));
+    await ghUpdateCourse(course => {
+      const lv = course.levels.find(l => l.id === levelId);
+      if (!lv) throw new Error('уровень не найден');
+      let mod;
+      if (moduleId === '__new__') {
+        let mid = slugify(newModuleTitle), n = 2;
+        while (lv.modules.some(m => m.id === mid)) mid = slugify(newModuleTitle) + '-' + (n++);
+        mod = lv.modules.find(m => m.title === newModuleTitle);
+        if (!mod) { mod = { id: mid, title: newModuleTitle, lessons: [] }; lv.modules.push(mod); }
+      } else {
+        mod = lv.modules.find(m => m.id === moduleId);
+        if (!mod) throw new Error('модуль не найден');
+      }
+      /* если урок с этим файлом уже есть где-то в курсе — обновляем его, а не дублируем */
+      let entry = null;
+      for (const L of course.levels) for (const M of L.modules) {
+        const i = M.lessons.findIndex(x => x.file === path);
+        if (i >= 0) { entry = M.lessons.splice(i, 1)[0]; }
+      }
+      if (!entry) {
+        let id = slug, n = 2;
+        const ids = course.levels.flatMap(L => L.modules.flatMap(M => M.lessons.map(x => x.id)));
+        while (ids.includes(id)) id = slug + '-' + (n++);
+        entry = { id };
+      }
+      Object.assign(entry, { unit, title, description: desc, file: path });
+      mod.lessons.push(entry);
+      mod.lessons.sort((a, b) => (a.unit || 999) - (b.unit || 999));
+    }, 'Курс: + ' + title);
 
-    const lv = course.levels.find(l => l.id === levelId);
-    if (!lv) throw new Error('уровень не найден');
-    let mod;
-    if (moduleId === '__new__') {
-      let mid = slugify(newModuleTitle), n = 2;
-      while (lv.modules.some(m => m.id === mid)) mid = slugify(newModuleTitle) + '-' + (n++);
-      mod = { id: mid, title: newModuleTitle, lessons: [] };
-      lv.modules.push(mod);
-    } else {
-      mod = lv.modules.find(m => m.id === moduleId);
-      if (!mod) throw new Error('модуль не найден');
-    }
-
-    /* если урок с этим файлом уже есть где-то в курсе — обновляем его, а не дублируем */
-    let entry = null;
-    for (const L of course.levels) for (const M of L.modules) {
-      const i = M.lessons.findIndex(x => x.file === path);
-      if (i >= 0) { entry = M.lessons.splice(i, 1)[0]; }
-    }
-    if (!entry) {
-      let id = slug, n = 2;
-      const ids = course.levels.flatMap(L => L.modules.flatMap(M => M.lessons.map(x => x.id)));
-      while (ids.includes(id)) id = slug + '-' + (n++);
-      entry = { id };
-    }
-    Object.assign(entry, { unit, title, description: desc, file: path });
-    mod.lessons.push(entry);
-    mod.lessons.sort((a, b) => (a.unit || 999) - (b.unit || 999));
-
-    st('busy','3/3 · Сохраняю курс…');
-    await gh(`/repos/${REPO.owner}/${REPO.name}/contents/course.json`, {
-      method: 'PUT',
-      body: JSON.stringify({ message: 'Курс: + ' + title, content: strToB64(JSON.stringify(course, null, 2)), branch: REPO.branch, sha: cj.sha })
-    });
-
-    st('ok','🎉 Готово! Урок «' + title + '» загружен. Сайт обновится через минуту-две — потом обнови страницу.');
+    st('ok','🎉 Готово! Урок «' + title + '» загружен. Сайт обновится через минуту-две — потом обнови страницу кабинета.');
     pickedFile = null;
   } catch(e){
-    st('err','Не получилось: ' + e.message + '. Проверь токен в настройках и попробуй ещё раз.');
+    if (/409/.test(e.message)) st('err','GitHub был занят предыдущим сохранением (конфликт версий). Подожди полминуты и нажми кнопку ещё раз — ничего не потерялось.');
+    else if (/401|403/.test(e.message)) st('err','GitHub не принял токен (' + e.message + '). Проверь его в настройках.');
+    else st('err','Не получилось: ' + e.message + '. Попробуй ещё раз, а если повторится — покажи это сообщение Клоду.');
+  } finally {
+    uploading = false; btn.disabled = false; btn.style.opacity = '';
   }
 }
 
