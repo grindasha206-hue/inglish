@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 5 · I do/work/like (present simple)</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --cream:#FBF6EC; --paper:#FFFCF5; --ink:#2A2622; --ink-soft:#5c554c;
+  --brick:#AD3B2C; --brick-dark:#8E2E22; --tab:#E2963F; --tab-dark:#C97B2A;
+  --sage:#4F8F6D; --sage-bg:#E6F1EA; --coral:#D65B4A; --coral-bg:#FBE7E3;
+  --gold:#CBA35C; --line:#E4DACB; --shadow: 0 6px 18px rgba(42,38,34,0.10);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; background:radial-gradient(circle at 15% 8%, rgba(203,163,92,0.10), transparent 40%), var(--cream); color:var(--ink); font-family:'Manrope', sans-serif; line-height:1.55; padding-bottom:80px;}
+h1,h2,h3,.display{font-family:'Fraunces', serif;}
+
+.topbar{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:1px solid var(--line); padding:10px 18px; display:flex; align-items:center; gap:14px; box-shadow:0 2px 10px rgba(0,0,0,0.04);}
+.topbar .book-title{font-family:'Fraunces', serif; font-weight:700; font-size:15px; color:var(--brick-dark); white-space:nowrap;}
+.progress-steps{display:flex; gap:5px; flex:1; align-items:center;}
+.pstep{flex:1; height:8px; border-radius:6px; background:var(--line); position:relative; overflow:hidden;}
+.pstep i{display:block; height:100%; width:0%; border-radius:6px; background:linear-gradient(90deg, var(--tab), var(--brick)); transition:width .5s ease;}
+.score-pill{font-size:13px; font-weight:700; background:var(--sage-bg); color:var(--sage); padding:5px 12px; border-radius:20px; white-space:nowrap;}
+
+.page{max-width:900px; margin:26px auto; background:var(--paper); border-radius:4px; box-shadow:var(--shadow); border:1px solid var(--line); overflow:hidden;}
+
+.unit-banner{background:linear-gradient(135deg, var(--brick) 0%, var(--brick-dark) 100%); color:#fff; padding:26px 30px 22px 96px; position:relative;}
+.unit-tag{position:absolute; left:0; top:0; bottom:0; width:76px; background:var(--brick-dark); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Fraunces',serif; border-right:2px solid rgba(255,255,255,0.15);}
+.unit-tag .u{font-size:11px; letter-spacing:2px; opacity:.75;}
+.unit-tag .n{font-size:30px; font-weight:800;}
+.unit-banner h1{margin:0; font-size:27px; font-weight:800; letter-spacing:.3px;}
+.unit-banner p{margin:6px 0 0; opacity:.9; font-size:14.5px;}
+
+.section{display:flex; border-top:1px solid var(--line);}
+.section .tab{width:56px; flex-shrink:0; background:var(--tab); color:#fff; font-family:'Fraunces',serif; font-weight:800; font-size:20px; display:flex; align-items:flex-start; justify-content:center; padding-top:22px;}
+.section.alt .tab{background:var(--tab-dark);}
+.section .content{padding:24px 28px 30px; flex:1; min-width:0;}
+.section h2{margin:0 0 4px; font-size:22px; color:var(--brick-dark);}
+.eyebrow{font-size:11.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-soft); font-weight:700; margin-bottom:4px;}
+.section p.lead{color:var(--ink-soft); margin-top:4px; font-size:14.5px;}
+
+.contrast-wrap{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:18px 0 6px;}
+@media(max-width:600px){.contrast-wrap{grid-template-columns:1fr;}}
+.contrast-card{background:#fff; border:1.5px solid var(--line); border-radius:14px; padding:16px; box-shadow:0 3px 8px rgba(0,0,0,0.05);}
+.contrast-card .ctag{font-size:10.5px; text-transform:uppercase; letter-spacing:1px; font-weight:800; padding:2px 9px; border-radius:10px; display:inline-block; margin-bottom:8px;}
+.contrast-card.simple .ctag{background:var(--sage-bg); color:var(--sage);}
+.contrast-card.cont .ctag{background:#E7F0FA; color:#2A6FA8;}
+.contrast-card p{margin:4px 0; font-size:14px;}
+.contrast-card p b{color:var(--brick-dark);}
+
+.gram-tables{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:22px;}
+@media(max-width:620px){.gram-tables{grid-template-columns:1fr;}}
+.gram-box h3{font-size:13px; text-transform:uppercase; letter-spacing:1px; color:var(--ink-soft); margin:0 0 8px;}
+table.formtable{width:100%; border-collapse:collapse; font-size:13.5px; background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;}
+table.formtable td{padding:7px 10px; border-bottom:1px solid var(--line);}
+table.formtable tr:last-child td{border-bottom:none;}
+table.formtable td.pron{color:var(--ink-soft); width:34%;}
+table.formtable td.verb{font-weight:700; color:var(--brick-dark);}
+table.formtable td.short{color:var(--ink-soft); font-style:italic;}
+
+.spelling-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:12px;}
+@media(max-width:600px){.spelling-grid{grid-template-columns:1fr 1fr;}}
+.spell-chip{background:#fff; border:1.5px solid var(--line); border-radius:8px; padding:8px 10px; text-align:center; font-size:13.5px;}
+.spell-chip .rule{font-size:10.5px; text-transform:uppercase; letter-spacing:.6px; color:var(--tab-dark); font-weight:800; margin-bottom:3px;}
+.spell-chip b{color:var(--brick-dark);}
+.spell-chip .dbl{color:var(--coral); font-weight:900;}
+
+.freq-line{background:#fff; border:1.5px solid var(--line); border-radius:12px; padding:14px 18px; margin-top:18px; text-align:center; font-size:15px;}
+.freq-line .formula{font-family:'Fraunces',serif; font-weight:700; color:var(--brick-dark);}
+.freq-chips{display:flex; gap:6px; justify-content:center; flex-wrap:wrap; margin-top:10px;}
+.freq-chip{background:var(--cream); border:1px solid var(--line); border-radius:14px; padding:4px 12px; font-size:12.5px; font-weight:700; color:var(--ink-soft);}
+
+.chunk{background:linear-gradient(180deg, transparent 60%, rgba(226,150,63,0.35) 60%); font-weight:700; color:var(--brick-dark); padding:0 1px;}
+
+.mini-note{margin-top:16px; background:var(--sage-bg); border-left:3px solid var(--sage); padding:10px 14px; border-radius:6px; font-size:13.5px; color:#2f5741;}
+.mini-note b{color:var(--sage);}
+.mini-note i{color:var(--ink-soft); font-style:italic;}
+.mini-note.warn{background:var(--coral-bg); border-left-color:var(--coral); color:#7a2e22;}
+.mini-note.warn b{color:var(--coral);}
+
+.vocab-table{margin-top:14px; display:flex; flex-direction:column; gap:8px;}
+.vocab-row{display:grid; grid-template-columns:auto 1fr auto auto; align-items:center; gap:12px; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:9px 14px;}
+@media(max-width:560px){.vocab-row{grid-template-columns:1fr; gap:4px;}}
+.vocab-word{font-weight:800; color:var(--brick-dark); font-size:14.5px; font-family:'Fraunces',serif;}
+.vocab-ipa{font-size:12.5px; color:var(--tab-dark); font-style:italic;}
+.vocab-ru{font-size:13.5px; color:var(--ink-soft);}
+.chunk-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px;}
+@media(max-width:600px){.chunk-grid{grid-template-columns:1fr;}}
+.chunk-row{display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--cream); border:1.5px dashed var(--gold); border-radius:10px; padding:9px 14px;}
+.chunk-en{font-weight:800; color:var(--brick-dark); font-size:14px; display:block;}
+.chunk-ipa{font-size:11.5px; color:var(--tab-dark); font-style:italic; display:block; margin-top:1px;}
+.chunk-ru{font-size:12.5px; color:var(--ink-soft); display:block; margin-top:1px; font-weight:400;}
+
+.game-tabs{display:flex; gap:8px; margin:18px 0 20px; flex-wrap:wrap;}
+.game-tab-btn{border:1.5px solid var(--line); background:#fff; color:var(--ink-soft); padding:8px 16px; border-radius:20px; font-family:'Manrope'; font-weight:700; font-size:13px; cursor:pointer; transition:.2s;}
+.game-tab-btn.active{background:var(--tab); color:#fff; border-color:var(--tab-dark);}
+.game-panel{display:none;}
+.game-panel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
+
+.fill-item{display:flex; align-items:flex-start; gap:10px; flex-wrap:wrap; padding:12px 4px; border-bottom:1px dashed var(--line);}
+.fill-item:last-child{border-bottom:none;}
+.fill-num{width:22px; height:22px; border-radius:50%; background:var(--cream); border:1px solid var(--line); font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; color:var(--ink-soft); flex-shrink:0; margin-top:3px;}
+.fill-body{flex:1; min-width:220px;}
+.fill-words{font-size:13px; color:var(--ink-soft); margin-bottom:6px; font-style:italic;}
+.blank-input{width:120px; padding:5px 8px; border:1.5px solid var(--line); border-radius:6px; font-family:'Manrope'; font-weight:700; font-size:14px; text-align:center; background:#fffdf8; color:var(--brick-dark);}
+.blank-input:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.blank-input.correct{border-color:var(--sage); background:var(--sage-bg); color:#2f5741;}
+.blank-input.wrong{border-color:var(--coral); background:var(--coral-bg); color:var(--coral);}
+.fill-fb{font-size:16px; margin-top:6px;}
+
+.btn{border:none; cursor:pointer; font-family:'Manrope'; font-weight:800; padding:10px 20px; border-radius:24px; font-size:14px; letter-spacing:.2px; background:var(--brick); color:#fff; box-shadow:0 4px 10px rgba(173,59,44,0.25); transition:.15s;}
+.btn:hover{transform:translateY(-1px); box-shadow:0 6px 14px rgba(173,59,44,0.32);}
+.btn.secondary{background:transparent; color:var(--brick); border:1.5px solid var(--brick); box-shadow:none;}
+.btn.small{padding:6px 14px; font-size:12.5px;}
+.actions-row{display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; align-items:center;}
+.fb-line{font-size:13.5px; font-weight:700; color:var(--ink-soft);}
+
+.memo-wrap{display:flex; flex-direction:column; align-items:center; gap:14px;}
+.memo-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; max-width:520px; width:100%;}
+@media(max-width:500px){.memo-grid{grid-template-columns:repeat(3,1fr);}}
+.memo-card{aspect-ratio:1/1; border-radius:10px; cursor:pointer; position:relative; perspective:600px;}
+.memo-inner{width:100%; height:100%; position:relative; transform-style:preserve-3d; transition:transform .45s;}
+.memo-card.flipped .memo-inner, .memo-card.matched .memo-inner{transform:rotateY(180deg);}
+.memo-face{position:absolute; inset:0; border-radius:10px; display:flex; align-items:center; justify-content:center; backface-visibility:hidden; font-weight:800; text-align:center; padding:4px; font-size:14px;}
+.memo-face.back{background:linear-gradient(135deg, var(--tab), var(--tab-dark)); color:#fff; font-family:'Fraunces',serif; font-size:22px;}
+.memo-face.front{background:#fff; border:2px solid var(--line); color:var(--brick-dark); transform:rotateY(180deg);}
+.memo-card.matched .memo-face.front{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.memo-status{font-size:13.5px; color:var(--ink-soft); font-weight:700;}
+
+.quiz-q{margin-bottom:18px;}
+.quiz-q p{font-weight:700; margin:0 0 8px; font-size:14.5px;}
+.quiz-opts{display:flex; gap:8px; flex-wrap:wrap;}
+.quiz-opt{border:1.5px solid var(--line); background:#fff; padding:7px 15px; border-radius:20px; font-weight:700; font-size:13.5px; cursor:pointer; color:var(--ink);}
+.quiz-opt.sel-correct{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.quiz-opt.sel-wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+.quiz-opt.reveal-correct{border-color:var(--sage); box-shadow:inset 0 0 0 1px var(--sage);}
+
+.match-wrap{display:flex; gap:14px; max-width:520px; margin:0 auto;}
+.match-col{flex:1; display:flex; flex-direction:column; gap:8px;}
+.match-tile{background:#fff; border:1.5px solid var(--line); border-radius:8px; padding:9px 12px; font-size:13.5px; font-weight:700; cursor:pointer; text-align:center; color:var(--ink); transition:.15s;}
+.match-tile.selected{border-color:var(--tab); background:var(--cream); box-shadow:inset 0 0 0 1.5px var(--tab);}
+.match-tile.matched{background:var(--sage-bg); border-color:var(--sage); color:#2f5741; cursor:default;}
+.match-tile.wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+
+.read-text{background:#fff; border:1.5px solid var(--line); border-radius:14px; padding:18px 20px; margin:16px 0; font-size:14.5px;}
+.read-text p{margin:0 0 10px;}
+.read-text p:last-child{margin-bottom:0;}
+.tf-item{display:flex; align-items:center; justify-content:space-between; gap:10px; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:9px 14px; margin-bottom:8px;}
+.tf-text{font-size:13.5px; flex:1;}
+.tf-btns{display:flex; gap:6px; flex-shrink:0;}
+.tf-btn{border:1.5px solid var(--line); background:var(--cream); padding:5px 12px; border-radius:16px; font-weight:800; font-size:12.5px; cursor:pointer; color:var(--ink-soft);}
+.tf-btn.sel-correct{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.tf-btn.sel-wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+.tf-btn.reveal-correct{box-shadow:inset 0 0 0 1px var(--sage); border-color:var(--sage);}
+
+.tts-warn{display:none; font-size:12.5px; color:var(--coral); background:var(--coral-bg); padding:8px 12px; border-radius:6px; margin:8px 0 0;}
+.tts-warn.shown{display:block;}
+.voice-picker{display:flex; align-items:center; gap:8px; flex-wrap:wrap; background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:8px 12px; margin-top:10px; font-size:13px;}
+.voice-picker label{font-weight:700; color:var(--ink-soft);}
+.voice-picker select{border:1.5px solid var(--line); border-radius:6px; padding:4px 8px; font-family:'Manrope'; font-size:13px; background:#fff; color:var(--ink); max-width:220px;}
+.voice-hint{font-size:11.5px; color:var(--ink-soft); flex-basis:100%;}
+.sound-block{margin-top:22px; padding-top:16px; border-top:1px dashed var(--line);}
+.sound-block:first-of-type{border-top:none; margin-top:16px;}
+.sound-block h3{font-size:15.5px; margin:0 0 6px; color:var(--brick-dark); font-weight:700;}
+.ipa{font-family:'Manrope'; font-weight:500; font-size:12px; color:var(--ink-soft); font-style:italic;}
+.sound-note{font-size:13.5px; color:var(--ink-soft); margin:0 0 12px;}
+.sound-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+.sound-grid.three{grid-template-columns:repeat(3,1fr);}
+@media(max-width:600px){.sound-grid, .sound-grid.three{grid-template-columns:1fr;}}
+.sound-pair{background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px;}
+.sound-pair.wide{grid-column:1/-1;}
+.sp-label{font-size:10.5px; text-transform:uppercase; letter-spacing:.8px; font-weight:800; padding:2px 8px; border-radius:10px; margin-right:8px; flex-shrink:0;}
+.sp-label.s{background:#E7F0FA; color:#2A6FA8;}
+.sp-label.z{background:var(--sage-bg); color:var(--sage);}
+.sp-label.iz{background:var(--coral-bg); color:var(--coral);}
+.sp-text{font-size:14.5px; font-weight:600; flex:1;}
+.sp-text.big{font-size:17px; text-align:center; font-family:'Fraunces',serif; color:var(--brick-dark);}
+.sp-controls{display:flex; gap:6px; flex-shrink:0;}
+.play-btn{border:1.5px solid var(--line); background:var(--cream); cursor:pointer; border-radius:8px; padding:6px 10px; font-size:15px; line-height:1; transition:.15s;}
+.play-btn:hover{background:var(--tab); border-color:var(--tab-dark);}
+.play-btn.playing{background:var(--brick); border-color:var(--brick-dark);}
+b.stress{color:var(--brick-dark); text-decoration:underline; text-decoration-color:var(--gold); text-decoration-thickness:2px; text-underline-offset:3px;}
+
+.prompt-list{list-style:none; padding:0; margin:14px 0; display:grid; gap:8px;}
+.prompt-list li{background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:8px 12px; font-size:13.5px; display:flex; gap:8px; align-items:baseline;}
+.prompt-list li b{color:var(--brick-dark); font-family:'Fraunces',serif;}
+textarea.write-area{width:100%; min-height:140px; border:1.5px solid var(--line); border-radius:10px; padding:14px; font-family:'Manrope'; font-size:14.5px; color:var(--ink); background:#fffdf8; resize:vertical;}
+textarea.write-area:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.word-count{font-size:12.5px; color:var(--ink-soft); margin-top:6px;}
+.cue-cards{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;}
+.cue-card{background:#fff; border:1.5px dashed var(--gold); border-radius:10px; padding:10px 14px; font-size:13px; width:160px; color:var(--ink-soft); font-style:italic;}
+.cue-card b{display:block; font-style:normal; color:var(--brick-dark); font-family:'Fraunces',serif; font-size:14px; margin-bottom:3px;}
+.reveal-box{margin-top:14px; border-left:3px solid var(--tab); background:var(--cream); padding:12px 16px; border-radius:6px; font-size:13.5px; display:none;}
+.reveal-box.shown{display:block;}
+
+.hw-list{display:flex; flex-direction:column; gap:10px; margin-top:16px;}
+.hw-item{display:flex; gap:10px; align-items:flex-start; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:11px 14px; font-size:13.5px; cursor:pointer; transition:.15s;}
+.hw-item:has(.hw-check:checked){background:var(--sage-bg); border-color:var(--sage);}
+.hw-check{margin-top:3px; width:16px; height:16px; accent-color:var(--sage); flex-shrink:0;}
+.hw-item b{color:var(--brick-dark); font-family:'Fraunces',serif;}
+.hw-item i{color:var(--ink-soft); font-style:italic;}
+
+@media print{
+  .topbar, .unit-banner, #presentation, #vocabulary, #practice, #reading, #sounds, #production, .badge-final, .footer-note, .no-print{ display:none !important; }
+  body{ background:#fff; padding:0; }
+  .page{ box-shadow:none; border:none; margin:0; max-width:100%; }
+  .section{ border-top:none; }
+  .section .tab{ display:none; }
+  .section .content{ padding:10px; }
+  .hw-item{ break-inside:avoid; }
+}
+
+.footer-note{text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:24px; padding:0 20px;}
+.badge-final{display:none; text-align:center; margin:26px auto 0; max-width:900px; background:linear-gradient(135deg, var(--sage), #3d7357); color:#fff; border-radius:14px; padding:22px; font-family:'Fraunces',serif; font-size:19px; font-weight:700; box-shadow:var(--shadow);}
+.badge-final.shown{display:block; animation:fadeIn .5s ease;}
+.badge-final span{display:block; font-family:'Manrope'; font-weight:500; font-size:13.5px; margin-top:6px; opacity:.9;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="book-title">Essential Grammar · Unit 5</div>
+  <div class="progress-steps">
+    <div class="pstep" id="step-p"><i id="bar-p"></i></div>
+    <div class="pstep" id="step-vocab"><i id="bar-vocab"></i></div>
+    <div class="pstep" id="step-pr"><i id="bar-pr"></i></div>
+    <div class="pstep" id="step-read"><i id="bar-read"></i></div>
+    <div class="pstep" id="step-sound"><i id="bar-sound"></i></div>
+    <div class="pstep" id="step-prod"><i id="bar-prod"></i></div>
+    <div class="pstep" id="step-hw"><i id="bar-hw"></i></div>
+  </div>
+  <div class="score-pill">★ <span id="scoreDisplay">0</span>/16</div>
+</div>
+
+<div class="page">
+
+  <div class="unit-banner">
+    <div class="unit-tag"><span class="u">UNIT</span><span class="n">5</span></div>
+    <h1>I do / work / like <span style="font-weight:400; font-size:18px; opacity:.85;">(present simple)</span></h1>
+    <p>Уровень A2 · Presentation → Vocabulary → Practice → Reading → Sounds → Production → Homework</p>
+  </div>
+
+  <!-- ===================== A · PRESENTATION ===================== -->
+  <div class="section" id="presentation">
+    <div class="tab">A</div>
+    <div class="content">
+      <div class="eyebrow">Presentation</div>
+      <h2>Привычка или момент?</h2>
+      <p class="lead">До сих пор мы говорили о том, что происходит прямо сейчас (present continuous). Present simple — про то, что происходит вообще, всегда или регулярно.</p>
+
+      <div class="contrast-wrap">
+        <div class="contrast-card simple">
+          <span class="ctag">present simple</span>
+          <p>They have a lot of books.</p>
+          <p><b>They read a lot.</b></p>
+        </div>
+        <div class="contrast-card cont">
+          <span class="ctag">present continuous</span>
+          <p>He's eating an ice cream.</p>
+          <p><b>He likes ice cream.</b> <i style="font-weight:400; color:var(--ink-soft); font-size:12.5px;">(факт, не действие)</i></p>
+        </div>
+      </div>
+
+      <div class="mini-note">
+        <b>Разница:</b> <i>He's eating an ice cream</i> — это происходит прямо сейчас. <i>He likes ice cream</i> — это факт о нём вообще, не важно, ест он его сейчас или нет.
+      </div>
+
+      <div class="gram-tables">
+        <div class="gram-box">
+          <h3>Present simple — форма</h3>
+          <table class="formtable">
+            <tr><td class="pron">I / we / you / they</td><td class="verb">read, like, work, do, have</td></tr>
+            <tr><td class="pron">he / she / it</td><td class="verb">read<b>s</b>, like<b>s</b>, work<b>s</b>, do<b>es</b>, ha<b>s</b></td></tr>
+          </table>
+        </div>
+        <div class="gram-box">
+          <h3>Примеры</h3>
+          <table class="formtable">
+            <tr><td class="pron">I</td><td class="verb" colspan="2">work in a shop.</td></tr>
+            <tr><td class="pron">My brother</td><td class="verb" colspan="2"><b>works</b> in a bank.</td></tr>
+            <tr><td class="pron">Lucy</td><td class="verb" colspan="2"><b>lives</b> in London.</td></tr>
+            <tr><td class="pron">Joe</td><td class="verb" colspan="2"><b>has</b> a shower every day.</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="mini-note warn">
+        <b>Частая ошибка:</b> не забывайте -s/-es с he/she/it! "My brother works" — а не <s>"My brother work"</s>.
+      </div>
+
+      <h3 style="font-size:13px; text-transform:uppercase; letter-spacing:1px; color:var(--ink-soft); margin:22px 0 4px;">Правописание -s / -es <span style="text-transform:none; font-style:italic; color:var(--ink-soft); font-weight:400;">(spelling)</span></h3>
+      <div class="spelling-grid">
+        <div class="spell-chip"><div class="rule">-es после -s/-sh/-ch</div>pass → pa<span class="dbl">ss</span><b>es</b><br>finish → finish<b>es</b><br>watch → watch<b>es</b></div>
+        <div class="spell-chip"><div class="rule">-y → -ies</div>study → stud<b>ies</b><br>try → tr<b>ies</b></div>
+        <div class="spell-chip"><div class="rule">исключения</div>do → do<b>es</b><br>go → go<b>es</b><br>have → ha<b>s</b></div>
+      </div>
+
+      <div class="freq-line">
+        <div class="formula">subject + <span style="color:var(--tab-dark);">always/usually/often/sometimes/never</span> + verb</div>
+        <div class="freq-chips">
+          <span class="freq-chip"><b>always</b> — всегда</span>
+          <span class="freq-chip"><b>usually</b> — обычно</span>
+          <span class="freq-chip"><b>often</b> — часто</span>
+          <span class="freq-chip"><b>sometimes</b> — иногда</span>
+          <span class="freq-chip"><b>never</b> — никогда</span>
+        </div>
+        <div class="freq-chips" style="margin-top:8px;">
+          <span class="freq-chip">Sue <b>always</b> gets to work early.</span>
+          <span class="freq-chip">I <b>never</b> eat breakfast.</span>
+          <span class="freq-chip">Mark <b>usually</b> plays football on Sundays.</span>
+        </div>
+      </div>
+      <div class="mini-note warn">
+        <b>Порядок слов:</b> наречие частоты стоит <u>перед</u> глаголом: "Sue always gets…" — не <s>"Sue gets always…"</s>; "I never eat…" — не <s>"I eat never…"</s>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== B · VOCABULARY ===================== -->
+  <div class="section alt" id="vocabulary">
+    <div class="tab">B</div>
+    <div class="content">
+      <div class="eyebrow">Vocabulary</div>
+      <h2>Новые слова этого урока</h2>
+      <p class="lead">Слова именно из Unit 5 (то, что уже было в Units 1–4, здесь не повторяется). Все они дальше встретятся в тексте блока <b>D · Reading</b>.</p>
+
+      <div class="vocab-table" id="vocabTable"></div>
+
+      <h3 style="font-size:15.5px; margin:24px 0 6px; color:var(--brick-dark);">Соседи слов <span class="ipa">chunks / collocations</span></h3>
+      <p class="sound-note">Эти сочетания в тексте (блок D) тоже подсвечены жёлтым.</p>
+      <div class="chunk-grid" id="chunkGrid"></div>
+    </div>
+  </div>
+
+  <!-- ===================== C · PRACTICE ===================== -->
+  <div class="section" id="practice">
+    <div class="tab">C</div>
+    <div class="content">
+      <div class="eyebrow">Practice</div>
+      <h2>Тренируемся: четыре мини-игры</h2>
+      <p class="lead">Выберите игру и заработайте звёзды ★. Ответы проверяются сразу.</p>
+
+      <div class="game-tabs">
+        <button class="game-tab-btn active" data-panel="panel-fill">✏️ Впиши форму глагола</button>
+        <button class="game-tab-btn" data-panel="panel-memo">🃏 Мемо: verb → verb+s</button>
+        <button class="game-tab-btn" data-panel="panel-quiz">⚡ Квиз</button>
+        <button class="game-tab-btn" data-panel="panel-vocabmatch">📚 Лексика</button>
+      </div>
+
+      <div class="game-panel active" id="panel-fill">
+        <div id="fillList"></div>
+        <div class="actions-row">
+          <button class="btn" id="checkFillBtn">Проверить</button>
+          <button class="btn secondary small" id="resetFillBtn">Сбросить</button>
+          <span class="fb-line" id="fillFeedback"></span>
+        </div>
+      </div>
+
+      <div class="game-panel" id="panel-memo">
+        <p class="lead" style="margin-top:0">Найдите пары: глагол ↔ его форма с he/she/it.</p>
+        <div class="memo-wrap">
+          <div class="memo-grid" id="memoGrid"></div>
+          <div class="memo-status" id="memoStatus">Найдено пар: 0 / 6</div>
+          <button class="btn secondary small" id="restartMemoBtn">Перемешать заново</button>
+        </div>
+      </div>
+
+      <div class="game-panel" id="panel-quiz">
+        <div id="quizList"></div>
+        <div class="actions-row">
+          <span class="fb-line" id="quizFeedback"></span>
+        </div>
+      </div>
+
+      <div class="game-panel" id="panel-vocabmatch">
+        <p class="lead" style="margin-top:0">Нажмите на английское слово, затем на его перевод.</p>
+        <div class="match-wrap">
+          <div class="match-col" id="matchEnCol"></div>
+          <div class="match-col" id="matchRuCol"></div>
+        </div>
+        <div class="actions-row">
+          <span class="fb-line" id="matchStatus">Найдено пар: 0 / 8</span>
+          <button class="btn secondary small" id="restartMatchBtn">Перемешать заново</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== D · READING ===================== -->
+  <div class="section alt" id="reading">
+    <div class="tab">D</div>
+    <div class="content">
+      <div class="eyebrow">Reading</div>
+      <h2>Sarah's bookshop</h2>
+      <p class="lead">Текст использует только грамматику, которую вы уже знаете (present simple + один present continuous для контраста), и новые слова из блока B.</p>
+
+      <div class="read-text">
+        <p>Sarah <b>works</b> in a small bookshop in London. She usually <span class="chunk">arrives</span> at eight o'clock and <span class="chunk">opens</span> the shop at nine.</p>
+        <p>She <span class="chunk">speaks</span> two <span class="chunk">languages</span> — English and French — so she often <span class="chunk">meets</span> tourists and helps them find books.</p>
+        <p>She loves tea and always drinks three cups a day. In the evening, she usually reads at home.</p>
+        <p>Right now, she's washing her car. It's very <span class="chunk">dirty</span>!</p>
+      </div>
+
+      <h3 style="font-size:15px; margin:20px 0 8px; color:var(--brick-dark);">1 · True or False</h3>
+      <div id="tfList"></div>
+      <div class="actions-row"><span class="fb-line" id="tfFeedback"></span></div>
+
+      <h3 style="font-size:15px; margin:24px 0 8px; color:var(--brick-dark);">2 · Расскажите то же самое про Тома</h3>
+      <p class="sound-note" style="margin-bottom:8px;">Tom works in a bookshop too — примените те же правила -s/-es к новому подлежащему.</p>
+      <div id="tomFillList"></div>
+      <div class="actions-row">
+        <button class="btn small" id="checkTomBtn">Проверить</button>
+        <span class="fb-line" id="tomFeedback"></span>
+      </div>
+
+      <h3 style="font-size:15px; margin:24px 0 8px; color:var(--brick-dark);">3 · Вставьте слово из текста</h3>
+      <p class="sound-note" style="margin-bottom:8px;">Слова: arrive · open · speak · meet · wash · dirty</p>
+      <div id="readFillList"></div>
+      <div class="actions-row">
+        <button class="btn small" id="checkReadFillBtn">Проверить</button>
+        <span class="fb-line" id="readFillFeedback"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== E · SOUNDS ===================== -->
+  <div class="section" id="sounds">
+    <div class="tab">E</div>
+    <div class="content">
+      <div class="eyebrow">Sounds &amp; Speech</div>
+      <h2>Три звука одного и того же -s</h2>
+      <p class="lead">Окончание -s/-es в he/she/it читается по-разному в зависимости от последнего звука глагола: /s/, /z/ или /ɪz/.</p>
+      <div class="voice-picker">
+        <label for="voiceSelect">Голос:</label>
+        <select id="voiceSelect"></select>
+        <span class="voice-hint">Роботизированность зависит от голоса устройства — попробуйте другой из списка.</span>
+      </div>
+      <p class="tts-warn" id="ttsWarn"></p>
+
+      <div class="sound-block">
+        <h3>1 · Звук <span class="ipa">/s/</span> — после глухих согласных</h3>
+        <p class="sound-note">works, likes, meets — глухой звук в конце глагола → глухой /s/.</p>
+        <div class="sound-grid three">
+          <div class="sound-pair"><div class="sp-label s">/s/</div><div class="sp-text big">works</div><div class="sp-controls"><button class="play-btn" data-text="works" data-rate="1">🔊</button></div></div>
+          <div class="sound-pair"><div class="sp-label s">/s/</div><div class="sp-text big">likes</div><div class="sp-controls"><button class="play-btn" data-text="likes" data-rate="1">🔊</button></div></div>
+          <div class="sound-pair"><div class="sp-label s">/s/</div><div class="sp-text big">meets</div><div class="sp-controls"><button class="play-btn" data-text="meets" data-rate="1">🔊</button></div></div>
+        </div>
+      </div>
+
+      <div class="sound-block">
+        <h3>2 · Звук <span class="ipa">/z/</span> — после звонких звуков</h3>
+        <p class="sound-note">opens, arrives, goes — звонкий звук в конце глагола → звонкий /z/.</p>
+        <div class="sound-grid three">
+          <div class="sound-pair"><div class="sp-label z">/z/</div><div class="sp-text big">opens</div><div class="sp-controls"><button class="play-btn" data-text="opens" data-rate="1">🔊</button></div></div>
+          <div class="sound-pair"><div class="sp-label z">/z/</div><div class="sp-text big">arrives</div><div class="sp-controls"><button class="play-btn" data-text="arrives" data-rate="1">🔊</button></div></div>
+          <div class="sound-pair"><div class="sp-label z">/z/</div><div class="sp-text big">goes</div><div class="sp-controls"><button class="play-btn" data-text="goes" data-rate="1">🔊</button></div></div>
+        </div>
+      </div>
+
+      <div class="sound-block">
+        <h3>3 · Звук <span class="ipa">/ɪz/</span> — новый слог!</h3>
+        <p class="sound-note">watches, teaches, washes — после s/sh/ch/z добавляется целый лишний слог /ɪz/.</p>
+        <div class="sound-grid three">
+          <div class="sound-pair"><div class="sp-label iz">/ɪz/</div><div class="sp-text big">watches</div><div class="sp-controls"><button class="play-btn" data-text="watches" data-rate="1">🔊</button></div></div>
+          <div class="sound-pair"><div class="sp-label iz">/ɪz/</div><div class="sp-text big">teaches</div><div class="sp-controls"><button class="play-btn" data-text="teaches" data-rate="1">🔊</button></div></div>
+          <div class="sound-pair"><div class="sp-label iz">/ɪz/</div><div class="sp-text big">washes</div><div class="sp-controls"><button class="play-btn" data-text="washes" data-rate="1">🔊</button></div></div>
+        </div>
+      </div>
+
+      <div class="sound-block">
+        <h3>4 · Ударение на наречии частоты</h3>
+        <p class="sound-note">always/never/often часто получают лёгкое ударение — так собеседник сразу слышит, насколько регулярно вы что-то делаете.</p>
+        <div class="sound-pair wide">
+          <div class="sp-text">Sue <b class="stress">always</b> gets to work early. I <b class="stress">never</b> eat breakfast.</div>
+          <div class="sp-controls"><button class="play-btn" data-text="Sue always gets to work early. I never eat breakfast." data-rate="1">🔊</button><button class="play-btn slow" data-text="Sue always gets to work early. I never eat breakfast." data-rate="0.55">🐢</button></div>
+        </div>
+      </div>
+
+      <div class="actions-row">
+        <button class="btn secondary small" id="playAllBtn">🔊 Прослушать всё подряд</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== F · PRODUCTION ===================== -->
+  <div class="section alt" id="production">
+    <div class="tab">F</div>
+    <div class="content">
+      <div class="eyebrow">Production</div>
+      <h2>Расскажите о своих привычках</h2>
+      <p class="lead">Напишите 6–8 предложений о вашем обычном дне — используйте present simple и наречия частоты (always/usually/often/sometimes/never).</p>
+
+      <ul class="prompt-list">
+        <li><b>I usually…</b> — что вы обычно делаете</li>
+        <li><b>I always / never…</b> — привычки без исключений</li>
+        <li><b>I sometimes…</b> — что-то нерегулярное</li>
+        <li><b>My…works/lives/studies…</b> — про кого-то ещё (не забудьте -s!)</li>
+      </ul>
+
+      <textarea class="write-area" id="writeArea" placeholder="I usually get up at seven..."></textarea>
+      <div class="word-count" id="wordCount">0 слов</div>
+
+      <div class="actions-row">
+        <button class="btn" id="finishBtn">Готово!</button>
+        <button class="btn secondary" id="sampleBtn">Показать пример</button>
+      </div>
+
+      <div class="reveal-box" id="sampleBox">
+        <b>Пример:</b> I usually get up at seven o'clock. I always drink coffee in the morning. I never eat breakfast — I don't have time! I sometimes walk to work, but I usually go by bus. My sister works in a hospital, and she often finishes very late. In the evening, I usually watch TV or read.
+      </div>
+
+      <div class="cue-cards">
+        <div class="cue-card"><b>Карточка 1</b>Расскажите партнёру о привычках вашей семьи: кто что обычно делает.</div>
+        <div class="cue-card"><b>Карточка 2</b>Опишите типичный рабочий день кого-то из знакомых (he/she works…).</div>
+        <div class="cue-card"><b>Карточка 3</b>Сравните: что вы делаете каждый день, а что — только иногда.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== G · HOMEWORK ===================== -->
+  <div class="section" id="homework">
+    <div class="tab">G</div>
+    <div class="content">
+      <div class="eyebrow">Homework</div>
+      <h2>Домашнее задание</h2>
+      <p class="lead">Отметьте галочкой то, что выполнили. Можно распечатать этот блок.</p>
+
+      <div class="hw-list">
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>1. Письменно.</b> Составьте 8 предложений о привычках друга или родственника (he/she + verb-s) — используйте минимум 4 новых слова из блока B.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>2. Правописание.</b> Выпишите 10 глаголов и допишите форму с -s/-es для he/she/it, применяя правила из блока A.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>3. Слушаем и повторяем.</b> Откройте блок <i>E · Sounds</i>, разложите 6 слов по трём звукам /s/, /z/, /ɪz/ на слух, потом повторите вслух.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>4. Наблюдение.</b> В течение дня запишите 3 привычки кого-то из близких в present simple (He always… / She usually…).</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>5. Повторение.</b> Вернитесь в блок <i>C · Practice</i> и пройдите игру «Мемо» ещё раз без ошибок.</span></label>
+      </div>
+
+      <div class="mini-note" style="margin-top:18px;"><b>На следующем занятии:</b> будьте готовы устно рассказать о привычках своей семьи (5–6 предложений).</div>
+
+      <div class="actions-row">
+        <span class="fb-line" id="hwFeedback">Выполнено: 0 / 5</span>
+        <button class="btn secondary small no-print" id="printHwBtn">🖨️ Распечатать задание</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="badge-final" id="finalBadge">
+  🎉 Отличная работа!
+  <span>Вы прошли Presentation, Vocabulary, Practice, Reading, Sounds и Production по теме present simple.</span>
+</div>
+
+<p class="footer-note">Based on Essential Grammar in Use, 4th Edition (Cambridge University Press, 2015), Unit 5 — original exercises created for this lesson.</p>
+
+<script>
+const state = { score:0, maxScore:16, presDone:false, practiceScore:0, prodDone:false, readScore:0 };
+function setBar(id, pct){ document.getElementById(id).style.width = pct+'%'; }
+function updateTop(){
+  document.getElementById('scoreDisplay').textContent = state.score;
+  setBar('bar-p', state.presDone ? 100 : 0);
+  const practicePct = Math.min(100, Math.round((state.practiceScore/9)*100));
+  setBar('bar-pr', practicePct);
+  setBar('bar-prod', state.prodDone ? 100 : 0);
+  if(state.presDone && practicePct>=100 && state.prodDone && soundsVisited){
+    document.getElementById('finalBadge').classList.add('shown');
+  }
+}
+const presObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ state.presDone = true; updateTop(); } });
+},{threshold:0.4});
+presObserver.observe(document.getElementById('vocabulary'));
+
+document.querySelectorAll('.game-tab-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.game-tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.game-panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.panel).classList.add('active');
+  });
+});
+
+function normalize(s){ return s.trim().toLowerCase().replace(/[’‘´`]/g,"'").replace(/[?.!,;:]/g,'').replace(/'/g,'').replace(/\s+/g,' '); }
+function shuffle(arr){ for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; } return arr; }
+
+/* ---------------- VOCABULARY ---------------- */
+const vocabData = [
+  { word:"always", ipa:"/ˈɔːlweɪz/", ru:"всегда" },
+  { word:"usually", ipa:"/ˈjuːʒuəli/", ru:"обычно" },
+  { word:"often", ipa:"/ˈɒf(t)ən/", ru:"часто" },
+  { word:"sometimes", ipa:"/ˈsʌmtaɪmz/", ru:"иногда" },
+  { word:"never", ipa:"/ˈnevər/", ru:"никогда" },
+  { word:"think", ipa:"/θɪŋk/", ru:"думать" },
+  { word:"fly", ipa:"/flaɪ/", ru:"летать" },
+  { word:"boil", ipa:"/bɔɪl/", ru:"кипеть, кипятить" },
+  { word:"close", ipa:"/kləʊz/", ru:"закрывать(ся)" },
+  { word:"cost", ipa:"/kɒst/", ru:"стоить" },
+  { word:"meet", ipa:"/miːt/", ru:"встречать(ся)" },
+  { word:"open", ipa:"/ˈəʊpən/", ru:"открывать(ся)" },
+  { word:"speak", ipa:"/spiːk/", ru:"говорить (на языке)" },
+  { word:"teach", ipa:"/tiːtʃ/", ru:"учить, преподавать" },
+  { word:"wash", ipa:"/wɒʃ/", ru:"мыть" },
+  { word:"arrive", ipa:"/əˈraɪv/", ru:"прибывать, приезжать" },
+  { word:"forget", ipa:"/fəˈɡet/", ru:"забывать" },
+  { word:"enjoy", ipa:"/ɪnˈdʒɔɪ/", ru:"получать удовольствие" },
+  { word:"expensive", ipa:"/ɪkˈspensɪv/", ru:"дорогой (по цене)" },
+  { word:"dirty", ipa:"/ˈdɜːti/", ru:"грязный" },
+  { word:"language", ipa:"/ˈlæŋɡwɪdʒ/", ru:"язык (речь)" },
+];
+const vocabTableEl = document.getElementById('vocabTable');
+vocabData.forEach(v=>{
+  const row = document.createElement('div');
+  row.className = 'vocab-row';
+  row.innerHTML = `<div class="vocab-word">${v.word}</div><div class="vocab-ipa">${v.ipa}</div><div class="vocab-ru">${v.ru}</div><button class="play-btn" data-text="${v.word}" data-rate="0.85">🔊</button>`;
+  vocabTableEl.appendChild(row);
+});
+const chunkData = [
+  { en:"speak a language", ipa:"/spiːk ə ˈlæŋɡwɪdʒ/", ru:"говорить на языке" },
+  { en:"arrive early", ipa:"/əˈraɪv ˈɜːli/", ru:"приезжать рано" },
+  { en:"cost a lot of money", ipa:"/kɒst ə lɒt ɒv ˈmʌni/", ru:"стоить много денег" },
+  { en:"get up early", ipa:"/ɡet ʌp ˈɜːli/", ru:"вставать рано" },
+  { en:"go to work by bus", ipa:"/ɡəʊ tə wɜːk baɪ bʌs/", ru:"ездить на работу на автобусе" },
+  { en:"watch TV", ipa:"/wɒtʃ tiːˈviː/", ru:"смотреть телевизор" },
+  { en:"at the weekend", ipa:"/æt ðə ˈwiːkend/", ru:"на выходных" },
+  { en:"in the evening", ipa:"/ɪn ði ˈiːvnɪŋ/", ru:"вечером" },
+];
+const chunkGridEl = document.getElementById('chunkGrid');
+chunkData.forEach(c=>{
+  const row = document.createElement('div');
+  row.className = 'chunk-row';
+  row.innerHTML = `<div><span class="chunk-en">${c.en}</span><span class="chunk-ipa">${c.ipa}</span><span class="chunk-ru">${c.ru}</span></div><button class="play-btn" data-text="${c.en}" data-rate="0.85">🔊</button>`;
+  chunkGridEl.appendChild(row);
+});
+
+/* ---------------- FILL (verb forms) ---------------- */
+const fillData = [
+  { sentence:"Maria ___ (speak) four languages.", answers:["speaks"] },
+  { sentence:"The shops usually ___ (open) at nine.", answers:["open"] },
+  { sentence:"Tina is a teacher. She ___ (teach) mathematics.", answers:["teaches"] },
+  { sentence:"Peter's car is dirty. He never ___ (wash) it.", answers:["washes"] },
+  { sentence:"She ___ (study) English every day.", answers:["studies"] },
+  { sentence:"Water ___ (boil) at 100 degrees.", answers:["boils"] },
+];
+const fillListEl = document.getElementById('fillList');
+fillData.forEach((item, idx)=>{
+  const row = document.createElement('div');
+  row.className = 'fill-item';
+  row.innerHTML = `<div class="fill-num">${idx+1}</div><div class="fill-body"><div class="fill-words">${item.sentence.replace('___', `<input type="text" class="blank-input" data-item="${idx}">`)}</div></div>`;
+  fillListEl.appendChild(row);
+});
+document.getElementById('checkFillBtn').addEventListener('click', ()=>{
+  let correctCount = 0;
+  fillData.forEach((item, idx)=>{
+    const input = document.querySelector(`#fillList .blank-input[data-item="${idx}"]`);
+    const ok = item.answers.some(a=>normalize(a)===normalize(input.value));
+    input.classList.remove('correct','wrong'); input.classList.add(ok?'correct':'wrong');
+    if(ok) correctCount++;
+  });
+  document.getElementById('fillFeedback').textContent = `Правильно: ${correctCount} из ${fillData.length}`;
+  state.practiceScore = Math.max(state.practiceScore, correctCount>=fillData.length-1 ? 3 : (correctCount>0?2:0));
+  state.score = calcScore(); updateTop();
+});
+document.getElementById('resetFillBtn').addEventListener('click', ()=>{
+  document.querySelectorAll('#fillList .blank-input').forEach(i=>{ i.value=''; i.classList.remove('correct','wrong'); });
+  document.getElementById('fillFeedback').textContent = '';
+});
+
+/* ---------------- MEMORY ---------------- */
+const memoPairs = [["study","studies"],["try","tries"],["watch","watches"],["finish","finishes"],["go","goes"],["have","has"]];
+let memoCards = [];
+memoPairs.forEach((pair, i)=>{ memoCards.push({id:i+'a', label:pair[0], pair:i}); memoCards.push({id:i+'b', label:pair[1], pair:i}); });
+let flipped = [], matchedCount = 0, lockBoard = false;
+function renderMemo(){
+  const grid = document.getElementById('memoGrid');
+  grid.innerHTML = ''; flipped=[]; matchedCount=0; lockBoard=false;
+  document.getElementById('memoStatus').textContent = 'Найдено пар: 0 / 6';
+  const cards = shuffle([...memoCards]);
+  cards.forEach(c=>{
+    const el = document.createElement('div');
+    el.className = 'memo-card'; el.dataset.pair = c.pair;
+    el.innerHTML = `<div class="memo-inner"><div class="memo-face back">?</div><div class="memo-face front">${c.label}</div></div>`;
+    el.addEventListener('click', ()=>onMemoClick(el));
+    grid.appendChild(el);
+  });
+}
+function onMemoClick(el){
+  if(lockBoard || el.classList.contains('flipped') || el.classList.contains('matched')) return;
+  el.classList.add('flipped'); flipped.push(el);
+  if(flipped.length === 2){
+    lockBoard = true;
+    const [a,b] = flipped;
+    if(a.dataset.pair === b.dataset.pair){
+      setTimeout(()=>{
+        a.classList.add('matched'); b.classList.add('matched'); matchedCount++;
+        document.getElementById('memoStatus').textContent = `Найдено пар: ${matchedCount} / 6`;
+        flipped=[]; lockBoard=false;
+        if(matchedCount === 6){ state.practiceScore = Math.max(state.practiceScore, 6); state.score = calcScore(); updateTop(); }
+      }, 400);
+    } else {
+      setTimeout(()=>{ a.classList.remove('flipped'); b.classList.remove('flipped'); flipped=[]; lockBoard=false; }, 700);
+    }
+  }
+}
+document.getElementById('restartMemoBtn').addEventListener('click', renderMemo);
+renderMemo();
+
+/* ---------------- QUIZ ---------------- */
+const quizData = [
+  { q:"My brother ___ in a bank.", opts:["work","works"], correct:"works" },
+  { q:"I ___ in a shop.", opts:["work","works"], correct:"work" },
+  { q:"The earth ___ round the sun.", opts:["go","goes"], correct:"goes" },
+  { q:"We ___ a lot of things in our free time.", opts:["do","does"], correct:"do" },
+  { q:"Mark ___ football on Sundays.", opts:["usually plays","plays usually"], correct:"usually plays" },
+];
+const quizListEl = document.getElementById('quizList');
+let quizAnswered = 0, quizCorrectFinal = 0;
+quizData.forEach((item, idx)=>{
+  const box = document.createElement('div');
+  box.className = 'quiz-q';
+  box.innerHTML = `<p>${idx+1}. ${item.q}</p><div class="quiz-opts">${item.opts.map(o=>`<button class="quiz-opt" data-correct="${o===item.correct}">${o}</button>`).join('')}</div>`;
+  quizListEl.appendChild(box);
+});
+document.querySelectorAll('#quizList .quiz-opts').forEach(group=>{
+  group.querySelectorAll('.quiz-opt').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      if(group.dataset.done) return;
+      group.dataset.done = "1";
+      group.querySelectorAll('.quiz-opt').forEach(b=>{ if(b.dataset.correct === "true") b.classList.add('reveal-correct'); });
+      if(btn.dataset.correct === "true"){ btn.classList.add('sel-correct'); } else { btn.classList.add('sel-wrong'); }
+      quizAnswered++;
+      const correctSoFar = document.querySelectorAll('#quizList .quiz-opt.sel-correct').length;
+      document.getElementById('quizFeedback').textContent = `Отвечено: ${quizAnswered} из ${quizData.length} · верно: ${correctSoFar}`;
+      if(quizAnswered === quizData.length){ quizCorrectFinal = correctSoFar; state.score = calcScore(); updateTop(); }
+    });
+  });
+});
+
+/* ---------------- VOCAB MATCH GAME ---------------- */
+const matchWords = [
+  { en:"think", ru:"думать" },
+  { en:"fly", ru:"летать" },
+  { en:"close", ru:"закрывать" },
+  { en:"meet", ru:"встречать" },
+  { en:"teach", ru:"учить" },
+  { en:"forget", ru:"забывать" },
+  { en:"enjoy", ru:"получать удовольствие" },
+  { en:"expensive", ru:"дорогой" },
+];
+let matchSelectedEn = null, matchSelectedRu = null, matchFound = 0, matchLock = false;
+function renderMatch(){
+  const enCol = document.getElementById('matchEnCol');
+  const ruCol = document.getElementById('matchRuCol');
+  enCol.innerHTML = ''; ruCol.innerHTML = '';
+  matchSelectedEn = null; matchSelectedRu = null; matchFound = 0; matchLock = false;
+  document.getElementById('matchStatus').textContent = `Найдено пар: 0 / ${matchWords.length}`;
+  const enShuffled = shuffle(matchWords.map((w,i)=>({...w, idx:i})));
+  const ruShuffled = shuffle(matchWords.map((w,i)=>({...w, idx:i})));
+  enShuffled.forEach(w=>{
+    const el = document.createElement('div');
+    el.className = 'match-tile'; el.dataset.idx = w.idx; el.textContent = w.en;
+    el.addEventListener('click', ()=>onMatchClick(el, 'en', w.idx));
+    enCol.appendChild(el);
+  });
+  ruShuffled.forEach(w=>{
+    const el = document.createElement('div');
+    el.className = 'match-tile'; el.dataset.idx = w.idx; el.textContent = w.ru;
+    el.addEventListener('click', ()=>onMatchClick(el, 'ru', w.idx));
+    ruCol.appendChild(el);
+  });
+}
+function onMatchClick(el, side, idx){
+  if(matchLock || el.classList.contains('matched')) return;
+  if(side === 'en'){ if(matchSelectedEn) matchSelectedEn.classList.remove('selected'); matchSelectedEn = el; el.classList.add('selected'); }
+  else { if(matchSelectedRu) matchSelectedRu.classList.remove('selected'); matchSelectedRu = el; el.classList.add('selected'); }
+  if(matchSelectedEn && matchSelectedRu){
+    matchLock = true;
+    const ok = matchSelectedEn.dataset.idx === matchSelectedRu.dataset.idx;
+    if(ok){
+      matchSelectedEn.classList.remove('selected'); matchSelectedRu.classList.remove('selected');
+      matchSelectedEn.classList.add('matched'); matchSelectedRu.classList.add('matched');
+      matchFound++;
+      document.getElementById('matchStatus').textContent = `Найдено пар: ${matchFound} / ${matchWords.length}`;
+      matchSelectedEn = null; matchSelectedRu = null; matchLock = false;
+    } else {
+      matchSelectedEn.classList.add('wrong'); matchSelectedRu.classList.add('wrong');
+      setTimeout(()=>{
+        matchSelectedEn.classList.remove('selected','wrong'); matchSelectedRu.classList.remove('selected','wrong');
+        matchSelectedEn = null; matchSelectedRu = null; matchLock = false;
+      }, 600);
+    }
+  }
+}
+document.getElementById('restartMatchBtn').addEventListener('click', renderMatch);
+renderMatch();
+
+/* ---------------- READING ---------------- */
+const tfData = [
+  { text:"Sarah works in a big shopping centre.", correct:false },
+  { text:"She speaks two languages.", correct:true },
+  { text:"She always drinks three cups of tea a day.", correct:true },
+  { text:"She never reads in the evening.", correct:false },
+  { text:"Right now, she's washing her car.", correct:true },
+];
+const tfListEl = document.getElementById('tfList');
+let tfAnswered = 0, tfCorrect = 0;
+tfData.forEach((item, idx)=>{
+  const row = document.createElement('div');
+  row.className = 'tf-item';
+  row.innerHTML = `<div class="tf-text">${idx+1}. ${item.text}</div><div class="tf-btns"><button class="tf-btn" data-val="true">True</button><button class="tf-btn" data-val="false">False</button></div>`;
+  tfListEl.appendChild(row);
+  row.querySelectorAll('.tf-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      if(row.dataset.done) return;
+      row.dataset.done = "1";
+      const val = btn.dataset.val === "true";
+      row.querySelectorAll('.tf-btn').forEach(b=>{ if((b.dataset.val === "true") === item.correct) b.classList.add('reveal-correct'); });
+      btn.classList.add(val === item.correct ? 'sel-correct' : 'sel-wrong');
+      tfAnswered++; if(val === item.correct) tfCorrect++;
+      document.getElementById('tfFeedback').textContent = `Отвечено: ${tfAnswered} из ${tfData.length} · верно: ${tfCorrect}`;
+      if(tfAnswered === tfData.length){ state.readScore = Math.max(state.readScore, tfCorrect >= 4 ? 2 : 1); state.score = calcScore(); updateTop(); }
+    });
+  });
+});
+
+const tomData = [
+  { sentence:"My friend Tom works in a bookshop too. He ___ (arrive) at eight.", answers:["arrives"] },
+  { sentence:"He ___ (open) the shop at nine.", answers:["opens"] },
+  { sentence:"He ___ (speak) three languages.", answers:["speaks"] },
+  { sentence:"He ___ (meet) a lot of tourists.", answers:["meets"] },
+];
+const tomFillListEl = document.getElementById('tomFillList');
+tomData.forEach((item, idx)=>{
+  const row = document.createElement('div');
+  row.className = 'fill-item';
+  row.innerHTML = `<div class="fill-num">${idx+1}</div><div class="fill-body"><div class="fill-words">${item.sentence.replace('___', `<input type="text" class="blank-input" data-item="${idx}">`)}</div></div>`;
+  tomFillListEl.appendChild(row);
+});
+document.getElementById('checkTomBtn').addEventListener('click', ()=>{
+  let correctCount = 0;
+  tomData.forEach((item, idx)=>{
+    const input = document.querySelector(`#tomFillList .blank-input[data-item="${idx}"]`);
+    const ok = item.answers.some(a=>normalize(a)===normalize(input.value));
+    input.classList.remove('correct','wrong'); input.classList.add(ok?'correct':'wrong');
+    if(ok) correctCount++;
+  });
+  document.getElementById('tomFeedback').textContent = `Правильно: ${correctCount} из ${tomData.length}`;
+  state.readScore = Math.max(state.readScore, correctCount>=tomData.length-1 ? 4 : (correctCount>0?2:0));
+  state.score = calcScore(); updateTop();
+});
+
+const readFillData = [
+  { sentence:"She usually ___ at eight o'clock.", answers:["arrives"] },
+  { sentence:"She ___ the shop at nine.", answers:["opens"] },
+  { sentence:"She ___ two languages.", answers:["speaks"] },
+  { sentence:"Right now she's ___ her car because it's very ___.", split:true, parts:[{answers:["washing"]},{answers:["dirty"]}] },
+];
+const readFillListEl = document.getElementById('readFillList');
+readFillData.forEach((item, idx)=>{
+  const row = document.createElement('div');
+  row.className = 'fill-item';
+  let html = `<div class="fill-num">${idx+1}</div><div class="fill-body"><div class="fill-words">`;
+  if(item.split){
+    let p = 0;
+    html += item.sentence.replace(/___/g, ()=>{ const out = `<input type="text" class="blank-input" data-item="${idx}" data-part="${p}">`; p++; return out; });
+  } else {
+    html += item.sentence.replace('___', `<input type="text" class="blank-input" data-item="${idx}" data-part="0">`);
+  }
+  html += `</div></div>`;
+  row.innerHTML = html;
+  readFillListEl.appendChild(row);
+});
+document.getElementById('checkReadFillBtn').addEventListener('click', ()=>{
+  let correctCount = 0, totalCount = 0;
+  readFillData.forEach((item, idx)=>{
+    const parts = item.split ? item.parts : [{answers:item.answers}];
+    parts.forEach((part, pIdx)=>{
+      totalCount++;
+      const input = document.querySelector(`#readFillList .blank-input[data-item="${idx}"][data-part="${pIdx}"]`);
+      if(!input) return;
+      const ok = part.answers.some(a=>normalize(a)===normalize(input.value));
+      input.classList.remove('correct','wrong'); input.classList.add(ok?'correct':'wrong');
+      if(ok) correctCount++;
+    });
+  });
+  document.getElementById('readFillFeedback').textContent = `Правильно: ${correctCount} из ${totalCount}`;
+  state.readScore = Math.max(state.readScore, correctCount>=totalCount-1 ? 4 : (correctCount>0?2:0));
+  state.score = calcScore(); updateTop();
+});
+
+function calcScore(){
+  const memoScore = matchedCount === 6 ? 3 : 0;
+  return Math.min(state.maxScore, fillScoreOrZero() + memoScore + quizCorrectFinal + (state.prodDone?2:0) + state.readScore);
+}
+function fillScoreOrZero(){
+  const el = document.getElementById('fillFeedback').textContent;
+  const m = el.match(/Правильно: (\d+)/);
+  return m ? Math.min(3, Math.round(parseInt(m[1])/6*3)) : 0;
+}
+
+/* ---------------- PRODUCTION ---------------- */
+const writeArea = document.getElementById('writeArea');
+writeArea.addEventListener('input', ()=>{
+  const words = writeArea.value.trim().split(/\s+/).filter(Boolean).length;
+  document.getElementById('wordCount').textContent = `${words} слов`;
+});
+document.getElementById('finishBtn').addEventListener('click', ()=>{
+  const words = writeArea.value.trim().split(/\s+/).filter(Boolean).length;
+  if(words >= 15){
+    state.prodDone = true; state.score = calcScore(); updateTop();
+    document.getElementById('wordCount').textContent = `${words} слов · ✅ отлично, задание засчитано!`;
+  } else {
+    document.getElementById('wordCount').textContent = `${words} слов · напишите чуть больше (минимум ~6-8 предложений)`;
+  }
+});
+document.getElementById('sampleBtn').addEventListener('click', ()=>{
+  document.getElementById('sampleBox').classList.toggle('shown');
+});
+
+/* ---------------- SOUNDS: text-to-speech ---------------- */
+let soundsVisited = false;
+const soundsObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting && !soundsVisited){ soundsVisited = true; setBar('bar-sound',100); updateTop(); } });
+},{threshold:0.4});
+soundsObserver.observe(document.getElementById('sounds'));
+
+function scoreVoice(v){
+  const n = v.name.toLowerCase(); let s = 0;
+  if(n.includes('enhanced') || n.includes('premium') || n.includes('neural') || n.includes('natural')) s += 5;
+  if(n.includes('google')) s += 3;
+  if(n.includes('siri')) s += 3;
+  if(v.lang === 'en-GB') s += 2;
+  if(v.lang && v.lang.startsWith('en')) s += 1;
+  if(v.localService) s += 1;
+  return s;
+}
+function populateVoiceList(){
+  const sel = document.getElementById('voiceSelect');
+  if(!sel || !('speechSynthesis' in window)) return;
+  const voices = window.speechSynthesis.getVoices().filter(v=>v.lang && v.lang.startsWith('en'));
+  if(!voices.length) return;
+  const prevValue = sel.value;
+  sel.innerHTML = '';
+  voices.sort((a,b)=>scoreVoice(b)-scoreVoice(a));
+  voices.forEach(v=>{ const opt=document.createElement('option'); opt.value=v.name+'|'+v.lang; opt.textContent=`${v.name} (${v.lang})`; sel.appendChild(opt); });
+  if(prevValue && voices.some(v=>(v.name+'|'+v.lang)===prevValue)) sel.value = prevValue;
+}
+function pickVoice(){
+  const sel = document.getElementById('voiceSelect');
+  const voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
+  if(sel && sel.value){ const chosen = voices.find(v => (v.name+'|'+v.lang) === sel.value); if(chosen) return chosen; }
+  return voices.find(v=>v.lang === 'en-GB') || voices.find(v=>v.lang && v.lang.startsWith('en')) || null;
+}
+if('speechSynthesis' in window){ populateVoiceList(); window.speechSynthesis.onvoiceschanged = populateVoiceList; }
+function speak(text, rate, btn){
+  if(!('speechSynthesis' in window)){
+    document.getElementById('ttsWarn').textContent = 'Озвучка не поддерживается этим браузером. Попробуйте открыть страницу в Chrome или Safari.';
+    document.getElementById('ttsWarn').classList.add('shown');
+    return;
+  }
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.rate = rate || 1; utter.pitch = 1;
+  const v = pickVoice(); if(v) utter.voice = v;
+  if(btn){ utter.onstart = ()=>btn.classList.add('playing'); utter.onend = ()=>btn.classList.remove('playing'); }
+  window.speechSynthesis.speak(utter);
+}
+document.querySelectorAll('.play-btn').forEach(btn=>{ btn.addEventListener('click', ()=>{ speak(btn.dataset.text, parseFloat(btn.dataset.rate||"1"), btn); }); });
+document.getElementById('playAllBtn').addEventListener('click', async ()=>{
+  const btns = Array.from(document.querySelectorAll('.sound-block .play-btn'));
+  for(const b of btns){ speak(b.dataset.text, 1, b); await new Promise(res=>setTimeout(res, Math.max(1000, b.dataset.text.split(' ').length*450))); }
+});
+
+/* ---------------- HOMEWORK ---------------- */
+const hwChecks = document.querySelectorAll('.hw-check');
+function updateHw(){
+  const done = document.querySelectorAll('.hw-check:checked').length;
+  document.getElementById('hwFeedback').textContent = `Выполнено: ${done} / ${hwChecks.length}`;
+  setBar('bar-hw', Math.round((done/hwChecks.length)*100));
+}
+hwChecks.forEach(c=>c.addEventListener('change', updateHw));
+document.getElementById('printHwBtn').addEventListener('click', ()=>window.print());
+updateHw();
+
+let vocabVisited = false;
+const vocabObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting && !vocabVisited){ vocabVisited = true; setBar('bar-vocab',100); } });
+},{threshold:0.4});
+vocabObserver.observe(document.getElementById('vocabulary'));
+
+updateTop();
+</script>
+</body>
+</html>
