@@ -574,6 +574,7 @@ async function uploadLesson(){
     await ghPutFile(path, fileB64, 'Урок: ' + title);
 
     st('busy','2/3 · Обновляю структуру курса…');
+    await new Promise(r => setTimeout(r, 900)); /* даём GitHub дописать первый коммит */
     await ghUpdateCourse(course => {
       const lv = course.levels.find(l => l.id === levelId);
       if (!lv) throw new Error('уровень не найден');
