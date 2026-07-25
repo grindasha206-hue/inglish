@@ -118,39 +118,103 @@ function lessonFields(w){
     .filter(el => !el.closest('.voice-picker'));
 }
 let saveTimer = null;
+let restoring = false; /* пока «переигрываем» сохранённое — не сохраняем поверх */
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
 function saveLessonState(){
+  if (restoring) return;
   try {
     const w = document.getElementById('lessonFrame').contentWindow;
     if (!w || !w.document || !lesson) return;
-    const data = lessonFields(w).map(el =>
-      (el.type === 'checkbox' || el.type === 'radio') ? { c: el.checked ? 1 : 0 } : { v: el.value || '' });
+    const d = w.document;
+    const data = {
+      /* всё, что вписано руками */
+      fields: lessonFields(w).map(el =>
+        (el.type === 'checkbox' || el.type === 'radio') ? { c: el.checked ? 1 : 0 } : { v: el.value || '' }),
+      /* нажимала ли «Проверить» */
+      fillChecked: !!(d.getElementById('fillFeedback') || {}).textContent,
+      readChecked: !!(d.getElementById('readFillFeedback') || {}).textContent,
+      /* квиз: какой вариант выбран в каждом вопросе */
+      quiz: Array.from(d.querySelectorAll('#quizList .quiz-opts')).map(g => {
+        const opts = Array.from(g.querySelectorAll('.quiz-opt'));
+        const i = opts.findIndex(o => o.classList.contains('sel-correct') || o.classList.contains('sel-wrong'));
+        return i >= 0 ? i : null;
+      }),
+      /* True / False */
+      tf: Array.from(d.querySelectorAll('#tfList .tf-item')).map(row => {
+        const btns = Array.from(row.querySelectorAll('.tf-btn'));
+        const i = btns.findIndex(b => b.classList.contains('sel-correct') || b.classList.contains('sel-wrong'));
+        return i >= 0 ? i : null;
+      }),
+      /* мемо и «Лексика»: найденные пары */
+      memo: [...new Set(Array.from(d.querySelectorAll('.memo-card.matched')).map(c => c.dataset.pair))],
+      match: [...new Set(Array.from(d.querySelectorAll('#matchEnCol .match-tile.matched')).map(t => t.dataset.idx))],
+      /* «Готово!» в письменном задании — определяем по «✅» в счётчике слов */
+      prodDone: /✅/.test((d.getElementById('wordCount') || {}).textContent || '')
+    };
     localStorage.setItem(stateKey(), JSON.stringify(data));
   } catch(e){}
 }
-function restoreLessonState(frame){
+
+async function restoreLessonState(frame){
+  let data = null;
+  try { data = JSON.parse(localStorage.getItem(stateKey()) || 'null'); } catch(e){}
+  if (!data) return;
+  if (Array.isArray(data)) data = { fields: data }; /* старый формат */
+  restoring = true;
   try {
-    const raw = localStorage.getItem(stateKey());
-    if (!raw) return;
     const w = frame.contentWindow;
+    const d = w.document;
+    /* 1. вписанное руками */
     const els = lessonFields(w);
-    JSON.parse(raw).forEach((d, i) => {
+    (data.fields || []).forEach((f, i) => {
       const el = els[i];
       if (!el) return;
-      if (d.c !== undefined) {
-        if (el.checked !== !!d.c) { el.checked = !!d.c; el.dispatchEvent(new Event('change', { bubbles: true })); }
-      } else if (d.v && el.value !== d.v) {
-        el.value = d.v;
-        el.dispatchEvent(new Event('input', { bubbles: true })); /* чтобы счётчики слов и т.п. обновились */
+      if (f.c !== undefined) {
+        if (el.checked !== !!f.c) { el.checked = !!f.c; el.dispatchEvent(new Event('change', { bubbles: true })); }
+      } else if (f.v && el.value !== f.v) {
+        el.value = f.v;
+        el.dispatchEvent(new Event('input', { bubbles: true }));
       }
     });
+    /* 2. «переигрываем» клики — урок сам восстановит подсветку, счёт и прогресс */
+    (data.quiz || []).forEach((sel, gi) => {
+      if (sel === null || sel === undefined) return;
+      const g = d.querySelectorAll('#quizList .quiz-opts')[gi];
+      const btn = g && g.querySelectorAll('.quiz-opt')[sel];
+      if (btn && !g.dataset.done) btn.click();
+    });
+    (data.tf || []).forEach((sel, ri) => {
+      if (sel === null || sel === undefined) return;
+      const row = d.querySelectorAll('#tfList .tf-item')[ri];
+      const btn = row && row.querySelectorAll('.tf-btn')[sel];
+      if (btn && !row.dataset.done) btn.click();
+    });
+    for (const idx of (data.match || [])) {
+      const en = d.querySelector(`#matchEnCol .match-tile[data-idx="${idx}"]:not(.matched)`);
+      const ru = d.querySelector(`#matchRuCol .match-tile[data-idx="${idx}"]:not(.matched)`);
+      if (en && ru) { en.click(); ru.click(); }
+    }
+    for (const pair of (data.memo || [])) {
+      const cards = d.querySelectorAll(`.memo-card[data-pair="${pair}"]:not(.matched)`);
+      if (cards.length === 2) { cards[0].click(); cards[1].click(); await sleep(520); }
+    }
+    if (data.fillChecked) { const b = d.getElementById('checkFillBtn'); b && b.click(); }
+    if (data.readChecked) { const b = d.getElementById('checkReadFillBtn'); b && b.click(); }
+    if (data.prodDone && !/✅/.test((d.getElementById('wordCount') || {}).textContent || '')) {
+      const b = d.getElementById('finishBtn'); b && b.click();
+    }
   } catch(e){}
+  restoring = false;
 }
+
 function watchTyping(frame){
   try {
     const doc = frame.contentWindow.document;
     const onEdit = () => { clearTimeout(saveTimer); saveTimer = setTimeout(saveLessonState, 400); };
     doc.addEventListener('input', onEdit, true);
     doc.addEventListener('change', onEdit, true);
+    doc.addEventListener('click', onEdit, true); /* клики в играх тоже сохраняем */
     setInterval(saveLessonState, 5000); /* страховка */
     window.addEventListener('beforeunload', saveLessonState);
   } catch(e){}
