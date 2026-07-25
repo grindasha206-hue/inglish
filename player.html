@@ -94,7 +94,11 @@ async function init(){
   }
 
   const frame = document.getElementById('lessonFrame');
-  frame.addEventListener('load', () => installVoice(frame));
+  frame.addEventListener('load', () => {
+    restoreLessonState(frame);
+    watchTyping(frame);
+    installVoice(frame);
+  });
   frame.src = lesson.file;
 
   markStarted(p, lesson.id);
@@ -103,6 +107,53 @@ async function init(){
 
   /* Каждые 1.5 сек. заглядываем внутрь урока: счёт и финальный бейдж. */
   setInterval(watchLesson, 1500);
+}
+
+/* ---- Сохранение написанного в уроке (ответы, текст, галочки) ---- */
+const stateKey = () => 'english.lessonState.' + lesson.id;
+/* Поля урока в стабильном порядке; селект выбора голоса не считаем —
+   он может исчезать, когда включена озвучка Groq, и сбивал бы нумерацию */
+function lessonFields(w){
+  return Array.from(w.document.querySelectorAll('input, textarea, select'))
+    .filter(el => !el.closest('.voice-picker'));
+}
+let saveTimer = null;
+function saveLessonState(){
+  try {
+    const w = document.getElementById('lessonFrame').contentWindow;
+    if (!w || !w.document || !lesson) return;
+    const data = lessonFields(w).map(el =>
+      (el.type === 'checkbox' || el.type === 'radio') ? { c: el.checked ? 1 : 0 } : { v: el.value || '' });
+    localStorage.setItem(stateKey(), JSON.stringify(data));
+  } catch(e){}
+}
+function restoreLessonState(frame){
+  try {
+    const raw = localStorage.getItem(stateKey());
+    if (!raw) return;
+    const w = frame.contentWindow;
+    const els = lessonFields(w);
+    JSON.parse(raw).forEach((d, i) => {
+      const el = els[i];
+      if (!el) return;
+      if (d.c !== undefined) {
+        if (el.checked !== !!d.c) { el.checked = !!d.c; el.dispatchEvent(new Event('change', { bubbles: true })); }
+      } else if (d.v && el.value !== d.v) {
+        el.value = d.v;
+        el.dispatchEvent(new Event('input', { bubbles: true })); /* чтобы счётчики слов и т.п. обновились */
+      }
+    });
+  } catch(e){}
+}
+function watchTyping(frame){
+  try {
+    const doc = frame.contentWindow.document;
+    const onEdit = () => { clearTimeout(saveTimer); saveTimer = setTimeout(saveLessonState, 400); };
+    doc.addEventListener('input', onEdit, true);
+    doc.addEventListener('change', onEdit, true);
+    setInterval(saveLessonState, 5000); /* страховка */
+    window.addEventListener('beforeunload', saveLessonState);
+  } catch(e){}
 }
 
 /* ---- Подмена озвучки урока на Groq (урок не редактируется) ---- */
