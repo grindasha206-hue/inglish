@@ -402,11 +402,19 @@ function renderAdd(view){
     <h3>＋ Добавить урок</h3>
     <p class="hint">Выбери HTML-файл урока — название и номер подставятся сами. Урок сохранится на сайт, изменения появятся через минуту-две.</p>
     ${hasToken ? '' : `<div class="status err" style="display:block">Сначала добавь токен GitHub в <a href="#/settings">настройках</a> — без него сайт не сможет сохранить урок.</div><br>`}
+    <div class="field"><label>Что сделать</label><select id="addMode">
+      <option value="new">➕ Добавить новый урок</option>
+      <option value="update">🔄 Обновить существующий урок (заменить файл новой версией)</option>
+    </select></div>
+    <div class="field" id="updateWrap" style="display:none"><label>Какой урок обновить</label><select id="updateLesson">${
+      COURSE.levels.flatMap(lv => lv.modules.flatMap(m => m.lessons.map(l =>
+        `<option value="${esc(l.file)}">${esc(lv.code)} · ${esc(m.title)} · Unit ${l.unit} · ${esc(l.title)}</option>`))).join('')
+    }</select></div>
     <div class="drop" id="drop">📄 <b>Нажми</b>, чтобы выбрать HTML-файл урока,<br>или перетащи его сюда</div>
     <input type="file" id="lessonFile" accept=".html,.htm" style="display:none">
     <div class="status ok" id="fileInfo"></div>
     <br>
-    <div class="form-row">
+    <div class="form-row" id="placeRow">
       <div class="field"><label>Уровень</label><select id="addLevel">${levelOpts}</select></div>
       <div class="field"><label>Модуль</label><select id="addModule"></select></div>
     </div>
@@ -436,6 +444,28 @@ function renderAdd(view){
     document.getElementById('newModuleWrap').style.display =
       document.getElementById('addModule').value === '__new__' ? 'block' : 'none';
   };
+
+  /* режим «обновить существующий» */
+  const modeSel = document.getElementById('addMode');
+  const updSel = document.getElementById('updateLesson');
+  function applyMode(){
+    const upd = modeSel.value === 'update';
+    document.getElementById('updateWrap').style.display = upd ? 'block' : 'none';
+    document.getElementById('placeRow').style.display = upd ? 'none' : 'grid';
+    document.getElementById('newModuleWrap').style.display = (!upd && document.getElementById('addModule').value === '__new__') ? 'block' : 'none';
+    document.getElementById('uploadBtn').textContent = upd ? 'Обновить урок на сайте' : 'Загрузить урок на сайт';
+    if (upd) prefillFromTarget();
+  }
+  function prefillFromTarget(){
+    const l = ALL_LESSONS.find(x => x.file === updSel.value);
+    if (!l) return;
+    document.getElementById('addUnit').value = l.unit || '';
+    document.getElementById('addTitle').value = l.title || '';
+    document.getElementById('addDesc').value = l.description || '';
+  }
+  modeSel.onchange = applyMode;
+  updSel.onchange = prefillFromTarget;
+
   document.getElementById('uploadBtn').onclick = uploadLesson;
 }
 
@@ -546,20 +576,29 @@ async function uploadLesson(){
     if (!title) return st('err','Напиши название урока.');
     const unit = parseInt(document.getElementById('addUnit').value, 10) || 0;
     const desc = document.getElementById('addDesc').value.trim();
+    const updateMode = document.getElementById('addMode').value === 'update';
     const levelId = document.getElementById('addLevel').value;
     let moduleId = document.getElementById('addModule').value;
     let newModuleTitle = '';
-    if (moduleId === '__new__') {
+    if (!updateMode && moduleId === '__new__') {
       newModuleTitle = document.getElementById('newModuleTitle').value.trim();
       if (!newModuleTitle) return st('err','Напиши название нового модуля.');
     }
 
-    const slug = slugify(pickedFile.name);
-    const path = 'lessons/' + slug + '.html';
+    /* при обновлении пишем файл на место старого — как бы ни назывался новый */
+    let path, slug;
+    if (updateMode) {
+      path = document.getElementById('updateLesson').value;
+      if (!path) return st('err','Выбери, какой урок обновить.');
+      slug = path.replace(/^lessons\//,'').replace(/\.html$/,'');
+    } else {
+      slug = slugify(pickedFile.name);
+      path = 'lessons/' + slug + '.html';
+    }
 
     st('busy','1/3 · Загружаю файл урока…');
     const existing = await gh(`/repos/${REPO.owner}/${REPO.name}/contents/${path}?ref=${REPO.branch}`);
-    if (existing) {
+    if (existing && !updateMode) {
       /* Файл уже в хранилище. Спрашиваем, только если урок реально виден в курсе.
          Если записи в курсе нет — это остаток прерванной загрузки, молча доделываем. */
       let inCourse = false;
@@ -576,6 +615,14 @@ async function uploadLesson(){
     st('busy','2/3 · Обновляю структуру курса…');
     await new Promise(r => setTimeout(r, 900)); /* даём GitHub дописать первый коммит */
     await ghUpdateCourse(course => {
+      if (updateMode) {
+        /* урок остаётся на своём месте — обновляем только его данные */
+        for (const L of course.levels) for (const M of L.modules) {
+          const e = M.lessons.find(x => x.file === path);
+          if (e) { Object.assign(e, { unit, title, description: desc }); M.lessons.sort((a, b) => (a.unit || 999) - (b.unit || 999)); }
+        }
+        return;
+      }
       const lv = course.levels.find(l => l.id === levelId);
       if (!lv) throw new Error('уровень не найден');
       let mod;
@@ -605,7 +652,9 @@ async function uploadLesson(){
       mod.lessons.sort((a, b) => (a.unit || 999) - (b.unit || 999));
     }, 'Курс: + ' + title);
 
-    st('ok','🎉 Готово! Урок «' + title + '» загружен. Сайт обновится через минуту-две — потом обнови страницу кабинета.');
+    st('ok', updateMode
+      ? '🎉 Готово! Урок «' + title + '» обновлён новой версией. Через минуту-две обнови страницу — и открой урок заново.'
+      : '🎉 Готово! Урок «' + title + '» загружен. Сайт обновится через минуту-две — потом обнови страницу кабинета.');
     pickedFile = null;
   } catch(e){
     if (/409/.test(e.message)) st('err','GitHub был занят предыдущим сохранением (конфликт версий). Подожди полминуты и нажми кнопку ещё раз — ничего не потерялось.');
