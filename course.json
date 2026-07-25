@@ -1,0 +1,50 @@
+{
+  "title": "Инглиш",
+  "levels": [
+    {
+      "id": "a1",
+      "code": "A1",
+      "name": "Beginner",
+      "modules": []
+    },
+    {
+      "id": "a2",
+      "code": "A2",
+      "name": "Elementary",
+      "modules": [
+        {
+          "id": "module-1",
+          "title": "Модуль 1",
+          "lessons": [
+            {
+              "id": "unit-01",
+              "unit": 1,
+              "title": "am / is / are",
+              "description": "Глагол to be: утверждение и отрицание",
+              "file": "lessons/unit-01-am-is-are.html"
+            },
+            {
+              "id": "unit-03",
+              "unit": 3,
+              "title": "I am doing — Present Continuous",
+              "description": "Что происходит прямо сейчас",
+              "file": "lessons/unit-03-present-continuous.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b1",
+      "code": "B1",
+      "name": "Intermediate",
+      "modules": []
+    },
+    {
+      "id": "b2",
+      "code": "B2",
+      "name": "Upper-Intermediate",
+      "modules": []
+    }
+  ]
+}

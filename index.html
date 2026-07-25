@@ -16,18 +16,24 @@
 *{box-sizing:border-box;}
 body{margin:0; background:radial-gradient(circle at 15% 8%, rgba(203,163,92,0.10), transparent 40%), var(--cream); color:var(--ink); font-family:'Manrope',sans-serif; line-height:1.55; padding-bottom:60px;}
 h1,h2,h3{font-family:'Fraunces',serif;}
+a{color:inherit;}
 
-.topbar{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:1px solid var(--line); padding:12px 20px; display:flex; align-items:center; gap:14px; box-shadow:0 2px 10px rgba(0,0,0,0.04);}
-.logo{font-family:'Fraunces',serif; font-weight:900; font-size:19px; color:var(--brick-dark);}
+.topbar{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:1px solid var(--line); padding:12px 20px; display:flex; align-items:center; gap:14px; box-shadow:0 2px 10px rgba(0,0,0,0.04); flex-wrap:wrap;}
+.logo{font-family:'Fraunces',serif; font-weight:900; font-size:19px; color:var(--brick-dark); text-decoration:none;}
 .logo span{color:var(--tab-dark);}
+.nav-link{font-size:13px; font-weight:800; color:var(--ink-soft); text-decoration:none; padding:6px 12px; border-radius:16px; border:1.5px solid transparent;}
+.nav-link:hover{border-color:var(--line); color:var(--tab-dark);}
 .top-pills{margin-left:auto; display:flex; gap:8px; flex-wrap:wrap;}
 .pill{font-size:13px; font-weight:800; padding:6px 13px; border-radius:20px; white-space:nowrap;}
 .pill.streak{background:var(--coral-bg); color:var(--brick);}
 .pill.xp{background:var(--sage-bg); color:var(--sage);}
 
 .wrap{max-width:900px; margin:26px auto; padding:0 16px;}
+.crumbs{font-size:13px; font-weight:700; color:var(--ink-soft); margin-bottom:14px;}
+.crumbs a{color:var(--tab-dark); text-decoration:none;}
+.crumbs a:hover{text-decoration:underline;}
 
-/* -------- Continue card -------- */
+/* -------- hero -------- */
 .hero{background:linear-gradient(135deg, var(--brick) 0%, var(--brick-dark) 100%); color:#fff; border-radius:14px; padding:26px 28px; box-shadow:var(--shadow); display:flex; align-items:center; gap:20px; flex-wrap:wrap;}
 .hero .txt{flex:1; min-width:220px;}
 .hero .eyebrow{font-size:11.5px; letter-spacing:2px; text-transform:uppercase; opacity:.75; font-weight:800; margin-bottom:4px;}
@@ -35,196 +41,538 @@ h1,h2,h3{font-family:'Fraunces',serif;}
 .hero p{margin:6px 0 0; opacity:.9; font-size:14px;}
 .btn{border:none; cursor:pointer; font-family:'Manrope'; font-weight:800; padding:14px 28px; border-radius:28px; font-size:15px; background:var(--tab); color:#fff; box-shadow:0 4px 12px rgba(0,0,0,0.25); transition:.15s; text-decoration:none; display:inline-block;}
 .btn:hover{transform:translateY(-2px); background:var(--tab-dark);}
+.btn.brick{background:var(--brick);}
+.btn.brick:hover{background:var(--brick-dark);}
 .hero.done-all{background:linear-gradient(135deg, var(--sage), #3d7357);}
 
-/* -------- Stats -------- */
+/* -------- stats -------- */
 .stats{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:18px;}
 @media(max-width:640px){.stats{grid-template-columns:1fr;}}
 .stat{background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:16px 18px; box-shadow:var(--shadow);}
 .stat .label{font-size:11.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-soft); font-weight:800;}
 .stat .value{font-family:'Fraunces',serif; font-size:30px; font-weight:900; color:var(--brick-dark); margin-top:2px;}
 .stat .sub{font-size:12.5px; color:var(--ink-soft);}
-.lvl-bar{height:8px; border-radius:6px; background:var(--line); margin-top:8px; overflow:hidden;}
-.lvl-bar i{display:block; height:100%; border-radius:6px; background:linear-gradient(90deg, var(--tab), var(--brick)); transition:width .5s;}
+.bar{height:8px; border-radius:6px; background:var(--line); margin-top:8px; overflow:hidden;}
+.bar i{display:block; height:100%; border-radius:6px; background:linear-gradient(90deg, var(--tab), var(--brick)); transition:width .5s;}
+.bar.green i{background:linear-gradient(90deg, #7db99a, var(--sage));}
 .week{display:flex; gap:6px; margin-top:10px;}
 .day{flex:1; text-align:center;}
 .day .dot{width:100%; aspect-ratio:1/1; max-width:34px; margin:0 auto; border-radius:8px; background:var(--cream); border:1.5px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:14px;}
 .day.on .dot{background:var(--sage-bg); border-color:var(--sage);}
 .day .lbl{font-size:10.5px; color:var(--ink-soft); margin-top:3px; font-weight:700;}
 
-/* -------- Course -------- */
-.course-head{margin:30px 0 4px; display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;}
-.course-head h2{margin:0; font-size:22px; color:var(--brick-dark);}
-.course-head .sub{font-size:13px; color:var(--ink-soft);}
-.module{margin-top:14px;}
-.module h3{font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--ink-soft); margin:0 0 10px;}
-.lesson-list{display:flex; flex-direction:column; gap:10px;}
-.lesson-card{display:flex; align-items:center; gap:14px; background:var(--paper); border:1.5px solid var(--line); border-radius:12px; padding:14px 16px; text-decoration:none; color:var(--ink); box-shadow:var(--shadow); transition:.15s;}
-.lesson-card:hover{transform:translateY(-2px); border-color:var(--tab);}
-.lesson-card .badge{width:44px; height:44px; border-radius:12px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:800; font-size:17px; background:var(--cream); border:1.5px solid var(--line); color:var(--ink-soft);}
-.lesson-card.done .badge{background:var(--sage-bg); border-color:var(--sage); color:var(--sage);}
-.lesson-card.next .badge{background:var(--tab); border-color:var(--tab-dark); color:#fff;}
-.lesson-card .info{flex:1; min-width:0;}
-.lesson-card .t{font-family:'Fraunces',serif; font-weight:700; font-size:16px; color:var(--brick-dark);}
-.lesson-card .d{font-size:13px; color:var(--ink-soft);}
-.lesson-card .right{flex-shrink:0; text-align:right; font-size:12.5px; font-weight:800;}
-.lesson-card .score{color:var(--sage);}
-.lesson-card .cta{color:var(--tab-dark);}
-.lesson-card .todo{color:var(--ink-soft); opacity:.7;}
+/* -------- section head -------- */
+.sec-head{margin:30px 0 12px; display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;}
+.sec-head h2{margin:0; font-size:22px; color:var(--brick-dark);}
+.sec-head .sub{font-size:13px; color:var(--ink-soft);}
 
-/* -------- footer -------- */
-.tools{margin-top:36px; padding-top:16px; border-top:1px dashed var(--line); display:flex; gap:10px; align-items:center; flex-wrap:wrap; font-size:12.5px; color:var(--ink-soft);}
-.mini-btn{border:1.5px solid var(--line); background:var(--paper); color:var(--ink-soft); padding:6px 14px; border-radius:16px; font-family:'Manrope'; font-weight:700; font-size:12.5px; cursor:pointer;}
+/* -------- level cards -------- */
+.level-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+@media(max-width:640px){.level-grid{grid-template-columns:1fr;}}
+.level-card{display:flex; gap:16px; align-items:center; background:var(--paper); border:1.5px solid var(--line); border-radius:14px; padding:18px; text-decoration:none; box-shadow:var(--shadow); transition:.15s;}
+.level-card:hover{transform:translateY(-2px); border-color:var(--tab);}
+.level-card.empty{opacity:.65;}
+.level-code{width:64px; height:64px; border-radius:14px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:900; font-size:24px; background:linear-gradient(135deg, var(--brick), var(--brick-dark)); color:#fff;}
+.level-card.empty .level-code{background:var(--cream); color:var(--ink-soft); border:1.5px solid var(--line);}
+.level-card.full .level-code{background:linear-gradient(135deg, var(--sage), #3d7357);}
+.level-info{flex:1; min-width:0;}
+.level-info .t{font-family:'Fraunces',serif; font-weight:800; font-size:17px; color:var(--brick-dark);}
+.level-info .d{font-size:12.5px; color:var(--ink-soft); font-weight:600;}
+
+/* -------- module / lesson cards -------- */
+.card-list{display:flex; flex-direction:column; gap:10px;}
+.row-card{display:flex; align-items:center; gap:14px; background:var(--paper); border:1.5px solid var(--line); border-radius:12px; padding:14px 16px; text-decoration:none; box-shadow:var(--shadow); transition:.15s;}
+.row-card:hover{transform:translateY(-2px); border-color:var(--tab);}
+.row-card .badge{width:44px; height:44px; border-radius:12px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:800; font-size:17px; background:var(--cream); border:1.5px solid var(--line); color:var(--ink-soft);}
+.row-card.done .badge{background:var(--sage-bg); border-color:var(--sage); color:var(--sage);}
+.row-card.next .badge{background:var(--tab); border-color:var(--tab-dark); color:#fff;}
+.row-card .info{flex:1; min-width:0;}
+.row-card .t{font-family:'Fraunces',serif; font-weight:700; font-size:16px; color:var(--brick-dark);}
+.row-card .d{font-size:13px; color:var(--ink-soft);}
+.row-card .right{flex-shrink:0; text-align:right; font-size:12.5px; font-weight:800;}
+.row-card .score{color:var(--sage);}
+.row-card .cta{color:var(--tab-dark);}
+.row-card .todo{color:var(--ink-soft); opacity:.7;}
+.mini-bar{width:120px;}
+@media(max-width:520px){.mini-bar{width:70px;}}
+
+.empty-note{background:var(--paper); border:1.5px dashed var(--line); border-radius:12px; padding:26px; text-align:center; color:var(--ink-soft); font-size:14px;}
+.empty-note .btn{margin-top:14px;}
+
+/* -------- forms (настройки / добавить урок) -------- */
+.panel{background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:22px 24px; box-shadow:var(--shadow); margin-bottom:18px;}
+.panel h3{margin:0 0 4px; font-size:18px; color:var(--brick-dark);}
+.panel .hint{font-size:13px; color:var(--ink-soft); margin:0 0 14px;}
+.panel .hint a{color:var(--tab-dark);}
+.field{margin-bottom:14px;}
+.field label{display:block; font-size:12px; font-weight:800; letter-spacing:1px; text-transform:uppercase; color:var(--ink-soft); margin-bottom:5px;}
+.field input[type=text], .field input[type=password], .field input[type=number], .field select, .field textarea{width:100%; padding:10px 12px; border:1.5px solid var(--line); border-radius:9px; font-family:'Manrope'; font-size:14px; background:#fffdf8; color:var(--ink);}
+.field input:focus, .field select:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.field .note{font-size:12px; color:var(--ink-soft); margin-top:4px;}
+.form-row{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+@media(max-width:560px){.form-row{grid-template-columns:1fr;}}
+.mini-btn{border:1.5px solid var(--line); background:var(--paper); color:var(--ink-soft); padding:7px 15px; border-radius:16px; font-family:'Manrope'; font-weight:700; font-size:12.5px; cursor:pointer;}
 .mini-btn:hover{border-color:var(--tab); color:var(--tab-dark);}
+.status{font-size:13.5px; font-weight:700; margin-top:10px; padding:10px 14px; border-radius:9px; display:none;}
+.status.ok{display:block; background:var(--sage-bg); color:var(--sage);}
+.status.err{display:block; background:var(--coral-bg); color:var(--coral);}
+.status.busy{display:block; background:var(--cream); color:var(--ink-soft);}
+.drop{border:2px dashed var(--gold); border-radius:12px; padding:22px; text-align:center; color:var(--ink-soft); font-size:13.5px; cursor:pointer; background:var(--cream); transition:.15s;}
+.drop:hover,.drop.over{border-color:var(--tab-dark); background:#f6ecd9;}
+.drop b{color:var(--brick-dark);}
+.footer-tools{margin-top:36px; padding-top:14px; border-top:1px dashed var(--line); font-size:12.5px; color:var(--ink-soft); display:flex; gap:12px; flex-wrap:wrap; align-items:center;}
+.footer-tools a{color:var(--tab-dark); font-weight:700; text-decoration:none;}
 </style>
 </head>
 <body>
 
 <div class="topbar">
-  <div class="logo">Ing<span>lish</span> ✳</div>
+  <a class="logo" href="#/">Ing<span>lish</span> ✳</a>
+  <a class="nav-link" href="#/add">＋ Добавить урок</a>
+  <a class="nav-link" href="#/settings">⚙ Настройки</a>
   <div class="top-pills">
-    <div class="pill streak" id="streakPill">🔥 0 дней</div>
-    <div class="pill xp" id="xpPill">✦ 0 XP</div>
+    <div class="pill streak" id="streakPill">🔥 …</div>
+    <div class="pill xp" id="xpPill">✦ …</div>
   </div>
 </div>
 
-<div class="wrap">
+<div class="wrap" id="view">Загружаю…</div>
 
-  <div class="hero" id="hero">
-    <div class="txt">
-      <div class="eyebrow" id="heroEyebrow">Продолжить обучение</div>
-      <h1 id="heroTitle">…</h1>
-      <p id="heroSub">…</p>
-    </div>
-    <a class="btn" id="continueBtn" href="#">Продолжить →</a>
-  </div>
-
-  <div class="stats">
-    <div class="stat">
-      <div class="label">Серия дней</div>
-      <div class="value" id="streakVal">0 🔥</div>
-      <div class="week" id="weekRow"></div>
-    </div>
-    <div class="stat">
-      <div class="label">Уровень</div>
-      <div class="value" id="levelVal">1</div>
-      <div class="sub" id="levelSub">0 / 100 XP до следующего</div>
-      <div class="lvl-bar"><i id="levelBar" style="width:0%"></i></div>
-    </div>
-    <div class="stat">
-      <div class="label">Уроки</div>
-      <div class="value" id="lessonsVal">0 / 0</div>
-      <div class="sub">пройдено в курсе</div>
-    </div>
-  </div>
-
-  <div class="course-head">
-    <h2 id="courseTitle"></h2>
-    <div class="sub" id="courseSub"></div>
-  </div>
-  <div id="courseBody"></div>
-
-  <div class="tools">
-    <span>Прогресс хранится в этом браузере.</span>
-    <button class="mini-btn" onclick="exportProgress()">⬇ Сохранить прогресс в файл</button>
-    <button class="mini-btn" onclick="document.getElementById('importFile').click()">⬆ Загрузить из файла</button>
-    <input type="file" id="importFile" accept=".json" style="display:none">
-  </div>
-
-</div>
-
-<script src="course.js"></script>
+<script src="site.js"></script>
 <script src="progress.js"></script>
 <script>
-const p = loadProgress();
+let p = loadProgress();
 
-/* ---- topbar & stats ---- */
-const streak = currentStreak(p);
-document.getElementById('streakPill').textContent = `🔥 ${streak} ${dayWord(streak)}`;
-document.getElementById('xpPill').textContent = `✦ ${p.xp} XP`;
-document.getElementById('streakVal').textContent = `${streak} 🔥`;
+/* ================= утилиты ================= */
+function esc(s){ return String(s ?? "").replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function dayWord(n){ const a=n%10,b=n%100; if(a===1&&b!==11)return'день'; if(a>=2&&a<=4&&(b<12||b>14))return'дня'; return'дней'; }
+function lessonWord(n){ const a=n%10,b=n%100; if(a===1&&b!==11)return'урок'; if(a>=2&&a<=4&&(b<12||b>14))return'урока'; return'уроков'; }
+function isDone(l){ return p.lessons[l.id]?.status === 'done'; }
+function moduleLessons(m){ return m.lessons; }
+function levelLessons(lv){ return lv.modules.flatMap(m => m.lessons); }
+function progressOf(list){ const done = list.filter(isDone).length; return { done, total:list.length, pct: list.length ? Math.round(done/list.length*100) : 0 }; }
 
-const li = levelInfo(p.xp);
-document.getElementById('levelVal').textContent = li.level;
-document.getElementById('levelSub').textContent = `${li.into} / ${li.need} XP до уровня ${li.level+1}`;
-document.getElementById('levelBar').style.width = li.pct + '%';
-
-const doneCount = ALL_LESSONS.filter(l => p.lessons[l.id]?.status === 'done').length;
-document.getElementById('lessonsVal').textContent = `${doneCount} / ${ALL_LESSONS.length}`;
-
-function dayWord(n){
-  const m10 = n % 10, m100 = n % 100;
-  if (m10 === 1 && m100 !== 11) return 'день';
-  if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return 'дня';
-  return 'дней';
+function updatePills(){
+  const s = currentStreak(p);
+  document.getElementById('streakPill').textContent = `🔥 ${s} ${dayWord(s)}`;
+  document.getElementById('xpPill').textContent = `✦ ${p.xp} XP`;
 }
 
-/* ---- неделя ---- */
-const weekRow = document.getElementById('weekRow');
-const names = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
-for (let i = 6; i >= 0; i--) {
-  const d = new Date(); d.setDate(d.getDate() - i);
-  const on = !!p.activity[todayKey(d)];
-  const el = document.createElement('div');
-  el.className = 'day' + (on ? ' on' : '');
-  el.innerHTML = `<div class="dot">${on ? '✓' : ''}</div><div class="lbl">${i===0 ? 'сег' : names[d.getDay()]}</div>`;
-  weekRow.appendChild(el);
+/* ================= роутер ================= */
+window.addEventListener('hashchange', render);
+
+async function start(){
+  try { await loadCourse(); } catch(e){
+    document.getElementById('view').innerHTML = '<div class="empty-note">Не удалось загрузить курс (course.json). Обнови страницу.</div>';
+    return;
+  }
+  render();
 }
 
-/* ---- hero ---- */
-const next = nextLesson(p);
-const hero = document.getElementById('hero');
-if (next) {
-  const started = p.lessons[next.id]?.status === 'started';
-  document.getElementById('heroEyebrow').textContent = started ? 'Вернуться к уроку' : 'Следующий урок';
-  document.getElementById('heroTitle').textContent = `Unit ${next.unit} · ${next.title}`;
-  document.getElementById('heroSub').textContent = next.description || '';
-  document.getElementById('continueBtn').href = `player.html?lesson=${next.id}`;
-  document.getElementById('continueBtn').textContent = started ? 'Продолжить →' : 'Начать →';
-} else {
-  hero.classList.add('done-all');
-  document.getElementById('heroEyebrow').textContent = 'Курс пройден';
-  document.getElementById('heroTitle').textContent = '🎉 Все уроки пройдены!';
-  document.getElementById('heroSub').textContent = 'Можно вернуться к любому уроку и улучшить результат.';
-  document.getElementById('continueBtn').style.display = 'none';
+function render(){
+  p = loadProgress();
+  updatePills();
+  const hash = location.hash || '#/';
+  const parts = hash.replace(/^#\//,'').split('/').filter(Boolean);
+  const view = document.getElementById('view');
+  window.scrollTo(0,0);
+  if (parts.length === 0) return renderHome(view);
+  if (parts[0] === 'settings') return renderSettings(view);
+  if (parts[0] === 'add') return renderAdd(view);
+  if (parts[0] === 'level' && parts[1]) {
+    const lv = COURSE.levels.find(l => l.id === parts[1]);
+    if (!lv) return renderHome(view);
+    if (parts[2] === 'module' && parts[3]) {
+      const m = lv.modules.find(x => x.id === parts[3]);
+      if (m) return renderModule(view, lv, m);
+    }
+    return renderLevel(view, lv);
+  }
+  renderHome(view);
 }
 
-/* ---- курс ---- */
-document.getElementById('courseTitle').textContent = COURSE.title;
-document.getElementById('courseSub').textContent = COURSE.subtitle;
-const body = document.getElementById('courseBody');
-COURSE.modules.forEach(mod => {
-  const mEl = document.createElement('div');
-  mEl.className = 'module';
-  mEl.innerHTML = `<h3>${mod.title}</h3>`;
-  const list = document.createElement('div');
-  list.className = 'lesson-list';
-  mod.lessons.forEach(l => {
+/* ================= главная ================= */
+function renderHome(view){
+  const next = nextLesson(p);
+  const streak = currentStreak(p);
+  const li = levelInfo(p.xp);
+  const all = progressOf(ALL_LESSONS);
+
+  let hero;
+  if (next) {
+    const started = p.lessons[next.id]?.status === 'started';
+    hero = `<div class="hero">
+      <div class="txt">
+        <div class="eyebrow">${started ? 'Вернуться к уроку' : 'Следующий урок'}</div>
+        <h1>Unit ${next.unit} · ${esc(next.title)}</h1>
+        <p>${esc(next.description || '')}</p>
+      </div>
+      <a class="btn" href="player.html?lesson=${next.id}">${started ? 'Продолжить →' : 'Начать →'}</a>
+    </div>`;
+  } else {
+    hero = `<div class="hero done-all">
+      <div class="txt">
+        <div class="eyebrow">Курс пройден</div>
+        <h1>🎉 Все уроки пройдены!</h1>
+        <p>Добавь новые уроки или вернись к любому, чтобы улучшить результат.</p>
+      </div>
+      <a class="btn brick" href="#/add">＋ Добавить урок</a>
+    </div>`;
+  }
+
+  let week = '';
+  const names = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(); d.setDate(d.getDate() - i);
+    const on = !!p.activity[todayKey(d)];
+    week += `<div class="day${on?' on':''}"><div class="dot">${on?'✓':''}</div><div class="lbl">${i===0?'сег':names[d.getDay()]}</div></div>`;
+  }
+
+  const levels = COURSE.levels.map(lv => {
+    const list = levelLessons(lv);
+    const pr = progressOf(list);
+    if (!list.length) {
+      return `<a class="level-card empty" href="#/level/${lv.id}">
+        <div class="level-code">${esc(lv.code)}</div>
+        <div class="level-info"><div class="t">${esc(lv.code)} · ${esc(lv.name)}</div><div class="d">пока нет уроков</div></div>
+      </a>`;
+    }
+    const full = pr.done === pr.total;
+    return `<a class="level-card${full?' full':''}" href="#/level/${lv.id}">
+      <div class="level-code">${esc(lv.code)}</div>
+      <div class="level-info">
+        <div class="t">${esc(lv.code)} · ${esc(lv.name)}</div>
+        <div class="d">${pr.total} ${lessonWord(pr.total)} · пройдено ${pr.done}</div>
+        <div class="bar${full?' green':''}"><i style="width:${pr.pct}%"></i></div>
+      </div>
+    </a>`;
+  }).join('');
+
+  view.innerHTML = `${hero}
+    <div class="stats">
+      <div class="stat"><div class="label">Серия дней</div><div class="value">${streak} 🔥</div><div class="week">${week}</div></div>
+      <div class="stat"><div class="label">Уровень</div><div class="value">${li.level}</div><div class="sub">${li.into} / ${li.need} XP до уровня ${li.level+1}</div><div class="bar"><i style="width:${li.pct}%"></i></div></div>
+      <div class="stat"><div class="label">Уроки</div><div class="value">${all.done} / ${all.total}</div><div class="sub">пройдено во всех уровнях</div></div>
+    </div>
+    <div class="sec-head"><h2>Уровни</h2><div class="sub">от простого к сложному</div></div>
+    <div class="level-grid">${levels}</div>
+    <div class="footer-tools"><span>Прогресс хранится в этом браузере.</span><a href="#/settings">Настройки, резервная копия прогресса →</a></div>`;
+}
+
+/* ================= уровень ================= */
+function renderLevel(view, lv){
+  const list = levelLessons(lv);
+  const pr = progressOf(list);
+  const next = nextLesson(p);
+  let body;
+  if (!lv.modules.length) {
+    body = `<div class="empty-note">В уровне ${esc(lv.code)} пока нет уроков.<br>
+      <a class="btn brick" href="#/add">＋ Добавить первый урок</a></div>`;
+  } else {
+    body = `<div class="card-list">` + lv.modules.map(m => {
+      const mpr = progressOf(m.lessons);
+      const full = mpr.total && mpr.done === mpr.total;
+      const hasNext = next && m.lessons.some(l => l.id === next.id);
+      return `<a class="row-card${full?' done':''}${hasNext?' next':''}" href="#/level/${lv.id}/module/${m.id}">
+        <div class="badge">${full ? '✓' : (hasNext ? '▶' : '📚')}</div>
+        <div class="info">
+          <div class="t">${esc(m.title)}</div>
+          <div class="d">${mpr.total} ${lessonWord(mpr.total)} · пройдено ${mpr.done}</div>
+        </div>
+        <div class="right"><div class="bar mini-bar${full?' green':''}"><i style="width:${mpr.pct}%"></i></div></div>
+      </a>`;
+    }).join('') + `</div>`;
+  }
+  view.innerHTML = `<div class="crumbs"><a href="#/">Кабинет</a> → ${esc(lv.code)}</div>
+    <div class="sec-head"><h2>${esc(lv.code)} · ${esc(lv.name)}</h2>
+    <div class="sub">${pr.total ? `${pr.total} ${lessonWord(pr.total)} · пройдено ${pr.done}` : ''}</div></div>
+    ${body}`;
+}
+
+/* ================= модуль ================= */
+function renderModule(view, lv, m){
+  const next = nextLesson(p);
+  const mpr = progressOf(m.lessons);
+  const cards = m.lessons.map(l => {
     const st = p.lessons[l.id];
     const done = st?.status === 'done';
     const isNext = next && next.id === l.id;
-    const a = document.createElement('a');
-    a.className = 'lesson-card' + (done ? ' done' : '') + (isNext ? ' next' : '');
-    a.href = `player.html?lesson=${l.id}`;
-    const badge = done ? '✓' : (isNext ? '▶' : l.unit);
     let right;
     if (done) right = `<span class="score">★ ${st.bestScore ?? 0}${st.maxScore ? '/' + st.maxScore : ''}</span>`;
     else if (isNext) right = `<span class="cta">начать →</span>`;
     else right = `<span class="todo">впереди</span>`;
-    a.innerHTML = `<div class="badge">${badge}</div>
-      <div class="info"><div class="t">Unit ${l.unit} · ${l.title}</div><div class="d">${l.description || ''}</div></div>
-      <div class="right">${right}</div>`;
-    list.appendChild(a);
-  });
-  mEl.appendChild(list);
-  body.appendChild(mEl);
-});
+    return `<a class="row-card${done?' done':''}${isNext?' next':''}" href="player.html?lesson=${l.id}">
+      <div class="badge">${done ? '✓' : (isNext ? '▶' : l.unit)}</div>
+      <div class="info"><div class="t">Unit ${l.unit} · ${esc(l.title)}</div><div class="d">${esc(l.description || '')}</div></div>
+      <div class="right">${right}</div>
+    </a>`;
+  }).join('');
+  view.innerHTML = `<div class="crumbs"><a href="#/">Кабинет</a> → <a href="#/level/${lv.id}">${esc(lv.code)}</a> → ${esc(m.title)}</div>
+    <div class="sec-head"><h2>${esc(m.title)}</h2><div class="sub">${mpr.total} ${lessonWord(mpr.total)} · пройдено ${mpr.done}</div></div>
+    <div class="card-list">${cards || ''}</div>
+    ${cards ? '' : '<div class="empty-note">В модуле пока нет уроков.</div>'}`;
+}
 
-/* ---- импорт ---- */
-document.getElementById('importFile').addEventListener('change', e => {
-  const f = e.target.files[0];
-  if (f) importProgress(f, ok => { if (ok) location.reload(); else alert('Не удалось прочитать файл прогресса.'); });
-});
+/* ================= настройки ================= */
+function renderSettings(view){
+  view.innerHTML = `<div class="crumbs"><a href="#/">Кабинет</a> → Настройки</div>
+
+  <div class="panel">
+    <h3>🎙 Озвучка Groq</h3>
+    <p class="hint">Живые голоса вместо роботизированных. Ключ хранится <b>только в этом браузере</b> — на сайт и в интернет он не попадает. Получить ключ: <a href="https://console.groq.com/keys" target="_blank">console.groq.com/keys</a>.</p>
+    <div class="form-row">
+      <div class="field"><label>API-ключ Groq</label><input type="password" id="groqKey" placeholder="gsk_..." value="${esc(getSetting('groqKey'))}"></div>
+      <div class="field"><label>Голос</label><select id="groqVoice">${GROQ_VOICES.map(v=>`<option value="${v}"${(getSetting('groqVoice')||'hannah')===v?' selected':''}>${v[0].toUpperCase()+v.slice(1)}${['autumn','diana','hannah'].includes(v)?' · женский':' · мужской'}</option>`).join('')}</select></div>
+    </div>
+    <button class="mini-btn" id="saveGroq">Сохранить</button>
+    <button class="mini-btn" id="testGroq">▶ Проверить голос</button>
+    <div class="status" id="groqStatus"></div>
+  </div>
+
+  <div class="panel">
+    <h3>🔑 GitHub — для загрузки уроков</h3>
+    <p class="hint">Токен нужен странице «Добавить урок», чтобы сохранять уроки на сайт. Тоже хранится только в этом браузере.<br>
+    Создать: <a href="https://github.com/settings/personal-access-tokens/new" target="_blank">github.com/settings/personal-access-tokens/new</a> → Repository access: <b>Only select repositories → ${REPO.name}</b> → Permissions → Contents: <b>Read and write</b> → Generate.</p>
+    <div class="field"><label>Токен GitHub</label><input type="password" id="ghToken" placeholder="github_pat_... или ghp_..." value="${esc(getSetting('ghToken'))}"></div>
+    <button class="mini-btn" id="saveGh">Сохранить</button>
+    <button class="mini-btn" id="testGh">Проверить доступ</button>
+    <div class="status" id="ghStatus"></div>
+  </div>
+
+  <div class="panel">
+    <h3>💾 Резервная копия прогресса</h3>
+    <p class="hint">Прогресс живёт в браузере. Перед сменой устройства сохрани его в файл и загрузи на новом.</p>
+    <button class="mini-btn" onclick="exportProgress()">⬇ Сохранить прогресс в файл</button>
+    <button class="mini-btn" onclick="document.getElementById('importFile').click()">⬆ Загрузить из файла</button>
+    <input type="file" id="importFile" accept=".json" style="display:none">
+    <div class="status" id="impStatus"></div>
+  </div>`;
+
+  document.getElementById('saveGroq').onclick = () => {
+    setSetting('groqKey', document.getElementById('groqKey').value.trim());
+    setSetting('groqVoice', document.getElementById('groqVoice').value);
+    show('groqStatus','ok','Сохранено. Теперь кнопки 🔊 в уроках будут говорить голосом Groq.');
+  };
+  document.getElementById('testGroq').onclick = async () => {
+    setSetting('groqKey', document.getElementById('groqKey').value.trim());
+    setSetting('groqVoice', document.getElementById('groqVoice').value);
+    show('groqStatus','busy','Запрашиваю голос…');
+    try { await groqSpeak('Hello! I am your new English voice. Nice to meet you!', 1);
+      show('groqStatus','ok','Работает! Так будут звучать фразы в уроках.');
+    } catch(e){ show('groqStatus','err', ttsErrText(e)); }
+  };
+  document.getElementById('saveGh').onclick = () => {
+    setSetting('ghToken', document.getElementById('ghToken').value.trim());
+    show('ghStatus','ok','Сохранено.');
+  };
+  document.getElementById('testGh').onclick = async () => {
+    setSetting('ghToken', document.getElementById('ghToken').value.trim());
+    show('ghStatus','busy','Проверяю…');
+    try {
+      const r = await gh(`/repos/${REPO.owner}/${REPO.name}`);
+      if (r && r.permissions && (r.permissions.push || r.permissions.admin)) show('ghStatus','ok','Доступ есть — можно загружать уроки.');
+      else show('ghStatus','err','Токен работает, но нет права записи в репозиторий. Проверь Permissions → Contents: Read and write.');
+    } catch(e){ show('ghStatus','err','Не получилось: ' + e.message + '. Проверь токен.'); }
+  };
+  document.getElementById('importFile').addEventListener('change', e => {
+    const f = e.target.files[0];
+    if (f) importProgress(f, ok => { if (ok){ p = loadProgress(); updatePills(); show('impStatus','ok','Прогресс загружен!'); } else show('impStatus','err','Не удалось прочитать файл.'); });
+  });
+}
+
+function ttsErrText(e){
+  if (e.message === 'no-key') return 'Сначала вставь API-ключ.';
+  if (e.message === 'groq-401') return 'Groq не принял ключ (401). Проверь, что ключ скопирован целиком.';
+  if (e.message === 'groq-429') return 'Groq говорит «слишком много запросов» (429). Подожди минуту и попробуй снова.';
+  return 'Не получилось: ' + e.message + '. Проверь интернет и ключ.';
+}
+function show(id, cls, text){ const el = document.getElementById(id); el.className = 'status ' + cls; el.textContent = text; }
+
+/* ================= добавить урок ================= */
+let pickedFile = null;
+
+function renderAdd(view){
+  const hasToken = !!getSetting('ghToken');
+  const levelOpts = COURSE.levels.map(lv => `<option value="${lv.id}">${esc(lv.code)} · ${esc(lv.name)}</option>`).join('');
+  view.innerHTML = `<div class="crumbs"><a href="#/">Кабинет</a> → Добавить урок</div>
+  <div class="panel">
+    <h3>＋ Добавить урок</h3>
+    <p class="hint">Выбери HTML-файл урока — название и номер подставятся сами. Урок сохранится на сайт, изменения появятся через минуту-две.</p>
+    ${hasToken ? '' : `<div class="status err" style="display:block">Сначала добавь токен GitHub в <a href="#/settings">настройках</a> — без него сайт не сможет сохранить урок.</div><br>`}
+    <div class="drop" id="drop">📄 <b>Нажми</b>, чтобы выбрать HTML-файл урока,<br>или перетащи его сюда</div>
+    <input type="file" id="lessonFile" accept=".html,.htm" style="display:none">
+    <div class="status ok" id="fileInfo"></div>
+    <br>
+    <div class="form-row">
+      <div class="field"><label>Уровень</label><select id="addLevel">${levelOpts}</select></div>
+      <div class="field"><label>Модуль</label><select id="addModule"></select></div>
+    </div>
+    <div class="field" id="newModuleWrap" style="display:none"><label>Название нового модуля</label><input type="text" id="newModuleTitle" placeholder="Например: Настоящее время"></div>
+    <div class="form-row">
+      <div class="field"><label>Номер (Unit)</label><input type="number" id="addUnit" min="1" placeholder="1"></div>
+      <div class="field"><label>Название урока</label><input type="text" id="addTitle" placeholder="am / is / are"></div>
+    </div>
+    <div class="field"><label>Короткое описание (необязательно)</label><input type="text" id="addDesc" placeholder="О чём этот урок"></div>
+    <button class="btn brick" id="uploadBtn"${hasToken ? '' : ' disabled style="opacity:.5"'}>Загрузить урок на сайт</button>
+    <div class="status" id="addStatus"></div>
+  </div>`;
+
+  const drop = document.getElementById('drop');
+  const fileInput = document.getElementById('lessonFile');
+  drop.onclick = () => fileInput.click();
+  drop.ondragover = e => { e.preventDefault(); drop.classList.add('over'); };
+  drop.ondragleave = () => drop.classList.remove('over');
+  drop.ondrop = e => { e.preventDefault(); drop.classList.remove('over'); if (e.dataTransfer.files[0]) pickFile(e.dataTransfer.files[0]); };
+  fileInput.onchange = () => { if (fileInput.files[0]) pickFile(fileInput.files[0]); };
+
+  const lvSel = document.getElementById('addLevel');
+  lvSel.value = COURSE.levels.find(l => l.id === 'a2') ? 'a2' : COURSE.levels[0].id;
+  lvSel.onchange = fillModules;
+  fillModules();
+  document.getElementById('addModule').onchange = () => {
+    document.getElementById('newModuleWrap').style.display =
+      document.getElementById('addModule').value === '__new__' ? 'block' : 'none';
+  };
+  document.getElementById('uploadBtn').onclick = uploadLesson;
+}
+
+function fillModules(){
+  const lv = COURSE.levels.find(l => l.id === document.getElementById('addLevel').value);
+  const sel = document.getElementById('addModule');
+  sel.innerHTML = (lv.modules.map(m => `<option value="${m.id}">${esc(m.title)}</option>`).join(''))
+    + `<option value="__new__">➕ Новый модуль…</option>`;
+  if (!lv.modules.length) {
+    sel.value = '__new__';
+    document.getElementById('newModuleWrap').style.display = 'block';
+    document.getElementById('newModuleTitle').value = 'Модуль 1';
+  } else {
+    document.getElementById('newModuleWrap').style.display = 'none';
+  }
+}
+
+async function pickFile(f){
+  pickedFile = f;
+  const text = await f.text();
+  const info = document.getElementById('fileInfo');
+  info.className = 'status ok';
+  info.textContent = '📄 ' + f.name + ' · ' + Math.round(f.size/1024) + ' КБ';
+  const mTitle = text.match(/<title>([^<]*)<\/title>/i);
+  if (mTitle) {
+    const t = mTitle[1].trim();
+    const mUnit = t.match(/unit\s*(\d+)/i);
+    if (mUnit) document.getElementById('addUnit').value = mUnit[1];
+    document.getElementById('addTitle').value = t.replace(/unit\s*\d+\s*[·:—-]\s*/i, '').trim();
+  }
+}
+
+function slugify(name){
+  const base = name.replace(/\.html?$/i,'').toLowerCase()
+    .replace(/[а-яё]/g, ch => ({'а':'a','б':'b','в':'v','г':'g','д':'d','е':'e','ё':'e','ж':'zh','з':'z','и':'i','й':'y','к':'k','л':'l','м':'m','н':'n','о':'o','п':'p','р':'r','с':'s','т':'t','у':'u','ф':'f','х':'h','ц':'c','ч':'ch','ш':'sh','щ':'sch','ъ':'','ы':'y','ь':'','э':'e','ю':'yu','я':'ya'}[ch] || ''))
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'') || 'lesson';
+  return base;
+}
+
+/* ---- GitHub API ---- */
+async function gh(path, opts = {}){
+  const token = getSetting('ghToken');
+  if (!token) throw new Error('нет токена');
+  const r = await fetch('https://api.github.com' + path, {
+    ...opts,
+    headers: { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json',
+      ...(opts.body ? {'Content-Type':'application/json'} : {}) }
+  });
+  if (r.status === 404) return null;
+  if (!r.ok) throw new Error('GitHub ' + r.status);
+  return r.json();
+}
+function bufToB64(buf){
+  const bytes = new Uint8Array(buf); let bin = '';
+  for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+  return btoa(bin);
+}
+function strToB64(s){ return bufToB64(new TextEncoder().encode(s)); }
+function b64ToStr(b64){
+  const bin = atob(b64.replace(/\s/g,'')); const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return new TextDecoder().decode(bytes);
+}
+
+async function uploadLesson(){
+  const st = (cls, t) => show('addStatus', cls, t);
+  try {
+    if (!pickedFile) return st('err','Сначала выбери HTML-файл урока.');
+    const title = document.getElementById('addTitle').value.trim();
+    if (!title) return st('err','Напиши название урока.');
+    const unit = parseInt(document.getElementById('addUnit').value, 10) || 0;
+    const desc = document.getElementById('addDesc').value.trim();
+    const levelId = document.getElementById('addLevel').value;
+    let moduleId = document.getElementById('addModule').value;
+    let newModuleTitle = '';
+    if (moduleId === '__new__') {
+      newModuleTitle = document.getElementById('newModuleTitle').value.trim();
+      if (!newModuleTitle) return st('err','Напиши название нового модуля.');
+    }
+
+    const slug = slugify(pickedFile.name);
+    const path = 'lessons/' + slug + '.html';
+
+    st('busy','1/3 · Загружаю файл урока…');
+    const existing = await gh(`/repos/${REPO.owner}/${REPO.name}/contents/${path}?ref=${REPO.branch}`);
+    if (existing && !confirm('Файл ' + slug + '.html уже есть на сайте. Заменить его новой версией?')) { st('err','Отменено.'); return; }
+    const fileB64 = bufToB64(await pickedFile.arrayBuffer());
+    await gh(`/repos/${REPO.owner}/${REPO.name}/contents/${path}`, {
+      method: 'PUT',
+      body: JSON.stringify({ message: 'Урок: ' + title, content: fileB64, branch: REPO.branch, ...(existing ? { sha: existing.sha } : {}) })
+    });
+
+    st('busy','2/3 · Обновляю структуру курса…');
+    const cj = await gh(`/repos/${REPO.owner}/${REPO.name}/contents/course.json?ref=${REPO.branch}`);
+    if (!cj) throw new Error('course.json не найден в репозитории');
+    const course = JSON.parse(b64ToStr(cj.content));
+
+    const lv = course.levels.find(l => l.id === levelId);
+    if (!lv) throw new Error('уровень не найден');
+    let mod;
+    if (moduleId === '__new__') {
+      let mid = slugify(newModuleTitle), n = 2;
+      while (lv.modules.some(m => m.id === mid)) mid = slugify(newModuleTitle) + '-' + (n++);
+      mod = { id: mid, title: newModuleTitle, lessons: [] };
+      lv.modules.push(mod);
+    } else {
+      mod = lv.modules.find(m => m.id === moduleId);
+      if (!mod) throw new Error('модуль не найден');
+    }
+
+    /* если урок с этим файлом уже есть где-то в курсе — обновляем его, а не дублируем */
+    let entry = null;
+    for (const L of course.levels) for (const M of L.modules) {
+      const i = M.lessons.findIndex(x => x.file === path);
+      if (i >= 0) { entry = M.lessons.splice(i, 1)[0]; }
+    }
+    if (!entry) {
+      let id = slug, n = 2;
+      const ids = course.levels.flatMap(L => L.modules.flatMap(M => M.lessons.map(x => x.id)));
+      while (ids.includes(id)) id = slug + '-' + (n++);
+      entry = { id };
+    }
+    Object.assign(entry, { unit, title, description: desc, file: path });
+    mod.lessons.push(entry);
+    mod.lessons.sort((a, b) => (a.unit || 999) - (b.unit || 999));
+
+    st('busy','3/3 · Сохраняю курс…');
+    await gh(`/repos/${REPO.owner}/${REPO.name}/contents/course.json`, {
+      method: 'PUT',
+      body: JSON.stringify({ message: 'Курс: + ' + title, content: strToB64(JSON.stringify(course, null, 2)), branch: REPO.branch, sha: cj.sha })
+    });
+
+    st('ok','🎉 Готово! Урок «' + title + '» загружен. Сайт обновится через минуту-две — потом обнови страницу.');
+    pickedFile = null;
+  } catch(e){
+    st('err','Не получилось: ' + e.message + '. Проверь токен в настройках и попробуй ещё раз.');
+  }
+}
+
+start();
 </script>
 </body>
 </html>
