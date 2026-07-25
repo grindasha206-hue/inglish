@@ -59,7 +59,11 @@ async function groqSpeak(text, rate){
         response_format: "wav"
       })
     });
-    if (!r.ok) throw new Error("groq-" + r.status);
+    if (!r.ok) {
+      let msg = "groq-" + r.status;
+      try { const j = await r.json(); if (j.error && j.error.message) msg = j.error.message; } catch(e){}
+      throw new Error(msg);
+    }
     url = URL.createObjectURL(await r.blob());
     _ttsCache.set(cacheId, url);
   }

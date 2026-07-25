@@ -110,9 +110,23 @@ function installVoice(frame){
       btn && btn.classList.add('playing');
       groqSpeak(text, rate)
         .then(() => { btn && btn.classList.remove('playing'); })
-        .catch(() => { btn && btn.classList.remove('playing'); try { browserSpeak(text, rate, btn); } catch(e){} });
+        .catch(err => {
+          voiceError(err);
+          btn && btn.classList.remove('playing');
+          try { browserSpeak(text, rate, btn); } catch(e){}
+        });
     };
   } catch(e){ /* нет доступа внутрь iframe */ }
+}
+
+/* Groq не ответил — показываем причину, чтобы это не оставалось загадкой */
+let voiceErrorShown = false;
+function voiceError(err){
+  if (voiceErrorShown) return;
+  voiceErrorShown = true;
+  const pill = document.getElementById('voicePill');
+  pill.className = 'voice-pill off';
+  pill.innerHTML = `<a href="index.html#/settings" title="${(err.message||'').replace(/"/g,'&quot;')}">⚠ Groq: ошибка — нажми и проверь голос в настройках</a>`;
 }
 
 function watchLesson(){

@@ -381,10 +381,13 @@ function renderSettings(view){
 }
 
 function ttsErrText(e){
-  if (e.message === 'no-key') return 'Сначала вставь API-ключ.';
-  if (e.message === 'groq-401') return 'Groq не принял ключ (401). Проверь, что ключ скопирован целиком.';
-  if (e.message === 'groq-429') return 'Groq говорит «слишком много запросов» (429). Подожди минуту и попробуй снова.';
-  return 'Не получилось: ' + e.message + '. Проверь интернет и ключ.';
+  const m = e.message || '';
+  if (m === 'no-key') return 'Сначала вставь API-ключ.';
+  if (m === 'groq-401' || /invalid api key/i.test(m)) return 'Groq не принял ключ (401). Проверь, что ключ скопирован целиком.';
+  if (m === 'groq-429' || /rate limit/i.test(m)) return 'Groq говорит «слишком много запросов» (429). Подожди минуту и попробуй снова.';
+  if (/terms/i.test(m)) return 'Нужно один раз принять условия для голосовой модели: открой console.groq.com/playground, выбери модель canopylabs/orpheus-v1-english и нажми Accept terms. Ответ Groq: «' + m + '»';
+  if (/model/i.test(m) && /(not exist|not found|decommission|access)/i.test(m)) return 'Groq не даёт доступ к голосовой модели. Ответ Groq: «' + m + '». Напиши это Клоду — разберёмся.';
+  return 'Не получилось. Ответ Groq: «' + m + '». Проверь интернет и ключ, или покажи это сообщение Клоду.';
 }
 function show(id, cls, text){ const el = document.getElementById(id); el.className = 'status ' + cls; el.textContent = text; }
 
