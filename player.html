@@ -46,6 +46,7 @@ iframe{flex:1; width:100%; border:none; background:var(--cream);}
   <div class="title" id="barTitle">Урок</div>
   <div class="voice-pill off" id="voicePill" title="Озвучка">…</div>
   <button class="redo-btn" id="redoBtn" title="Фраза прозвучала неправильно? Нажми — я озвучу её заново другим дублем.">↻ переозвучить</button>
+  <button class="redo-btn shown" id="resetBtn" title="Стереть свои ответы в этом уроке и начать с чистого листа (прогресс и XP останутся)">⟲ заново</button>
   <button class="done-btn" id="doneBtn">✓ Завершить урок</button>
 </div>
 
@@ -95,11 +96,19 @@ async function init(){
 
   const frame = document.getElementById('lessonFrame');
   frame.addEventListener('load', () => {
+    skipSave = false;
     restoreLessonState(frame);
     watchTyping(frame);
     installVoice(frame);
   });
   frame.src = lesson.file;
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    if (!confirm('Стереть все твои ответы в этом уроке и начать с чистого листа?\nПрогресс, XP и звёзды за прохождение останутся.')) return;
+    skipSave = true; /* не даём автосохранению вернуть старые ответы */
+    try { localStorage.removeItem(stateKey()); } catch(e){}
+    try { frame.contentWindow.location.reload(); } catch(e){ frame.src = lesson.file; }
+  });
 
   markStarted(p, lesson.id);
   finished = lessonState(p, lesson.id)?.status === 'done';
@@ -119,10 +128,11 @@ function lessonFields(w){
 }
 let saveTimer = null;
 let restoring = false; /* пока «переигрываем» сохранённое — не сохраняем поверх */
+let skipSave = false;  /* после «⟲ заново» — до перезагрузки урока ничего не сохраняем */
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 function saveLessonState(){
-  if (restoring) return;
+  if (restoring || skipSave) return;
   try {
     const w = document.getElementById('lessonFrame').contentWindow;
     if (!w || !w.document || !lesson) return;
