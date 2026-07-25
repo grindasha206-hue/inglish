@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 4 · are you doing? (present continuous questions)</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --cream:#FBF6EC; --paper:#FFFCF5; --ink:#2A2622; --ink-soft:#5c554c;
+  --brick:#AD3B2C; --brick-dark:#8E2E22; --tab:#E2963F; --tab-dark:#C97B2A;
+  --sage:#4F8F6D; --sage-bg:#E6F1EA; --coral:#D65B4A; --coral-bg:#FBE7E3;
+  --gold:#CBA35C; --line:#E4DACB; --shadow: 0 6px 18px rgba(42,38,34,0.10);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; background:radial-gradient(circle at 15% 8%, rgba(203,163,92,0.10), transparent 40%), var(--cream); color:var(--ink); font-family:'Manrope', sans-serif; line-height:1.55; padding-bottom:80px;}
+h1,h2,h3,.display{font-family:'Fraunces', serif;}
+
+.topbar{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:1px solid var(--line); padding:10px 18px; display:flex; align-items:center; gap:14px; box-shadow:0 2px 10px rgba(0,0,0,0.04);}
+.topbar .book-title{font-family:'Fraunces', serif; font-weight:700; font-size:15px; color:var(--brick-dark); white-space:nowrap;}
+.progress-steps{display:flex; gap:5px; flex:1; align-items:center;}
+.pstep{flex:1; height:8px; border-radius:6px; background:var(--line); position:relative; overflow:hidden;}
+.pstep i{display:block; height:100%; width:0%; border-radius:6px; background:linear-gradient(90deg, var(--tab), var(--brick)); transition:width .5s ease;}
+.score-pill{font-size:13px; font-weight:700; background:var(--sage-bg); color:var(--sage); padding:5px 12px; border-radius:20px; white-space:nowrap;}
+
+.page{max-width:900px; margin:26px auto; background:var(--paper); border-radius:4px; box-shadow:var(--shadow); border:1px solid var(--line); overflow:hidden;}
+
+.unit-banner{background:linear-gradient(135deg, var(--brick) 0%, var(--brick-dark) 100%); color:#fff; padding:26px 30px 22px 96px; position:relative;}
+.unit-tag{position:absolute; left:0; top:0; bottom:0; width:76px; background:var(--brick-dark); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Fraunces',serif; border-right:2px solid rgba(255,255,255,0.15);}
+.unit-tag .u{font-size:11px; letter-spacing:2px; opacity:.75;}
+.unit-tag .n{font-size:30px; font-weight:800;}
+.unit-banner h1{margin:0; font-size:26px; font-weight:800; letter-spacing:.3px;}
+.unit-banner p{margin:6px 0 0; opacity:.9; font-size:14.5px;}
+
+.section{display:flex; border-top:1px solid var(--line);}
+.section .tab{width:56px; flex-shrink:0; background:var(--tab); color:#fff; font-family:'Fraunces',serif; font-weight:800; font-size:20px; display:flex; align-items:flex-start; justify-content:center; padding-top:22px;}
+.section.alt .tab{background:var(--tab-dark);}
+.section .content{padding:24px 28px 30px; flex:1; min-width:0;}
+.section h2{margin:0 0 4px; font-size:22px; color:var(--brick-dark);}
+.eyebrow{font-size:11.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-soft); font-weight:700; margin-bottom:4px;}
+.section p.lead{color:var(--ink-soft); margin-top:4px; font-size:14.5px;}
+
+.dialog-wrap{display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; margin:18px 0 6px;}
+.dialog-figure{width:110px; text-align:center; flex-shrink:0;}
+.dialog-avatar{width:96px; height:120px; margin:0 auto;}
+.dialog-avatar svg{width:100%; height:100%;}
+.dialog-figure .name{font-family:'Fraunces',serif; font-weight:700; font-size:12.5px; letter-spacing:1px; color:var(--brick-dark); margin-top:4px;}
+.dialog-bubbles{display:flex; flex-direction:column; gap:8px; flex:1; min-width:260px; max-width:420px;}
+.d-bubble{background:#fff; border:1.5px solid var(--line); border-radius:16px; padding:8px 14px; font-size:13.5px; box-shadow:0 3px 8px rgba(0,0,0,0.05);}
+.d-bubble.q{border-color:var(--tab);}
+.d-bubble.a{align-self:flex-end; background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.d-bubble b{color:var(--brick-dark);}
+.d-bubble.a b{color:var(--sage);}
+
+.gram-tables{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:22px;}
+@media(max-width:620px){.gram-tables{grid-template-columns:1fr;}}
+.gram-box h3{font-size:13px; text-transform:uppercase; letter-spacing:1px; color:var(--ink-soft); margin:0 0 8px;}
+table.formtable{width:100%; border-collapse:collapse; font-size:13.5px; background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;}
+table.formtable td{padding:7px 10px; border-bottom:1px solid var(--line);}
+table.formtable tr:last-child td{border-bottom:none;}
+table.formtable td.pron{color:var(--ink-soft); width:34%;}
+table.formtable td.verb{font-weight:700; color:var(--brick-dark);}
+table.formtable td.short{color:var(--ink-soft); font-style:italic;}
+
+.wordorder-box{background:#fff; border:1.5px solid var(--line); border-radius:12px; padding:16px; margin-top:18px;}
+.wordorder-formula{text-align:center; font-family:'Fraunces',serif; font-weight:700; font-size:16px; color:var(--brick-dark); margin-bottom:12px; letter-spacing:.3px;}
+.wordorder-formula span{color:var(--tab-dark);}
+.wo-example{display:flex; gap:6px; align-items:center; flex-wrap:wrap; font-size:14px; padding:6px 0; border-bottom:1px dashed var(--line);}
+.wo-example:last-child{border-bottom:none;}
+.wo-chip{background:var(--cream); border:1px solid var(--line); border-radius:6px; padding:3px 9px; font-weight:700; color:var(--ink-soft); font-size:12.5px;}
+.wo-chip.verb{color:var(--brick-dark); background:#fff; border-color:var(--tab);}
+.wo-wrong{color:var(--coral); font-size:12.5px; font-style:italic;}
+
+.chunk{background:linear-gradient(180deg, transparent 60%, rgba(226,150,63,0.35) 60%); font-weight:700; color:var(--brick-dark); padding:0 1px;}
+
+.mini-note{margin-top:16px; background:var(--sage-bg); border-left:3px solid var(--sage); padding:10px 14px; border-radius:6px; font-size:13.5px; color:#2f5741;}
+.mini-note b{color:var(--sage);}
+.mini-note i{color:var(--ink-soft); font-style:italic;}
+.mini-note.warn{background:var(--coral-bg); border-left-color:var(--coral); color:#7a2e22;}
+.mini-note.warn b{color:var(--coral);}
+
+.vocab-table{margin-top:14px; display:flex; flex-direction:column; gap:8px;}
+.vocab-row{display:grid; grid-template-columns:auto 1fr auto auto; align-items:center; gap:12px; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:9px 14px;}
+@media(max-width:560px){.vocab-row{grid-template-columns:1fr; gap:4px;}}
+.vocab-word{font-weight:800; color:var(--brick-dark); font-size:14.5px; font-family:'Fraunces',serif;}
+.vocab-ipa{font-size:12.5px; color:var(--tab-dark); font-style:italic;}
+.vocab-ru{font-size:13.5px; color:var(--ink-soft);}
+.chunk-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px;}
+@media(max-width:600px){.chunk-grid{grid-template-columns:1fr;}}
+.chunk-row{display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--cream); border:1.5px dashed var(--gold); border-radius:10px; padding:9px 14px;}
+.chunk-en{font-weight:800; color:var(--brick-dark); font-size:14px; display:block;}
+.chunk-ipa{font-size:11.5px; color:var(--tab-dark); font-style:italic; display:block; margin-top:1px;}
+.chunk-ru{font-size:12.5px; color:var(--ink-soft); display:block; margin-top:1px; font-weight:400;}
+
+.game-tabs{display:flex; gap:8px; margin:18px 0 20px; flex-wrap:wrap;}
+.game-tab-btn{border:1.5px solid var(--line); background:#fff; color:var(--ink-soft); padding:8px 16px; border-radius:20px; font-family:'Manrope'; font-weight:700; font-size:13px; cursor:pointer; transition:.2s;}
+.game-tab-btn.active{background:var(--tab); color:#fff; border-color:var(--tab-dark);}
+.game-panel{display:none;}
+.game-panel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
+
+.fill-item{display:flex; align-items:flex-start; gap:10px; flex-wrap:wrap; padding:12px 4px; border-bottom:1px dashed var(--line);}
+.fill-item:last-child{border-bottom:none;}
+.fill-num{width:22px; height:22px; border-radius:50%; background:var(--cream); border:1px solid var(--line); font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; color:var(--ink-soft); flex-shrink:0; margin-top:3px;}
+.fill-body{flex:1; min-width:220px;}
+.fill-words{font-size:13px; color:var(--ink-soft); margin-bottom:6px; font-style:italic;}
+.fill-full-input{width:100%; padding:7px 10px; border:1.5px solid var(--line); border-radius:6px; font-family:'Manrope'; font-weight:600; font-size:14px; background:#fffdf8; color:var(--brick-dark);}
+.fill-full-input:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.fill-full-input.correct{border-color:var(--sage); background:var(--sage-bg); color:#2f5741;}
+.fill-full-input.wrong{border-color:var(--coral); background:var(--coral-bg); color:var(--coral);}
+.fill-fb{font-size:16px; margin-top:6px;}
+
+.blank-input{width:120px; padding:5px 8px; border:1.5px solid var(--line); border-radius:6px; font-family:'Manrope'; font-weight:700; font-size:14px; text-align:center; background:#fffdf8; color:var(--brick-dark);}
+.blank-input:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.blank-input.correct{border-color:var(--sage); background:var(--sage-bg); color:#2f5741;}
+.blank-input.wrong{border-color:var(--coral); background:var(--coral-bg); color:var(--coral);}
+
+.btn{border:none; cursor:pointer; font-family:'Manrope'; font-weight:800; padding:10px 20px; border-radius:24px; font-size:14px; letter-spacing:.2px; background:var(--brick); color:#fff; box-shadow:0 4px 10px rgba(173,59,44,0.25); transition:.15s;}
+.btn:hover{transform:translateY(-1px); box-shadow:0 6px 14px rgba(173,59,44,0.32);}
+.btn.secondary{background:transparent; color:var(--brick); border:1.5px solid var(--brick); box-shadow:none;}
+.btn.small{padding:6px 14px; font-size:12.5px;}
+.actions-row{display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; align-items:center;}
+.fb-line{font-size:13.5px; font-weight:700; color:var(--ink-soft);}
+
+.memo-wrap{display:flex; flex-direction:column; align-items:center; gap:14px;}
+.memo-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; max-width:560px; width:100%;}
+@media(max-width:520px){.memo-grid{grid-template-columns:repeat(3,1fr);}}
+.memo-card{aspect-ratio:1/1; border-radius:10px; cursor:pointer; position:relative; perspective:600px;}
+.memo-inner{width:100%; height:100%; position:relative; transform-style:preserve-3d; transition:transform .45s;}
+.memo-card.flipped .memo-inner, .memo-card.matched .memo-inner{transform:rotateY(180deg);}
+.memo-face{position:absolute; inset:0; border-radius:10px; display:flex; align-items:center; justify-content:center; backface-visibility:hidden; font-weight:800; text-align:center; padding:5px; font-size:11.5px; line-height:1.25;}
+.memo-face.back{background:linear-gradient(135deg, var(--tab), var(--tab-dark)); color:#fff; font-family:'Fraunces',serif; font-size:22px;}
+.memo-face.front{background:#fff; border:2px solid var(--line); color:var(--brick-dark); transform:rotateY(180deg);}
+.memo-card.matched .memo-face.front{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.memo-status{font-size:13.5px; color:var(--ink-soft); font-weight:700;}
+
+.match-wrap{display:flex; gap:14px; max-width:520px; margin:0 auto;}
+.match-col{flex:1; display:flex; flex-direction:column; gap:8px;}
+.match-tile{background:#fff; border:1.5px solid var(--line); border-radius:8px; padding:9px 12px; font-size:13.5px; font-weight:700; cursor:pointer; text-align:center; color:var(--ink); transition:.15s;}
+.match-tile.selected{border-color:var(--tab); background:var(--cream); box-shadow:inset 0 0 0 1.5px var(--tab);}
+.match-tile.matched{background:var(--sage-bg); border-color:var(--sage); color:#2f5741; cursor:default;}
+.match-tile.wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+
+.quiz-q{margin-bottom:18px;}
+.quiz-q p{font-weight:700; margin:0 0 8px; font-size:14.5px;}
+.quiz-opts{display:flex; gap:8px; flex-wrap:wrap;}
+.quiz-opt{border:1.5px solid var(--line); background:#fff; padding:7px 15px; border-radius:20px; font-weight:700; font-size:13.5px; cursor:pointer; color:var(--ink);}
+.quiz-opt.sel-correct{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.quiz-opt.sel-wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+.quiz-opt.reveal-correct{border-color:var(--sage); box-shadow:inset 0 0 0 1px var(--sage);}
+
+/* reading */
+.read-text{background:#fff; border:1.5px solid var(--line); border-radius:14px; padding:18px 20px; margin:16px 0;}
+.read-text .rt-line{display:flex; gap:8px; margin-bottom:9px; font-size:14.5px;}
+.read-text .rt-line:last-child{margin-bottom:0;}
+.read-text .rt-name{font-weight:800; color:var(--brick-dark); flex-shrink:0; width:44px; font-family:'Fraunces',serif;}
+.tf-item{display:flex; align-items:center; justify-content:space-between; gap:10px; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:9px 14px; margin-bottom:8px;}
+.tf-text{font-size:13.5px; flex:1;}
+.tf-btns{display:flex; gap:6px; flex-shrink:0;}
+.tf-btn{border:1.5px solid var(--line); background:var(--cream); padding:5px 12px; border-radius:16px; font-weight:800; font-size:12.5px; cursor:pointer; color:var(--ink-soft);}
+.tf-btn.sel-correct{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.tf-btn.sel-wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+.tf-btn.reveal-correct{box-shadow:inset 0 0 0 1px var(--sage); border-color:var(--sage);}
+.qa-item{padding:9px 0; border-bottom:1px dashed var(--line);}
+.qa-item:last-child{border-bottom:none;}
+.qa-q{font-size:13.5px; font-weight:700; margin-bottom:6px;}
+
+.tts-warn{display:none; font-size:12.5px; color:var(--coral); background:var(--coral-bg); padding:8px 12px; border-radius:6px; margin:8px 0 0;}
+.tts-warn.shown{display:block;}
+.voice-picker{display:flex; align-items:center; gap:8px; flex-wrap:wrap; background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:8px 12px; margin-top:10px; font-size:13px;}
+.voice-picker label{font-weight:700; color:var(--ink-soft);}
+.voice-picker select{border:1.5px solid var(--line); border-radius:6px; padding:4px 8px; font-family:'Manrope'; font-size:13px; background:#fff; color:var(--ink); max-width:220px;}
+.voice-hint{font-size:11.5px; color:var(--ink-soft); flex-basis:100%;}
+.sound-block{margin-top:22px; padding-top:16px; border-top:1px dashed var(--line);}
+.sound-block:first-of-type{border-top:none; margin-top:16px;}
+.sound-block h3{font-size:15.5px; margin:0 0 6px; color:var(--brick-dark); font-weight:700;}
+.ipa{font-family:'Manrope'; font-weight:500; font-size:12px; color:var(--ink-soft); font-style:italic;}
+.sound-note{font-size:13.5px; color:var(--ink-soft); margin:0 0 12px;}
+.sound-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+.sound-grid.three{grid-template-columns:repeat(3,1fr);}
+@media(max-width:600px){.sound-grid, .sound-grid.three{grid-template-columns:1fr;}}
+.sound-pair{background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px;}
+.sound-pair.wide{grid-column:1/-1;}
+.sp-label{font-size:10.5px; text-transform:uppercase; letter-spacing:.8px; font-weight:800; padding:2px 8px; border-radius:10px; margin-right:8px; flex-shrink:0;}
+.sp-label.rise{background:#E7F0FA; color:#2A6FA8;}
+.sp-label.fall{background:var(--sage-bg); color:var(--sage);}
+.sp-text{font-size:14.5px; font-weight:600; flex:1;}
+.sp-controls{display:flex; gap:6px; flex-shrink:0;}
+.play-btn{border:1.5px solid var(--line); background:var(--cream); cursor:pointer; border-radius:8px; padding:6px 10px; font-size:15px; line-height:1; transition:.15s;}
+.play-btn:hover{background:var(--tab); border-color:var(--tab-dark);}
+.play-btn.playing{background:var(--brick); border-color:var(--brick-dark);}
+.arrow-rise{color:#2A6FA8; font-weight:900; font-size:17px;}
+.arrow-fall{color:var(--sage); font-weight:900; font-size:17px;}
+.tie{color:var(--tab-dark); font-weight:800; padding:0 1px;}
+b.stress{color:var(--brick-dark); text-decoration:underline; text-decoration-color:var(--gold); text-decoration-thickness:2px; text-underline-offset:3px;}
+
+.prompt-list{list-style:none; padding:0; margin:14px 0; display:grid; gap:8px;}
+.prompt-list li{background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:8px 12px; font-size:13.5px; display:flex; gap:8px; align-items:baseline;}
+.prompt-list li b{color:var(--brick-dark); font-family:'Fraunces',serif;}
+textarea.write-area{width:100%; min-height:140px; border:1.5px solid var(--line); border-radius:10px; padding:14px; font-family:'Manrope'; font-size:14.5px; color:var(--ink); background:#fffdf8; resize:vertical;}
+textarea.write-area:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.word-count{font-size:12.5px; color:var(--ink-soft); margin-top:6px;}
+.cue-cards{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;}
+.cue-card{background:#fff; border:1.5px dashed var(--gold); border-radius:10px; padding:10px 14px; font-size:13px; width:160px; color:var(--ink-soft); font-style:italic;}
+.cue-card b{display:block; font-style:normal; color:var(--brick-dark); font-family:'Fraunces',serif; font-size:14px; margin-bottom:3px;}
+.reveal-box{margin-top:14px; border-left:3px solid var(--tab); background:var(--cream); padding:12px 16px; border-radius:6px; font-size:13.5px; display:none;}
+.reveal-box.shown{display:block;}
+
+.hw-list{display:flex; flex-direction:column; gap:10px; margin-top:16px;}
+.hw-item{display:flex; gap:10px; align-items:flex-start; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:11px 14px; font-size:13.5px; cursor:pointer; transition:.15s;}
+.hw-item:has(.hw-check:checked){background:var(--sage-bg); border-color:var(--sage);}
+.hw-check{margin-top:3px; width:16px; height:16px; accent-color:var(--sage); flex-shrink:0;}
+.hw-item b{color:var(--brick-dark); font-family:'Fraunces',serif;}
+.hw-item i{color:var(--ink-soft); font-style:italic;}
+
+@media print{
+  .topbar, .unit-banner, #presentation, #vocabulary, #practice, #reading, #sounds, #production, .badge-final, .footer-note, .no-print{ display:none !important; }
+  body{ background:#fff; padding:0; }
+  .page{ box-shadow:none; border:none; margin:0; max-width:100%; }
+  .section{ border-top:none; }
+  .section .tab{ display:none; }
+  .section .content{ padding:10px; }
+  .hw-item{ break-inside:avoid; }
+}
+
+.footer-note{text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:24px; padding:0 20px;}
+.badge-final{display:none; text-align:center; margin:26px auto 0; max-width:900px; background:linear-gradient(135deg, var(--sage), #3d7357); color:#fff; border-radius:14px; padding:22px; font-family:'Fraunces',serif; font-size:19px; font-weight:700; box-shadow:var(--shadow);}
+.badge-final.shown{display:block; animation:fadeIn .5s ease;}
+.badge-final span{display:block; font-family:'Manrope'; font-weight:500; font-size:13.5px; margin-top:6px; opacity:.9;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="book-title">Essential Grammar · Unit 4</div>
+  <div class="progress-steps">
+    <div class="pstep" id="step-p"><i id="bar-p"></i></div>
+    <div class="pstep" id="step-vocab"><i id="bar-vocab"></i></div>
+    <div class="pstep" id="step-pr"><i id="bar-pr"></i></div>
+    <div class="pstep" id="step-read"><i id="bar-read"></i></div>
+    <div class="pstep" id="step-sound"><i id="bar-sound"></i></div>
+    <div class="pstep" id="step-prod"><i id="bar-prod"></i></div>
+    <div class="pstep" id="step-hw"><i id="bar-hw"></i></div>
+  </div>
+  <div class="score-pill">★ <span id="scoreDisplay">0</span>/16</div>
+</div>
+
+<div class="page">
+
+  <div class="unit-banner">
+    <div class="unit-tag"><span class="u">UNIT</span><span class="n">4</span></div>
+    <h1>are you doing? <span style="font-weight:400; font-size:18px; opacity:.85;">(present continuous questions)</span></h1>
+    <p>Уровень A2 · Presentation → Vocabulary → Practice → Reading → Sounds → Production → Homework</p>
+  </div>
+
+  <!-- ===================== A · PRESENTATION ===================== -->
+  <div class="section" id="presentation">
+    <div class="tab">A</div>
+    <div class="content">
+      <div class="eyebrow">Presentation</div>
+      <h2>Кто-то прячется под столом…</h2>
+      <p class="lead">Как и с am/is/are, в вопросе present continuous глагол am/is/are «выпрыгивает» перед подлежащим.</p>
+
+      <div class="dialog-wrap">
+        <div class="dialog-figure">
+          <div class="dialog-avatar">
+            <svg viewBox="0 0 96 120">
+              <rect x="24" y="60" width="48" height="55" rx="16" fill="#2E7D62"/>
+              <circle cx="48" cy="42" r="24" fill="#F2C29B"/>
+              <path d="M24 40 Q48 8 72 40 Q74 55 66 62 Q70 32 48 28 Q26 32 30 62 Q22 55 24 40Z" fill="#3A2A1A"/>
+              <circle cx="39" cy="44" r="2.6" fill="#2A2622"/>
+              <circle cx="57" cy="44" r="2.6" fill="#2A2622"/>
+              <path d="M40 55 Q48 51 56 55" stroke="#2A2622" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="name">MIA</div>
+        </div>
+        <div class="dialog-bubbles">
+          <div class="d-bubble q"><b>What are</b> you doing?</div>
+          <div class="d-bubble a">I<b>'m hiding</b> under the table!</div>
+          <div class="d-bubble q">Are you <span class="chunk">feeling OK</span>?</div>
+          <div class="d-bubble a">Yes, I<b>'m</b> fine, thanks.</div>
+          <div class="d-bubble q">Look, there's Emily! <b>Where's she going</b>?</div>
+        </div>
+        <div class="dialog-figure">
+          <div class="dialog-avatar">
+            <svg viewBox="0 0 96 120">
+              <rect x="20" y="70" width="56" height="50" rx="14" fill="#C0392B"/>
+              <circle cx="48" cy="46" r="24" fill="#EBB489"/>
+              <path d="M22 42 Q48 14 74 42 Q76 50 70 55 Q70 32 48 30 Q26 32 26 55 Q20 50 22 42Z" fill="#2A2622"/>
+              <circle cx="39" cy="48" r="2.6" fill="#2A2622"/>
+              <circle cx="57" cy="48" r="2.6" fill="#2A2622"/>
+              <path d="M40 58 Q48 62 56 58" stroke="#2A2622" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="name">TOM</div>
+        </div>
+      </div>
+
+      <div class="gram-tables">
+        <div class="gram-box">
+          <h3>Утверждение → вопрос</h3>
+          <table class="formtable">
+            <tr><td class="pron">I am doing</td><td class="verb">→</td><td class="short">Am I doing…?</td></tr>
+            <tr><td class="pron">he/she/it is working</td><td class="verb">→</td><td class="short">Is he/she/it working…?</td></tr>
+            <tr><td class="pron">we/you/they are going</td><td class="verb">→</td><td class="short">Are we/you/they going…?</td></tr>
+          </table>
+        </div>
+        <div class="gram-box">
+          <h3>Краткие ответы</h3>
+          <table class="formtable">
+            <tr><td class="pron">Yes / No, I</td><td class="verb">am / 'm not</td></tr>
+            <tr><td class="pron">Yes / No, he/she/it</td><td class="verb">is / isn't</td></tr>
+            <tr><td class="pron">Yes / No, we/you/they</td><td class="verb">are / aren't</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="wordorder-box">
+        <div class="wordorder-formula">is / are &nbsp;+&nbsp; <span>subject</span> &nbsp;+&nbsp; -ing</div>
+        <div class="wo-example">
+          <span class="wo-chip">Where</span><span class="wo-chip">is</span><span class="wo-chip">Ben</span><span class="wo-chip verb">working</span> today?
+          <span class="wo-wrong">(не "Is working Ben today?")</span>
+        </div>
+        <div class="wo-example">
+          <span class="wo-chip">Where</span><span class="wo-chip">are</span><span class="wo-chip">those people</span><span class="wo-chip verb">going</span>?
+          <span class="wo-wrong">(не "Where are going those people?")</span>
+        </div>
+      </div>
+
+      <div class="mini-note">
+        <b>Обратите внимание:</b> "Who are you <span class="chunk">waiting for</span>?" — предлог остаётся в конце вопроса, это нормально для разговорного английского.
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== B · VOCABULARY ===================== -->
+  <div class="section alt" id="vocabulary">
+    <div class="tab">B</div>
+    <div class="content">
+      <div class="eyebrow">Vocabulary</div>
+      <h2>Новые слова этого урока</h2>
+      <p class="lead">Слова, которые встретились именно в Unit 4 (то, что уже было в Units 1–3, здесь не повторяется). Все они дальше встретятся в тексте в блоке <b>D · Reading</b> — так вы увидите их не изолированно, а в контексте.</p>
+
+      <div class="vocab-table" id="vocabTable"></div>
+
+      <h3 style="font-size:15.5px; margin:24px 0 6px; color:var(--brick-dark);">Учите не по одному слову, а «соседями» <span class="ipa">chunks / collocations</span></h3>
+      <p class="sound-note">Носители языка запоминают английский устойчивыми связками слов, а не отдельными кирпичиками. Гораздо надёжнее выучить <b>wait for</b> целиком, чем отдельно «wait» и отдельно «for». В тексте урока (блок D) эти сочетания тоже подсвечены жёлтым.</p>
+      <div class="chunk-grid" id="chunkGrid"></div>
+    </div>
+  </div>
+
+  <!-- ===================== C · PRACTICE ===================== -->
+  <div class="section" id="practice">
+    <div class="tab">C</div>
+    <div class="content">
+      <div class="eyebrow">Practice</div>
+      <h2>Тренируемся: три мини-игры</h2>
+      <p class="lead">Выберите игру и заработайте звёзды ★. Ответы проверяются сразу.</p>
+
+      <div class="game-tabs">
+        <button class="game-tab-btn active" data-panel="panel-fill">✏️ Собери вопрос</button>
+        <button class="game-tab-btn" data-panel="panel-memo">🃏 Мемо: вопрос ↔ ответ</button>
+        <button class="game-tab-btn" data-panel="panel-quiz">⚡ Квиз</button>
+        <button class="game-tab-btn" data-panel="panel-vocabmatch">📚 Лексика</button>
+      </div>
+
+      <div class="game-panel active" id="panel-fill">
+        <p class="lead" style="margin-top:0">Составьте вопрос из слов в правильном порядке и впишите его целиком.</p>
+        <div id="fillList"></div>
+        <div class="actions-row">
+          <button class="btn" id="checkFillBtn">Проверить</button>
+          <button class="btn secondary small" id="resetFillBtn">Сбросить</button>
+          <span class="fb-line" id="fillFeedback"></span>
+        </div>
+      </div>
+
+      <div class="game-panel" id="panel-memo">
+        <p class="lead" style="margin-top:0">Найдите пары: вопрос ↔ короткий ответ.</p>
+        <div class="memo-wrap">
+          <div class="memo-grid" id="memoGrid"></div>
+          <div class="memo-status" id="memoStatus">Найдено пар: 0 / 6</div>
+          <button class="btn secondary small" id="restartMemoBtn">Перемешать заново</button>
+        </div>
+      </div>
+
+      <div class="game-panel" id="panel-quiz">
+        <div id="quizList"></div>
+        <div class="actions-row">
+          <span class="fb-line" id="quizFeedback"></span>
+        </div>
+      </div>
+
+      <div class="game-panel" id="panel-vocabmatch">
+        <p class="lead" style="margin-top:0">Нажмите на английское слово, затем на его перевод — совпавшая пара закрепится зелёным. Слова — из блока B.</p>
+        <div class="match-wrap">
+          <div class="match-col" id="matchEnCol"></div>
+          <div class="match-col" id="matchRuCol"></div>
+        </div>
+        <div class="actions-row">
+          <span class="fb-line" id="matchStatus">Найдено пар: 0 / 8</span>
+          <button class="btn secondary small" id="restartMatchBtn">Перемешать заново</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== D · READING ===================== -->
+  <div class="section alt" id="reading">
+    <div class="tab">D</div>
+    <div class="content">
+      <div class="eyebrow">Reading</div>
+      <h2>Телефонный разговор Mia и Tom</h2>
+      <p class="lead">Текст использует только грамматику, которую вы уже знаете (am/is/are, present continuous), и новые слова из блока B. Прочитайте и выполните задания.</p>
+
+      <div class="read-text">
+        <div class="rt-line"><span class="rt-name">Mia:</span><span>Hi Tom! What <b>are</b> you <b>doing</b>?</span></div>
+        <div class="rt-line"><span class="rt-name">Tom:</span><span>I'm not <span class="chunk">studying</span> — I'm <span class="chunk">cooking</span> dinner! I'm <span class="chunk">wearing</span> my favourite apron, and I'm <span class="chunk">listening to</span> music.</span></div>
+        <div class="rt-line"><span class="rt-name">Mia:</span><span>Are you cooking for your <span class="chunk">exam</span> party?</span></div>
+        <div class="rt-line"><span class="rt-name">Tom:</span><span>Yes, I am! My friends are coming at seven o'clock.</span></div>
+        <div class="rt-line"><span class="rt-name">Mia:</span><span>Is it raining there?</span></div>
+        <div class="rt-line"><span class="rt-name">Tom:</span><span>Yes, it's raining a lot. I have an <span class="chunk">umbrella</span>, but it's <span class="chunk">broken</span>!</span></div>
+        <div class="rt-line"><span class="rt-name">Mia:</span><span>That's <span class="chunk">funny</span>! Are you <span class="chunk">waiting for</span> a <span class="chunk">taxi</span>?</span></div>
+        <div class="rt-line"><span class="rt-name">Tom:</span><span>No, I'm not. I'm staying at home today.</span></div>
+        <div class="rt-line"><span class="rt-name">Mia:</span><span>OK, good luck with the exam. See you soon!</span></div>
+      </div>
+
+      <h3 style="font-size:15px; margin:20px 0 8px; color:var(--brick-dark);">1 · True or False</h3>
+      <div id="tfList"></div>
+      <div class="actions-row"><span class="fb-line" id="tfFeedback"></span></div>
+
+      <h3 style="font-size:15px; margin:24px 0 8px; color:var(--brick-dark);">2 · Ответьте кратко (Yes, he is. / No, he isn't.)</h3>
+      <div id="qaList"></div>
+      <div class="actions-row">
+        <button class="btn small" id="checkQaBtn">Проверить</button>
+        <span class="fb-line" id="qaFeedback"></span>
+      </div>
+
+      <h3 style="font-size:15px; margin:24px 0 8px; color:var(--brick-dark);">3 · Вставьте слово из текста</h3>
+      <p class="sound-note" style="margin-bottom:8px;">Слова: hide · feel · listen · wait · cook · study · wear · broken · funny · taxi</p>
+      <div id="readFillList"></div>
+      <div class="actions-row">
+        <button class="btn small" id="checkReadFillBtn">Проверить</button>
+        <span class="fb-line" id="readFillFeedback"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== E · SOUNDS ===================== -->
+  <div class="section" id="sounds">
+    <div class="tab">E</div>
+    <div class="content">
+      <div class="eyebrow">Sounds &amp; Speech</div>
+      <h2>Интонация вопросов с -ing</h2>
+      <p class="lead">Как и в Unit 2 — вопросы Yes/No идут вверх ↗, вопросы с wh-словом идут вниз ↘. Здесь добавляется ещё и -ing на конце.</p>
+      <div class="voice-picker">
+        <label for="voiceSelect">Голос:</label>
+        <select id="voiceSelect"></select>
+        <span class="voice-hint">Роботизированность зависит от голоса устройства — попробуйте другой из списка.</span>
+      </div>
+      <p class="tts-warn" id="ttsWarn"></p>
+
+      <div class="sound-block">
+        <h3>1 · Восходящая интонация <span class="ipa">rising ↗</span></h3>
+        <p class="sound-note">Yes/No-вопросы без wh-слова.</p>
+        <div class="sound-grid">
+          <div class="sound-pair"><div class="sp-label rise">rise</div><div class="sp-text">Are you feeling OK? <span class="arrow-rise">↗</span></div><div class="sp-controls"><button class="play-btn" data-text="Are you feeling OK?" data-rate="1">🔊</button><button class="play-btn slow" data-text="Are you feeling OK?" data-rate="0.55">🐢</button></div></div>
+          <div class="sound-pair"><div class="sp-label rise">rise</div><div class="sp-text">Is it raining? <span class="arrow-rise">↗</span></div><div class="sp-controls"><button class="play-btn" data-text="Is it raining?" data-rate="1">🔊</button><button class="play-btn slow" data-text="Is it raining?" data-rate="0.55">🐢</button></div></div>
+        </div>
+      </div>
+
+      <div class="sound-block">
+        <h3>2 · Нисходящая интонация <span class="ipa">falling ↘</span></h3>
+        <p class="sound-note">Вопросы с what/where/who/why.</p>
+        <div class="sound-grid">
+          <div class="sound-pair"><div class="sp-label fall">fall</div><div class="sp-text">What are you doing? <span class="arrow-fall">↘</span></div><div class="sp-controls"><button class="play-btn" data-text="What are you doing?" data-rate="1">🔊</button><button class="play-btn slow" data-text="What are you doing?" data-rate="0.55">🐢</button></div></div>
+          <div class="sound-pair"><div class="sp-label fall">fall</div><div class="sp-text">Where are you going? <span class="arrow-fall">↘</span></div><div class="sp-controls"><button class="play-btn" data-text="Where are you going?" data-rate="1">🔊</button><button class="play-btn slow" data-text="Where are you going?" data-rate="0.55">🐢</button></div></div>
+        </div>
+      </div>
+
+      <div class="sound-block">
+        <h3>3 · Уверенный краткий ответ <span class="ipa">falling ↘</span></h3>
+        <div class="sound-grid">
+          <div class="sound-pair"><div class="sp-text">Yes, I <b class="stress">am</b>. <span class="arrow-fall">↘</span></div><div class="sp-controls"><button class="play-btn" data-text="Yes, I am." data-rate="1">🔊</button><button class="play-btn slow" data-text="Yes, I am." data-rate="0.55">🐢</button></div></div>
+          <div class="sound-pair"><div class="sp-text">No, they <b class="stress">aren't</b>. <span class="arrow-fall">↘</span></div><div class="sp-controls"><button class="play-btn" data-text="No, they aren't." data-rate="1">🔊</button><button class="play-btn slow" data-text="No, they aren't." data-rate="0.55">🐢</button></div></div>
+        </div>
+      </div>
+
+      <div class="sound-block">
+        <h3>4 · Слияния в начале вопроса</h3>
+        <p class="sound-note">is/are сливаются с местоимением или именем сразу после них.</p>
+        <div class="sound-grid three">
+          <div class="sound-pair"><div class="sp-text">Is<span class="tie">‿</span>he working?</div><div class="sp-controls"><button class="play-btn" data-text="Is he working?" data-rate="1">🔊</button><button class="play-btn slow" data-text="Is he working?" data-rate="0.5">🐢</button></div></div>
+          <div class="sound-pair"><div class="sp-text">Are<span class="tie">‿</span>you listening?</div><div class="sp-controls"><button class="play-btn" data-text="Are you listening?" data-rate="1">🔊</button><button class="play-btn slow" data-text="Are you listening?" data-rate="0.5">🐢</button></div></div>
+          <div class="sound-pair"><div class="sp-text">Is<span class="tie">‿</span>it raining?</div><div class="sp-controls"><button class="play-btn" data-text="Is it raining?" data-rate="1">🔊</button><button class="play-btn slow" data-text="Is it raining?" data-rate="0.5">🐢</button></div></div>
+        </div>
+      </div>
+
+      <div class="actions-row">
+        <button class="btn secondary small" id="playAllBtn">🔊 Прослушать всё подряд</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== F · PRODUCTION ===================== -->
+  <div class="section alt" id="production">
+    <div class="tab">F</div>
+    <div class="content">
+      <div class="eyebrow">Production</div>
+      <h2>Игра «Угадай, что я делаю»</h2>
+      <p class="lead">Напишите 6 вопросов, чтобы угадать, чем сейчас занят человек по ту сторону телефона (партнёр по игре). Используйте разные wh-слова и хотя бы один вопрос Yes/No — можно использовать новые слова из блока B.</p>
+
+      <ul class="prompt-list">
+        <li><b>What are you doing?</b> — общий вопрос</li>
+        <li><b>Are you…-ing?</b> — конкретное предположение (cooking? studying?)</li>
+        <li><b>Where are you sitting/standing?</b> — место</li>
+        <li><b>Who are you talking to?</b> — с кем</li>
+        <li><b>Why are you…?</b> — причина</li>
+      </ul>
+
+      <textarea class="write-area" id="writeArea" placeholder="1. What are you doing right now?&#10;2. ..."></textarea>
+      <div class="word-count" id="wordCount">0 слов</div>
+
+      <div class="actions-row">
+        <button class="btn" id="finishBtn">Готово!</button>
+        <button class="btn secondary" id="sampleBtn">Показать пример</button>
+      </div>
+
+      <div class="reveal-box" id="sampleBox">
+        <b>Пример:</b> What are you doing right now? Are you cooking or studying? Where are you sitting? Who are you talking to? Are you wearing something warm? Why are you laughing?
+      </div>
+
+      <div class="cue-cards">
+        <div class="cue-card"><b>Карточка 1</b>Позвоните партнёру и узнайте, чем он занят, не глядя на него.</div>
+        <div class="cue-card"><b>Карточка 2</b>Опишите, что делают ваши одногруппники прямо сейчас, а партнёр пусть угадает, кто это.</div>
+        <div class="cue-card"><b>Карточка 3</b>Спросите: "Are you waiting for a taxi or are you staying at home?"</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== G · HOMEWORK ===================== -->
+  <div class="section" id="homework">
+    <div class="tab">G</div>
+    <div class="content">
+      <div class="eyebrow">Homework</div>
+      <h2>Домашнее задание</h2>
+      <p class="lead">Отметьте галочкой то, что выполнили. Можно распечатать этот блок.</p>
+
+      <div class="hw-list">
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>1. Письменно.</b> Составьте 8 вопросов в present continuous о людях вокруг вас — используйте минимум 4 новых слова из блока B (hide, feel, wait, cook, study, exam, wear, broken, funny, taxi…).</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>2. Пересказ.</b> Перескажите своими словами диалог Mia и Tom из блока D (3–4 предложения), не подглядывая в текст.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>3. Слушаем и повторяем.</b> Откройте блок <i>E · Sounds</i>, повторите каждую фразу 3 раза, следя за направлением интонации ↗ / ↘.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>4. Живой разговор.</b> Позвоните другу/родственнику и по-английски спросите, чем он сейчас занят — минимум 3 вопроса подряд.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>5. Повторение.</b> Вернитесь в блок <i>C · Practice</i> и пройдите игру «Мемо» ещё раз без ошибок.</span></label>
+      </div>
+
+      <div class="mini-note" style="margin-top:18px;"><b>На следующем занятии:</b> будьте готовы устно сыграть в «Угадай, что я делаю» с преподавателем и пересказать диалог Mia и Tom.</div>
+
+      <div class="actions-row">
+        <span class="fb-line" id="hwFeedback">Выполнено: 0 / 5</span>
+        <button class="btn secondary small no-print" id="printHwBtn">🖨️ Распечатать задание</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="badge-final" id="finalBadge">
+  🎉 Отличная работа!
+  <span>Вы прошли Presentation, Vocabulary, Practice, Reading, Sounds и Production по теме present continuous questions.</span>
+</div>
+
+<p class="footer-note">Based on Essential Grammar in Use, 4th Edition (Cambridge University Press, 2015), Unit 4 — original exercises created for this lesson.</p>
+
+<script>
+const state = { score:0, maxScore:16, presDone:false, practiceScore:0, prodDone:false, readScore:0 };
+function setBar(id, pct){ document.getElementById(id).style.width = pct+'%'; }
+function updateTop(){
+  document.getElementById('scoreDisplay').textContent = state.score;
+  setBar('bar-p', state.presDone ? 100 : 0);
+  const practicePct = Math.min(100, Math.round((state.practiceScore/9)*100));
+  setBar('bar-pr', practicePct);
+  setBar('bar-prod', state.prodDone ? 100 : 0);
+  if(state.presDone && practicePct>=100 && state.prodDone && soundsVisited){
+    document.getElementById('finalBadge').classList.add('shown');
+  }
+}
+const presObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ state.presDone = true; updateTop(); } });
+},{threshold:0.4});
+presObserver.observe(document.getElementById('vocabulary'));
+
+document.querySelectorAll('.game-tab-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.game-tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.game-panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.panel).classList.add('active');
+  });
+});
+
+/* ---------------- VOCABULARY ---------------- */
+const vocabData = [
+  { word:"hide", ipa:"/haɪd/", ru:"прятаться" },
+  { word:"feel", ipa:"/fiːl/", ru:"чувствовать себя" },
+  { word:"listen (to)", ipa:"/ˈlɪsən/", ru:"слушать" },
+  { word:"wait (for)", ipa:"/weɪt/", ru:"ждать" },
+  { word:"cook", ipa:"/kʊk/", ru:"готовить (еду)" },
+  { word:"study", ipa:"/ˈstʌdi/", ru:"учиться, заниматься" },
+  { word:"exam", ipa:"/ɪɡˈzæm/", ru:"экзамен" },
+  { word:"wear", ipa:"/weər/", ru:"носить (одежду)" },
+  { word:"coat", ipa:"/kəʊt/", ru:"пальто" },
+  { word:"umbrella", ipa:"/ʌmˈbrelə/", ru:"зонт" },
+  { word:"broken", ipa:"/ˈbrəʊkən/", ru:"сломанный" },
+  { word:"funny", ipa:"/ˈfʌni/", ru:"смешной" },
+  { word:"taxi", ipa:"/ˈtæksi/", ru:"такси" },
+  { word:"bus stop", ipa:"/bʌs stɒp/", ru:"автобусная остановка" },
+];
+const vocabTableEl = document.getElementById('vocabTable');
+vocabData.forEach(v=>{
+  const row = document.createElement('div');
+  row.className = 'vocab-row';
+  row.innerHTML = `
+    <div class="vocab-word">${v.word}</div>
+    <div class="vocab-ipa">${v.ipa}</div>
+    <div class="vocab-ru">${v.ru}</div>
+    <button class="play-btn" data-text="${v.word.replace(/\(.*?\)/,'').trim()}" data-rate="0.85">🔊</button>`;
+  vocabTableEl.appendChild(row);
+});
+
+const chunkData = [
+  { en:"wait for", ipa:"/weɪt fɔː(r)/", ru:"ждать (кого-то/чего-то)" },
+  { en:"listen to", ipa:"/ˈlɪsən tuː/", ru:"слушать (кого-то/что-то)" },
+  { en:"look at", ipa:"/lʊk æt/", ru:"смотреть на" },
+  { en:"talk to", ipa:"/tɔːk tuː/", ru:"разговаривать с" },
+  { en:"feel OK", ipa:"/fiːl əʊˈkeɪ/", ru:"чувствовать себя хорошо" },
+  { en:"at the moment", ipa:"/æt ðə ˈməʊmənt/", ru:"в данный момент" },
+  { en:"stay at a hotel", ipa:"/steɪ æt ə həʊˈtel/", ru:"остановиться в отеле" },
+  { en:"study for an exam", ipa:"/ˈstʌdi fɔːr ən ɪɡˈzæm/", ru:"готовиться к экзамену" },
+];
+const chunkGridEl = document.getElementById('chunkGrid');
+chunkData.forEach(c=>{
+  const row = document.createElement('div');
+  row.className = 'chunk-row';
+  row.innerHTML = `
+    <div><span class="chunk-en">${c.en}</span><span class="chunk-ipa">${c.ipa}</span><span class="chunk-ru">${c.ru}</span></div>
+    <button class="play-btn" data-text="${c.en}" data-rate="0.85">🔊</button>`;
+  chunkGridEl.appendChild(row);
+});
+
+/* ---------------- WORD-ORDER FILL (Practice) ---------------- */
+const fillData = [
+  { words:"is / Ben / working / today", answers:["is ben working today"] },
+  { words:"what / the children / are / doing", answers:["what are the children doing"] },
+  { words:"you / are / listening / to me", answers:["are you listening to me"] },
+  { words:"where / your friends / are / going", answers:["where are your friends going"] },
+  { words:"what / Jessica / is / cooking", answers:["what is jessica cooking"] },
+  { words:"why / you / at me / are / looking", answers:["why are you looking at me"] },
+];
+const fillListEl = document.getElementById('fillList');
+fillData.forEach((item, idx)=>{
+  const row = document.createElement('div');
+  row.className = 'fill-item';
+  row.innerHTML = `
+    <div class="fill-num">${idx+1}</div>
+    <div class="fill-body">
+      <div class="fill-words">(${item.words})</div>
+      <input type="text" class="fill-full-input" data-item="${idx}" placeholder="Напишите вопрос целиком…">
+      <div class="fill-fb" id="fb-${idx}"></div>
+    </div>`;
+  fillListEl.appendChild(row);
+});
+function normalizeQ(s){ return s.trim().toLowerCase().replace(/[’‘´`]/g,"'").replace(/[?.!,;:]/g,'').replace(/'/g,'').replace(/\s+/g,' '); }
+document.getElementById('checkFillBtn').addEventListener('click', ()=>{
+  let correctCount = 0;
+  fillData.forEach((item, idx)=>{
+    const input = document.querySelector(`.fill-full-input[data-item="${idx}"]`);
+    const val = normalizeQ(input.value);
+    const ok = item.answers.some(a=>normalizeQ(a)===val);
+    input.classList.remove('correct','wrong');
+    input.classList.add(ok ? 'correct':'wrong');
+    document.getElementById(`fb-${idx}`).textContent = ok ? '✅' : `правильный порядок: "${item.answers[0][0].toUpperCase()+item.answers[0].slice(1)}?"`;
+    if(ok) correctCount++;
+  });
+  document.getElementById('fillFeedback').textContent = `Правильно: ${correctCount} из ${fillData.length}`;
+  state.practiceScore = Math.max(state.practiceScore, correctCount>=fillData.length-1 ? 3 : (correctCount>0?2:0));
+  state.score = calcScore();
+  updateTop();
+});
+document.getElementById('resetFillBtn').addEventListener('click', ()=>{
+  document.querySelectorAll('.fill-full-input').forEach(i=>{ i.value=''; i.classList.remove('correct','wrong'); });
+  document.querySelectorAll('.fill-fb').forEach(f=>f.textContent='');
+  document.getElementById('fillFeedback').textContent = '';
+});
+
+/* ---------------- MEMORY ---------------- */
+const memoPairs = [
+  ["Are you going now?", "Yes, I am."],
+  ["Is Ben working today?", "Yes, he is."],
+  ["Is it raining?", "No, it isn't."],
+  ["Are your friends staying at a hotel?", "No, they aren't."],
+  ["Are you feeling OK?", "Yes, I'm fine."],
+  ["Is Jessica cooking dinner?", "No, she isn't."],
+];
+let memoCards = [];
+memoPairs.forEach((pair, i)=>{ memoCards.push({id:i+'a', label:pair[0], pair:i}); memoCards.push({id:i+'b', label:pair[1], pair:i}); });
+let flipped = [], matchedCount = 0, lockBoard = false;
+function shuffle(arr){ for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; } return arr; }
+function renderMemo(){
+  const grid = document.getElementById('memoGrid');
+  grid.innerHTML = ''; flipped=[]; matchedCount=0; lockBoard=false;
+  document.getElementById('memoStatus').textContent = 'Найдено пар: 0 / 6';
+  const cards = shuffle([...memoCards]);
+  cards.forEach(c=>{
+    const el = document.createElement('div');
+    el.className = 'memo-card'; el.dataset.pair = c.pair;
+    el.innerHTML = `<div class="memo-inner"><div class="memo-face back">?</div><div class="memo-face front">${c.label}</div></div>`;
+    el.addEventListener('click', ()=>onMemoClick(el));
+    grid.appendChild(el);
+  });
+}
+function onMemoClick(el){
+  if(lockBoard || el.classList.contains('flipped') || el.classList.contains('matched')) return;
+  el.classList.add('flipped'); flipped.push(el);
+  if(flipped.length === 2){
+    lockBoard = true;
+    const [a,b] = flipped;
+    if(a.dataset.pair === b.dataset.pair){
+      setTimeout(()=>{
+        a.classList.add('matched'); b.classList.add('matched'); matchedCount++;
+        document.getElementById('memoStatus').textContent = `Найдено пар: ${matchedCount} / 6`;
+        flipped=[]; lockBoard=false;
+        if(matchedCount === 6){ state.practiceScore = Math.max(state.practiceScore, 6); state.score = calcScore(); updateTop(); }
+      }, 400);
+    } else {
+      setTimeout(()=>{ a.classList.remove('flipped'); b.classList.remove('flipped'); flipped=[]; lockBoard=false; }, 700);
+    }
+  }
+}
+document.getElementById('restartMemoBtn').addEventListener('click', renderMemo);
+renderMemo();
+
+/* ---------------- QUIZ ---------------- */
+const quizData = [
+  { q:"___ are the children doing?", opts:["What","Who"], correct:"What" },
+  { q:"___'s Paul doing? — He's studying.", opts:["What","Where"], correct:"What" },
+  { q:"Look, there's Emily! ___'s she going?", opts:["Where","Why"], correct:"Where" },
+  { q:"___ are you waiting for?", opts:["Who","What"], correct:"Who" },
+  { q:"Are your friends staying at a hotel? No, they ___.", opts:["isn't","aren't"], correct:"aren't" },
+];
+const quizListEl = document.getElementById('quizList');
+let quizAnswered = 0, quizCorrectFinal = 0;
+quizData.forEach((item, idx)=>{
+  const box = document.createElement('div');
+  box.className = 'quiz-q';
+  box.innerHTML = `<p>${idx+1}. ${item.q}</p><div class="quiz-opts">${item.opts.map(o=>`<button class="quiz-opt" data-correct="${o===item.correct}">${o}</button>`).join('')}</div>`;
+  quizListEl.appendChild(box);
+});
+document.querySelectorAll('.quiz-opts').forEach(group=>{
+  group.querySelectorAll('.quiz-opt').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      if(group.dataset.done) return;
+      group.dataset.done = "1";
+      group.querySelectorAll('.quiz-opt').forEach(b=>{ if(b.dataset.correct === "true") b.classList.add('reveal-correct'); });
+      if(btn.dataset.correct === "true"){ btn.classList.add('sel-correct'); } else { btn.classList.add('sel-wrong'); }
+      quizAnswered++;
+      const correctSoFar = document.querySelectorAll('.quiz-opt.sel-correct').length;
+      document.getElementById('quizFeedback').textContent = `Отвечено: ${quizAnswered} из ${quizData.length} · верно: ${correctSoFar}`;
+      if(quizAnswered === quizData.length){ quizCorrectFinal = correctSoFar; state.score = calcScore(); updateTop(); }
+    });
+  });
+});
+
+/* ---------------- VOCAB MATCH GAME ---------------- */
+const matchWords = [
+  { en:"hide", ru:"прятаться" },
+  { en:"feel", ru:"чувствовать себя" },
+  { en:"listen", ru:"слушать" },
+  { en:"wait", ru:"ждать" },
+  { en:"cook", ru:"готовить" },
+  { en:"study", ru:"учиться" },
+  { en:"wear", ru:"носить (одежду)" },
+  { en:"broken", ru:"сломанный" },
+];
+let matchSelectedEn = null, matchSelectedRu = null, matchFound = 0, matchLock = false;
+function renderMatch(){
+  const enCol = document.getElementById('matchEnCol');
+  const ruCol = document.getElementById('matchRuCol');
+  enCol.innerHTML = ''; ruCol.innerHTML = '';
+  matchSelectedEn = null; matchSelectedRu = null; matchFound = 0; matchLock = false;
+  document.getElementById('matchStatus').textContent = `Найдено пар: 0 / ${matchWords.length}`;
+  const enShuffled = shuffle(matchWords.map((w,i)=>({...w, idx:i})));
+  const ruShuffled = shuffle(matchWords.map((w,i)=>({...w, idx:i})));
+  enShuffled.forEach(w=>{
+    const el = document.createElement('div');
+    el.className = 'match-tile'; el.dataset.idx = w.idx; el.textContent = w.en;
+    el.addEventListener('click', ()=>onMatchClick(el, 'en', w.idx));
+    enCol.appendChild(el);
+  });
+  ruShuffled.forEach(w=>{
+    const el = document.createElement('div');
+    el.className = 'match-tile'; el.dataset.idx = w.idx; el.textContent = w.ru;
+    el.addEventListener('click', ()=>onMatchClick(el, 'ru', w.idx));
+    ruCol.appendChild(el);
+  });
+}
+function onMatchClick(el, side, idx){
+  if(matchLock || el.classList.contains('matched')) return;
+  if(side === 'en'){
+    if(matchSelectedEn) matchSelectedEn.classList.remove('selected');
+    matchSelectedEn = el; el.classList.add('selected');
+  } else {
+    if(matchSelectedRu) matchSelectedRu.classList.remove('selected');
+    matchSelectedRu = el; el.classList.add('selected');
+  }
+  if(matchSelectedEn && matchSelectedRu){
+    matchLock = true;
+    const ok = matchSelectedEn.dataset.idx === matchSelectedRu.dataset.idx;
+    if(ok){
+      matchSelectedEn.classList.remove('selected'); matchSelectedRu.classList.remove('selected');
+      matchSelectedEn.classList.add('matched'); matchSelectedRu.classList.add('matched');
+      matchFound++;
+      document.getElementById('matchStatus').textContent = `Найдено пар: ${matchFound} / ${matchWords.length}`;
+      matchSelectedEn = null; matchSelectedRu = null; matchLock = false;
+    } else {
+      matchSelectedEn.classList.add('wrong'); matchSelectedRu.classList.add('wrong');
+      setTimeout(()=>{
+        matchSelectedEn.classList.remove('selected','wrong'); matchSelectedRu.classList.remove('selected','wrong');
+        matchSelectedEn = null; matchSelectedRu = null; matchLock = false;
+      }, 600);
+    }
+  }
+}
+document.getElementById('restartMatchBtn').addEventListener('click', renderMatch);
+renderMatch();
+
+/* ---------------- READING ---------------- */
+const tfData = [
+  { text:"Tom is studying right now.", correct:false },
+  { text:"Tom is wearing an apron.", correct:true },
+  { text:"Tom's friends are coming at seven o'clock.", correct:true },
+  { text:"It isn't raining.", correct:false },
+  { text:"Tom's umbrella is broken.", correct:true },
+];
+const tfListEl = document.getElementById('tfList');
+let tfAnswered = 0, tfCorrect = 0;
+tfData.forEach((item, idx)=>{
+  const row = document.createElement('div');
+  row.className = 'tf-item';
+  row.innerHTML = `<div class="tf-text">${idx+1}. ${item.text}</div><div class="tf-btns">
+    <button class="tf-btn" data-val="true">True</button>
+    <button class="tf-btn" data-val="false">False</button>
+  </div>`;
+  tfListEl.appendChild(row);
+  row.querySelectorAll('.tf-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      if(row.dataset.done) return;
+      row.dataset.done = "1";
+      const val = btn.dataset.val === "true";
+      row.querySelectorAll('.tf-btn').forEach(b=>{
+        if((b.dataset.val === "true") === item.correct) b.classList.add('reveal-correct');
+      });
+      btn.classList.add(val === item.correct ? 'sel-correct' : 'sel-wrong');
+      tfAnswered++;
+      if(val === item.correct) tfCorrect++;
+      document.getElementById('tfFeedback').textContent = `Отвечено: ${tfAnswered} из ${tfData.length} · верно: ${tfCorrect}`;
+      markReadingProgress();
+      if(tfAnswered === tfData.length){ state.readScore = Math.max(state.readScore, tfCorrect >= 4 ? 2 : 1); state.score = calcScore(); updateTop(); }
+    });
+  });
+});
+
+const qaData = [
+  { q:"Is Tom cooking dinner?", answers:["yes he is","yes, he is"] },
+  { q:"Is Tom waiting for a taxi?", answers:["no he isn't","no, he isn't","no he isnt","no, he's not","no he's not"] },
+  { q:"Are Tom's friends coming today?", answers:["yes they are","yes, they are"] },
+];
+const qaListEl = document.getElementById('qaList');
+qaData.forEach((item, idx)=>{
+  const box = document.createElement('div');
+  box.className = 'qa-item';
+  box.innerHTML = `<div class="qa-q">${idx+1}. ${item.q}</div><input type="text" class="blank-input" style="width:220px" data-item="${idx}" placeholder="Yes, he is.">`;
+  qaListEl.appendChild(box);
+});
+document.getElementById('checkQaBtn').addEventListener('click', ()=>{
+  let correctCount = 0;
+  qaData.forEach((item, idx)=>{
+    const input = document.querySelector(`#qaList .blank-input[data-item="${idx}"]`);
+    const val = normalizeQ(input.value);
+    const ok = item.answers.some(a=>normalizeQ(a)===val);
+    input.classList.remove('correct','wrong');
+    input.classList.add(ok ? 'correct':'wrong');
+    if(ok) correctCount++;
+  });
+  document.getElementById('qaFeedback').textContent = `Правильно: ${correctCount} из ${qaData.length}`;
+  state.readScore = Math.max(state.readScore, correctCount>=qaData.length-1 ? 4 : (correctCount>0?2:0));
+  state.score = calcScore();
+  markReadingProgress();
+  updateTop();
+});
+
+const readFillData = [
+  { sentence:"I'm not studying — I'm ___ dinner!", answers:["cooking"] },
+  { sentence:"I'm ___ my favourite apron.", answers:["wearing"] },
+  { sentence:"I'm ___ to music.", answers:["listening"] },
+  { sentence:"I have an umbrella, but it's ___!", answers:["broken"] },
+  { sentence:"That's ___! Are you waiting for a ___?", split:true, parts:[{answers:["funny"]},{answers:["taxi"]}] },
+];
+const readFillListEl = document.getElementById('readFillList');
+readFillData.forEach((item, idx)=>{
+  const row = document.createElement('div');
+  row.className = 'fill-item';
+  let html = `<div class="fill-num">${idx+1}</div><div class="fill-body"><div class="fill-words">`;
+  if(item.split){
+    let p = 0;
+    html += item.sentence.replace(/___/g, ()=>{ const out = `<input type="text" class="blank-input" data-item="${idx}" data-part="${p}">`; p++; return out; });
+  } else {
+    html += item.sentence.replace('___', `<input type="text" class="blank-input" data-item="${idx}" data-part="0">`);
+  }
+  html += `</div></div>`;
+  row.innerHTML = html;
+  readFillListEl.appendChild(row);
+});
+document.getElementById('checkReadFillBtn').addEventListener('click', ()=>{
+  let correctCount = 0, totalCount = 0;
+  readFillData.forEach((item, idx)=>{
+    const parts = item.split ? item.parts : [{answers:item.answers}];
+    parts.forEach((part, pIdx)=>{
+      totalCount++;
+      const input = document.querySelector(`#readFillList .blank-input[data-item="${idx}"][data-part="${pIdx}"]`);
+      if(!input) return;
+      const val = normalizeQ(input.value);
+      const ok = part.answers.some(a=>normalizeQ(a)===val);
+      input.classList.remove('correct','wrong');
+      input.classList.add(ok ? 'correct':'wrong');
+      if(ok) correctCount++;
+    });
+  });
+  document.getElementById('readFillFeedback').textContent = `Правильно: ${correctCount} из ${totalCount}`;
+  state.readScore = Math.max(state.readScore, correctCount>=totalCount-1 ? 4 : (correctCount>0?2:0));
+  state.score = calcScore();
+  markReadingProgress();
+  updateTop();
+});
+
+let readingTouched = false;
+function markReadingProgress(){
+  if(!readingTouched){ readingTouched = true; }
+  setBar('bar-read', 100);
+}
+
+function calcScore(){
+  const memoScore = matchedCount === 6 ? 3 : 0;
+  return Math.min(state.maxScore, fillScoreOrZero() + memoScore + quizCorrectFinal + (state.prodDone?2:0) + state.readScore);
+}
+function fillScoreOrZero(){
+  const el = document.getElementById('fillFeedback').textContent;
+  const m = el.match(/Правильно: (\d+)/);
+  return m ? Math.min(3, Math.round(parseInt(m[1])/6*3)) : 0;
+}
+
+/* ---------------- PRODUCTION ---------------- */
+const writeArea = document.getElementById('writeArea');
+writeArea.addEventListener('input', ()=>{
+  const words = writeArea.value.trim().split(/\s+/).filter(Boolean).length;
+  document.getElementById('wordCount').textContent = `${words} слов`;
+});
+document.getElementById('finishBtn').addEventListener('click', ()=>{
+  const words = writeArea.value.trim().split(/\s+/).filter(Boolean).length;
+  if(words >= 12){
+    state.prodDone = true; state.score = calcScore(); updateTop();
+    document.getElementById('wordCount').textContent = `${words} слов · ✅ отлично, задание засчитано!`;
+  } else {
+    document.getElementById('wordCount').textContent = `${words} слов · напишите чуть больше (минимум ~6 вопросов)`;
+  }
+});
+document.getElementById('sampleBtn').addEventListener('click', ()=>{
+  document.getElementById('sampleBox').classList.toggle('shown');
+});
+
+/* ---------------- SOUNDS: text-to-speech ---------------- */
+let soundsVisited = false;
+const soundsObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting && !soundsVisited){ soundsVisited = true; setBar('bar-sound',100); updateTop(); } });
+},{threshold:0.4});
+soundsObserver.observe(document.getElementById('sounds'));
+
+function scoreVoice(v){
+  const n = v.name.toLowerCase(); let s = 0;
+  if(n.includes('enhanced') || n.includes('premium') || n.includes('neural') || n.includes('natural')) s += 5;
+  if(n.includes('google')) s += 3;
+  if(n.includes('siri')) s += 3;
+  if(v.lang === 'en-GB') s += 2;
+  if(v.lang && v.lang.startsWith('en')) s += 1;
+  if(v.localService) s += 1;
+  return s;
+}
+function populateVoiceList(){
+  const sel = document.getElementById('voiceSelect');
+  if(!sel || !('speechSynthesis' in window)) return;
+  const voices = window.speechSynthesis.getVoices().filter(v=>v.lang && v.lang.startsWith('en'));
+  if(!voices.length) return;
+  const prevValue = sel.value;
+  sel.innerHTML = '';
+  voices.sort((a,b)=>scoreVoice(b)-scoreVoice(a));
+  voices.forEach(v=>{ const opt=document.createElement('option'); opt.value=v.name+'|'+v.lang; opt.textContent=`${v.name} (${v.lang})`; sel.appendChild(opt); });
+  if(prevValue && voices.some(v=>(v.name+'|'+v.lang)===prevValue)) sel.value = prevValue;
+}
+function pickVoice(){
+  const sel = document.getElementById('voiceSelect');
+  const voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
+  if(sel && sel.value){ const chosen = voices.find(v => (v.name+'|'+v.lang) === sel.value); if(chosen) return chosen; }
+  return voices.find(v=>v.lang === 'en-GB') || voices.find(v=>v.lang && v.lang.startsWith('en')) || null;
+}
+if('speechSynthesis' in window){ populateVoiceList(); window.speechSynthesis.onvoiceschanged = populateVoiceList; }
+function speak(text, rate, btn){
+  if(!('speechSynthesis' in window)){
+    document.getElementById('ttsWarn').textContent = 'Озвучка не поддерживается этим браузером. Попробуйте открыть страницу в Chrome или Safari.';
+    document.getElementById('ttsWarn').classList.add('shown');
+    return;
+  }
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.rate = rate || 1; utter.pitch = 1;
+  const v = pickVoice(); if(v) utter.voice = v;
+  if(btn){ utter.onstart = ()=>btn.classList.add('playing'); utter.onend = ()=>btn.classList.remove('playing'); }
+  window.speechSynthesis.speak(utter);
+}
+document.querySelectorAll('.play-btn').forEach(btn=>{ btn.addEventListener('click', ()=>{ speak(btn.dataset.text, parseFloat(btn.dataset.rate), btn); }); });
+document.getElementById('playAllBtn').addEventListener('click', async ()=>{
+  const btns = Array.from(document.querySelectorAll('.sound-block .play-btn:not(.slow)'));
+  for(const b of btns){ speak(b.dataset.text, 1, b); await new Promise(res=>setTimeout(res, Math.max(1200, b.dataset.text.split(' ').length*450))); }
+});
+
+/* ---------------- HOMEWORK ---------------- */
+const hwChecks = document.querySelectorAll('.hw-check');
+function updateHw(){
+  const done = document.querySelectorAll('.hw-check:checked').length;
+  document.getElementById('hwFeedback').textContent = `Выполнено: ${done} / ${hwChecks.length}`;
+  setBar('bar-hw', Math.round((done/hwChecks.length)*100));
+}
+hwChecks.forEach(c=>c.addEventListener('change', updateHw));
+document.getElementById('printHwBtn').addEventListener('click', ()=>window.print());
+updateHw();
+
+let vocabVisited = false;
+const vocabObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting && !vocabVisited){ vocabVisited = true; setBar('bar-vocab',100); } });
+},{threshold:0.4});
+vocabObserver.observe(document.getElementById('vocabulary'));
+
+updateTop();
+</script>
+</body>
+</html>
