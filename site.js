@@ -46,7 +46,10 @@ async function groqSpeak(text, rate){
   const key = getSetting("groqKey");
   if (!key) throw new Error("no-key");
   const voice = getSetting("groqVoice") || "hannah";
-  const cacheId = voice + "|" + text;
+  /* Точка в конце помогает модели не «фантазировать» продолжение коротких фраз */
+  let input = String(text).trim().slice(0, 190);
+  if (!/[.!?…]$/.test(input)) input += ".";
+  const cacheId = voice + "|" + input;
   let url = _ttsCache.get(cacheId);
   if (!url) {
     const r = await fetch("https://api.groq.com/openai/v1/audio/speech", {
@@ -54,7 +57,7 @@ async function groqSpeak(text, rate){
       headers: { "Authorization": "Bearer " + key, "Content-Type": "application/json" },
       body: JSON.stringify({
         model: "canopylabs/orpheus-v1-english",
-        input: String(text).slice(0, 190),
+        input: input,
         voice: voice,
         response_format: "wav"
       })
@@ -70,7 +73,9 @@ async function groqSpeak(text, rate){
   if (_ttsAudio) { _ttsAudio.pause(); _ttsAudio = null; }
   const audio = new Audio(url);
   _ttsAudio = audio;
-  audio.playbackRate = (rate && rate < 0.9) ? 0.72 : 1; /* 🐢 медленный режим */
+  /* Замедляем только настоящие кнопки 🐢 (rate ≤ 0.6). Голос Groq и так
+     естественный, поэтому «слегка замедленные» кнопки урока (0.85) играют как 1x. */
+  audio.playbackRate = (rate && rate <= 0.6) ? 0.72 : 1;
   await audio.play();
   return new Promise(resolve => { audio.onended = resolve; audio.onpause = resolve; });
 }
