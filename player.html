@@ -106,6 +106,19 @@ function installVoice(frame){
     const w = frame.contentWindow;
     if (!w || typeof w.speak !== 'function' || !getSetting('groqKey')) return;
     const browserSpeak = w.speak; /* запасной вариант — голос браузера */
+
+    /* Заменяем внутри урока блок выбора браузерного голоса на понятную надпись */
+    try {
+      const v = getSetting('groqVoice') || 'hannah';
+      const vName = v[0].toUpperCase() + v.slice(1);
+      w.document.querySelectorAll('.voice-picker').forEach(vp => {
+        vp.innerHTML = `<label>🎙 Голос: <b style="color:var(--sage,#4F8F6D)">Groq · ${vName}</b></label>` +
+          `<span class="voice-hint">Живая озвучка подключена. Голос меняется в настройках сайта (⚙), а не в уроке.</span>`;
+      });
+      const warn = w.document.getElementById('ttsWarn');
+      if (warn) warn.style.display = 'none';
+    } catch(e){}
+
     w.speak = function(text, rate, btn){
       btn && btn.classList.add('playing');
       groqSpeak(text, rate)
