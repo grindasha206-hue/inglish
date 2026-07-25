@@ -73,6 +73,19 @@
               "file": "lessons/itogovyi-test-units-1-4.html"
             }
           ]
+        },
+        {
+          "id": "modul-2",
+          "title": "Модуль 2",
+          "lessons": [
+            {
+              "id": "urok-present-simple-2",
+              "unit": 1,
+              "title": "I do/work/like (present simple)",
+              "description": "",
+              "file": "lessons/urok-present-simple-2.html"
+            }
+          ]
         }
       ]
     },
