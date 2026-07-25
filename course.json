@@ -43,6 +43,13 @@
               "title": "are you doing? (present continuous questions)",
               "description": "",
               "file": "lessons/urok-present-continuous-questions.html"
+            },
+            {
+              "id": "vocab-review-1-people",
+              "unit": 5,
+              "title": "Vocabulary Review 1 · Люди",
+              "description": "",
+              "file": "lessons/vocab-review-1-people.html"
             }
           ]
         }
