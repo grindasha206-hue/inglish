@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок · Инглиш</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Manrope:wght@500;700;800&display=swap');
+:root{
+  --cream:#FBF6EC; --paper:#FFFCF5; --ink:#2A2622; --ink-soft:#5c554c;
+  --brick:#AD3B2C; --brick-dark:#8E2E22; --tab:#E2963F; --tab-dark:#C97B2A;
+  --sage:#4F8F6D; --sage-bg:#E6F1EA; --line:#E4DACB;
+}
+*{box-sizing:border-box;}
+html,body{height:100%;}
+body{margin:0; display:flex; flex-direction:column; font-family:'Manrope',sans-serif; background:var(--cream);}
+.bar{background:var(--paper); border-bottom:1px solid var(--line); padding:9px 14px; display:flex; align-items:center; gap:12px; box-shadow:0 2px 10px rgba(0,0,0,0.05); flex-shrink:0;}
+.back{text-decoration:none; font-weight:800; font-size:13.5px; color:var(--brick-dark); border:1.5px solid var(--line); border-radius:18px; padding:6px 14px; white-space:nowrap;}
+.back:hover{border-color:var(--tab);}
+.title{font-family:'Fraunces',serif; font-weight:800; font-size:15px; color:var(--brick-dark); flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.done-btn{border:none; cursor:pointer; font-family:'Manrope'; font-weight:800; font-size:13px; padding:8px 16px; border-radius:20px; background:var(--sage); color:#fff; white-space:nowrap;}
+.done-btn:hover{background:#3d7357;}
+.done-btn[disabled]{background:var(--sage-bg); color:var(--sage); cursor:default;}
+iframe{flex:1; width:100%; border:none; background:var(--cream);}
+
+.toast{position:fixed; left:50%; bottom:-160px; transform:translateX(-50%); background:linear-gradient(135deg, var(--sage), #3d7357); color:#fff; border-radius:16px; padding:18px 26px; box-shadow:0 10px 30px rgba(0,0,0,0.3); text-align:center; font-family:'Fraunces',serif; font-size:18px; font-weight:800; transition:bottom .45s ease; z-index:100; max-width:92vw;}
+.toast.shown{bottom:26px;}
+.toast .xp{display:block; font-family:'Manrope'; font-weight:700; font-size:13.5px; margin-top:4px; opacity:.92;}
+.toast .row{display:flex; gap:10px; justify-content:center; margin-top:12px; flex-wrap:wrap;}
+.toast a{font-family:'Manrope'; font-weight:800; font-size:13.5px; text-decoration:none; padding:8px 18px; border-radius:20px;}
+.toast a.next{background:#fff; color:#3d7357;}
+.toast a.home{background:rgba(255,255,255,0.18); color:#fff; border:1px solid rgba(255,255,255,0.5);}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <a class="back" href="index.html">← Кабинет</a>
+  <div class="title" id="barTitle">Урок</div>
+  <button class="done-btn" id="doneBtn">✓ Завершить урок</button>
+</div>
+
+<iframe id="lessonFrame" src="about:blank" title="Урок"></iframe>
+
+<div class="toast" id="toast">
+  🎉 Урок пройден!
+  <span class="xp" id="toastXp"></span>
+  <div class="row">
+    <a class="next" id="toastNext" href="#" style="display:none">Следующий урок →</a>
+    <a class="home" href="index.html">В кабинет</a>
+  </div>
+</div>
+
+<script src="course.js"></script>
+<script src="progress.js"></script>
+<script>
+const params = new URLSearchParams(location.search);
+const lesson = lessonById(params.get('lesson'));
+const p = loadProgress();
+
+if (!lesson) {
+  document.getElementById('barTitle').textContent = 'Урок не найден';
+} else {
+  document.title = `Unit ${lesson.unit} · ${lesson.title} — Инглиш`;
+  document.getElementById('barTitle').textContent = `Unit ${lesson.unit} · ${lesson.title}`;
+  document.getElementById('lessonFrame').src = lesson.file;
+  markStarted(p, lesson.id);
+  if (lessonState(p, lesson.id)?.status === 'done') setDoneUi();
+}
+
+let finished = lesson ? lessonState(p, lesson.id)?.status === 'done' : false;
+let lastScore = 0, lastMax = 0;
+
+/* Каждые 1.5 сек. заглядываем внутрь урока: какой счёт и не появился ли финальный бейдж.
+   Работает, потому что урок открыт с того же сайта. Если браузер не пустит —
+   остаётся кнопка «Завершить урок». */
+setInterval(() => {
+  if (!lesson) return;
+  try {
+    const w = document.getElementById('lessonFrame').contentWindow;
+    if (!w || !w.document) return;
+    const scoreEl = w.document.getElementById('scoreDisplay');
+    if (scoreEl) lastScore = parseInt(scoreEl.textContent, 10) || 0;
+    if (w.state && w.state.maxScore) lastMax = w.state.maxScore;
+    const badge = w.document.getElementById('finalBadge');
+    if (badge && badge.classList.contains('shown')) {
+      if (!finished) complete(true);
+      else {
+        const st = lessonState(p, lesson.id);
+        if (st && lastScore > (st.bestScore || 0)) markCompleted(p, lesson.id, lastScore, lastMax || 16);
+      }
+    }
+  } catch(e){ /* нет доступа внутрь iframe — не страшно */ }
+}, 1500);
+
+function complete(auto){
+  if (!lesson || finished) return;
+  finished = true;
+  const gained = markCompleted(p, lesson.id, lastScore, lastMax || 16);
+  setDoneUi();
+  const toast = document.getElementById('toast');
+  document.getElementById('toastXp').textContent =
+    gained > 0 ? `+${gained} XP · счёт ★ ${lastScore}${lastMax ? '/' + lastMax : ''}` : `Результат обновлён · ★ ${lastScore}`;
+  const nx = lessonAfter(lesson.id);
+  const nextP = nextLesson(p);
+  const target = nextP || nx;
+  if (target) {
+    const a = document.getElementById('toastNext');
+    a.href = `player.html?lesson=${target.id}`;
+    a.style.display = 'inline-block';
+  }
+  toast.classList.add('shown');
+  if (auto) setTimeout(() => toast.classList.remove('shown'), 12000);
+}
+
+function setDoneUi(){
+  const b = document.getElementById('doneBtn');
+  b.textContent = '✓ Пройден';
+  b.disabled = true;
+}
+
+document.getElementById('doneBtn').addEventListener('click', () => complete(false));
+</script>
+</body>
+</html>

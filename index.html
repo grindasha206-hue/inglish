@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Инглиш · мой английский</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --cream:#FBF6EC; --paper:#FFFCF5; --ink:#2A2622; --ink-soft:#5c554c;
+  --brick:#AD3B2C; --brick-dark:#8E2E22; --tab:#E2963F; --tab-dark:#C97B2A;
+  --sage:#4F8F6D; --sage-bg:#E6F1EA; --coral:#D65B4A; --coral-bg:#FBE7E3;
+  --gold:#CBA35C; --line:#E4DACB; --shadow:0 6px 18px rgba(42,38,34,0.10);
+}
+*{box-sizing:border-box;}
+body{margin:0; background:radial-gradient(circle at 15% 8%, rgba(203,163,92,0.10), transparent 40%), var(--cream); color:var(--ink); font-family:'Manrope',sans-serif; line-height:1.55; padding-bottom:60px;}
+h1,h2,h3{font-family:'Fraunces',serif;}
+
+.topbar{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:1px solid var(--line); padding:12px 20px; display:flex; align-items:center; gap:14px; box-shadow:0 2px 10px rgba(0,0,0,0.04);}
+.logo{font-family:'Fraunces',serif; font-weight:900; font-size:19px; color:var(--brick-dark);}
+.logo span{color:var(--tab-dark);}
+.top-pills{margin-left:auto; display:flex; gap:8px; flex-wrap:wrap;}
+.pill{font-size:13px; font-weight:800; padding:6px 13px; border-radius:20px; white-space:nowrap;}
+.pill.streak{background:var(--coral-bg); color:var(--brick);}
+.pill.xp{background:var(--sage-bg); color:var(--sage);}
+
+.wrap{max-width:900px; margin:26px auto; padding:0 16px;}
+
+/* -------- Continue card -------- */
+.hero{background:linear-gradient(135deg, var(--brick) 0%, var(--brick-dark) 100%); color:#fff; border-radius:14px; padding:26px 28px; box-shadow:var(--shadow); display:flex; align-items:center; gap:20px; flex-wrap:wrap;}
+.hero .txt{flex:1; min-width:220px;}
+.hero .eyebrow{font-size:11.5px; letter-spacing:2px; text-transform:uppercase; opacity:.75; font-weight:800; margin-bottom:4px;}
+.hero h1{margin:0; font-size:26px; font-weight:800;}
+.hero p{margin:6px 0 0; opacity:.9; font-size:14px;}
+.btn{border:none; cursor:pointer; font-family:'Manrope'; font-weight:800; padding:14px 28px; border-radius:28px; font-size:15px; background:var(--tab); color:#fff; box-shadow:0 4px 12px rgba(0,0,0,0.25); transition:.15s; text-decoration:none; display:inline-block;}
+.btn:hover{transform:translateY(-2px); background:var(--tab-dark);}
+.hero.done-all{background:linear-gradient(135deg, var(--sage), #3d7357);}
+
+/* -------- Stats -------- */
+.stats{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:18px;}
+@media(max-width:640px){.stats{grid-template-columns:1fr;}}
+.stat{background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:16px 18px; box-shadow:var(--shadow);}
+.stat .label{font-size:11.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-soft); font-weight:800;}
+.stat .value{font-family:'Fraunces',serif; font-size:30px; font-weight:900; color:var(--brick-dark); margin-top:2px;}
+.stat .sub{font-size:12.5px; color:var(--ink-soft);}
+.lvl-bar{height:8px; border-radius:6px; background:var(--line); margin-top:8px; overflow:hidden;}
+.lvl-bar i{display:block; height:100%; border-radius:6px; background:linear-gradient(90deg, var(--tab), var(--brick)); transition:width .5s;}
+.week{display:flex; gap:6px; margin-top:10px;}
+.day{flex:1; text-align:center;}
+.day .dot{width:100%; aspect-ratio:1/1; max-width:34px; margin:0 auto; border-radius:8px; background:var(--cream); border:1.5px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:14px;}
+.day.on .dot{background:var(--sage-bg); border-color:var(--sage);}
+.day .lbl{font-size:10.5px; color:var(--ink-soft); margin-top:3px; font-weight:700;}
+
+/* -------- Course -------- */
+.course-head{margin:30px 0 4px; display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;}
+.course-head h2{margin:0; font-size:22px; color:var(--brick-dark);}
+.course-head .sub{font-size:13px; color:var(--ink-soft);}
+.module{margin-top:14px;}
+.module h3{font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--ink-soft); margin:0 0 10px;}
+.lesson-list{display:flex; flex-direction:column; gap:10px;}
+.lesson-card{display:flex; align-items:center; gap:14px; background:var(--paper); border:1.5px solid var(--line); border-radius:12px; padding:14px 16px; text-decoration:none; color:var(--ink); box-shadow:var(--shadow); transition:.15s;}
+.lesson-card:hover{transform:translateY(-2px); border-color:var(--tab);}
+.lesson-card .badge{width:44px; height:44px; border-radius:12px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:800; font-size:17px; background:var(--cream); border:1.5px solid var(--line); color:var(--ink-soft);}
+.lesson-card.done .badge{background:var(--sage-bg); border-color:var(--sage); color:var(--sage);}
+.lesson-card.next .badge{background:var(--tab); border-color:var(--tab-dark); color:#fff;}
+.lesson-card .info{flex:1; min-width:0;}
+.lesson-card .t{font-family:'Fraunces',serif; font-weight:700; font-size:16px; color:var(--brick-dark);}
+.lesson-card .d{font-size:13px; color:var(--ink-soft);}
+.lesson-card .right{flex-shrink:0; text-align:right; font-size:12.5px; font-weight:800;}
+.lesson-card .score{color:var(--sage);}
+.lesson-card .cta{color:var(--tab-dark);}
+.lesson-card .todo{color:var(--ink-soft); opacity:.7;}
+
+/* -------- footer -------- */
+.tools{margin-top:36px; padding-top:16px; border-top:1px dashed var(--line); display:flex; gap:10px; align-items:center; flex-wrap:wrap; font-size:12.5px; color:var(--ink-soft);}
+.mini-btn{border:1.5px solid var(--line); background:var(--paper); color:var(--ink-soft); padding:6px 14px; border-radius:16px; font-family:'Manrope'; font-weight:700; font-size:12.5px; cursor:pointer;}
+.mini-btn:hover{border-color:var(--tab); color:var(--tab-dark);}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">Ing<span>lish</span> ✳</div>
+  <div class="top-pills">
+    <div class="pill streak" id="streakPill">🔥 0 дней</div>
+    <div class="pill xp" id="xpPill">✦ 0 XP</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="hero" id="hero">
+    <div class="txt">
+      <div class="eyebrow" id="heroEyebrow">Продолжить обучение</div>
+      <h1 id="heroTitle">…</h1>
+      <p id="heroSub">…</p>
+    </div>
+    <a class="btn" id="continueBtn" href="#">Продолжить →</a>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="label">Серия дней</div>
+      <div class="value" id="streakVal">0 🔥</div>
+      <div class="week" id="weekRow"></div>
+    </div>
+    <div class="stat">
+      <div class="label">Уровень</div>
+      <div class="value" id="levelVal">1</div>
+      <div class="sub" id="levelSub">0 / 100 XP до следующего</div>
+      <div class="lvl-bar"><i id="levelBar" style="width:0%"></i></div>
+    </div>
+    <div class="stat">
+      <div class="label">Уроки</div>
+      <div class="value" id="lessonsVal">0 / 0</div>
+      <div class="sub">пройдено в курсе</div>
+    </div>
+  </div>
+
+  <div class="course-head">
+    <h2 id="courseTitle"></h2>
+    <div class="sub" id="courseSub"></div>
+  </div>
+  <div id="courseBody"></div>
+
+  <div class="tools">
+    <span>Прогресс хранится в этом браузере.</span>
+    <button class="mini-btn" onclick="exportProgress()">⬇ Сохранить прогресс в файл</button>
+    <button class="mini-btn" onclick="document.getElementById('importFile').click()">⬆ Загрузить из файла</button>
+    <input type="file" id="importFile" accept=".json" style="display:none">
+  </div>
+
+</div>
+
+<script src="course.js"></script>
+<script src="progress.js"></script>
+<script>
+const p = loadProgress();
+
+/* ---- topbar & stats ---- */
+const streak = currentStreak(p);
+document.getElementById('streakPill').textContent = `🔥 ${streak} ${dayWord(streak)}`;
+document.getElementById('xpPill').textContent = `✦ ${p.xp} XP`;
+document.getElementById('streakVal').textContent = `${streak} 🔥`;
+
+const li = levelInfo(p.xp);
+document.getElementById('levelVal').textContent = li.level;
+document.getElementById('levelSub').textContent = `${li.into} / ${li.need} XP до уровня ${li.level+1}`;
+document.getElementById('levelBar').style.width = li.pct + '%';
+
+const doneCount = ALL_LESSONS.filter(l => p.lessons[l.id]?.status === 'done').length;
+document.getElementById('lessonsVal').textContent = `${doneCount} / ${ALL_LESSONS.length}`;
+
+function dayWord(n){
+  const m10 = n % 10, m100 = n % 100;
+  if (m10 === 1 && m100 !== 11) return 'день';
+  if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return 'дня';
+  return 'дней';
+}
+
+/* ---- неделя ---- */
+const weekRow = document.getElementById('weekRow');
+const names = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+for (let i = 6; i >= 0; i--) {
+  const d = new Date(); d.setDate(d.getDate() - i);
+  const on = !!p.activity[todayKey(d)];
+  const el = document.createElement('div');
+  el.className = 'day' + (on ? ' on' : '');
+  el.innerHTML = `<div class="dot">${on ? '✓' : ''}</div><div class="lbl">${i===0 ? 'сег' : names[d.getDay()]}</div>`;
+  weekRow.appendChild(el);
+}
+
+/* ---- hero ---- */
+const next = nextLesson(p);
+const hero = document.getElementById('hero');
+if (next) {
+  const started = p.lessons[next.id]?.status === 'started';
+  document.getElementById('heroEyebrow').textContent = started ? 'Вернуться к уроку' : 'Следующий урок';
+  document.getElementById('heroTitle').textContent = `Unit ${next.unit} · ${next.title}`;
+  document.getElementById('heroSub').textContent = next.description || '';
+  document.getElementById('continueBtn').href = `player.html?lesson=${next.id}`;
+  document.getElementById('continueBtn').textContent = started ? 'Продолжить →' : 'Начать →';
+} else {
+  hero.classList.add('done-all');
+  document.getElementById('heroEyebrow').textContent = 'Курс пройден';
+  document.getElementById('heroTitle').textContent = '🎉 Все уроки пройдены!';
+  document.getElementById('heroSub').textContent = 'Можно вернуться к любому уроку и улучшить результат.';
+  document.getElementById('continueBtn').style.display = 'none';
+}
+
+/* ---- курс ---- */
+document.getElementById('courseTitle').textContent = COURSE.title;
+document.getElementById('courseSub').textContent = COURSE.subtitle;
+const body = document.getElementById('courseBody');
+COURSE.modules.forEach(mod => {
+  const mEl = document.createElement('div');
+  mEl.className = 'module';
+  mEl.innerHTML = `<h3>${mod.title}</h3>`;
+  const list = document.createElement('div');
+  list.className = 'lesson-list';
+  mod.lessons.forEach(l => {
+    const st = p.lessons[l.id];
+    const done = st?.status === 'done';
+    const isNext = next && next.id === l.id;
+    const a = document.createElement('a');
+    a.className = 'lesson-card' + (done ? ' done' : '') + (isNext ? ' next' : '');
+    a.href = `player.html?lesson=${l.id}`;
+    const badge = done ? '✓' : (isNext ? '▶' : l.unit);
+    let right;
+    if (done) right = `<span class="score">★ ${st.bestScore ?? 0}${st.maxScore ? '/' + st.maxScore : ''}</span>`;
+    else if (isNext) right = `<span class="cta">начать →</span>`;
+    else right = `<span class="todo">впереди</span>`;
+    a.innerHTML = `<div class="badge">${badge}</div>
+      <div class="info"><div class="t">Unit ${l.unit} · ${l.title}</div><div class="d">${l.description || ''}</div></div>
+      <div class="right">${right}</div>`;
+    list.appendChild(a);
+  });
+  mEl.appendChild(list);
+  body.appendChild(mEl);
+});
+
+/* ---- импорт ---- */
+document.getElementById('importFile').addEventListener('change', e => {
+  const f = e.target.files[0];
+  if (f) importProgress(f, ok => { if (ok) location.reload(); else alert('Не удалось прочитать файл прогресса.'); });
+});
+</script>
+</body>
+</html>
