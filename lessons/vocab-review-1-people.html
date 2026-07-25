@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vocabulary Review 1 · Люди</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --cream:#FBF6EC; --paper:#FFFCF5; --ink:#2A2622; --ink-soft:#5c554c;
+  --brick:#AD3B2C; --brick-dark:#8E2E22; --tab:#E2963F; --tab-dark:#C97B2A;
+  --sage:#4F8F6D; --sage-bg:#E6F1EA; --coral:#D65B4A; --coral-bg:#FBE7E3;
+  --gold:#CBA35C; --line:#E4DACB; --shadow: 0 6px 18px rgba(42,38,34,0.10);
+  --plum:#6B4E71; --plum-bg:#EFE6F0;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; background:radial-gradient(circle at 15% 8%, rgba(203,163,92,0.10), transparent 40%), var(--cream); color:var(--ink); font-family:'Manrope', sans-serif; line-height:1.55; padding-bottom:80px;}
+h1,h2,h3,.display{font-family:'Fraunces', serif;}
+
+.topbar{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:1px solid var(--line); padding:10px 18px; display:flex; align-items:center; gap:14px; box-shadow:0 2px 10px rgba(0,0,0,0.04);}
+.topbar .book-title{font-family:'Fraunces', serif; font-weight:700; font-size:14.5px; color:var(--plum); white-space:nowrap;}
+.progress-steps{display:flex; gap:4px; flex:1; align-items:center;}
+.pstep{flex:1; height:8px; border-radius:6px; background:var(--line); position:relative; overflow:hidden;}
+.pstep i{display:block; height:100%; width:0%; border-radius:6px; background:linear-gradient(90deg, var(--gold), var(--plum)); transition:width .5s ease;}
+.score-pill{font-size:13px; font-weight:700; background:var(--plum-bg); color:var(--plum); padding:5px 12px; border-radius:20px; white-space:nowrap;}
+
+.page{max-width:920px; margin:26px auto; background:var(--paper); border-radius:4px; box-shadow:var(--shadow); border:1px solid var(--line); overflow:hidden;}
+
+.unit-banner{background:linear-gradient(135deg, var(--plum) 0%, #4d3752 100%); color:#fff; padding:26px 30px 22px 96px; position:relative;}
+.unit-tag{position:absolute; left:0; top:0; bottom:0; width:76px; background:#4d3752; display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Fraunces',serif; border-right:2px solid rgba(255,255,255,0.15); text-align:center;}
+.unit-tag .u{font-size:10px; letter-spacing:1.5px; opacity:.8; padding:0 4px;}
+.unit-tag .n{font-size:24px; font-weight:800;}
+.unit-banner h1{margin:0; font-size:26px; font-weight:800; letter-spacing:.3px;}
+.unit-banner p{margin:6px 0 0; opacity:.9; font-size:14px;}
+
+.section{display:flex; border-top:1px solid var(--line);}
+.section .tab{width:56px; flex-shrink:0; background:var(--gold); color:#fff; font-family:'Fraunces',serif; font-weight:800; font-size:20px; display:flex; align-items:flex-start; justify-content:center; padding-top:22px;}
+.section.alt .tab{background:#B08A3E;}
+.section .content{padding:24px 28px 30px; flex:1; min-width:0;}
+.section h2{margin:0 0 4px; font-size:21px; color:var(--plum);}
+.eyebrow{font-size:11.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-soft); font-weight:700; margin-bottom:4px;}
+.section p.lead{color:var(--ink-soft); margin-top:4px; font-size:14px;}
+
+/* vocab overview */
+.theme-block{margin-top:18px;}
+.theme-title{font-size:13.5px; font-weight:800; color:var(--plum); margin-bottom:8px; display:flex; align-items:center; gap:6px;}
+.theme-title .n{background:var(--plum-bg); color:var(--plum); border-radius:10px; padding:1px 8px; font-size:11px;}
+.word-chip-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(140px,1fr)); gap:8px; margin-bottom:18px;}
+.word-chip{background:#fff; border:1.5px solid var(--line); border-radius:9px; padding:7px 10px; font-size:12.5px;}
+.word-chip b{color:var(--brick-dark); font-family:'Fraunces',serif; font-size:13.5px; display:block;}
+.word-chip .ru{color:var(--ink-soft); font-size:11.5px;}
+.word-chip .ipa-pos{color:var(--tab-dark); font-size:11px; font-style:italic; display:block; margin-top:1px;}
+.word-chip .play-btn{float:right; margin-top:-2px;}
+
+.play-btn{border:1.5px solid var(--line); background:var(--cream); cursor:pointer; border-radius:7px; padding:3px 7px; font-size:12px; line-height:1; transition:.15s;}
+.play-btn:hover{background:var(--gold); border-color:#B08A3E;}
+.play-btn.playing{background:var(--plum); border-color:#4d3752; color:#fff;}
+.voice-picker{display:flex; align-items:center; gap:8px; flex-wrap:wrap; background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:8px 12px; margin:10px 0; font-size:13px;}
+.voice-picker label{font-weight:700; color:var(--ink-soft);}
+.speed-btns{display:flex; gap:6px;}
+.speed-btn{border:1.5px solid var(--line); background:#fff; padding:5px 12px; border-radius:16px; font-size:12.5px; font-weight:700; cursor:pointer; color:var(--ink-soft);}
+.speed-btn.active{background:var(--plum); color:#fff; border-color:#4d3752;}
+.voice-picker select{border:1.5px solid var(--line); border-radius:6px; padding:4px 8px; font-family:'Manrope'; font-size:13px; background:#fff; color:var(--ink); max-width:220px;}
+
+/* reading */
+.read-text{background:#fff; border:1.5px solid var(--line); border-radius:14px; padding:18px 20px; margin:16px 0; font-size:14.5px;}
+.read-text p{margin:0 0 10px;}
+.read-text p:last-child{margin-bottom:0;}
+.chunk{background:linear-gradient(180deg, transparent 60%, rgba(203,163,92,0.4) 60%); font-weight:700; color:var(--brick-dark); padding:0 1px;}
+.dialog-bubbles{display:flex; flex-direction:column; gap:8px; margin:16px 0;}
+.d-bubble{background:#fff; border:1.5px solid var(--line); border-radius:16px; padding:9px 14px; font-size:14px; max-width:80%; box-shadow:0 3px 8px rgba(0,0,0,0.05);}
+.d-bubble.q{border-color:var(--gold);}
+.d-bubble.a{align-self:flex-end; background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.d-bubble.narr{align-self:center; background:var(--plum-bg); border-color:var(--plum); color:#4d3752; max-width:95%; text-align:center;}
+.d-bubble b{color:var(--brick-dark);}
+.d-bubble.a b{color:var(--sage);}
+
+.tf-item{display:flex; align-items:center; justify-content:space-between; gap:10px; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:9px 14px; margin-bottom:8px;}
+.tf-text{font-size:13.5px; flex:1;}
+.tf-btns{display:flex; gap:6px; flex-shrink:0;}
+.tf-btn{border:1.5px solid var(--line); background:var(--cream); padding:5px 12px; border-radius:16px; font-weight:800; font-size:12.5px; cursor:pointer; color:var(--ink-soft);}
+.tf-btn.sel-correct{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.tf-btn.sel-wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+.tf-btn.reveal-correct{box-shadow:inset 0 0 0 1px var(--sage); border-color:var(--sage);}
+.fb-line{font-size:13.5px; font-weight:700; color:var(--ink-soft);}
+
+/* picture description */
+.scene-box{background:#fff; border:1.5px solid var(--line); border-radius:14px; padding:18px; margin:16px 0; text-align:center;}
+.scene-box svg{max-width:100%; height:auto;}
+.word-bank{display:flex; gap:7px; flex-wrap:wrap; justify-content:center; margin-top:14px;}
+.wb-chip{background:var(--plum-bg); color:var(--plum); border-radius:14px; padding:4px 12px; font-size:12.5px; font-weight:700;}
+textarea.write-area{width:100%; min-height:110px; border:1.5px solid var(--line); border-radius:10px; padding:14px; font-family:'Manrope'; font-size:14.5px; color:var(--ink); background:#fffdf8; resize:vertical; margin-top:12px;}
+textarea.write-area:focus{outline:2px solid var(--gold); border-color:var(--gold);}
+.word-count{font-size:12.5px; color:var(--ink-soft); margin-top:6px;}
+.reveal-box{margin-top:14px; border-left:3px solid var(--gold); background:var(--cream); padding:12px 16px; border-radius:6px; font-size:13.5px; display:none;}
+.reveal-box.shown{display:block;}
+
+/* games */
+.game-tabs{display:flex; gap:8px; margin:18px 0 20px; flex-wrap:wrap;}
+.game-tab-btn{border:1.5px solid var(--line); background:#fff; color:var(--ink-soft); padding:8px 16px; border-radius:20px; font-family:'Manrope'; font-weight:700; font-size:13px; cursor:pointer; transition:.2s;}
+.game-tab-btn.active{background:var(--gold); color:#fff; border-color:#B08A3E;}
+.game-panel{display:none;}
+.game-panel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
+
+.quiz-q{margin-bottom:16px;}
+.quiz-q p{font-weight:700; margin:0 0 8px; font-size:14px;}
+.quiz-opts{display:flex; gap:8px; flex-wrap:wrap;}
+.quiz-opt{border:1.5px solid var(--line); background:#fff; padding:7px 15px; border-radius:20px; font-weight:700; font-size:13.5px; cursor:pointer; color:var(--ink);}
+.quiz-opt.sel-correct{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.quiz-opt.sel-wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+.quiz-opt.reveal-correct{border-color:var(--sage); box-shadow:inset 0 0 0 1px var(--sage);}
+
+.match-wrap{display:flex; gap:14px; max-width:520px; margin:0 auto;}
+.match-col{flex:1; display:flex; flex-direction:column; gap:8px;}
+.match-tile{background:#fff; border:1.5px solid var(--line); border-radius:8px; padding:9px 12px; font-size:13px; font-weight:700; cursor:pointer; text-align:center; color:var(--ink); transition:.15s;}
+.match-tile.selected{border-color:var(--gold); background:var(--cream); box-shadow:inset 0 0 0 1.5px var(--gold);}
+.match-tile.matched{background:var(--sage-bg); border-color:var(--sage); color:#2f5741; cursor:default;}
+.match-tile.wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+.memo-status{font-size:13.5px; color:var(--ink-soft); font-weight:700; text-align:center; margin-top:10px;}
+.round-tabs{display:flex; gap:6px; justify-content:center; margin-bottom:12px;}
+.round-btn{border:1.5px solid var(--line); background:#fff; padding:5px 12px; border-radius:14px; font-size:12px; font-weight:700; cursor:pointer; color:var(--ink-soft);}
+.round-btn.active{background:var(--plum); color:#fff; border-color:#4d3752;}
+
+.btn{border:none; cursor:pointer; font-family:'Manrope'; font-weight:800; padding:10px 20px; border-radius:24px; font-size:14px; letter-spacing:.2px; background:var(--plum); color:#fff; box-shadow:0 4px 10px rgba(107,78,113,0.25); transition:.15s;}
+.btn:hover{transform:translateY(-1px);}
+.btn.secondary{background:transparent; color:var(--plum); border:1.5px solid var(--plum); box-shadow:none;}
+.btn.small{padding:6px 14px; font-size:12.5px;}
+.actions-row{display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; align-items:center;}
+
+.hw-list{display:flex; flex-direction:column; gap:10px; margin-top:16px;}
+.hw-item{display:flex; gap:10px; align-items:flex-start; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:11px 14px; font-size:13.5px; cursor:pointer; transition:.15s;}
+.hw-item:has(.hw-check:checked){background:var(--sage-bg); border-color:var(--sage);}
+.hw-check{margin-top:3px; width:16px; height:16px; accent-color:var(--sage); flex-shrink:0;}
+.hw-item b{color:var(--brick-dark); font-family:'Fraunces',serif;}
+
+@media print{
+  .topbar, .unit-banner, .no-print{ display:none !important; }
+  body{ background:#fff; padding:0; }
+}
+
+.footer-note{text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:24px; padding:0 20px;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="book-title">Vocabulary Review · после Units 1–4</div>
+  <div class="progress-steps">
+    <div class="pstep"><i id="bar-1"></i></div>
+    <div class="pstep"><i id="bar-2"></i></div>
+    <div class="pstep"><i id="bar-3"></i></div>
+    <div class="pstep"><i id="bar-4"></i></div>
+    <div class="pstep"><i id="bar-5"></i></div>
+  </div>
+  <div class="score-pill">1 / 3 · Люди</div>
+</div>
+
+<div class="page">
+
+  <div class="unit-banner">
+    <div class="unit-tag"><span class="u">VOCAB<br>REVIEW</span><span class="n">1</span></div>
+    <h1>Люди <span style="font-weight:400; font-size:18px; opacity:.85;">61 слово из Units 1–4</span></h1>
+    <p>Обзор → Тексты → Картинка → Игры → Аудирование → Продакшн → Домашнее задание</p>
+  </div>
+
+  <!-- ===================== A · OVERVIEW ===================== -->
+  <div class="section" id="overview">
+    <div class="tab">A</div>
+    <div class="content">
+      <div class="eyebrow">Overview</div>
+      <h2>Все 61 слово по темам</h2>
+      <p class="lead">Это не новые слова — все они уже встречались в Units 1–4. Задача этого урока — не выучить, а закрепить их в контексте.</p>
+      <div class="voice-picker">
+        <label for="voiceSelect">Голос:</label>
+        <select id="voiceSelect"></select>
+      </div>
+      <div id="themeBlocks"></div>
+    </div>
+  </div>
+
+  <!-- ===================== B · READING 1 ===================== -->
+  <div class="section alt" id="reading1">
+    <div class="tab">B</div>
+    <div class="content">
+      <div class="eyebrow">Reading 1</div>
+      <h2>Anna's family</h2>
+      <p class="lead">Профессии и семья — в связном тексте.</p>
+      <div class="read-text">
+        <p>Anna is a <span class="chunk">student</span>. Her <span class="chunk">father</span> is a <span class="chunk">doctor</span>, and her <span class="chunk">mother</span> is a <span class="chunk">journalist</span>. Anna's <span class="chunk">brother</span> is a taxi driver, and her <span class="chunk">sister</span> is a <span class="chunk">teacher</span>.</p>
+        <p>They are very <span class="chunk">interesting</span> <span class="chunk">people</span>! Anna's <span class="chunk">good</span> <span class="chunk">friend</span>, Tom, is a <span class="chunk">lawyer</span>. He's <span class="chunk">married</span>, and his <span class="chunk">wife</span> is a <span class="chunk">designer</span>.</p>
+      </div>
+      <h3 style="font-size:14.5px; margin:16px 0 8px; color:var(--brick-dark);">True or False</h3>
+      <div id="tf1List"></div>
+      <div class="actions-row"><span class="fb-line" id="tf1Feedback"></span></div>
+    </div>
+  </div>
+
+  <!-- ===================== C · READING 2 ===================== -->
+  <div class="section" id="reading2">
+    <div class="tab">C</div>
+    <div class="content">
+      <div class="eyebrow">Reading 2</div>
+      <h2>How is everyone feeling?</h2>
+      <p class="lead">Чувства и вежливые фразы — в диалоге.</p>
+      <div class="dialog-bubbles">
+        <div class="d-bubble q">Are you <b>OK</b>?</div>
+        <div class="d-bubble a">Yes, I'm <b>fine</b>, <b>thanks</b>.</div>
+        <div class="d-bubble q">Are you <b>hungry</b>?</div>
+        <div class="d-bubble a">No, but I'm <b>thirsty</b>.</div>
+        <div class="d-bubble q">Are you <b>tired</b>?</div>
+        <div class="d-bubble a">Yes, I'm very tired today.</div>
+        <div class="d-bubble narr"><b>Sarah</b> is <b>scared</b> of dogs.</div>
+        <div class="d-bubble narr">Ben's car is <b>broken</b>. He's <b>angry</b>!</div>
+        <div class="d-bubble q">I'm <b>sorry</b>!</div>
+      </div>
+      <h3 style="font-size:14.5px; margin:16px 0 8px; color:var(--brick-dark);">True or False</h3>
+      <div id="tf2List"></div>
+      <div class="actions-row"><span class="fb-line" id="tf2Feedback"></span></div>
+    </div>
+  </div>
+
+  <!-- ===================== D · PICTURE ===================== -->
+  <div class="section alt" id="picture">
+    <div class="tab">D</div>
+    <div class="content">
+      <div class="eyebrow">Picture description</div>
+      <h2>Опишите сцену</h2>
+      <p class="lead">Посмотрите на картинку и опишите людей своими словами — используйте слова-подсказки.</p>
+      <div class="scene-box">
+        <svg viewBox="0 0 420 260" width="420">
+          <rect x="0" y="0" width="420" height="260" fill="#F5EEF6"/>
+          <rect x="0" y="200" width="420" height="60" fill="#E4D5E7"/>
+          <!-- figure 1: doctor -->
+          <g>
+            <ellipse cx="90" cy="235" rx="42" ry="9" fill="#D9C6DD"/>
+            <rect x="60" y="120" width="60" height="90" rx="18" fill="#FFFFFF" stroke="#D9C6DD" stroke-width="2"/>
+            <path d="M75 130 Q90 150 105 130" stroke="#5A8FA8" stroke-width="5" fill="none"/>
+            <circle cx="75" cy="128" r="5" fill="#5A8FA8"/>
+            <circle cx="105" cy="128" r="5" fill="#5A8FA8"/>
+            <circle cx="90" cy="90" r="26" fill="#F2C29B"/>
+            <path d="M64 84 Q90 55 116 84 Q118 100 110 108 Q112 78 90 74 Q68 78 70 108 Q62 100 64 84Z" fill="#3A2A1A"/>
+            <circle cx="80" cy="92" r="2.6" fill="#2A2622"/>
+            <circle cx="100" cy="92" r="2.6" fill="#2A2622"/>
+            <path d="M80 102 Q90 108 100 102" stroke="#2A2622" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <rect x="70" y="205" width="15" height="30" fill="#4A6B7A"/>
+            <rect x="95" y="205" width="15" height="30" fill="#4A6B7A"/>
+          </g>
+          <!-- figure 2: teacher -->
+          <g>
+            <ellipse cx="210" cy="240" rx="46" ry="9" fill="#D9C6DD"/>
+            <rect x="176" y="118" width="68" height="95" rx="18" fill="#AD3B2C"/>
+            <circle cx="210" cy="86" r="27" fill="#EBB489"/>
+            <path d="M182 80 Q210 48 238 80 Q240 96 230 104 Q234 70 210 68 Q186 70 190 104 Q180 96 182 80Z" fill="#2A2622"/>
+            <circle cx="199" cy="88" r="2.6" fill="#2A2622"/>
+            <circle cx="221" cy="88" r="2.6" fill="#2A2622"/>
+            <path d="M199 98 Q210 104 221 98" stroke="#2A2622" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <rect x="185" y="213" width="16" height="32" fill="#2A2622"/>
+            <rect x="219" y="213" width="16" height="32" fill="#2A2622"/>
+            <!-- small blackboard prop -->
+            <rect x="250" y="150" width="46" height="34" rx="3" fill="#2E4A3E" stroke="#8A6A3A" stroke-width="4"/>
+            <path d="M258 165 L270 165 M258 172 L282 172" stroke="#fff" stroke-width="2"/>
+          </g>
+          <!-- figure 3: student -->
+          <g>
+            <ellipse cx="335" cy="238" rx="42" ry="9" fill="#D9C6DD"/>
+            <rect x="303" y="122" width="64" height="90" rx="18" fill="#4F8F6D"/>
+            <circle cx="335" cy="90" r="25" fill="#F2C29B"/>
+            <path d="M310 84 Q335 55 360 84 Q362 100 353 108 Q356 76 335 72 Q314 76 317 108 Q308 100 310 84Z" fill="#4A3222"/>
+            <circle cx="325" cy="92" r="2.6" fill="#2A2622"/>
+            <circle cx="345" cy="92" r="2.6" fill="#2A2622"/>
+            <path d="M325 102 Q335 108 345 102" stroke="#2A2622" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <rect x="312" y="211" width="15" height="30" fill="#2E5C42"/>
+            <rect x="337" y="211" width="15" height="30" fill="#2E5C42"/>
+            <!-- backpack -->
+            <rect x="358" y="140" width="22" height="34" rx="6" fill="#C97B2A"/>
+            <rect x="362" y="146" width="14" height="6" rx="2" fill="#8E2E22"/>
+          </g>
+        </svg>
+        <div class="word-bank">
+          <span class="wb-chip">father</span><span class="wb-chip">doctor</span><span class="wb-chip">teacher</span>
+          <span class="wb-chip">student</span><span class="wb-chip">friend</span><span class="wb-chip">good</span>
+          <span class="wb-chip">nice</span><span class="wb-chip">interesting</span><span class="wb-chip">people</span>
+        </div>
+      </div>
+      <textarea class="write-area" id="pictureArea" placeholder="These are three people. On the left..."></textarea>
+      <div class="actions-row">
+        <button class="btn secondary small" id="showPicSample">Показать пример</button>
+      </div>
+      <div class="reveal-box" id="picSample">
+        <b>Пример:</b> These are three people. On the left, a man is a doctor. In the middle, a woman is a teacher. On the right, a man is a student. They are good friends and very interesting people!
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== E · GAMES ===================== -->
+  <div class="section" id="games">
+    <div class="tab">E</div>
+    <div class="content">
+      <div class="eyebrow">Practice</div>
+      <h2>Закрепляем: три игры</h2>
+
+      <div class="game-tabs">
+        <button class="game-tab-btn active" data-panel="panel-quiz">⚡ Квиз: chunk'и</button>
+        <button class="game-tab-btn" data-panel="panel-match">📚 Пары: слово ↔ перевод</button>
+      </div>
+
+      <div class="game-panel active" id="panel-quiz">
+        <div id="quizList"></div>
+        <div class="actions-row"><span class="fb-line" id="quizFeedback"></span></div>
+      </div>
+
+      <div class="game-panel" id="panel-match">
+        <div class="round-tabs" id="roundTabs"></div>
+        <div class="match-wrap">
+          <div class="match-col" id="matchEnCol"></div>
+          <div class="match-col" id="matchRuCol"></div>
+        </div>
+        <div class="memo-status" id="matchStatus"></div>
+        <div class="actions-row" style="justify-content:center;">
+          <button class="btn secondary small" id="restartMatchBtn">Перемешать раунд заново</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== F · LISTENING ===================== -->
+  <div class="section alt" id="listening">
+    <div class="tab">F</div>
+    <div class="content">
+      <div class="eyebrow">Listening</div>
+      <h2>Слушаем вслепую</h2>
+      <p class="lead">Этот диалог вы ещё не видели — это новый текст, не повторение блока C. Выберите скорость, слушайте 1-2 раза, ответьте на вопросы — и только потом откройте скрипт для проверки.</p>
+      <div class="voice-picker">
+        <label>Скорость:</label>
+        <div class="speed-btns">
+          <button class="speed-btn" data-rate="0.6">🐢 Медленно</button>
+          <button class="speed-btn active" data-rate="0.95">🔊 Обычно</button>
+        </div>
+      </div>
+      <div class="actions-row">
+        <button class="btn" id="playListeningBtn">▶️ Слушать диалог</button>
+      </div>
+      <h3 style="font-size:14.5px; margin:18px 0 8px; color:var(--brick-dark);">Вопросы по прослушанному</h3>
+      <div id="tf3List"></div>
+      <div class="actions-row"><span class="fb-line" id="tf3Feedback"></span></div>
+      <div class="actions-row">
+        <button class="btn secondary small" id="toggleScriptBtn">📜 Показать скрипт (для проверки)</button>
+      </div>
+      <div class="reveal-box" id="scriptBox">
+        <b>Скрипт:</b><br>
+        "Hello! What's your name?" — "My name's Maria. I'm Italian."<br>
+        "Are you a student?" — "No, I'm a nurse."<br>
+        "Is your job interesting?" — "Yes, it's very interesting, but I'm often tired."<br>
+        "Is that your friend over there?" — "Yes, he's English. He's a football player."<br>
+        "He's very quiet, but he's kind."
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== G · PRODUCTION ===================== -->
+  <div class="section" id="production">
+    <div class="tab">G</div>
+    <div class="content">
+      <div class="eyebrow">Production</div>
+      <h2>Расскажите о своей семье и о себе</h2>
+      <p class="lead">Напишите 6-8 предложений: кто ваши близкие (профессии), какие они, и как вы себя чувствуете сегодня — используйте только "to be" (I'm.../He's...) и present continuous, present simple мы пока не берём. Минимум 10 слов из этого урока.</p>
+      <textarea class="write-area" id="writeArea" placeholder="My father is..."></textarea>
+      <div class="word-count" id="wordCount">0 слов</div>
+      <div class="actions-row"><button class="btn" id="finishBtn">Готово!</button></div>
+    </div>
+  </div>
+
+  <!-- ===================== H · HOMEWORK ===================== -->
+  <div class="section alt" id="homework">
+    <div class="tab">H</div>
+    <div class="content">
+      <div class="eyebrow">Homework</div>
+      <h2>Домашнее задание</h2>
+      <div class="hw-list">
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>1.</b> Пройдите игру «Пары» (блок E) для обоих раундов без единой ошибки.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>2.</b> Опишите вслух (или запишите голосом) фото своей реальной семьи или друзей — минимум 5 предложений.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>3.</b> Перескажите текст 1 (Anna's family) своими словами, не подглядывая.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>4.</b> Составьте диалог из 6 реплик про самочувствие (Are you OK? / tired? / hungry?) и разыграйте с кем-то.</span></label>
+      </div>
+      <div class="actions-row">
+        <span class="fb-line" id="hwFeedback">Выполнено: 0 / 4</span>
+        <button class="btn secondary small no-print" id="printHwBtn">🖨️ Распечатать задание</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<p class="footer-note">Vocabulary Review 1 · слова из Essential Grammar in Use, Units 1–4 — авторская подборка на базе накопленного словаря курса.</p>
+
+<script>
+/* ---------------- DATA ---------------- */
+const posShort = {"существительное":"сущ.","прилагательное":"прил.","глагол":"гл.","наречие":"нареч.",
+  "прилагательное / сущ.":"прил./сущ.","прилагательное/междометие":"прил./межд.","прилагательное / сущ.":"прил./сущ.",
+  "прилагательное/междометие":"прил./межд.","междометие":"межд.","наречие / вежливая частица":"нареч.",
+  "прилагательное / сущ.":"прил./сущ.","прилагательное / сущ.":"прил./сущ."};
+
+const themes = [
+  { title:"Профессии и роли", words:[
+    ["student","студент, учащийся","/ˈstjuːdənt/","сущ."],["teacher","учитель","/ˈtiːtʃə/","сущ."],
+    ["doctor","врач","/ˈdɒktə/","сущ."],["nurse","медсестра","/nɜːs/","сущ."],
+    ["driver","водитель","/ˈdraɪvə/","сущ."],["lawyer","юрист, адвокат","/ˈlɔːjə/","сущ."],
+    ["journalist","журналист","/ˈdʒɜːnəlɪst/","сущ."],["designer","дизайнер","/dɪˈzaɪnə/","сущ."],
+    ["player","игрок","/ˈpleɪə/","сущ."],["swimmer","пловец","/ˈswɪmə/","сущ."],
+    ["parent","родитель","/ˈpeərənt/","сущ."],["child","ребёнок","/tʃaɪld/","сущ."],
+    ["man","мужчина","/mæn/","сущ."],["woman","женщина","/ˈwʊmən/","сущ."],
+    ["friend","друг","/frend/","сущ."],["people","люди","/ˈpiːpl/","сущ."],
+  ]},
+  { title:"Семья", words:[
+    ["father","отец","/ˈfɑːðə/","сущ."],["mother","мать","/ˈmʌðə/","сущ."],
+    ["sister","сестра","/ˈsɪstə/","сущ."],["brother","брат","/ˈbrʌðə/","сущ."],["wife","жена","/waɪf/","сущ."],
+  ]},
+  { title:"Национальности", words:[
+    ["English","английский","/ˈɪŋɡlɪʃ/","прил."],["Australian","австралийский","/ɒˈstreɪliən/","прил."],
+    ["American","американский","/əˈmerɪkən/","прил."],["Italian","итальянский","/ɪˈtæliən/","прил."],
+  ]},
+  { title:"Чувства и состояния", words:[
+    ["cold","холодный / замёрзший","/kəʊld/","прил."],["hot","жаркий / горячий","/hɒt/","прил."],
+    ["tired","уставший","/ˈtaɪəd/","прил."],["hungry","голодный","/ˈhʌŋɡri/","прил."],
+    ["thirsty","хотящий пить","/ˈθɜːsti/","прил."],["scared","напуганный","/skeəd/","прил."],
+    ["angry","злой","/ˈæŋɡri/","прил."],["ill","больной","/ɪl/","прил."],
+    ["quiet","тихий","/ˈkwaɪət/","прил."],["feel","чувствовать себя","/fiːl/","гл."],
+    ["OK","хорошо, нормально","/ˌəʊˈkeɪ/","прил./межд."],["fine","в порядке","/faɪn/","прил."],
+  ]},
+  { title:"Характер и оценки", words:[
+    ["good","хороший","/ɡʊd/","прил."],["kind","добрый","/kaɪnd/","прил."],
+    ["nice","приятный","/naɪs/","прил."],["rich","богатый","/rɪtʃ/","прил."],
+    ["beautiful","красивый","/ˈbjuːtɪfl/","прил."],["interesting","интересный","/ˈɪntrəstɪŋ/","прил."],
+    ["interested","заинтересованный","/ˈɪntrəstɪd/","прил."],["favourite","любимый","/ˈfeɪvərɪt/","прил."],
+    ["funny","смешной","/ˈfʌni/","прил."],
+  ]},
+  { title:"Вежливые фразы", words:[
+    ["please","пожалуйста","/pliːz/","нареч."],["thank","благодарить","/θæŋk/","гл."],
+    ["thanks","спасибо","/θæŋks/","межд."],["sorry","извините","/ˈsɒri/","прил./межд."],
+    ["goodbye","до свидания","/ˌɡʊdˈbaɪ/","межд."],["see","видеть","/siː/","гл."],
+    ["enjoy","получать удовольствие","/ɪnˈdʒɔɪ/","гл."],
+  ]},
+  { title:"Разное", words:[
+    ["name","имя","/neɪm/","сущ."],["age","возраст","/eɪdʒ/","сущ."],["job","работа","/dʒɒb/","сущ."],
+    ["old","старый / ...лет","/əʊld/","прил."],["married","женат/замужем","/ˈmærid/","прил."],
+    ["foot","нога, ступня","/fʊt/","сущ."],["hair","волосы","/heə/","сущ."],["cry","плакать","/kraɪ/","гл."],
+  ]},
+];
+
+const themeBlocksEl = document.getElementById('themeBlocks');
+themes.forEach(t=>{
+  const block = document.createElement('div');
+  block.className = 'theme-block';
+  block.innerHTML = `<div class="theme-title">${t.title} <span class="n">${t.words.length}</span></div>`;
+  const grid = document.createElement('div');
+  grid.className = 'word-chip-grid';
+  t.words.forEach(([en,ru,ipa,pos])=>{
+    const chip = document.createElement('div');
+    chip.className = 'word-chip';
+    chip.innerHTML = `<button class="play-btn" data-text="${en}" data-rate="0.9">🔊</button><b>${en}</b><span class="ipa-pos">${ipa} · ${pos}</span><span class="ru">${ru}</span>`;
+    grid.appendChild(chip);
+  });
+  block.appendChild(grid);
+  themeBlocksEl.appendChild(block);
+});
+
+/* ---------------- TTS ---------------- */
+function scoreVoice(v){
+  const n = v.name.toLowerCase(); let s = 0;
+  if(n.includes('enhanced') || n.includes('premium') || n.includes('neural') || n.includes('natural')) s += 5;
+  if(n.includes('google')) s += 3; if(n.includes('siri')) s += 3;
+  if(v.lang === 'en-GB') s += 2; if(v.lang && v.lang.startsWith('en')) s += 1; if(v.localService) s += 1;
+  return s;
+}
+function populateVoiceList(){
+  const sel = document.getElementById('voiceSelect');
+  if(!sel || !('speechSynthesis' in window)) return;
+  const voices = window.speechSynthesis.getVoices().filter(v=>v.lang && v.lang.startsWith('en'));
+  if(!voices.length) return;
+  const prevValue = sel.value;
+  sel.innerHTML = '';
+  voices.sort((a,b)=>scoreVoice(b)-scoreVoice(a));
+  voices.forEach(v=>{ const opt=document.createElement('option'); opt.value=v.name+'|'+v.lang; opt.textContent=`${v.name} (${v.lang})`; sel.appendChild(opt); });
+  if(prevValue && voices.some(v=>(v.name+'|'+v.lang)===prevValue)) sel.value = prevValue;
+}
+function pickVoice(){
+  const sel = document.getElementById('voiceSelect');
+  const voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
+  if(sel && sel.value){ const chosen = voices.find(v => (v.name+'|'+v.lang) === sel.value); if(chosen) return chosen; }
+  return voices.find(v=>v.lang === 'en-GB') || voices.find(v=>v.lang && v.lang.startsWith('en')) || null;
+}
+if('speechSynthesis' in window){ populateVoiceList(); window.speechSynthesis.onvoiceschanged = populateVoiceList; }
+function speak(text, rate, btn){
+  if(!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.rate = rate || 1; utter.pitch = 1;
+  const v = pickVoice(); if(v) utter.voice = v;
+  if(btn){ utter.onstart = ()=>btn.classList.add('playing'); utter.onend = ()=>btn.classList.remove('playing'); }
+  window.speechSynthesis.speak(utter);
+}
+document.addEventListener('click', (e)=>{
+  const btn = e.target.closest('.play-btn');
+  if(btn){ speak(btn.dataset.text, parseFloat(btn.dataset.rate||"1"), btn); }
+});
+
+/* ---------------- TRUE/FALSE builder ---------------- */
+function buildTF(containerId, feedbackId, data, onDone){
+  const el = document.getElementById(containerId);
+  let answered = 0, correct = 0;
+  data.forEach((item, idx)=>{
+    const row = document.createElement('div');
+    row.className = 'tf-item';
+    row.innerHTML = `<div class="tf-text">${idx+1}. ${item.text}</div><div class="tf-btns"><button class="tf-btn" data-val="true">True</button><button class="tf-btn" data-val="false">False</button></div>`;
+    el.appendChild(row);
+    row.querySelectorAll('.tf-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        if(row.dataset.done) return;
+        row.dataset.done = "1";
+        const val = btn.dataset.val === "true";
+        row.querySelectorAll('.tf-btn').forEach(b=>{ if((b.dataset.val === "true") === item.correct) b.classList.add('reveal-correct'); });
+        btn.classList.add(val === item.correct ? 'sel-correct' : 'sel-wrong');
+        answered++; if(val === item.correct) correct++;
+        document.getElementById(feedbackId).textContent = `Отвечено: ${answered} из ${data.length} · верно: ${correct}`;
+        if(answered === data.length && onDone) onDone(correct);
+      });
+    });
+  });
+}
+
+buildTF('tf1List','tf1Feedback',[
+  { text:"Anna's father is a teacher.", correct:false },
+  { text:"Anna's mother is a journalist.", correct:true },
+  { text:"Anna's sister is a taxi driver.", correct:false },
+  { text:"Tom is married.", correct:true },
+  { text:"Tom's wife is a lawyer.", correct:false },
+], ()=>markDone(1));
+
+buildTF('tf2List','tf2Feedback',[
+  { text:"The person is hungry.", correct:false },
+  { text:"The person is tired today.", correct:true },
+  { text:"Sarah is scared of dogs.", correct:true },
+  { text:"Ben's car is new.", correct:false },
+], ()=>markDone(2));
+
+buildTF('tf3List','tf3Feedback',[
+  { text:"Maria is a student.", correct:false },
+  { text:"Maria is Italian.", correct:true },
+  { text:"Maria's job isn't interesting.", correct:false },
+  { text:"Maria's friend is a football player.", correct:true },
+  { text:"Her friend is very quiet.", correct:true },
+], ()=>markDone(3));
+
+let listeningRate = 0.95;
+document.querySelectorAll('.speed-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    listeningRate = parseFloat(btn.dataset.rate);
+  });
+});
+document.getElementById('playListeningBtn').addEventListener('click', ()=>{
+  const lines = ["Hello! What's your name?","My name's Maria. I'm Italian.","Are you a student?","No, I'm a nurse.",
+    "Is your job interesting?","Yes, it's very interesting, but I'm often tired.",
+    "Is that your friend over there?","Yes, he's English. He's a football player.",
+    "He's very quiet, but he's kind."];
+  let i = 0;
+  const btn = document.getElementById('playListeningBtn');
+  function next(){
+    if(i >= lines.length) return;
+    speak(lines[i], listeningRate, btn);
+    const words = lines[i].split(' ').length;
+    i++;
+    setTimeout(next, Math.max(1200, words*420/listeningRate));
+  }
+  next();
+});
+document.getElementById('toggleScriptBtn').addEventListener('click', ()=>{
+  document.getElementById('scriptBox').classList.toggle('shown');
+});
+
+/* ---------------- PROGRESS ---------------- */
+function markDone(n){ document.getElementById('bar-'+n).style.width = '100%'; }
+
+document.getElementById('showPicSample').addEventListener('click', ()=>{
+  document.getElementById('picSample').classList.toggle('shown');
+});
+document.getElementById('pictureArea').addEventListener('input', ()=>markDone(4));
+
+/* ---------------- QUIZ ---------------- */
+const quizData = [
+  { q:"get ___", opts:["married","tired","late"], correct:"married" },
+  { q:"feel ___ (голодный)", opts:["hungry","quiet","kind"], correct:"hungry" },
+  { q:"scared ___ dogs", opts:["from","of","with"], correct:"of" },
+  { q:"say ___", opts:["goodbye","sorry","please"], correct:"goodbye" },
+  { q:"___ a doctor", opts:["see","take","have"], correct:"see" },
+  { q:"best ___", opts:["friend","people","child"], correct:"friend" },
+  { q:"I'm ___, thanks.", opts:["fine","sorry","late"], correct:"fine" },
+  { q:"be ___ (тихо)", opts:["quiet","kind","rich"], correct:"quiet" },
+];
+const quizListEl = document.getElementById('quizList');
+let quizAnswered = 0;
+quizData.forEach((item, idx)=>{
+  const box = document.createElement('div');
+  box.className = 'quiz-q';
+  box.innerHTML = `<p>${idx+1}. ${item.q}</p><div class="quiz-opts">${item.opts.map(o=>`<button class="quiz-opt" data-correct="${o===item.correct}">${o}</button>`).join('')}</div>`;
+  quizListEl.appendChild(box);
+});
+document.querySelectorAll('#quizList .quiz-opts').forEach(group=>{
+  group.querySelectorAll('.quiz-opt').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      if(group.dataset.done) return;
+      group.dataset.done = "1";
+      group.querySelectorAll('.quiz-opt').forEach(b=>{ if(b.dataset.correct === "true") b.classList.add('reveal-correct'); });
+      if(btn.dataset.correct === "true"){ btn.classList.add('sel-correct'); } else { btn.classList.add('sel-wrong'); }
+      quizAnswered++;
+      const correctSoFar = document.querySelectorAll('#quizList .quiz-opt.sel-correct').length;
+      document.getElementById('quizFeedback').textContent = `Отвечено: ${quizAnswered} из ${quizData.length} · верно: ${correctSoFar}`;
+      if(quizAnswered === quizData.length) markDone(5);
+    });
+  });
+});
+
+/* ---------------- MATCH GAME (2 rounds) ---------------- */
+const rounds = [
+  { name:"Профессии", pairs:[
+    ["student","студент"],["teacher","учитель"],["doctor","врач"],["nurse","медсестра"],
+    ["driver","водитель"],["lawyer","юрист"],["journalist","журналист"],["designer","дизайнер"],
+    ["player","игрок"],["swimmer","пловец"],["parent","родитель"],["wife","жена"],
+  ]},
+  { name:"Чувства и характер", pairs:[
+    ["cold","холодный"],["hot","жаркий"],["tired","уставший"],["hungry","голодный"],
+    ["thirsty","хочет пить"],["scared","напуганный"],["angry","злой"],["ill","больной"],
+    ["quiet","тихий"],["kind","добрый"],["rich","богатый"],["funny","смешной"],
+  ]},
+];
+let curRound = 0, matchSelectedEn = null, matchSelectedRu = null, matchFound = 0, matchLock = false;
+
+const roundTabsEl = document.getElementById('roundTabs');
+rounds.forEach((r, i)=>{
+  const b = document.createElement('button');
+  b.className = 'round-btn' + (i===0 ? ' active':'');
+  b.textContent = r.name;
+  b.addEventListener('click', ()=>{ curRound = i; document.querySelectorAll('.round-btn').forEach(x=>x.classList.remove('active')); b.classList.add('active'); renderMatch(); });
+  roundTabsEl.appendChild(b);
+});
+
+function shuffle(arr){ for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; } return arr; }
+function renderMatch(){
+  const pairs = rounds[curRound].pairs;
+  const enCol = document.getElementById('matchEnCol');
+  const ruCol = document.getElementById('matchRuCol');
+  enCol.innerHTML = ''; ruCol.innerHTML = '';
+  matchSelectedEn = null; matchSelectedRu = null; matchFound = 0; matchLock = false;
+  document.getElementById('matchStatus').textContent = `Найдено пар: 0 / ${pairs.length}`;
+  const enShuffled = shuffle(pairs.map((w,i)=>({en:w[0],ru:w[1],idx:i})));
+  const ruShuffled = shuffle(pairs.map((w,i)=>({en:w[0],ru:w[1],idx:i})));
+  enShuffled.forEach(w=>{
+    const el = document.createElement('div');
+    el.className = 'match-tile'; el.dataset.idx = w.idx; el.textContent = w.en;
+    el.addEventListener('click', ()=>onMatchClick(el, 'en', w.idx, pairs.length));
+    enCol.appendChild(el);
+  });
+  ruShuffled.forEach(w=>{
+    const el = document.createElement('div');
+    el.className = 'match-tile'; el.dataset.idx = w.idx; el.textContent = w.ru;
+    el.addEventListener('click', ()=>onMatchClick(el, 'ru', w.idx, pairs.length));
+    ruCol.appendChild(el);
+  });
+}
+function onMatchClick(el, side, idx, total){
+  if(matchLock || el.classList.contains('matched')) return;
+  if(side === 'en'){ if(matchSelectedEn) matchSelectedEn.classList.remove('selected'); matchSelectedEn = el; el.classList.add('selected'); }
+  else { if(matchSelectedRu) matchSelectedRu.classList.remove('selected'); matchSelectedRu = el; el.classList.add('selected'); }
+  if(matchSelectedEn && matchSelectedRu){
+    matchLock = true;
+    const ok = matchSelectedEn.dataset.idx === matchSelectedRu.dataset.idx;
+    if(ok){
+      matchSelectedEn.classList.remove('selected'); matchSelectedRu.classList.remove('selected');
+      matchSelectedEn.classList.add('matched'); matchSelectedRu.classList.add('matched');
+      matchFound++;
+      document.getElementById('matchStatus').textContent = `Найдено пар: ${matchFound} / ${total}`;
+      matchSelectedEn = null; matchSelectedRu = null; matchLock = false;
+    } else {
+      matchSelectedEn.classList.add('wrong'); matchSelectedRu.classList.add('wrong');
+      setTimeout(()=>{
+        matchSelectedEn.classList.remove('selected','wrong'); matchSelectedRu.classList.remove('selected','wrong');
+        matchSelectedEn = null; matchSelectedRu = null; matchLock = false;
+      }, 600);
+    }
+  }
+}
+document.getElementById('restartMatchBtn').addEventListener('click', renderMatch);
+renderMatch();
+
+document.querySelectorAll('.game-tab-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.game-tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.game-panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.panel).classList.add('active');
+  });
+});
+
+/* ---------------- PRODUCTION ---------------- */
+const writeArea = document.getElementById('writeArea');
+writeArea.addEventListener('input', ()=>{
+  const words = writeArea.value.trim().split(/\s+/).filter(Boolean).length;
+  document.getElementById('wordCount').textContent = `${words} слов`;
+});
+document.getElementById('finishBtn').addEventListener('click', ()=>{
+  const words = writeArea.value.trim().split(/\s+/).filter(Boolean).length;
+  document.getElementById('wordCount').textContent = words >= 20 ? `${words} слов · ✅ отлично!` : `${words} слов · напишите чуть больше`;
+});
+
+/* ---------------- HOMEWORK ---------------- */
+const hwChecks = document.querySelectorAll('.hw-check');
+function updateHw(){
+  const done = document.querySelectorAll('.hw-check:checked').length;
+  document.getElementById('hwFeedback').textContent = `Выполнено: ${done} / ${hwChecks.length}`;
+}
+hwChecks.forEach(c=>c.addEventListener('change', updateHw));
+document.getElementById('printHwBtn').addEventListener('click', ()=>window.print());
+</script>
+</body>
+</html>
