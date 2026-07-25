@@ -41,6 +41,35 @@ function setSetting(key, val){
 const GROQ_VOICES = ["autumn", "diana", "hannah", "austin", "daniel", "troy"];
 const _ttsCache = new Map();
 let _ttsAudio = null;
+let _ttsQueue = Promise.resolve(); /* запросы к Groq идут строго по одному */
+const _sleep = ms => new Promise(res => setTimeout(res, ms));
+
+async function _fetchTts(input, voice, key){
+  /* 1) постоянный кэш браузера — уже озвученные фразы не запрашиваются повторно */
+  const cacheKey = "/tts-cache/v1/" + voice + "/" + encodeURIComponent(input);
+  let store = null;
+  try { store = await caches.open("inglish-tts"); } catch(e){}
+  if (store) {
+    try { const hit = await store.match(cacheKey); if (hit) return await hit.blob(); } catch(e){}
+  }
+  /* 2) запрос с повторами: лимит запросов в минуту (429) — ждём и пробуем снова */
+  for (let attempt = 0; ; attempt++) {
+    const r = await fetch("https://api.groq.com/openai/v1/audio/speech", {
+      method: "POST",
+      headers: { "Authorization": "Bearer " + key, "Content-Type": "application/json" },
+      body: JSON.stringify({ model: "canopylabs/orpheus-v1-english", input, voice, response_format: "wav" })
+    });
+    if (r.status === 429 && attempt < 3) { await _sleep(1800 * (attempt + 1)); continue; }
+    if (!r.ok) {
+      let msg = "groq-" + r.status;
+      try { const j = await r.json(); if (j.error && j.error.message) msg = j.error.message; } catch(e){}
+      throw new Error(msg);
+    }
+    const blob = await r.blob();
+    if (store) { try { await store.put(cacheKey, new Response(blob, { headers: { "Content-Type": "audio/wav" } })); } catch(e){} }
+    return blob;
+  }
+}
 
 async function groqSpeak(text, rate){
   const key = getSetting("groqKey");
@@ -52,22 +81,10 @@ async function groqSpeak(text, rate){
   const cacheId = voice + "|" + input;
   let url = _ttsCache.get(cacheId);
   if (!url) {
-    const r = await fetch("https://api.groq.com/openai/v1/audio/speech", {
-      method: "POST",
-      headers: { "Authorization": "Bearer " + key, "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "canopylabs/orpheus-v1-english",
-        input: input,
-        voice: voice,
-        response_format: "wav"
-      })
-    });
-    if (!r.ok) {
-      let msg = "groq-" + r.status;
-      try { const j = await r.json(); if (j.error && j.error.message) msg = j.error.message; } catch(e){}
-      throw new Error(msg);
-    }
-    url = URL.createObjectURL(await r.blob());
+    const task = _ttsQueue.catch(() => {}).then(() => _fetchTts(input, voice, key));
+    _ttsQueue = task;
+    const blob = await task;
+    url = _ttsCache.get(cacheId) || URL.createObjectURL(blob);
     _ttsCache.set(cacheId, url);
   }
   if (_ttsAudio) { _ttsAudio.pause(); _ttsAudio = null; }

@@ -122,7 +122,7 @@ function installVoice(frame){
     w.speak = function(text, rate, btn){
       btn && btn.classList.add('playing');
       groqSpeak(text, rate)
-        .then(() => { btn && btn.classList.remove('playing'); })
+        .then(() => { voiceOk(); btn && btn.classList.remove('playing'); })
         .catch(err => {
           voiceError(err);
           btn && btn.classList.remove('playing');
@@ -133,13 +133,23 @@ function installVoice(frame){
 }
 
 /* Groq не ответил — показываем причину, чтобы это не оставалось загадкой */
-let voiceErrorShown = false;
 function voiceError(err){
-  if (voiceErrorShown) return;
-  voiceErrorShown = true;
+  const m = err.message || '';
+  let short = 'Groq: ошибка — проверь голос в настройках';
+  if (/429|rate.?limit|too many/i.test(m)) short = 'Groq: лимит запросов в минуту — подожди чуть-чуть и нажми снова';
+  else if (/401|api key/i.test(m)) short = 'Groq не принял ключ — проверь в настройках';
+  else if (/terms/i.test(m)) short = 'Groq: нужно принять условия модели в console.groq.com';
   const pill = document.getElementById('voicePill');
   pill.className = 'voice-pill off';
-  pill.innerHTML = `<a href="index.html#/settings" title="${(err.message||'').replace(/"/g,'&quot;')}">⚠ Groq: ошибка — нажми и проверь голос в настройках</a>`;
+  pill.innerHTML = `<a href="index.html#/settings" title="${m.replace(/"/g,'&quot;')}">⚠ ${short}</a>`;
+}
+/* Groq снова отвечает — возвращаем зелёный значок */
+function voiceOk(){
+  const pill = document.getElementById('voicePill');
+  if (pill.className === 'voice-pill') return;
+  const v = getSetting('groqVoice') || 'hannah';
+  pill.className = 'voice-pill';
+  pill.innerHTML = `🎙 ${v[0].toUpperCase()+v.slice(1)}`;
 }
 
 function watchLesson(){
