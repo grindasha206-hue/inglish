@@ -559,7 +559,17 @@ async function uploadLesson(){
 
     st('busy','1/3 · Загружаю файл урока…');
     const existing = await gh(`/repos/${REPO.owner}/${REPO.name}/contents/${path}?ref=${REPO.branch}`);
-    if (existing && !confirm('Файл ' + slug + '.html уже есть на сайте. Заменить его новой версией?')) { st('err','Отменено.'); return; }
+    if (existing) {
+      /* Файл уже в хранилище. Спрашиваем, только если урок реально виден в курсе.
+         Если записи в курсе нет — это остаток прерванной загрузки, молча доделываем. */
+      let inCourse = false;
+      try {
+        const cj0 = await gh(`/repos/${REPO.owner}/${REPO.name}/contents/course.json?ref=${REPO.branch}`);
+        inCourse = !!cj0 && JSON.parse(b64ToStr(cj0.content)).levels
+          .some(L => L.modules.some(M => M.lessons.some(x => x.file === path)));
+      } catch(e){}
+      if (inCourse && !confirm('Урок из файла ' + slug + '.html уже есть на сайте. Заменить его новой версией?')) { st('err','Отменено.'); return; }
+    }
     const fileB64 = bufToB64(await pickedFile.arrayBuffer());
     await ghPutFile(path, fileB64, 'Урок: ' + title);
 

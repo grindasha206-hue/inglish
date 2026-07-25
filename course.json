@@ -64,6 +64,13 @@
               "title": "Vocabulary Review 3 · Действия и время",
               "description": "",
               "file": "lessons/vocab-review-3-actions.html"
+            },
+            {
+              "id": "itogovyi-test-units-1-4",
+              "unit": 8,
+              "title": "Итоговый тест · Units 1–4",
+              "description": "Проверка всего пройденного",
+              "file": "lessons/itogovyi-test-units-1-4.html"
             }
           ]
         }
