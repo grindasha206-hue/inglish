@@ -50,6 +50,13 @@
               "title": "Vocabulary Review 1 · Люди",
               "description": "",
               "file": "lessons/vocab-review-1-people.html"
+            },
+            {
+              "id": "vocab-review-2-home",
+              "unit": 6,
+              "title": "Vocabulary Review 2 · Дом, город и вещи",
+              "description": "",
+              "file": "lessons/vocab-review-2-home.html"
             }
           ]
         }
