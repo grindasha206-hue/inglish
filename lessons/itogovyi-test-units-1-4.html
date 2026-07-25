@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Итоговый тест · Units 1–4</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --cream:#FBF6EC; --paper:#FFFCF5; --ink:#2A2622; --ink-soft:#5c554c;
+  --brick:#AD3B2C; --brick-dark:#8E2E22; --tab:#E2963F; --tab-dark:#C97B2A;
+  --sage:#4F8F6D; --sage-bg:#E6F1EA; --coral:#D65B4A; --coral-bg:#FBE7E3;
+  --gold:#CBA35C; --line:#E4DACB; --shadow: 0 6px 18px rgba(42,38,34,0.10);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; background:radial-gradient(circle at 15% 8%, rgba(203,163,92,0.10), transparent 40%), var(--cream); color:var(--ink); font-family:'Manrope', sans-serif; line-height:1.55; padding-bottom:80px;}
+h1,h2,h3,.display{font-family:'Fraunces', serif;}
+
+.topbar{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:1px solid var(--line); padding:10px 18px; display:flex; align-items:center; gap:14px; box-shadow:0 2px 10px rgba(0,0,0,0.04);}
+.topbar .book-title{font-family:'Fraunces', serif; font-weight:700; font-size:15px; color:var(--brick-dark); white-space:nowrap;}
+.topbar-progress{flex:1; height:8px; border-radius:6px; background:var(--line); position:relative; overflow:hidden;}
+.topbar-progress i{display:block; height:100%; width:0%; border-radius:6px; background:linear-gradient(90deg, var(--tab), var(--brick)); transition:width .4s ease;}
+.score-pill{font-size:13px; font-weight:700; background:var(--sage-bg); color:var(--sage); padding:5px 12px; border-radius:20px; white-space:nowrap;}
+
+.page{max-width:900px; margin:26px auto; background:var(--paper); border-radius:4px; box-shadow:var(--shadow); border:1px solid var(--line); overflow:hidden;}
+
+.unit-banner{background:linear-gradient(135deg, var(--brick) 0%, var(--brick-dark) 100%); color:#fff; padding:26px 30px 22px 96px; position:relative;}
+.unit-tag{position:absolute; left:0; top:0; bottom:0; width:76px; background:var(--brick-dark); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Fraunces',serif; border-right:2px solid rgba(255,255,255,0.15); text-align:center;}
+.unit-tag .u{font-size:10px; letter-spacing:1.5px; opacity:.75; padding:0 4px;}
+.unit-tag .n{font-size:26px; font-weight:800;}
+.unit-banner h1{margin:0; font-size:25px; font-weight:800; letter-spacing:.3px;}
+.unit-banner p{margin:6px 0 0; opacity:.9; font-size:14px;}
+
+.section{display:flex; border-top:1px solid var(--line);}
+.section .tab{width:56px; flex-shrink:0; background:var(--tab); color:#fff; font-family:'Fraunces',serif; font-weight:800; font-size:22px; display:flex; align-items:flex-start; justify-content:center; padding-top:22px;}
+.section.alt .tab{background:var(--tab-dark);}
+.section .content{padding:24px 28px 30px; flex:1; min-width:0;}
+.section h2{margin:0 0 4px; font-size:20px; color:var(--brick-dark);}
+.eyebrow{font-size:11.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-soft); font-weight:700; margin-bottom:4px;}
+.section p.lead{color:var(--ink-soft); margin-top:4px; font-size:14px;}
+
+.q-item{display:flex; align-items:flex-start; gap:10px; flex-wrap:wrap; padding:12px 4px; border-bottom:1px dashed var(--line);}
+.q-item:last-child{border-bottom:none;}
+.q-num{width:24px; height:24px; border-radius:50%; background:var(--cream); border:1px solid var(--line); font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; color:var(--ink-soft); flex-shrink:0; margin-top:2px;}
+.q-body{flex:1; min-width:220px;}
+.q-sentence{font-size:14.5px; margin-bottom:6px;}
+.q-hint{font-size:12px; color:var(--ink-soft); font-style:italic;}
+.q-input{width:150px; padding:6px 9px; border:1.5px solid var(--line); border-radius:6px; font-family:'Manrope'; font-weight:700; font-size:14px; text-align:center; background:#fffdf8; color:var(--brick-dark);}
+.q-input.wide{width:100%;}
+.q-input:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.q-input.correct{border-color:var(--sage); background:var(--sage-bg); color:#2f5741;}
+.q-input.wrong{border-color:var(--coral); background:var(--coral-bg); color:var(--coral);}
+.q-fb{font-size:12.5px; color:var(--ink-soft); margin-top:5px;}
+.q-fb.wrong-fb{color:var(--coral);}
+
+.mc-opts{display:flex; gap:8px; flex-wrap:wrap; margin-top:4px;}
+.mc-opt{border:1.5px solid var(--line); background:#fff; padding:6px 14px; border-radius:18px; font-weight:700; font-size:13px; cursor:pointer; color:var(--ink);}
+.mc-opt.picked{border-color:var(--tab); background:var(--cream);}
+.mc-opt.correct{border-color:var(--sage); background:var(--sage-bg); color:#2f5741;}
+.mc-opt.incorrect{border-color:var(--coral); background:var(--coral-bg); color:var(--coral);}
+
+.btn{border:none; cursor:pointer; font-family:'Manrope'; font-weight:800; padding:12px 26px; border-radius:24px; font-size:15px; letter-spacing:.2px; background:var(--brick); color:#fff; box-shadow:0 4px 10px rgba(173,59,44,0.25); transition:.15s;}
+.btn:hover{transform:translateY(-1px); box-shadow:0 6px 14px rgba(173,59,44,0.32);}
+.btn.secondary{background:transparent; color:var(--brick); border:1.5px solid var(--brick); box-shadow:none;}
+.btn.small{padding:7px 16px; font-size:13px;}
+
+.submit-wrap{text-align:center; padding:30px 20px;}
+.submit-wrap p{color:var(--ink-soft); font-size:13.5px; margin-bottom:16px;}
+
+.results-card{display:none; margin:26px auto 0; max-width:900px; background:var(--paper); border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow); overflow:hidden;}
+.results-card.shown{display:block; animation:fadeIn .5s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+.results-hero{background:linear-gradient(135deg, var(--brick), var(--brick-dark)); color:#fff; padding:26px 28px; text-align:center;}
+.results-hero .big-score{font-family:'Fraunces',serif; font-size:44px; font-weight:800;}
+.results-hero .grade{font-size:15px; font-weight:700; margin-top:4px; opacity:.95;}
+.results-body{padding:22px 28px;}
+.results-body h3{font-size:13px; text-transform:uppercase; letter-spacing:1px; color:var(--ink-soft); margin:0 0 12px;}
+.rbar-row{display:flex; align-items:center; gap:10px; margin-bottom:10px; font-size:13.5px;}
+.rbar-label{width:180px; flex-shrink:0; color:var(--ink-soft); font-weight:600;}
+.rbar-track{flex:1; height:10px; background:var(--line); border-radius:6px; overflow:hidden;}
+.rbar-fill{height:100%; border-radius:6px; background:linear-gradient(90deg, var(--tab), var(--sage));}
+.rbar-val{width:44px; text-align:right; font-weight:700; color:var(--brick-dark); flex-shrink:0;}
+.results-advice{margin-top:18px; background:var(--sage-bg); border-left:3px solid var(--sage); padding:12px 16px; border-radius:6px; font-size:13.5px; color:#2f5741;}
+.results-advice b{color:var(--sage);}
+
+.footer-note{text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:24px; padding:0 20px;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="book-title">Итоговый тест · Units 1–4</div>
+  <div class="topbar-progress"><i id="topProgress"></i></div>
+  <div class="score-pill"><span id="answeredCount">0</span>/24 отвечено</div>
+</div>
+
+<div class="page">
+
+  <div class="unit-banner">
+    <div class="unit-tag"><span class="u">CHECK<br>POINT</span><span class="n">1–4</span></div>
+    <h1>Итоговый тест</h1>
+    <p>am/is/are · вопросы · present continuous · вопросы continuous · лексика</p>
+  </div>
+
+  <!-- 1 -->
+  <div class="section" id="s1">
+    <div class="tab">1</div>
+    <div class="content">
+      <div class="eyebrow">Unit 1</div>
+      <h2>am / is / are</h2>
+      <p class="lead">Впишите am, is или are.</p>
+      <div id="list1"></div>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="section alt" id="s2">
+    <div class="tab">2</div>
+    <div class="content">
+      <div class="eyebrow">Unit 2</div>
+      <h2>am / is / are — вопросы</h2>
+      <p class="lead">Составьте вопрос из слов или впишите краткий ответ.</p>
+      <div id="list2"></div>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="section" id="s3">
+    <div class="tab">3</div>
+    <div class="content">
+      <div class="eyebrow">Unit 3</div>
+      <h2>Present continuous</h2>
+      <p class="lead">Впишите глагол в форме -ing вместе с am/is/are. Следите за правописанием.</p>
+      <div id="list3"></div>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="section alt" id="s4">
+    <div class="tab">4</div>
+    <div class="content">
+      <div class="eyebrow">Unit 4</div>
+      <h2>Present continuous — вопросы</h2>
+      <p class="lead">Составьте вопрос из слов в правильном порядке.</p>
+      <div id="list4"></div>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="section" id="s5">
+    <div class="tab">5</div>
+    <div class="content">
+      <div class="eyebrow">Units 3–4</div>
+      <h2>Vocabulary</h2>
+      <p class="lead">Выберите правильный перевод.</p>
+      <div id="list5"></div>
+    </div>
+  </div>
+
+  <div class="submit-wrap">
+    <p>Ответьте на все вопросы, затем нажмите кнопку — результат покажет, что уже хорошо усвоено, а что стоит повторить.</p>
+    <button class="btn" id="submitTestBtn">Проверить тест и увидеть результат</button>
+  </div>
+
+</div>
+
+<div class="results-card" id="resultsCard">
+  <div class="results-hero">
+    <div class="big-score" id="bigScore">0 / 24</div>
+    <div class="grade" id="gradeText"></div>
+  </div>
+  <div class="results-body">
+    <h3>Результат по темам</h3>
+    <div id="sectionBars"></div>
+    <div class="results-advice" id="advice"></div>
+  </div>
+</div>
+
+<p class="footer-note">Итоговая проверка на основе Units 1–4 (Essential Grammar in Use, 4th Edition). Задания составлены отдельно для этой серии уроков.</p>
+
+<script>
+/* ---------------- DATA ---------------- */
+const section1 = [
+  { sentence:"My sister ___ a doctor.", answers:["is"] },
+  { sentence:"We ___ good friends.", answers:["are"] },
+  { sentence:"I ___ from Oryol.", answers:["am","'m","m"] },
+  { sentence:"Those shoes ___ new.", answers:["are"] },
+  { sentence:"It ___ cold today.", answers:["is"] },
+];
+const section2 = [
+  { type:"order", words:"(your / is / brother / a / teacher)", answers:["is your brother a teacher"] },
+  { type:"order", words:"(from / are / where / you)", answers:["where are you from"] },
+  { type:"short", sentence:"Are you a student? (Yes)", answers:["yes i am","yes, i am"] },
+  { type:"short", sentence:"Is Ben working today? (No)", answers:["no he isn't","no, he isn't","no he isnt","no, he's not","no he's not"] },
+];
+const section3 = [
+  { sentence:"Look! Somebody ___ (run) in the street.", answers:["is running"] },
+  { sentence:"We ___ (stay) at my aunt's house this week.", answers:["are staying"] },
+  { sentence:"I ___ (write) an email right now.", answers:["am writing","'m writing","m writing"] },
+  { sentence:"The children ___ (play) in the garden.", answers:["are playing"] },
+  { sentence:"The sun ___ (shine) today.", answers:["is shining"] },
+];
+const section4 = [
+  { words:"(is / Anna / cooking / dinner)", answers:["is anna cooking dinner"] },
+  { words:"(what / are / you / doing)", answers:["what are you doing"] },
+  { words:"(are / your friends / where / going)", answers:["where are your friends going"] },
+  { words:"(why / looking / you / at me / are)", answers:["why are you looking at me"] },
+];
+const section5 = [
+  { word:"broken", opts:["новый","сломанный","быстрый"], correct:"сломанный" },
+  { word:"wait for", opts:["ждать","готовить","носить"], correct:"ждать" },
+  { word:"funny", opts:["грустный","смешной","сложный"], correct:"смешной" },
+  { word:"study", opts:["работать","учиться","отдыхать"], correct:"учиться" },
+  { word:"umbrella", opts:["зонт","пальто","такси"], correct:"зонт" },
+  { word:"listen to", opts:["смотреть на","слушать","разговаривать с"], correct:"слушать" },
+];
+
+function normalize(s){ return s.trim().toLowerCase().replace(/[’‘´`]/g,"'").replace(/[?.!,;:]/g,'').replace(/'/g,'').replace(/\s+/g,' '); }
+
+/* ---------------- RENDER SECTION 1 ---------------- */
+const list1 = document.getElementById('list1');
+section1.forEach((item, idx)=>{
+  const row = document.createElement('div');
+  row.className = 'q-item';
+  row.innerHTML = `<div class="q-num">${idx+1}</div><div class="q-body">
+    <div class="q-sentence">${item.sentence.replace('___', `<input type="text" class="q-input" data-sec="1" data-item="${idx}">`)}</div>
+    <div class="q-fb" id="fb-1-${idx}"></div></div>`;
+  list1.appendChild(row);
+});
+
+/* ---------------- RENDER SECTION 2 ---------------- */
+const list2 = document.getElementById('list2');
+section2.forEach((item, idx)=>{
+  const row = document.createElement('div');
+  row.className = 'q-item';
+  if(item.type === 'order'){
+    row.innerHTML = `<div class="q-num">${idx+1}</div><div class="q-body">
+      <div class="q-hint">${item.words}</div>
+      <input type="text" class="q-input wide" data-sec="2" data-item="${idx}" placeholder="Напишите вопрос целиком…">
+      <div class="q-fb" id="fb-2-${idx}"></div></div>`;
+  } else {
+    row.innerHTML = `<div class="q-num">${idx+1}</div><div class="q-body">
+      <div class="q-sentence">${item.sentence}</div>
+      <input type="text" class="q-input wide" data-sec="2" data-item="${idx}" placeholder="Yes, I am. / No, he isn't.">
+      <div class="q-fb" id="fb-2-${idx}"></div></div>`;
+  }
+  list2.appendChild(row);
+});
+
+/* ---------------- RENDER SECTION 3 ---------------- */
+const list3 = document.getElementById('list3');
+section3.forEach((item, idx)=>{
+  const row = document.createElement('div');
+  row.className = 'q-item';
+  row.innerHTML = `<div class="q-num">${idx+1}</div><div class="q-body">
+    <div class="q-sentence">${item.sentence.replace('___', `<input type="text" class="q-input" data-sec="3" data-item="${idx}">`)}</div>
+    <div class="q-fb" id="fb-3-${idx}"></div></div>`;
+  list3.appendChild(row);
+});
+
+/* ---------------- RENDER SECTION 4 ---------------- */
+const list4 = document.getElementById('list4');
+section4.forEach((item, idx)=>{
+  const row = document.createElement('div');
+  row.className = 'q-item';
+  row.innerHTML = `<div class="q-num">${idx+1}</div><div class="q-body">
+    <div class="q-hint">${item.words}</div>
+    <input type="text" class="q-input wide" data-sec="4" data-item="${idx}" placeholder="Напишите вопрос целиком…">
+    <div class="q-fb" id="fb-4-${idx}"></div></div>`;
+  list4.appendChild(row);
+});
+
+/* ---------------- RENDER SECTION 5 ---------------- */
+const list5 = document.getElementById('list5');
+section5.forEach((item, idx)=>{
+  const row = document.createElement('div');
+  row.className = 'q-item';
+  row.innerHTML = `<div class="q-num">${idx+1}</div><div class="q-body">
+    <div class="q-sentence"><b>${item.word}</b></div>
+    <div class="mc-opts" data-sec="5" data-item="${idx}">
+      ${item.opts.map(o=>`<button type="button" class="mc-opt" data-val="${o}">${o}</button>`).join('')}
+    </div></div>`;
+  list5.appendChild(row);
+});
+document.querySelectorAll('#list5 .mc-opts').forEach(group=>{
+  group.querySelectorAll('.mc-opt').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      group.querySelectorAll('.mc-opt').forEach(b=>b.classList.remove('picked'));
+      btn.classList.add('picked');
+      updateAnsweredCount();
+    });
+  });
+});
+
+/* ---------------- ANSWERED COUNTER ---------------- */
+function updateAnsweredCount(){
+  let count = 0;
+  document.querySelectorAll('.q-input').forEach(i=>{ if(i.value.trim() !== '') count++; });
+  document.querySelectorAll('#list5 .mc-opts').forEach(g=>{ if(g.querySelector('.mc-opt.picked')) count++; });
+  document.getElementById('answeredCount').textContent = count;
+  document.getElementById('topProgress').style.width = Math.round((count/24)*100)+'%';
+}
+document.querySelectorAll('.q-input').forEach(i=>i.addEventListener('input', updateAnsweredCount));
+
+/* ---------------- SUBMIT & GRADE ---------------- */
+document.getElementById('submitTestBtn').addEventListener('click', ()=>{
+  let scores = { s1:0, s2:0, s3:0, s4:0, s5:0 };
+  let totals = { s1:section1.length, s2:section2.length, s3:section3.length, s4:section4.length, s5:section5.length };
+
+  section1.forEach((item, idx)=>{
+    const input = document.querySelector(`.q-input[data-sec="1"][data-item="${idx}"]`);
+    const ok = item.answers.some(a=>normalize(a)===normalize(input.value));
+    input.classList.remove('correct','wrong'); input.classList.add(ok?'correct':'wrong');
+    document.getElementById(`fb-1-${idx}`).textContent = ok ? '' : `верно: "${item.answers[0]}"`;
+    document.getElementById(`fb-1-${idx}`).className = ok ? 'q-fb' : 'q-fb wrong-fb';
+    if(ok) scores.s1++;
+  });
+
+  section2.forEach((item, idx)=>{
+    const input = document.querySelector(`.q-input[data-sec="2"][data-item="${idx}"]`);
+    const ok = item.answers.some(a=>normalize(a)===normalize(input.value));
+    input.classList.remove('correct','wrong'); input.classList.add(ok?'correct':'wrong');
+    document.getElementById(`fb-2-${idx}`).textContent = ok ? '' : `верно: "${item.answers[0]}"`;
+    document.getElementById(`fb-2-${idx}`).className = ok ? 'q-fb' : 'q-fb wrong-fb';
+    if(ok) scores.s2++;
+  });
+
+  section3.forEach((item, idx)=>{
+    const input = document.querySelector(`.q-input[data-sec="3"][data-item="${idx}"]`);
+    const ok = item.answers.some(a=>normalize(a)===normalize(input.value));
+    input.classList.remove('correct','wrong'); input.classList.add(ok?'correct':'wrong');
+    document.getElementById(`fb-3-${idx}`).textContent = ok ? '' : `верно: "${item.answers[0]}"`;
+    document.getElementById(`fb-3-${idx}`).className = ok ? 'q-fb' : 'q-fb wrong-fb';
+    if(ok) scores.s3++;
+  });
+
+  section4.forEach((item, idx)=>{
+    const input = document.querySelector(`.q-input[data-sec="4"][data-item="${idx}"]`);
+    const ok = item.answers.some(a=>normalize(a)===normalize(input.value));
+    input.classList.remove('correct','wrong'); input.classList.add(ok?'correct':'wrong');
+    document.getElementById(`fb-4-${idx}`).textContent = ok ? '' : `верно: "${item.answers[0]}"`;
+    document.getElementById(`fb-4-${idx}`).className = ok ? 'q-fb' : 'q-fb wrong-fb';
+    if(ok) scores.s4++;
+  });
+
+  section5.forEach((item, idx)=>{
+    const group = document.querySelector(`.mc-opts[data-sec="5"][data-item="${idx}"]`);
+    const picked = group.querySelector('.mc-opt.picked');
+    group.querySelectorAll('.mc-opt').forEach(b=>{
+      if(b.dataset.val === item.correct) b.classList.add('correct');
+      if(picked && b === picked && b.dataset.val !== item.correct) b.classList.add('incorrect');
+    });
+    if(picked && picked.dataset.val === item.correct) scores.s5++;
+  });
+
+  const total = scores.s1+scores.s2+scores.s3+scores.s4+scores.s5;
+  const totalMax = totals.s1+totals.s2+totals.s3+totals.s4+totals.s5;
+  const pct = Math.round((total/totalMax)*100);
+
+  document.getElementById('bigScore').textContent = `${total} / ${totalMax}`;
+  let gradeMsg = '';
+  if(pct >= 90) gradeMsg = '🌟 Отлично! Материал усвоен уверенно.';
+  else if(pct >= 75) gradeMsg = '👍 Хорошо! Есть пара мест для повторения.';
+  else if(pct >= 50) gradeMsg = '📘 Неплохо, но стоит повторить некоторые темы.';
+  else gradeMsg = '🔁 Лучше вернуться к урокам и пройти их ещё раз.';
+  document.getElementById('gradeText').textContent = `${pct}% · ${gradeMsg}`;
+
+  const sectionLabels = [
+    { key:'s1', label:'Unit 1 · am/is/are' },
+    { key:'s2', label:'Unit 2 · вопросы' },
+    { key:'s3', label:'Unit 3 · continuous' },
+    { key:'s4', label:'Unit 4 · вопросы continuous' },
+    { key:'s5', label:'Vocabulary' },
+  ];
+  const barsEl = document.getElementById('sectionBars');
+  barsEl.innerHTML = '';
+  let weakest = null, weakestPct = 101;
+  sectionLabels.forEach(s=>{
+    const p = Math.round((scores[s.key]/totals[s.key])*100);
+    if(p < weakestPct){ weakestPct = p; weakest = s.label; }
+    const row = document.createElement('div');
+    row.className = 'rbar-row';
+    row.innerHTML = `<div class="rbar-label">${s.label}</div><div class="rbar-track"><div class="rbar-fill" style="width:${p}%"></div></div><div class="rbar-val">${scores[s.key]}/${totals[s.key]}</div>`;
+    barsEl.appendChild(row);
+  });
+  document.getElementById('advice').innerHTML = `<b>Совет:</b> сейчас слабее всего тема «${weakest}» (${weakestPct}%) — стоит вернуться к соответствующему уроку и пройти блок Practice ещё раз.`;
+
+  document.getElementById('resultsCard').classList.add('shown');
+  document.getElementById('resultsCard').scrollIntoView({behavior:'smooth', block:'start'});
+  updateAnsweredCount();
+});
+
+updateAnsweredCount();
+</script>
+</body>
+</html>
