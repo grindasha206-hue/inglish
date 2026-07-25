@@ -42,6 +42,7 @@ const GROQ_VOICES = ["autumn", "diana", "hannah", "austin", "daniel", "troy"];
 const _ttsCache = new Map();
 let _ttsAudio = null;
 let _ttsQueue = Promise.resolve(); /* запросы к Groq идут строго по одному */
+let _lastTts = null; /* последняя озвученная фраза — для кнопки «перегенерировать» */
 const _sleep = ms => new Promise(res => setTimeout(res, ms));
 
 async function _fetchTts(input, voice, key){
@@ -79,6 +80,7 @@ async function groqSpeak(text, rate){
   let input = String(text).trim().slice(0, 190);
   if (!/[.!?…]$/.test(input)) input += ".";
   const cacheId = voice + "|" + input;
+  _lastTts = { input, voice, cacheId, rate };
   let url = _ttsCache.get(cacheId);
   if (!url) {
     const task = _ttsQueue.catch(() => {}).then(() => _fetchTts(input, voice, key));
@@ -95,4 +97,17 @@ async function groqSpeak(text, rate){
   audio.playbackRate = (rate && rate <= 0.6) ? 0.72 : 1;
   await audio.play();
   return new Promise(resolve => { audio.onended = resolve; audio.onpause = resolve; });
+}
+
+/* Модель сгенерировала фразу криво? Выбрасываем её из кэша и просим заново. */
+async function regenerateLastTts(){
+  if (!_lastTts) return false;
+  const { input, voice, cacheId, rate } = _lastTts;
+  _ttsCache.delete(cacheId);
+  try {
+    const store = await caches.open("inglish-tts");
+    await store.delete("/tts-cache/v1/" + voice + "/" + encodeURIComponent(input));
+  } catch(e){}
+  await groqSpeak(input, rate);
+  return true;
 }

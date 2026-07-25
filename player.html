@@ -21,6 +21,10 @@ body{margin:0; display:flex; flex-direction:column; font-family:'Manrope',sans-s
 .voice-pill{font-size:11.5px; font-weight:800; color:var(--sage); background:var(--sage-bg); border-radius:14px; padding:4px 10px; white-space:nowrap;}
 .voice-pill.off{color:var(--ink-soft); background:var(--cream); border:1px solid var(--line);}
 .voice-pill a{color:inherit; text-decoration:none;}
+.redo-btn{display:none; border:1.5px solid var(--line); background:var(--cream); cursor:pointer; border-radius:14px; padding:5px 11px; font-size:13px; line-height:1; white-space:nowrap; font-family:'Manrope'; font-weight:800; color:var(--ink-soft);}
+.redo-btn.shown{display:inline-block;}
+.redo-btn:hover{border-color:var(--tab); color:var(--tab-dark);}
+.redo-btn.busy{opacity:.5; pointer-events:none;}
 .done-btn{border:none; cursor:pointer; font-family:'Manrope'; font-weight:800; font-size:13px; padding:8px 16px; border-radius:20px; background:var(--sage); color:#fff; white-space:nowrap;}
 .done-btn:hover{background:#3d7357;}
 .done-btn[disabled]{background:var(--sage-bg); color:var(--sage); cursor:default;}
@@ -41,6 +45,7 @@ iframe{flex:1; width:100%; border:none; background:var(--cream);}
   <a class="back" id="backLink" href="index.html">← Кабинет</a>
   <div class="title" id="barTitle">Урок</div>
   <div class="voice-pill off" id="voicePill" title="Озвучка">…</div>
+  <button class="redo-btn" id="redoBtn" title="Фраза прозвучала неправильно? Нажми — я озвучу её заново другим дублем.">↻ переозвучить</button>
   <button class="done-btn" id="doneBtn">✓ Завершить урок</button>
 </div>
 
@@ -145,12 +150,20 @@ function voiceError(err){
 }
 /* Groq снова отвечает — возвращаем зелёный значок */
 function voiceOk(){
+  document.getElementById('redoBtn').classList.add('shown');
   const pill = document.getElementById('voicePill');
   if (pill.className === 'voice-pill') return;
   const v = getSetting('groqVoice') || 'hannah';
   pill.className = 'voice-pill';
   pill.innerHTML = `🎙 ${v[0].toUpperCase()+v.slice(1)}`;
 }
+
+document.getElementById('redoBtn').addEventListener('click', async () => {
+  const b = document.getElementById('redoBtn');
+  b.classList.add('busy'); b.textContent = '↻ генерирую…';
+  try { await regenerateLastTts(); } catch(e){ voiceError(e); }
+  b.classList.remove('busy'); b.textContent = '↻ переозвучить';
+});
 
 function watchLesson(){
   if (!lesson) return;
