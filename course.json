@@ -36,6 +36,13 @@
               "title": "I am doing — Present Continuous",
               "description": "Что происходит прямо сейчас",
               "file": "lessons/unit-03-present-continuous.html"
+            },
+            {
+              "id": "urok-present-continuous-questions",
+              "unit": 4,
+              "title": "are you doing? (present continuous questions)",
+              "description": "",
+              "file": "lessons/urok-present-continuous-questions.html"
             }
           ]
         }
