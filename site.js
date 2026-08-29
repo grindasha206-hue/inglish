@@ -150,7 +150,8 @@ async function _fetchElevenTts(input, voiceId, key){
 async function elevenSpeak(text, rate){
   const key = getSetting("elevenKey");
   if (!key) throw new Error("no-key");
-  const voiceId = getSetting("elevenVoice") || "21m00Tcm4TlvDq8ikWAM"; /* Rachel — голос по умолчанию у всех аккаунтов */
+  const voiceId = getSetting("elevenVoice");
+  if (!voiceId) throw new Error("no-voice");
   let input = String(text).trim().slice(0, 500);
   const cacheId = voiceId + "|" + input;
   _lastEleven = { input, voiceId, cacheId, rate };
@@ -182,16 +183,6 @@ async function regenerateLastEleven(){
   return true;
 }
 
-/* Список доступных голосов аккаунта (включая стандартные, доступные и на бесплатном тарифе) */
-async function fetchElevenVoices(key){
-  const r = await fetch("https://api.elevenlabs.io/v1/voices", { headers: { "xi-api-key": key } });
-  if (!r.ok) throw new Error("eleven-" + r.status);
-  const data = await r.json();
-  /* На бесплатном тарифе через API работают только «premade» голоса (стандартный набор) —
-     остальное (voice library) требует платной подписки, даже если API их и показывает в списке. */
-  const usable = (data.voices || []).filter(v => v.category === "premade" || v.category === "cloned" || v.category === "generated");
-  return usable.map(v => ({ id: v.voice_id, name: v.name }));
-}
 
 /* ============================================================
    ОБЛАЧНАЯ СИНХРОНИЗАЦИЯ (Firebase Firestore)
