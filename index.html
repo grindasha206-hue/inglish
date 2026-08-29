@@ -137,8 +137,9 @@ a{color:inherit;}
   </div>
 </div>
 
-<div class="wrap" id="loginWrap" style="display:none; max-width:420px;">
-  <div class="panel" style="margin-top:60px;">
+<div id="loginWrap" style="display:none; min-height:calc(100vh - 40px); flex-direction:column; align-items:center; justify-content:center; padding:20px;">
+  <a class="logo" href="#/" style="font-size:30px; margin-bottom:22px; pointer-events:none;">Ing<span>lish</span> ✳</a>
+  <div class="panel" style="max-width:380px; width:100%; box-sizing:border-box;">
     <h3>Вход</h3>
     <p class="hint">Доступ по приглашению — аккаунт заводит администратор сайта.</p>
     <div class="field"><label>Email</label><input type="email" id="loginEmail" autocomplete="username"></div>
@@ -191,7 +192,7 @@ async function start(){
 function showLogin(){
   document.getElementById('topbar').style.display = 'none';
   document.getElementById('view').style.display = 'none';
-  document.getElementById('loginWrap').style.display = 'block';
+  document.getElementById('loginWrap').style.display = 'flex';
 }
 
 function loginErrText(e){
