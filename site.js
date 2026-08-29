@@ -112,6 +112,84 @@ async function regenerateLastTts(){
   return true;
 }
 
+/* ---- ElevenLabs TTS (второй вариант озвучки — более "спокойный", без выдумывания) ---- */
+const _elevenCache = new Map();
+let _elevenAudio = null;
+let _elevenQueue = Promise.resolve();
+let _lastEleven = null;
+
+async function _fetchElevenTts(input, voiceId, key){
+  const cacheKey = "/tts-cache/v1/" + voiceId + "/" + encodeURIComponent(input);
+  let store = null;
+  try { store = await caches.open("inglish-tts-11labs"); } catch(e){}
+  if (store) {
+    try { const hit = await store.match(cacheKey); if (hit) return await hit.blob(); } catch(e){}
+  }
+  for (let attempt = 0; ; attempt++) {
+    const r = await fetch("https://api.elevenlabs.io/v1/text-to-speech/" + voiceId, {
+      method: "POST",
+      headers: { "xi-api-key": key, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        text: input,
+        model_id: "eleven_multilingual_v2",
+        voice_settings: { stability: 0.6, similarity_boost: 0.75 }
+      })
+    });
+    if (r.status === 429 && attempt < 3) { await _sleep(1800 * (attempt + 1)); continue; }
+    if (!r.ok) {
+      let msg = "eleven-" + r.status;
+      try { const j = await r.json(); if (j.detail && j.detail.message) msg = j.detail.message; } catch(e){}
+      throw new Error(msg);
+    }
+    const blob = await r.blob();
+    if (store) { try { await store.put(cacheKey, new Response(blob, { headers: { "Content-Type": "audio/mpeg" } })); } catch(e){} }
+    return blob;
+  }
+}
+
+async function elevenSpeak(text, rate){
+  const key = getSetting("elevenKey");
+  if (!key) throw new Error("no-key");
+  const voiceId = getSetting("elevenVoice") || "21m00Tcm4TlvDq8ikWAM"; /* Rachel — голос по умолчанию у всех аккаунтов */
+  let input = String(text).trim().slice(0, 500);
+  const cacheId = voiceId + "|" + input;
+  _lastEleven = { input, voiceId, cacheId, rate };
+  let url = _elevenCache.get(cacheId);
+  if (!url) {
+    const task = _elevenQueue.catch(() => {}).then(() => _fetchElevenTts(input, voiceId, key));
+    _elevenQueue = task;
+    const blob = await task;
+    url = _elevenCache.get(cacheId) || URL.createObjectURL(blob);
+    _elevenCache.set(cacheId, url);
+  }
+  if (_elevenAudio) { _elevenAudio.pause(); _elevenAudio = null; }
+  const audio = new Audio(url);
+  _elevenAudio = audio;
+  audio.playbackRate = (rate && rate <= 0.6) ? 0.72 : 1;
+  await audio.play();
+  return new Promise(resolve => { audio.onended = resolve; audio.onpause = resolve; });
+}
+
+async function regenerateLastEleven(){
+  if (!_lastEleven) return false;
+  const { input, voiceId, cacheId, rate } = _lastEleven;
+  _elevenCache.delete(cacheId);
+  try {
+    const store = await caches.open("inglish-tts-11labs");
+    await store.delete("/tts-cache/v1/" + voiceId + "/" + encodeURIComponent(input));
+  } catch(e){}
+  await elevenSpeak(input, rate);
+  return true;
+}
+
+/* Список доступных голосов аккаунта (включая стандартные, доступные и на бесплатном тарифе) */
+async function fetchElevenVoices(key){
+  const r = await fetch("https://api.elevenlabs.io/v1/voices", { headers: { "xi-api-key": key } });
+  if (!r.ok) throw new Error("eleven-" + r.status);
+  const data = await r.json();
+  return (data.voices || []).map(v => ({ id: v.voice_id, name: v.name }));
+}
+
 /* ============================================================
    ОБЛАЧНАЯ СИНХРОНИЗАЦИЯ (Firebase Firestore)
    localStorage остаётся быстрым локальным кэшем — Firestore
