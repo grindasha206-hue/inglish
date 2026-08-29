@@ -187,7 +187,10 @@ async function fetchElevenVoices(key){
   const r = await fetch("https://api.elevenlabs.io/v1/voices", { headers: { "xi-api-key": key } });
   if (!r.ok) throw new Error("eleven-" + r.status);
   const data = await r.json();
-  return (data.voices || []).map(v => ({ id: v.voice_id, name: v.name }));
+  /* На бесплатном тарифе через API работают только «premade» голоса (стандартный набор) —
+     остальное (voice library) требует платной подписки, даже если API их и показывает в списке. */
+  const usable = (data.voices || []).filter(v => v.category === "premade" || v.category === "cloned" || v.category === "generated");
+  return usable.map(v => ({ id: v.voice_id, name: v.name }));
 }
 
 /* ============================================================
