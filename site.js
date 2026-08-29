@@ -119,14 +119,19 @@ async function regenerateLastTts(){
    Личный ключ "зашит" в код, не в браузер — переживает
    очистку кэша и работает на любом устройстве, где открыт сайт.
    ============================================================ */
-const CLOUD_USER_ID = "darya_es_2026_kf92x";
-
 let _cloudDb = null;
 let _cloudDocFns = null;
+let _cloudAuth = null;
+let _authFns = null;
+let currentUser = null;
+let _authStateResolve;
+const authReady = new Promise(res => { _authStateResolve = res; }); /* резолвится один раз: null (не вошёл) или объект пользователя */
+
 let _cloudReady = (async () => {
   try {
     const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js");
     const firestoreMod = await import("https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js");
+    const authMod = await import("https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js");
     const firebaseConfig = {
       apiKey: "AIzaSyBXdyJhFcHTdgWbcvuvRdTho8Gal2FCAOc",
       authDomain: "inglish-progress.firebaseapp.com",
@@ -138,28 +143,55 @@ let _cloudReady = (async () => {
     const app = initializeApp(firebaseConfig);
     _cloudDb = firestoreMod.getFirestore(app);
     _cloudDocFns = firestoreMod;
+    _cloudAuth = authMod.getAuth(app);
+    _authFns = authMod;
+    authMod.onAuthStateChanged(_cloudAuth, (user) => {
+      currentUser = user;
+      if (_authStateResolve) { _authStateResolve(user); _authStateResolve = null; }
+    });
     return true;
   } catch(e){
     console.warn("Облако недоступно, работаем только с localStorage:", e);
+    if (_authStateResolve) { _authStateResolve(null); _authStateResolve = null; }
     return false;
   }
 })();
 
-/* Общий прогресс (XP, streak, статус уроков) — один документ на пользователя */
+/* ---- вход / выход. Регистрация с сайта закрыта — аккаунты создаются
+   только в Firebase Console (Authentication → Users → Add user). ---- */
+async function signIn(email, password){
+  const ok = await _cloudReady;
+  if (!ok || !_cloudAuth) throw new Error("cloud-unavailable");
+  const cred = await _authFns.signInWithEmailAndPassword(_cloudAuth, email, password);
+  currentUser = cred.user;
+  return cred.user;
+}
+
+async function signOutUser(){
+  const ok = await _cloudReady;
+  if (ok && _cloudAuth) await _authFns.signOut(_cloudAuth);
+  currentUser = null;
+}
+
+function cloudUserId(){ return currentUser ? currentUser.uid : null; }
+
+/* Общий прогресс (XP, streak, статус уроков) — один документ на пользователя, ключ = uid */
 async function cloudSaveProgress(p){
   const ok = await _cloudReady;
-  if (!ok) return;
+  const uid = cloudUserId();
+  if (!ok || !uid) return;
   try {
-    const ref = _cloudDocFns.doc(_cloudDb, "inglishProgress", CLOUD_USER_ID);
+    const ref = _cloudDocFns.doc(_cloudDb, "inglishProgress", uid);
     await _cloudDocFns.setDoc(ref, { ...p, updatedAt: Date.now() });
   } catch(e){ console.warn("Не удалось сохранить прогресс в облако:", e); }
 }
 
 async function cloudLoadProgress(){
   const ok = await _cloudReady;
-  if (!ok) return null;
+  const uid = cloudUserId();
+  if (!ok || !uid) return null;
   try {
-    const ref = _cloudDocFns.doc(_cloudDb, "inglishProgress", CLOUD_USER_ID);
+    const ref = _cloudDocFns.doc(_cloudDb, "inglishProgress", uid);
     const snap = await _cloudDocFns.getDoc(ref);
     if (!snap.exists()) return null;
     const data = snap.data();
@@ -167,21 +199,23 @@ async function cloudLoadProgress(){
   } catch(e){ console.warn("Не удалось загрузить прогресс из облака:", e); return null; }
 }
 
-/* Детальное состояние конкретного урока (вписанные ответы, квиз, игры) */
+/* Детальное состояние конкретного урока (вписанные ответы, квиз, игры), ключ = uid + id урока */
 async function cloudSaveLessonState(lessonId, data){
   const ok = await _cloudReady;
-  if (!ok) return;
+  const uid = cloudUserId();
+  if (!ok || !uid) return;
   try {
-    const ref = _cloudDocFns.doc(_cloudDb, "inglishLessonState", `${CLOUD_USER_ID}__${lessonId}`);
+    const ref = _cloudDocFns.doc(_cloudDb, "inglishLessonState", `${uid}__${lessonId}`);
     await _cloudDocFns.setDoc(ref, { data, updatedAt: Date.now() });
   } catch(e){ console.warn("Не удалось сохранить состояние урока в облако:", e); }
 }
 
 async function cloudLoadLessonState(lessonId){
   const ok = await _cloudReady;
-  if (!ok) return null;
+  const uid = cloudUserId();
+  if (!ok || !uid) return null;
   try {
-    const ref = _cloudDocFns.doc(_cloudDb, "inglishLessonState", `${CLOUD_USER_ID}__${lessonId}`);
+    const ref = _cloudDocFns.doc(_cloudDb, "inglishLessonState", `${uid}__${lessonId}`);
     const snap = await _cloudDocFns.getDoc(ref);
     if (!snap.exists()) return null;
     return snap.data().data || null;
