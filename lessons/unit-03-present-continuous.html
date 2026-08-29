@@ -916,22 +916,33 @@ function pickVoice(){
 }
 if('speechSynthesis' in window){ populateVoiceList(); window.speechSynthesis.onvoiceschanged = populateVoiceList; }
 function speak(text, rate, btn){
-  if(!('speechSynthesis' in window)){
-    document.getElementById('ttsWarn').textContent = 'Озвучка не поддерживается этим браузером. Попробуйте открыть страницу в Chrome или Safari.';
-    document.getElementById('ttsWarn').classList.add('shown');
-    return;
-  }
-  window.speechSynthesis.cancel();
-  const utter = new SpeechSynthesisUtterance(text);
-  utter.rate = rate || 1; utter.pitch = 1;
-  const v = pickVoice(); if(v) utter.voice = v;
-  if(btn){ utter.onstart = ()=>btn.classList.add('playing'); utter.onend = ()=>btn.classList.remove('playing'); }
-  window.speechSynthesis.speak(utter);
+  /* Возвращает промис, который резолвится, когда фраза реально закончила звучать —
+     это нужно, чтобы «Прослушать всё подряд» не обрывал фразы на середине. */
+  return new Promise((resolve) => {
+    if(!('speechSynthesis' in window)){
+      document.getElementById('ttsWarn').textContent = 'Озвучка не поддерживается этим браузером. Попробуйте открыть страницу в Chrome или Safari.';
+      document.getElementById('ttsWarn').classList.add('shown');
+      resolve();
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.rate = rate || 1; utter.pitch = 1;
+    const v = pickVoice(); if(v) utter.voice = v;
+    if(btn){ utter.onstart = ()=>btn.classList.add('playing'); }
+    const done = () => { if(btn) btn.classList.remove('playing'); resolve(); };
+    utter.onend = done;
+    utter.onerror = done;
+    window.speechSynthesis.speak(utter);
+  });
 }
 document.querySelectorAll('.play-btn').forEach(btn=>{ btn.addEventListener('click', ()=>{ speak(btn.dataset.text, parseFloat(btn.dataset.rate||"1"), btn); }); });
 document.getElementById('playAllBtn').addEventListener('click', async ()=>{
   const btns = Array.from(document.querySelectorAll('.sound-block .play-btn:not(.slow)'));
-  for(const b of btns){ speak(b.dataset.text, 1, b); await new Promise(res=>setTimeout(res, Math.max(1200, b.dataset.text.split(' ').length*450))); }
+  for(const b of btns){
+    await speak(b.dataset.text, 1, b); /* ждём реального конца фразы, а не оценку по числу слов */
+    await new Promise(res=>setTimeout(res, 350)); /* небольшая пауза между фразами */
+  }
 });
 
 /* ---------------- HOMEWORK ---------------- */
