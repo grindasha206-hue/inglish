@@ -70,6 +70,8 @@ let lesson = null, finished = false, lastScore = 0, lastMax = 0;
 init();
 
 async function init(){
+  const user = await authReady;
+  if (!user) { location.href = 'index.html'; return; }
   await loadCourse();
   lesson = lessonById(new URLSearchParams(location.search).get('lesson'));
   if (!lesson) { document.getElementById('barTitle').textContent = 'Урок не найден'; return; }
