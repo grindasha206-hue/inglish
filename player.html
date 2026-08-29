@@ -20,6 +20,8 @@ body{margin:0; display:flex; flex-direction:column; font-family:'Manrope',sans-s
 .title{font-family:'Fraunces',serif; font-weight:800; font-size:15px; color:var(--brick-dark); flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
 .voice-pill{font-size:11.5px; font-weight:800; color:var(--sage); background:var(--sage-bg); border-radius:14px; padding:4px 10px; white-space:nowrap;}
 .voice-pill.off{color:var(--ink-soft); background:var(--cream); border:1px solid var(--line);}
+.voice-pill.toggle{cursor:pointer; transition:.15s;}
+.voice-pill.toggle:hover{background:var(--sage); color:#fff;}
 .voice-pill a{color:inherit; text-decoration:none;}
 .redo-btn{display:none; border:1.5px solid var(--line); background:var(--cream); cursor:pointer; border-radius:14px; padding:5px 11px; font-size:13px; line-height:1; white-space:nowrap; font-family:'Manrope'; font-weight:800; color:var(--ink-soft);}
 .redo-btn.shown{display:inline-block;}
@@ -89,19 +91,7 @@ async function init(){
     document.getElementById('toastHome').href = backUrl;
   }
 
-  /* значок озвучки: ElevenLabs приоритетнее Groq, если оба ключа заданы */
-  const pill = document.getElementById('voicePill');
-  const activeProvider = getSetting('elevenKey') ? 'eleven' : (getSetting('groqKey') ? 'groq' : null);
-  if (activeProvider === 'eleven') {
-    pill.className = 'voice-pill';
-    pill.innerHTML = `🎙 ${getSetting('elevenVoiceName')||'ElevenLabs'}`;
-  } else if (activeProvider === 'groq') {
-    const v = getSetting('groqVoice') || 'hannah';
-    pill.className = 'voice-pill';
-    pill.innerHTML = `🎙 ${v[0].toUpperCase()+v.slice(1)}`;
-  } else {
-    pill.innerHTML = `<a href="index.html#/settings" title="Подключить живой голос">🤖 голос браузера</a>`;
-  }
+  refreshVoiceUI(); /* значок озвучки + возможность переключить Groq ↔ ElevenLabs кликом */
 
   const frame = document.getElementById('lessonFrame');
   frame.addEventListener('load', () => {
@@ -249,14 +239,57 @@ function watchTyping(frame){
 /* ---- Подмена озвучки урока на Groq (урок не редактируется) ---- */
 let _activeVoiceProvider = null; /* 'eleven' | 'groq' | null — какой провайдер сейчас реально используется */
 
+/* Groq — провайдер по умолчанию. Если явно переключили (кликом по значку) — используем выбор,
+   но только если для него есть ключ; иначе тихо откатываемся на то, что реально настроено. */
+function getActiveProvider(){
+  const hasGroq = !!getSetting('groqKey');
+  const hasEleven = !!getSetting('elevenKey');
+  if (!hasGroq && !hasEleven) return null;
+  const pref = getSetting('activeVoiceProvider');
+  if (pref === 'eleven' && hasEleven) return 'eleven';
+  if (pref === 'groq' && hasGroq) return 'groq';
+  return hasGroq ? 'groq' : 'eleven';
+}
+
+function canToggleVoice(){ return !!getSetting('groqKey') && !!getSetting('elevenKey'); }
+
+function refreshVoiceUI(){
+  const pill = document.getElementById('voicePill');
+  const provider = getActiveProvider();
+  const toggleable = canToggleVoice();
+  if (provider === 'eleven') {
+    pill.className = 'voice-pill' + (toggleable ? ' toggle' : '');
+    pill.innerHTML = `🎙 ${getSetting('elevenVoiceName')||'ElevenLabs'}`;
+  } else if (provider === 'groq') {
+    const v = getSetting('groqVoice') || 'hannah';
+    pill.className = 'voice-pill' + (toggleable ? ' toggle' : '');
+    pill.innerHTML = `🎙 ${v[0].toUpperCase()+v.slice(1)}`;
+  } else {
+    pill.className = 'voice-pill off';
+    pill.innerHTML = `<a href="index.html#/settings" title="Подключить живой голос">🤖 голос браузера</a>`;
+  }
+  pill.title = toggleable ? 'Нажми, чтобы переключить голос: Groq ↔ ElevenLabs' : 'Озвучка';
+  const frame = document.getElementById('lessonFrame');
+  if (frame) installVoice(frame);
+}
+
+document.getElementById('voicePill').addEventListener('click', (e) => {
+  if (!canToggleVoice()) return; /* ключ только один — пусть работает обычная ссылка в значок (если она есть) */
+  e.preventDefault();
+  const current = getActiveProvider();
+  setSetting('activeVoiceProvider', current === 'groq' ? 'eleven' : 'groq');
+  refreshVoiceUI();
+});
+
 function installVoice(frame){
   try {
     const w = frame.contentWindow;
     if (!w || typeof w.speak !== 'function') return;
-    const provider = getSetting('elevenKey') ? 'eleven' : (getSetting('groqKey') ? 'groq' : null);
+    const provider = getActiveProvider();
     if (!provider) return;
     _activeVoiceProvider = provider;
-    const browserSpeak = w.speak; /* запасной вариант — голос браузера */
+    if (!w.__browserSpeak) w.__browserSpeak = w.speak; /* запоминаем оригинал только один раз — иначе переключение потеряет голос браузера как запасной вариант */
+    const browserSpeak = w.__browserSpeak;
 
     /* Заменяем внутри урока блок выбора браузерного голоса на понятную надпись */
     try {
