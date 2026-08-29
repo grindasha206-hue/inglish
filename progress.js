@@ -1,10 +1,14 @@
 /* ============================================================
-   ПРОГРЕСС — хранение в localStorage браузера.
+   ПРОГРЕСС — хранение в localStorage браузера + резервная
+   синхронизация в Firebase (см. cloudSaveProgress/cloudLoadProgress
+   в site.js). localStorage остаётся источником истины для
+   мгновенного рендера, облако — страховка на случай сброса кэша.
    Структура:
    {
      lessons: { "unit-01": { status:"done"|"started", bestScore, maxScore, completedAt } },
      xp: 120,
-     activity: { "2026-07-25": true, ... }   // дни, когда занималась
+     activity: { "2026-07-25": true, ... },   // дни, когда занималась
+     updatedAt: 1730000000000                  // для сравнения с облаком
    }
    ============================================================ */
 
@@ -16,14 +20,33 @@ function loadProgress(){
     const raw = localStorage.getItem(STORE_KEY);
     if (raw) {
       const p = JSON.parse(raw);
-      return { lessons: p.lessons || {}, xp: p.xp || 0, activity: p.activity || {} };
+      return { lessons: p.lessons || {}, xp: p.xp || 0, activity: p.activity || {}, updatedAt: p.updatedAt || 0 };
     }
   } catch(e){ /* повреждённые данные — начинаем заново */ }
-  return { lessons: {}, xp: 0, activity: {} };
+  return { lessons: {}, xp: 0, activity: {}, updatedAt: 0 };
 }
 
 function saveProgress(p){
+  p.updatedAt = Date.now();
   try { localStorage.setItem(STORE_KEY, JSON.stringify(p)); } catch(e){}
+  /* фоновая отправка в облако — не блокирует интерфейс */
+  if (typeof cloudSaveProgress === 'function') cloudSaveProgress(p);
+}
+
+/* При старте приложения: подтягиваем облачную версию, если она новее
+   локальной (например, кэш только что сбросили или зашли с другого
+   устройства) — и сразу сохраняем результат локально. */
+async function mergeCloudIntoLocal(){
+  if (typeof cloudLoadProgress !== 'function') return loadProgress();
+  const local = loadProgress();
+  let cloud = null;
+  try { cloud = await cloudLoadProgress(); } catch(e){}
+  if (!cloud) return local;
+  if ((cloud.updatedAt || 0) > (local.updatedAt || 0)) {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(cloud)); } catch(e){}
+    return cloud;
+  }
+  return local;
 }
 
 /* ---- даты ---- */
@@ -101,7 +124,9 @@ function importProgress(file, onDone){
     try {
       const p = JSON.parse(reader.result);
       if (typeof p === "object" && p !== null) {
-        localStorage.setItem(STORE_KEY, JSON.stringify({ lessons: p.lessons||{}, xp: p.xp||0, activity: p.activity||{} }));
+        const merged = { lessons: p.lessons||{}, xp: p.xp||0, activity: p.activity||{} };
+        localStorage.setItem(STORE_KEY, JSON.stringify(merged));
+        saveProgress(merged); /* тоже отправит в облако */
         onDone && onDone(true);
         return;
       }
