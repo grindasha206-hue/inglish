@@ -126,17 +126,29 @@ a{color:inherit;}
 </head>
 <body>
 
-<div class="topbar">
+<div class="topbar" id="topbar" style="display:none">
   <a class="logo" href="#/">Ing<span>lish</span> ✳</a>
   <a class="nav-link" href="#/add">＋ Добавить урок</a>
   <a class="nav-link" href="#/settings">⚙ Настройки</a>
   <div class="top-pills">
     <div class="pill streak" id="streakPill">🔥 …</div>
     <div class="pill xp" id="xpPill">✦ …</div>
+    <a class="nav-link" href="#" id="logoutLink" title="Выйти">⎋ Выйти</a>
   </div>
 </div>
 
-<div class="wrap" id="view">Загружаю…</div>
+<div class="wrap" id="loginWrap" style="display:none; max-width:420px;">
+  <div class="panel" style="margin-top:60px;">
+    <h3>Вход</h3>
+    <p class="hint">Доступ по приглашению — аккаунт заводит администратор сайта.</p>
+    <div class="field"><label>Email</label><input type="email" id="loginEmail" autocomplete="username"></div>
+    <div class="field"><label>Пароль</label><input type="password" id="loginPassword" autocomplete="current-password"></div>
+    <button class="btn brick" id="loginBtn" style="width:100%">Войти</button>
+    <div class="status" id="loginStatus"></div>
+  </div>
+</div>
+
+<div class="wrap" id="view" style="display:none">Загружаю…</div>
 
 <script src="site.js"></script>
 <script src="progress.js"></script>
@@ -162,6 +174,11 @@ function updatePills(){
 window.addEventListener('hashchange', render);
 
 async function start(){
+  const user = await authReady;
+  if (!user) { showLogin(); return; }
+  document.getElementById('topbar').style.display = 'flex';
+  document.getElementById('loginWrap').style.display = 'none';
+  document.getElementById('view').style.display = 'block';
   try { await loadCourse(); } catch(e){
     document.getElementById('view').innerHTML = '<div class="empty-note">Не удалось загрузить курс (course.json). Обнови страницу.</div>';
     return;
@@ -169,6 +186,46 @@ async function start(){
   await mergeCloudIntoLocal(); /* подтягиваем облако, если оно новее локального кэша */
   render();
 }
+
+function showLogin(){
+  document.getElementById('topbar').style.display = 'none';
+  document.getElementById('view').style.display = 'none';
+  document.getElementById('loginWrap').style.display = 'block';
+}
+
+function loginErrText(e){
+  const m = (e && (e.code || e.message)) || '';
+  if (/user-not-found|invalid-credential|wrong-password/.test(m)) return 'Неверный email или пароль.';
+  if (/too-many-requests/.test(m)) return 'Слишком много попыток входа. Подожди немного и попробуй снова.';
+  if (/invalid-email/.test(m)) return 'Проверь формат email.';
+  if (/cloud-unavailable/.test(m)) return 'Не удалось подключиться к серверу входа. Проверь интернет и обнови страницу.';
+  return 'Не получилось войти: ' + m;
+}
+
+document.getElementById('loginBtn').addEventListener('click', async () => {
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const statusEl = document.getElementById('loginStatus');
+  statusEl.className = 'status busy'; statusEl.textContent = 'Вхожу…';
+  try {
+    await signIn(email, password);
+    statusEl.className = 'status';
+    await start();
+  } catch(e){
+    statusEl.className = 'status err';
+    statusEl.textContent = loginErrText(e);
+  }
+});
+document.getElementById('loginPassword').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('loginBtn').click();
+});
+
+document.getElementById('logoutLink').addEventListener('click', async (e) => {
+  e.preventDefault();
+  await signOutUser();
+  location.hash = '#/';
+  location.reload();
+});
 
 function render(){
   p = loadProgress();
