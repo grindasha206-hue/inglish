@@ -380,11 +380,12 @@ function renderSettings(view){
   <div class="panel">
     <h3>🎙 Озвучка ElevenLabs <span style="font-size:11.5px; font-weight:700; color:var(--sage); background:var(--sage-bg); padding:2px 8px; border-radius:10px;">рекомендуется</span></h3>
     <p class="hint">Более спокойный и предсказуемый голос, без "актёрских" сюрпризов Groq. Бесплатный лимит — около 10 000 символов в месяц (фразы кэшируются, повторно не тратятся). Ключ хранится <b>только в этом браузере</b>. Получить ключ: <a href="https://elevenlabs.io" target="_blank">elevenlabs.io</a> → профиль → API Key.</p>
+    <p class="hint"><b>ID голоса берём прямо из вашего личного кабинета</b> (у ElevenLabs сейчас меняется набор голосов, и через API нельзя надёжно угадать, какие доступны именно вам): зайдите в раздел <a href="https://elevenlabs.io/app/voice-lab" target="_blank">My Voices</a> на сайте ElevenLabs, откройте любой голос, нажмите на "⋯" (три точки) → <b>Copy voice ID</b>, и вставьте сюда.</p>
     <div class="form-row">
       <div class="field"><label>API-ключ ElevenLabs</label><input type="password" id="elevenKey" placeholder="..." value="${esc(getSetting('elevenKey'))}"></div>
-      <div class="field"><label>Голос</label><select id="elevenVoice"><option value="${esc(getSetting('elevenVoice')||'21m00Tcm4TlvDq8ikWAM')}">${getSetting('elevenVoiceName')||'Rachel (по умолчанию)'}</option></select></div>
+      <div class="field"><label>ID голоса (Voice ID)</label><input type="text" id="elevenVoice" placeholder="вставьте скопированный ID" value="${esc(getSetting('elevenVoice'))}"></div>
     </div>
-    <button class="mini-btn" id="loadElevenVoices">🔄 Загрузить список голосов</button>
+    <div class="field"><label>Название голоса (для отображения, необязательно)</label><input type="text" id="elevenVoiceName" placeholder="например: Sarah" value="${esc(getSetting('elevenVoiceName'))}"></div>
     <button class="mini-btn" id="saveEleven">Сохранить</button>
     <button class="mini-btn" id="testEleven">▶ Проверить голос</button>
     <div class="status" id="elevenStatus"></div>
@@ -421,32 +422,27 @@ function renderSettings(view){
     <div class="status" id="impStatus"></div>
   </div>`;
 
-  document.getElementById('loadElevenVoices').onclick = async () => {
-    const key = document.getElementById('elevenKey').value.trim();
-    if (!key) return show('elevenStatus','err','Сначала вставь API-ключ.');
-    show('elevenStatus','busy','Загружаю список голосов…');
-    try {
-      const voices = await fetchElevenVoices(key);
-      const sel = document.getElementById('elevenVoice');
-      const current = getSetting('elevenVoice');
-      sel.innerHTML = voices.map(v => `<option value="${v.id}"${v.id===current?' selected':''}>${esc(v.name)}</option>`).join('');
-      show('elevenStatus','ok', `Загружено голосов: ${voices.length}. Выбери нужный и нажми «Сохранить».`);
-    } catch(e){ show('elevenStatus','err','Не получилось загрузить голоса: ' + e.message + '. Проверь ключ.'); }
-  };
   document.getElementById('saveEleven').onclick = () => {
     setSetting('elevenKey', document.getElementById('elevenKey').value.trim());
-    const sel = document.getElementById('elevenVoice');
-    setSetting('elevenVoice', sel.value);
-    setSetting('elevenVoiceName', sel.options[sel.selectedIndex] ? sel.options[sel.selectedIndex].textContent : '');
+    setSetting('elevenVoice', document.getElementById('elevenVoice').value.trim());
+    setSetting('elevenVoiceName', document.getElementById('elevenVoiceName').value.trim());
     show('elevenStatus','ok','Сохранено. Теперь кнопки 🔊 в уроках будут говорить голосом ElevenLabs.');
   };
   document.getElementById('testEleven').onclick = async () => {
     setSetting('elevenKey', document.getElementById('elevenKey').value.trim());
-    setSetting('elevenVoice', document.getElementById('elevenVoice').value);
+    const voiceId = document.getElementById('elevenVoice').value.trim();
+    setSetting('elevenVoice', voiceId);
+    if (!voiceId) return show('elevenStatus','err','Сначала вставь ID голоса из My Voices.');
     show('elevenStatus','busy','Запрашиваю голос…');
     try { await elevenSpeak('Hello! I am your new English voice. Nice to meet you!', 1);
       show('elevenStatus','ok','Работает! Так будут звучать фразы в уроках.');
-    } catch(e){ show('elevenStatus','err', 'Не получилось: ' + e.message + '. Проверь ключ и остаток бесплатного лимита.'); }
+    } catch(e){
+      let msg = e.message || '';
+      let hint = 'Проверь ключ и ID голоса.';
+      if (/library/i.test(msg)) hint = 'Этот голос из общей библиотеки — на бесплатном тарифе через API недоступен. Возьми другой голос из My Voices (не Voice Library) и скопируй его ID заново.';
+      else if (/quota|credit/i.test(msg)) hint = 'Похоже, закончился бесплатный лимит символов на этот месяц.';
+      show('elevenStatus','err', 'Не получилось: ' + msg + '. ' + hint);
+    }
   };
 
   document.getElementById('saveGroq').onclick = () => {
