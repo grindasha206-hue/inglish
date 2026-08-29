@@ -166,6 +166,7 @@ async function start(){
     document.getElementById('view').innerHTML = '<div class="empty-note">Не удалось загрузить курс (course.json). Обнови страницу.</div>';
     return;
   }
+  await mergeCloudIntoLocal(); /* подтягиваем облако, если оно новее локального кэша */
   render();
 }
 
