@@ -89,9 +89,13 @@ async function init(){
     document.getElementById('toastHome').href = backUrl;
   }
 
-  /* значок озвучки */
+  /* значок озвучки: ElevenLabs приоритетнее Groq, если оба ключа заданы */
   const pill = document.getElementById('voicePill');
-  if (getSetting('groqKey')) {
+  const activeProvider = getSetting('elevenKey') ? 'eleven' : (getSetting('groqKey') ? 'groq' : null);
+  if (activeProvider === 'eleven') {
+    pill.className = 'voice-pill';
+    pill.innerHTML = `🎙 ${getSetting('elevenVoiceName')||'ElevenLabs'}`;
+  } else if (activeProvider === 'groq') {
     const v = getSetting('groqVoice') || 'hannah';
     pill.className = 'voice-pill';
     pill.innerHTML = `🎙 ${v[0].toUpperCase()+v.slice(1)}`;
@@ -243,29 +247,36 @@ function watchTyping(frame){
 }
 
 /* ---- Подмена озвучки урока на Groq (урок не редактируется) ---- */
+let _activeVoiceProvider = null; /* 'eleven' | 'groq' | null — какой провайдер сейчас реально используется */
+
 function installVoice(frame){
   try {
     const w = frame.contentWindow;
-    if (!w || typeof w.speak !== 'function' || !getSetting('groqKey')) return;
+    if (!w || typeof w.speak !== 'function') return;
+    const provider = getSetting('elevenKey') ? 'eleven' : (getSetting('groqKey') ? 'groq' : null);
+    if (!provider) return;
+    _activeVoiceProvider = provider;
     const browserSpeak = w.speak; /* запасной вариант — голос браузера */
 
     /* Заменяем внутри урока блок выбора браузерного голоса на понятную надпись */
     try {
-      const v = getSetting('groqVoice') || 'hannah';
-      const vName = v[0].toUpperCase() + v.slice(1);
+      const label = provider === 'eleven' ? ('ElevenLabs · ' + (getSetting('elevenVoiceName') || 'Rachel'))
+        : ('Groq · ' + (getSetting('groqVoice') || 'hannah')[0].toUpperCase() + (getSetting('groqVoice') || 'hannah').slice(1));
       w.document.querySelectorAll('.voice-picker').forEach(vp => {
-        vp.innerHTML = `<label>🎙 Голос: <b style="color:var(--sage,#4F8F6D)">Groq · ${vName}</b></label>` +
+        vp.innerHTML = `<label>🎙 Голос: <b style="color:var(--sage,#4F8F6D)">${label}</b></label>` +
           `<span class="voice-hint">Живая озвучка подключена. Голос меняется в настройках сайта (⚙), а не в уроке.</span>`;
       });
       const warn = w.document.getElementById('ttsWarn');
       if (warn) warn.style.display = 'none';
     } catch(e){}
 
+    const speakFn = provider === 'eleven' ? elevenSpeak : groqSpeak;
+
     w.speak = function(text, rate, btn){
       /* Возвращает промис, который резолвится по-настоящему в конце звучания —
-         иначе «Прослушать всё подряд» / диалоги в Listening обрывают фразы Groq на середине. */
+         иначе «Прослушать всё подряд» / диалоги в Listening обрывают фразы на середине. */
       btn && btn.classList.add('playing');
-      return groqSpeak(text, rate)
+      return speakFn(text, rate)
         .then(() => { voiceOk(); btn && btn.classList.remove('playing'); })
         .catch(err => {
           voiceError(err);
@@ -276,23 +287,25 @@ function installVoice(frame){
   } catch(e){ /* нет доступа внутрь iframe */ }
 }
 
-/* Groq не ответил — показываем причину, чтобы это не оставалось загадкой */
+/* Провайдер не ответил — показываем причину, чтобы это не оставалось загадкой */
 function voiceError(err){
   const m = err.message || '';
-  let short = 'Groq: ошибка — проверь голос в настройках';
-  if (/429|rate.?limit|too many/i.test(m)) short = 'Groq: лимит запросов в минуту — подожди чуть-чуть и нажми снова';
-  else if (/401|api key/i.test(m)) short = 'Groq не принял ключ — проверь в настройках';
+  const providerName = _activeVoiceProvider === 'eleven' ? 'ElevenLabs' : 'Groq';
+  let short = providerName + ': ошибка — проверь голос в настройках';
+  if (/429|rate.?limit|too many/i.test(m)) short = providerName + ': лимит запросов — подожди чуть-чуть и нажми снова';
+  else if (/401|api key|invalid_api_key/i.test(m)) short = providerName + ' не принял ключ — проверь в настройках';
   else if (/terms/i.test(m)) short = 'Groq: нужно принять условия модели в console.groq.com';
+  else if (/quota|credit/i.test(m)) short = 'ElevenLabs: похоже, закончился бесплатный лимит символов на этот месяц';
   const pill = document.getElementById('voicePill');
   pill.className = 'voice-pill off';
   pill.innerHTML = `<a href="index.html#/settings" title="${m.replace(/"/g,'&quot;')}">⚠ ${short}</a>`;
 }
-/* Groq снова отвечает — возвращаем зелёный значок */
+/* Провайдер снова отвечает — возвращаем зелёный значок */
 function voiceOk(){
   document.getElementById('redoBtn').classList.add('shown');
   const pill = document.getElementById('voicePill');
   if (pill.className === 'voice-pill') return;
-  const v = getSetting('groqVoice') || 'hannah';
+  const v = _activeVoiceProvider === 'eleven' ? (getSetting('elevenVoiceName')||'ElevenLabs') : (getSetting('groqVoice') || 'hannah');
   pill.className = 'voice-pill';
   pill.innerHTML = `🎙 ${v[0].toUpperCase()+v.slice(1)}`;
 }
@@ -300,7 +313,10 @@ function voiceOk(){
 document.getElementById('redoBtn').addEventListener('click', async () => {
   const b = document.getElementById('redoBtn');
   b.classList.add('busy'); b.textContent = '↻ генерирую…';
-  try { await regenerateLastTts(); } catch(e){ voiceError(e); }
+  try {
+    if (_activeVoiceProvider === 'eleven') await regenerateLastEleven();
+    else await regenerateLastTts();
+  } catch(e){ voiceError(e); }
   b.classList.remove('busy'); b.textContent = '↻ переозвучить';
 });
 
