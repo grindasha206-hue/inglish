@@ -262,13 +262,15 @@ function installVoice(frame){
     } catch(e){}
 
     w.speak = function(text, rate, btn){
+      /* Возвращает промис, который резолвится по-настоящему в конце звучания —
+         иначе «Прослушать всё подряд» / диалоги в Listening обрывают фразы Groq на середине. */
       btn && btn.classList.add('playing');
-      groqSpeak(text, rate)
+      return groqSpeak(text, rate)
         .then(() => { voiceOk(); btn && btn.classList.remove('playing'); })
         .catch(err => {
           voiceError(err);
           btn && btn.classList.remove('playing');
-          try { browserSpeak(text, rate, btn); } catch(e){}
+          try { return browserSpeak(text, rate, btn); } catch(e){}
         });
     };
   } catch(e){ /* нет доступа внутрь iframe */ }
