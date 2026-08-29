@@ -174,7 +174,8 @@ function updatePills(){
 window.addEventListener('hashchange', render);
 
 async function start(){
-  const user = await authReady;
+  await authReady; /* дожидаемся, что Firebase закончил проверку — само значение промиса больше не используем */
+  const user = currentUser; /* всегда свежее значение, в отличие от единожды застывшего authReady */
   if (!user) { showLogin(); return; }
   document.getElementById('topbar').style.display = 'flex';
   document.getElementById('loginWrap').style.display = 'none';
