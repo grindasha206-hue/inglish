@@ -1,6 +1,6 @@
 /* ============================================================
    Общее для всех страниц: конфиг репозитория, загрузка курса,
-   настройки (ключ Groq, токен GitHub).
+   настройки (ключ Groq, токен GitHub), облачная синхронизация.
    Курс хранится в course.json — редактируется страницей
    «Добавить урок» или руками.
    ============================================================ */
@@ -110,4 +110,80 @@ async function regenerateLastTts(){
   } catch(e){}
   await groqSpeak(input, rate);
   return true;
+}
+
+/* ============================================================
+   ОБЛАЧНАЯ СИНХРОНИЗАЦИЯ (Firebase Firestore)
+   localStorage остаётся быстрым локальным кэшем — Firestore
+   становится страховкой на случай сброса кэша/данных сайта.
+   Личный ключ "зашит" в код, не в браузер — переживает
+   очистку кэша и работает на любом устройстве, где открыт сайт.
+   ============================================================ */
+const CLOUD_USER_ID = "darya_es_2026_kf92x";
+
+let _cloudDb = null;
+let _cloudDocFns = null;
+let _cloudReady = (async () => {
+  try {
+    const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js");
+    const firestoreMod = await import("https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js");
+    const firebaseConfig = {
+      apiKey: "AIzaSyBXdyJhFcHTdgWbcvuvRdTho8Gal2FCAOc",
+      authDomain: "inglish-progress.firebaseapp.com",
+      projectId: "inglish-progress",
+      storageBucket: "inglish-progress.firebasestorage.app",
+      messagingSenderId: "71414843435",
+      appId: "1:71414843435:web:dbdf466da49bda2ea4426e"
+    };
+    const app = initializeApp(firebaseConfig);
+    _cloudDb = firestoreMod.getFirestore(app);
+    _cloudDocFns = firestoreMod;
+    return true;
+  } catch(e){
+    console.warn("Облако недоступно, работаем только с localStorage:", e);
+    return false;
+  }
+})();
+
+/* Общий прогресс (XP, streak, статус уроков) — один документ на пользователя */
+async function cloudSaveProgress(p){
+  const ok = await _cloudReady;
+  if (!ok) return;
+  try {
+    const ref = _cloudDocFns.doc(_cloudDb, "inglishProgress", CLOUD_USER_ID);
+    await _cloudDocFns.setDoc(ref, { ...p, updatedAt: Date.now() });
+  } catch(e){ console.warn("Не удалось сохранить прогресс в облако:", e); }
+}
+
+async function cloudLoadProgress(){
+  const ok = await _cloudReady;
+  if (!ok) return null;
+  try {
+    const ref = _cloudDocFns.doc(_cloudDb, "inglishProgress", CLOUD_USER_ID);
+    const snap = await _cloudDocFns.getDoc(ref);
+    if (!snap.exists()) return null;
+    const data = snap.data();
+    return { lessons: data.lessons || {}, xp: data.xp || 0, activity: data.activity || {}, updatedAt: data.updatedAt || 0 };
+  } catch(e){ console.warn("Не удалось загрузить прогресс из облака:", e); return null; }
+}
+
+/* Детальное состояние конкретного урока (вписанные ответы, квиз, игры) */
+async function cloudSaveLessonState(lessonId, data){
+  const ok = await _cloudReady;
+  if (!ok) return;
+  try {
+    const ref = _cloudDocFns.doc(_cloudDb, "inglishLessonState", `${CLOUD_USER_ID}__${lessonId}`);
+    await _cloudDocFns.setDoc(ref, { data, updatedAt: Date.now() });
+  } catch(e){ console.warn("Не удалось сохранить состояние урока в облако:", e); }
+}
+
+async function cloudLoadLessonState(lessonId){
+  const ok = await _cloudReady;
+  if (!ok) return null;
+  try {
+    const ref = _cloudDocFns.doc(_cloudDb, "inglishLessonState", `${CLOUD_USER_ID}__${lessonId}`);
+    const snap = await _cloudDocFns.getDoc(ref);
+    if (!snap.exists()) return null;
+    return snap.data().data || null;
+  } catch(e){ console.warn("Не удалось загрузить состояние урока из облака:", e); return null; }
 }
