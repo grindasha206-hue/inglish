@@ -70,7 +70,8 @@ let lesson = null, finished = false, lastScore = 0, lastMax = 0;
 init();
 
 async function init(){
-  const user = await authReady;
+  await authReady;
+  const user = currentUser;
   if (!user) { location.href = 'index.html'; return; }
   await loadCourse();
   lesson = lessonById(new URLSearchParams(location.search).get('lesson'));
