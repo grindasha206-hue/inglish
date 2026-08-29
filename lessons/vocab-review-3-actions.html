@@ -402,7 +402,7 @@ const themes = [
     ["holiday","отпуск","/ˈhɒlədeɪ/","сущ."],["time","время","/taɪm/","сущ."],
   ]},
   { title:"Числа и разное", words:[
-    ["ten","десять","/ten/","числ."],["five","пять","/faɪv/","числ."],["six","шесть","/sɪks/","числ."],
+    ["ten","десять","/ten/","числ.","10"],["five","пять","/faɪv/","числ.","5"],["six","шесть","/sɪks/","числ.","6"],
     ["kilo","килограмм","/ˈkiːləʊ/","сущ."],["very","очень","/ˈveri/","нареч."],["little","маленький","/ˈlɪtl/","прил."],
     ["well","хорошо","/wel/","нареч."],["much","много","/mʌtʃ/","опред."],["question","вопрос","/ˈkwestʃən/","сущ."],
     ["end","конец","/end/","сущ."],["off","выключено","/ɒf/","нареч."],["additional","дополнительный","/əˈdɪʃənl/","прил."],
@@ -417,10 +417,12 @@ themes.forEach(t=>{
   block.innerHTML = `<div class="theme-title">${t.title} <span class="n">${t.words.length}</span></div>`;
   const grid = document.createElement('div');
   grid.className = 'word-chip-grid';
-  t.words.forEach(([en,ru,ipa,pos])=>{
+  t.words.forEach(([en,ru,ipa,pos,speakAs])=>{
     const chip = document.createElement('div');
     chip.className = 'word-chip';
-    chip.innerHTML = `<button class="play-btn" data-text="${en}" data-rate="0.9">🔊</button><b>${en}</b><span class="ipa-pos">${ipa} · ${pos}</span><span class="ru">${ru}</span>`;
+    /* Для чисел отправляем модели цифру (10, а не "ten") — так у Groq включается
+       надёжная встроенная нормализация чисел вместо словесного произношения. */
+    chip.innerHTML = `<button class="play-btn" data-text="${speakAs || en}" data-rate="0.9">🔊</button><b>${en}</b><span class="ipa-pos">${ipa} · ${pos}</span><span class="ru">${ru}</span>`;
     grid.appendChild(chip);
   });
   block.appendChild(grid);
