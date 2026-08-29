@@ -494,13 +494,18 @@ function pickVoice(){
 }
 if('speechSynthesis' in window){ populateVoiceList(); window.speechSynthesis.onvoiceschanged = populateVoiceList; }
 function speak(text, rate, btn){
-  if(!('speechSynthesis' in window)) return;
-  window.speechSynthesis.cancel();
-  const utter = new SpeechSynthesisUtterance(text);
-  utter.rate = rate || 1; utter.pitch = 1;
-  const v = pickVoice(); if(v) utter.voice = v;
-  if(btn){ utter.onstart = ()=>btn.classList.add('playing'); utter.onend = ()=>btn.classList.remove('playing'); }
-  window.speechSynthesis.speak(utter);
+  return new Promise((resolve) => {
+    if(!('speechSynthesis' in window)){ resolve(); return; }
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.rate = rate || 1; utter.pitch = 1;
+    const v = pickVoice(); if(v) utter.voice = v;
+    if(btn){ utter.onstart = ()=>btn.classList.add('playing'); }
+    const done = () => { if(btn) btn.classList.remove('playing'); resolve(); };
+    utter.onend = done;
+    utter.onerror = done;
+    window.speechSynthesis.speak(utter);
+  });
 }
 document.addEventListener('click', (e)=>{
   const btn = e.target.closest('.play-btn');
@@ -562,21 +567,16 @@ document.querySelectorAll('.speed-btn').forEach(btn=>{
     listeningRate = parseFloat(btn.dataset.rate);
   });
 });
-document.getElementById('playListeningBtn').addEventListener('click', ()=>{
+document.getElementById('playListeningBtn').addEventListener('click', async ()=>{
   const lines = ["Hello! What's your name?","My name's Maria. I'm Italian.","Are you a student?","No, I'm a nurse.",
     "Is your job interesting?","Yes, it's very interesting, but I'm often tired.",
     "Is that your friend over there?","Yes, he's English. He's a football player.",
     "He's very quiet, but he's kind."];
-  let i = 0;
   const btn = document.getElementById('playListeningBtn');
-  function next(){
-    if(i >= lines.length) return;
-    speak(lines[i], listeningRate, btn);
-    const words = lines[i].split(' ').length;
-    i++;
-    setTimeout(next, Math.max(1200, words*420/listeningRate));
+  for(const line of lines){
+    await speak(line, listeningRate, btn);
+    await new Promise(res=>setTimeout(res, 350));
   }
-  next();
 });
 document.getElementById('toggleScriptBtn').addEventListener('click', ()=>{
   document.getElementById('scriptBox').classList.toggle('shown');
