@@ -73,6 +73,8 @@ async function init(){
   await loadCourse();
   lesson = lessonById(new URLSearchParams(location.search).get('lesson'));
   if (!lesson) { document.getElementById('barTitle').textContent = 'Урок не найден'; return; }
+  const fresh = await mergeCloudIntoLocal(); /* облако новее локального кэша? подтягиваем */
+  p.lessons = fresh.lessons; p.xp = fresh.xp; p.activity = fresh.activity; p.updatedAt = fresh.updatedAt;
 
   document.title = `Unit ${lesson.unit} · ${lesson.title} — Инглиш`;
   document.getElementById('barTitle').textContent = `Unit ${lesson.unit} · ${lesson.title}`;
@@ -163,12 +165,19 @@ function saveLessonState(){
       prodDone: /✅/.test((d.getElementById('wordCount') || {}).textContent || '')
     };
     localStorage.setItem(stateKey(), JSON.stringify(data));
+    if (typeof cloudSaveLessonState === 'function') cloudSaveLessonState(lesson.id, data);
   } catch(e){}
 }
 
 async function restoreLessonState(frame){
   let data = null;
   try { data = JSON.parse(localStorage.getItem(stateKey()) || 'null'); } catch(e){}
+  if (!data && typeof cloudLoadLessonState === 'function') {
+    try {
+      data = await cloudLoadLessonState(lesson.id);
+      if (data) localStorage.setItem(stateKey(), JSON.stringify(data)); /* кладём в локальный кэш на будущее */
+    } catch(e){}
+  }
   if (!data) return;
   if (Array.isArray(data)) data = { fields: data }; /* старый формат */
   restoring = true;
