@@ -521,13 +521,17 @@ document.querySelectorAll('.speed-btn').forEach(btn=>{
   });
 });
 document.getElementById('playListeningBtn').addEventListener('click', async ()=>{
+  const sequenceButton=document.getElementById('playListeningBtn');
+  if(sequenceButton.disabled)return;sequenceButton.disabled=true;
+  try{
   const lines = ["What are you eating?","I'm eating an apple.","Are you drinking coffee?","Yes, I am.",
     "Are you cooking dinner?","Yes, I'm cooking in the kitchen."];
   const btn = document.getElementById('playListeningBtn');
   for(const line of lines){
-    await speak(line, listeningRate, btn);
+    if(await speak(line, listeningRate, btn)===false)break;
     await new Promise(res=>setTimeout(res, 350));
   }
+  }finally{sequenceButton.disabled=false;}
 });
 document.getElementById('toggleScriptBtn').addEventListener('click', ()=>{
   document.getElementById('scriptBox').classList.toggle('shown');

@@ -125,7 +125,7 @@ function resumePendingSync(){
 }
 /* ---- Groq TTS (Orpheus) ---- */
 const GROQ_VOICES = ["autumn", "diana", "hannah", "austin", "daniel", "troy"];
-const groqTts=TTS.engine({name:'Groq',enabled:()=>serverCapabilities.groq,voice:'groqVoice',defaultVoice:'hannah',model:'canopylabs/orpheus-v1-english',settings:null,cache:'inglish-tts-v2',limit:189,punctuation:true,
+const groqTts=TTS.engine({name:'Groq',enabled:()=>serverCapabilities.groq,voice:'groqVoice',defaultVoice:'hannah',model:'canopylabs/orpheus-v1-english',settings:{delivery:'professional-v1'},cache:'inglish-tts-v3',limit:170,punctuation:true,
  transport:(input,voice,signal)=>gatewayResponse('/tts',{provider:'groq',text:input,voice},signal)});
 const elevenTts=TTS.engine({name:'ElevenLabs',enabled:()=>serverCapabilities.eleven,voice:'elevenVoice',model:'eleven_multilingual_v2',settings:{stability:0.6,similarity_boost:0.75},cache:'inglish-tts-11labs-v2',limit:500,
  transport:(text,voice,signal)=>gatewayResponse('/tts',{provider:'eleven',text,voice},signal)});

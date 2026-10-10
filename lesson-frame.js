@@ -20,7 +20,7 @@
     }
     if(msg.type==='speak'&&ready&&Number.isSafeInteger(msg.id)&&typeof msg.text==='string'&&msg.text.length<=20000){
      const activeSession=session;
-     try{await handlers.speak(msg.text,typeof msg.rate==='number'&&Number.isFinite(msg.rate)?Math.max(0.1,Math.min(2,msg.rate)):1);if(session===activeSession)send('audio-result',{id:msg.id});}
+     try{const played=await handlers.speak(msg.text,typeof msg.rate==='number'&&Number.isFinite(msg.rate)?Math.max(0.1,Math.min(2,msg.rate)):1);if(session===activeSession)send('audio-result',{id:msg.id,...(played===false?{error:'Воспроизведение остановлено'}:{})});}
      catch(e){if(session===activeSession)send('audio-result',{id:msg.id,error:'Не удалось озвучить фразу'});}
     }
    }catch(e){handlers.error(e.message,stored);}

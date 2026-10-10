@@ -13,11 +13,11 @@
   function stop(){root.speechSynthesis?.cancel();if(active){active.pause();active=null;}}
   function play(url,rate){
     stop();const audio=new Audio(url);active=audio;
-    audio.playbackRate=rate&&rate<=0.6?0.72:1;
+    audio.playbackRate=rate&&rate<=0.6?0.72:Math.max(0.6,Math.min(1.5,Number(rate)||1));
     return new Promise((resolve,reject)=>{
       let timer;
       const done=err=>{clearTimeout(timer);audio.onended=audio.onpause=audio.onerror=null;if(active===audio)active=null;err?reject(err):resolve();};
-      audio.onended=audio.onpause=()=>done();audio.onerror=()=>done(new Error('Не удалось воспроизвести аудио'));
+      audio.onended=()=>done();audio.onpause=()=>done(Object.assign(new Error('Воспроизведение остановлено'),{name:'AbortError'}));audio.onerror=()=>done(new Error('Не удалось воспроизвести аудио'));
       timer=setTimeout(()=>{done(new Error('Превышено время воспроизведения'));audio.pause();},180000);
       Promise.resolve().then(()=>audio.play()).catch(done);
     });
@@ -76,11 +76,12 @@
       const token=++root.TTS.generation;stop();last={text:input,rate,voice};
       for(let part of chunks(input,config.limit)){
         if(config.punctuation&&!/[.!?…]$/.test(part))part+='.';
-        if(token!==root.TTS.generation)return;
+        if(token!==root.TTS.generation)return false;
         const url=await urlFor(part,voice,key);
-        if(token!==root.TTS.generation)return;
-        await play(url,rate);
+        if(token!==root.TTS.generation)return false;
+        try{await play(url,rate);}catch(error){if(error.name==='AbortError'||token!==root.TTS.generation)return false;throw error;}
       }
+      return token===root.TTS.generation;
     }
     async function regenerate(){
       if(!last)return false;

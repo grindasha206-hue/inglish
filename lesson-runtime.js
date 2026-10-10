@@ -150,7 +150,7 @@ if(typeof originalSpeak==='function')window.speak=(text,rate,button)=>{
  return new Promise((resolve,reject)=>{
   const timer=setTimeout(()=>{requests.delete(id);reject(new Error('Озвучка не ответила'));},240000);
   requests.set(id,{resolve,reject,timer});send('speak',{id,text:String(text),rate:typeof rate==='number'?rate:1});
- }).catch(()=>{}).finally(()=>button?.classList.remove('playing'));
+ }).then(()=>true).catch(()=>false).finally(()=>button?.classList.remove('playing'));
 };
 for(const type of ['input','change','click'])document.addEventListener(type,()=>{clearTimeout(timer);timer=setTimeout(snapshot,350);},true);
 window.addEventListener('pagehide',snapshot);

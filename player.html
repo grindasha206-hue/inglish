@@ -212,7 +212,7 @@ function browserSpeech(text,rate){
  return new Promise((resolve,reject)=>{
   const utterance=new SpeechSynthesisUtterance(text);utterance.lang='en-US';utterance.rate=rate||1;
   const timer=setTimeout(()=>{speechSynthesis.cancel();reject(Error('Браузерная озвучка не ответила'));},180000);
-  utterance.onend=()=>{clearTimeout(timer);resolve();};utterance.onerror=()=>{clearTimeout(timer);resolve();};
+  utterance.onend=()=>{clearTimeout(timer);resolve(true);};utterance.onerror=event=>{clearTimeout(timer);if(['canceled','interrupted'].includes(event.error))resolve(false);else reject(Error('Браузерная озвучка: '+event.error));};
   speechSynthesis.speak(utterance);
  });
 }
@@ -221,8 +221,8 @@ async function playLessonSpeech(text,rate){
  if(!provider)return browserSpeech(text,rate);
  const playback=provider==='eleven'?elevenSpeak(text,rate):groqSpeak(text,rate);
  const generation=TTS.generation;
- try{await playback;if(generation===TTS.generation)voiceOk();}
- catch(e){if(generation!==TTS.generation)return;voiceError(e);return browserSpeech(text,rate);}
+ try{const played=await playback;if(generation!==TTS.generation||played===false)return false;voiceOk();return true;}
+ catch(e){if(generation!==TTS.generation)return false;voiceError(e);return browserSpeech(text,rate);}
 }
 
 /* Провайдер не ответил — показываем причину, чтобы это не оставалось загадкой */
