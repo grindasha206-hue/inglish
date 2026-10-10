@@ -1,54 +1,37 @@
-/* ============================================================
-   ПРОГРЕСС — хранение в localStorage браузера + резервная
-   синхронизация в Firebase (см. cloudSaveProgress/cloudLoadProgress
-   в site.js). localStorage остаётся источником истины для
-   мгновенного рендера, облако — страховка на случай сброса кэша.
-   Структура:
-   {
-     lessons: { "unit-01": { status:"done"|"started", bestScore, maxScore, completedAt } },
-     xp: 120,
-     activity: { "2026-07-25": true, ... },   // дни, когда занималась
-     updatedAt: 1730000000000                  // для сравнения с облаком
-   }
-   ============================================================ */
-
-const STORE_KEY = "english.progress.v1";
-const XP_PER_LESSON = 50; // базовые очки за пройденный урок (+ звёзды из урока)
-
+/* Account-scoped, monotonic progress. Cloud writes merge in a transaction. */
+const XP_PER_LESSON = 50;
+function progressKey(){ return accountKey('progress.v2'); }
 function loadProgress(){
-  try {
-    const raw = localStorage.getItem(STORE_KEY);
-    if (raw) {
-      const p = JSON.parse(raw);
-      return { lessons: p.lessons || {}, xp: p.xp || 0, activity: p.activity || {}, updatedAt: p.updatedAt || 0 };
-    }
-  } catch(e){ /* повреждённые данные — начинаем заново */ }
-  return { lessons: {}, xp: 0, activity: {}, updatedAt: 0 };
-}
-
-function saveProgress(p){
-  p.updatedAt = Date.now();
-  try { localStorage.setItem(STORE_KEY, JSON.stringify(p)); } catch(e){}
-  /* фоновая отправка в облако — не блокирует интерфейс */
-  if (typeof cloudSaveProgress === 'function') cloudSaveProgress(p);
-}
-
-/* При старте приложения: подтягиваем облачную версию, если она новее
-   локальной (например, кэш только что сбросили или зашли с другого
-   устройства) — и сразу сохраняем результат локально. */
-async function mergeCloudIntoLocal(){
-  if (typeof cloudLoadProgress !== 'function') return loadProgress();
-  const local = loadProgress();
-  let cloud = null;
-  try { cloud = await cloudLoadProgress(); } catch(e){}
-  if (!cloud) return local;
-  if ((cloud.updatedAt || 0) > (local.updatedAt || 0)) {
-    try { localStorage.setItem(STORE_KEY, JSON.stringify(cloud)); } catch(e){}
-    return cloud;
+  try { const raw = localStorage.getItem(progressKey()); if (raw) return SyncCore.validateProgress(JSON.parse(raw)); }
+  catch(e){
+    const raw=localStorage.getItem(progressKey());
+    if(raw) localStorage.setItem(accountKey('corrupt-progress.'+Date.now()),raw);
+    setSyncStatus('error', 'Локальный прогресс повреждён. Исходная копия сохранена отдельно.');
   }
-  return local;
+  return SyncCore.emptyProgress();
 }
-
+function storeProgress(p, uid = cloudUserId()){
+  const clean = SyncCore.validateProgress(p);
+  try { localStorage.setItem(accountKey('progress.v2',uid), JSON.stringify(clean)); }
+  catch(e){ setSyncStatus('error', 'Не удалось сохранить данные в браузере. Не закрывай страницу.'); throw e; }
+  return clean;
+}
+function saveProgress(p){
+  const merged=SyncCore.mergeProgress(loadProgress(),p);
+  merged.updatedAt=Date.now(); Object.assign(p,merged); storeProgress(merged);
+  queueProgressSync(merged);
+}
+async function mergeCloudIntoLocal(){
+  const uid=cloudUserId(); if (!uid) return SyncCore.emptyProgress();
+  try {
+    const cloud=await cloudLoadProgress(uid);
+    if (uid!==cloudUserId()) return SyncCore.emptyProgress();
+    const merged=SyncCore.mergeProgress(loadProgress(),cloud||SyncCore.emptyProgress());
+    storeProgress(merged,uid);
+    if (!cloud || !SyncCore.equal(merged,cloud)) queueProgressSync(merged);
+    return merged;
+  } catch(e){ setSyncStatus('error','Облако недоступно. Ответы сохраняются в этом браузере.'); return loadProgress(); }
+}
 /* ---- даты ---- */
 function todayKey(d){
   const dt = d || new Date();
@@ -71,31 +54,24 @@ function currentStreak(p){
   return streak;
 }
 
-/* ---- уроки ---- */
-function lessonState(p, id){ return p.lessons[id] || null; }
-
-function markStarted(p, id){
-  if (!p.lessons[id]) { p.lessons[id] = { status: "started" }; saveProgress(p); }
-  touchActivity(p);
+/* Completion is monotonic; XP is awarded once per lesson. */
+function lessonState(p,id){ return p.lessons[id] || null; }
+function markStarted(p,id){
+  Object.assign(p,SyncCore.mergeProgress(loadProgress(),p));
+  if (!p.lessons[id]) p.lessons[id]={status:'started'};
+  p.activity[todayKey()]=true; saveProgress(p);
 }
-
-/* Завершение урока. Возвращает количество начисленных XP (0, если уже был пройден). */
-function markCompleted(p, id, score, maxScore){
-  const prev = p.lessons[id] || {};
-  const first = prev.status !== "done";
-  p.lessons[id] = {
-    status: "done",
-    bestScore: Math.max(prev.bestScore || 0, score || 0),
-    maxScore: maxScore || prev.maxScore || 0,
-    completedAt: prev.completedAt || new Date().toISOString()
-  };
-  let gained = 0;
-  if (first) { gained = XP_PER_LESSON + (score || 0); p.xp += gained; }
-  saveProgress(p);
-  touchActivity(p);
-  return gained;
+function markCompleted(p,id,score,maxScore){
+  Object.assign(p,SyncCore.mergeProgress(loadProgress(),p));
+  const prev=p.lessons[id]||{}, first=prev.status!=='done';
+  score=Number.isSafeInteger(score)&&score>=0?score:0;
+  maxScore=Number.isSafeInteger(maxScore)&&maxScore>=0?maxScore:0;
+  if (maxScore) score=Math.min(score,maxScore);
+  const gained=first?XP_PER_LESSON+score:0;
+  p.lessons[id]={status:'done',bestScore:Math.max(prev.bestScore||0,score),maxScore:Math.max(prev.maxScore||0,maxScore),
+    completedAt:prev.completedAt||new Date().toISOString(),awardedXP:first?gained:prev.awardedXP};
+  p.activity[todayKey()]=true; saveProgress(p); return gained;
 }
-
 /* ---- уровень из XP ---- */
 function levelInfo(xp){
   const level = Math.floor(xp / 100) + 1;
@@ -108,30 +84,15 @@ function nextLesson(p){
   return ALL_LESSONS.find(l => !(p.lessons[l.id] && p.lessons[l.id].status === "done")) || null;
 }
 
-/* ---- экспорт / импорт (страховка от потери данных) ---- */
-function exportProgress(){
-  const blob = new Blob([localStorage.getItem(STORE_KEY) || "{}"], { type: "application/json" });
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "english-progress-" + todayKey() + ".json";
-  a.click();
-  URL.revokeObjectURL(a.href);
-}
-
-function importProgress(file, onDone){
-  const reader = new FileReader();
-  reader.onload = () => {
-    try {
-      const p = JSON.parse(reader.result);
-      if (typeof p === "object" && p !== null) {
-        const merged = { lessons: p.lessons||{}, xp: p.xp||0, activity: p.activity||{} };
-        localStorage.setItem(STORE_KEY, JSON.stringify(merged));
-        saveProgress(merged); /* тоже отправит в облако */
-        onDone && onDone(true);
-        return;
-      }
-    } catch(e){}
-    onDone && onDone(false);
-  };
+/* Import adds valid results; it never silently deletes newer work. */
+function exportProgress(){ downloadJSON(loadProgress(),'english-progress-'+todayKey()+'.json'); }
+function importProgress(file,onDone){
+  if (file.size>2*1024*1024) { onDone?.(false); return; }
+  const reader=new FileReader();
+  reader.onerror=()=>onDone?.(false);
+  reader.onload=()=>{ try {
+    const imported=SyncCore.validateProgress(JSON.parse(reader.result));
+    const merged=SyncCore.mergeProgress(loadProgress(),imported); saveProgress(merged); onDone?.(true);
+  } catch(e){ onDone?.(false); } };
   reader.readAsText(file);
 }

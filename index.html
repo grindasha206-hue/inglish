@@ -122,6 +122,9 @@ a{color:inherit;}
 .drop b{color:var(--brick-dark);}
 .footer-tools{margin-top:36px; padding-top:14px; border-top:1px dashed var(--line); font-size:12.5px; color:var(--ink-soft); display:flex; gap:12px; flex-wrap:wrap; align-items:center;}
 .footer-tools a{color:var(--tab-dark); font-weight:700; text-decoration:none;}
+@media(max-width:600px){input,textarea,select{font-size:16px!important}.btn,.mini-btn{min-height:44px}.form-row{grid-template-columns:1fr}.topbar{flex-wrap:wrap}.panel{overflow-wrap:anywhere}}
+:focus-visible{outline:3px solid var(--brick);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
@@ -151,8 +154,14 @@ a{color:inherit;}
 
 <div class="wrap" id="view" style="display:none">Загружаю…</div>
 
+<script src="sync-core.js"></script>
+<script src="tts.js"></script>
+<script src="backend-config.js"></script>
+<script src="gateway.js"></script>
 <script src="site.js"></script>
+<script src="lesson-schema.js"></script>
 <script src="progress.js"></script>
+<script src="backup.js"></script>
 <script>
 let p = loadProgress();
 
@@ -178,6 +187,10 @@ async function start(){
   await authReady; /* дожидаемся, что Firebase закончил проверку — само значение промиса больше не используем */
   const user = currentUser; /* всегда свежее значение, в отличие от единожды застывшего authReady */
   if (!user) { showLogin(); return; }
+  initializeAccountStorage();
+  try{await refreshCapabilities();}catch(e){setSyncStatus('error','Сервер озвучки и загрузки недоступен.');}
+  resumeBackupRestore();
+  resumePendingSync();
   document.getElementById('topbar').style.display = 'flex';
   document.getElementById('loginWrap').style.display = 'none';
   document.getElementById('view').style.display = 'block';
@@ -225,11 +238,11 @@ document.getElementById('loginPassword').addEventListener('keydown', e => {
 document.getElementById('logoutLink').addEventListener('click', async (e) => {
   e.preventDefault();
   await signOutUser();
-  location.hash = '#/';
   location.reload();
 });
 
 function render(){
+  if (!currentUser || !COURSE) return;
   p = loadProgress();
   updatePills();
   const hash = location.hash || '#/';
@@ -358,7 +371,7 @@ function renderModule(view, lv, m){
     const done = st?.status === 'done';
     const isNext = next && next.id === l.id;
     let right;
-    if (done) right = `<span class="score">★ ${st.bestScore ?? 0}${st.maxScore ? '/' + st.maxScore : ''}</span>`;
+    if (done) right = `<span class="score">★ ${esc(st.bestScore ?? 0)}${st.maxScore ? '/' + esc(st.maxScore) : ''}</span>`;
     else if (isNext) right = `<span class="cta">начать →</span>`;
     else right = `<span class="todo">впереди</span>`;
     return `<a class="row-card${done?' done':''}${isNext?' next':''}" href="player.html?lesson=${l.id}">
@@ -375,130 +388,53 @@ function renderModule(view, lv, m){
 
 /* ================= настройки ================= */
 function renderSettings(view){
-  view.innerHTML = `<div class="crumbs"><a href="#/">Кабинет</a> → Настройки</div>
-
-  <div class="panel">
-    <h3>🎙 Озвучка ElevenLabs <span style="font-size:11.5px; font-weight:700; color:var(--sage); background:var(--sage-bg); padding:2px 8px; border-radius:10px;">рекомендуется</span></h3>
-    <p class="hint">Более спокойный и предсказуемый голос, без "актёрских" сюрпризов Groq. Бесплатный лимит — около 10 000 символов в месяц (фразы кэшируются, повторно не тратятся). Ключ хранится <b>только в этом браузере</b>. Получить ключ: <a href="https://elevenlabs.io" target="_blank">elevenlabs.io</a> → профиль → API Key.</p>
-    <p class="hint"><b>ID голоса берём прямо из вашего личного кабинета</b> (у ElevenLabs сейчас меняется набор голосов, и через API нельзя надёжно угадать, какие доступны именно вам): зайдите в раздел <a href="https://elevenlabs.io/app/voice-lab" target="_blank">My Voices</a> на сайте ElevenLabs, откройте любой голос, нажмите на "⋯" (три точки) → <b>Copy voice ID</b>, и вставьте сюда.</p>
-    <div class="form-row">
-      <div class="field"><label>API-ключ ElevenLabs</label><input type="password" id="elevenKey" placeholder="..." value="${esc(getSetting('elevenKey'))}"></div>
-      <div class="field"><label>ID голоса (Voice ID)</label><input type="text" id="elevenVoice" placeholder="вставьте скопированный ID" value="${esc(getSetting('elevenVoice'))}"></div>
-    </div>
-    <div class="field"><label>Название голоса (для отображения, необязательно)</label><input type="text" id="elevenVoiceName" placeholder="например: Sarah" value="${esc(getSetting('elevenVoiceName'))}"></div>
-    <button class="mini-btn" id="saveEleven">Сохранить</button>
-    <button class="mini-btn" id="testEleven">▶ Проверить голос</button>
-    <div class="status" id="elevenStatus"></div>
+  view.innerHTML=`<div class="crumbs"><a href="#/">Кабинет</a> → Настройки</div>
+  <div class="panel"><h3>Озвучка и загрузка уроков</h3>
+    <p class="hint">Ключи хранятся на сервере. Здесь выбираются только голоса. ${window.BACKEND_URL?'':'Сервер пока не подключён: работает голос браузера.'}</p>
+    <p class="hint">Groq: ${serverCapabilities.groq?'подключён':'недоступен'} · ElevenLabs: ${serverCapabilities.eleven?'подключён':'недоступен'} · Загрузка: ${serverCapabilities.github?'доступна владельцу':'недоступна'}</p>
+    <button class="mini-btn" id="checkServer">Проверить подключение</button><div class="status" id="serverStatus"></div>
   </div>
-
-  <div class="panel">
-    <h3>🎙 Озвучка Groq</h3>
-    <p class="hint">Живые голоса вместо роботизированных. Если заполнен ключ ElevenLabs выше — сайт будет использовать его вместо Groq. Ключ хранится <b>только в этом браузере</b>. Получить ключ: <a href="https://console.groq.com/keys" target="_blank">console.groq.com/keys</a>.</p>
-    <div class="form-row">
-      <div class="field"><label>API-ключ Groq</label><input type="password" id="groqKey" placeholder="gsk_..." value="${esc(getSetting('groqKey'))}"></div>
-      <div class="field"><label>Голос</label><select id="groqVoice">${GROQ_VOICES.map(v=>`<option value="${v}"${(getSetting('groqVoice')||'hannah')===v?' selected':''}>${v[0].toUpperCase()+v.slice(1)}${['autumn','diana','hannah'].includes(v)?' · женский':' · мужской'}</option>`).join('')}</select></div>
-    </div>
-    <button class="mini-btn" id="saveGroq">Сохранить</button>
-    <button class="mini-btn" id="testGroq">▶ Проверить голос</button>
-    <div class="status" id="groqStatus"></div>
+  <div class="panel"><h3>Голос Groq</h3>
+    <div class="field"><label for="groqVoice">Голос</label><select id="groqVoice">${GROQ_VOICES.map(v=>`<option value="${v}"${(getSetting('groqVoice')||'hannah')===v?' selected':''}>${v}</option>`).join('')}</select></div>
+    <button class="mini-btn" id="saveGroq">Сохранить голос</button><button class="mini-btn" id="testGroq">▶ Прослушать</button><div class="status" id="groqStatus"></div>
   </div>
-
-  <div class="panel">
-    <h3>🔑 GitHub — для загрузки уроков</h3>
-    <p class="hint">Токен нужен странице «Добавить урок», чтобы сохранять уроки на сайт. Тоже хранится только в этом браузере.<br>
-    Создать: <a href="https://github.com/settings/personal-access-tokens/new" target="_blank">github.com/settings/personal-access-tokens/new</a> → Repository access: <b>Only select repositories → ${REPO.name}</b> → Permissions → Contents: <b>Read and write</b> → Generate.</p>
-    <div class="field"><label>Токен GitHub</label><input type="password" id="ghToken" placeholder="github_pat_... или ghp_..." value="${esc(getSetting('ghToken'))}"></div>
-    <button class="mini-btn" id="saveGh">Сохранить</button>
-    <button class="mini-btn" id="testGh">Проверить доступ</button>
-    <div class="status" id="ghStatus"></div>
+  <div class="panel"><h3>Голос ElevenLabs</h3>
+    <div class="field"><label for="elevenVoice">ID голоса из My Voices</label><input id="elevenVoice" value="${esc(getSetting('elevenVoice'))}"></div>
+    <div class="field"><label for="elevenVoiceName">Название голоса</label><input id="elevenVoiceName" value="${esc(getSetting('elevenVoiceName'))}"></div>
+    <button class="mini-btn" id="saveEleven">Сохранить голос</button><button class="mini-btn" id="testEleven">▶ Прослушать</button><div class="status" id="elevenStatus"></div>
   </div>
-
-  <div class="panel">
-    <h3>💾 Резервная копия прогресса</h3>
-    <p class="hint">Прогресс живёт в браузере. Перед сменой устройства сохрани его в файл и загрузи на новом.</p>
-    <button class="mini-btn" onclick="exportProgress()">⬇ Сохранить прогресс в файл</button>
-    <button class="mini-btn" onclick="document.getElementById('importFile').click()">⬆ Загрузить из файла</button>
-    <input type="file" id="importFile" accept=".json" style="display:none">
-    <div class="status" id="impStatus"></div>
+  <div class="panel"><h3>💾 Резервная копия</h3>
+    <p class="hint">Файл результатов содержит прохождения, XP и дни занятий. Полная копия дополнительно сохраняет ответы упражнений. Ключи не экспортируются.</p>
+    <button class="mini-btn" onclick="exportProgress()">Скачать результаты</button>
+    <button class="mini-btn" onclick="exportFullBackup()">Скачать полную копию</button>
+    <button class="mini-btn" onclick="document.getElementById('importFile').click()">Восстановить из файла</button>
+    <input type="file" id="importFile" accept=".json" hidden><div class="status" id="impStatus"></div>
   </div>`;
-
-  document.getElementById('saveEleven').onclick = () => {
-    setSetting('elevenKey', document.getElementById('elevenKey').value.trim());
-    setSetting('elevenVoice', document.getElementById('elevenVoice').value.trim());
-    setSetting('elevenVoiceName', document.getElementById('elevenVoiceName').value.trim());
-    show('elevenStatus','ok','Сохранено. Теперь кнопки 🔊 в уроках будут говорить голосом ElevenLabs.');
+  const saveGroq=()=>setSetting('groqVoice',document.getElementById('groqVoice').value);
+  const saveEleven=()=>{setSetting('elevenVoice',document.getElementById('elevenVoice').value.trim());setSetting('elevenVoiceName',document.getElementById('elevenVoiceName').value.trim());};
+  document.getElementById('saveGroq').onclick=()=>{saveGroq();show('groqStatus','ok','Голос сохранён.');};
+  document.getElementById('saveEleven').onclick=()=>{saveEleven();show('elevenStatus','ok','Голос сохранён.');};
+  for(const [id,save,speak,status]of [['testGroq',saveGroq,groqSpeak,'groqStatus'],['testEleven',saveEleven,elevenSpeak,'elevenStatus']])document.getElementById(id).onclick=async()=>{
+    save();show(status,'busy','Запрашиваю голос…');try{await speak('Hello! Nice to meet you!',1);show(status,'ok','Голос работает.');}catch(e){show(status,'err',e.message);}
   };
-  document.getElementById('testEleven').onclick = async () => {
-    setSetting('elevenKey', document.getElementById('elevenKey').value.trim());
-    const voiceId = document.getElementById('elevenVoice').value.trim();
-    setSetting('elevenVoice', voiceId);
-    if (!voiceId) return show('elevenStatus','err','Сначала вставь ID голоса из My Voices.');
-    show('elevenStatus','busy','Запрашиваю голос…');
-    try { await elevenSpeak('Hello! I am your new English voice. Nice to meet you!', 1);
-      show('elevenStatus','ok','Работает! Так будут звучать фразы в уроках.');
-    } catch(e){
-      let msg = e.message || '';
-      let hint = 'Проверь ключ и ID голоса.';
-      if (/library/i.test(msg)) hint = 'Этот голос из общей библиотеки — на бесплатном тарифе через API недоступен. Возьми другой голос из My Voices (не Voice Library) и скопируй его ID заново.';
-      else if (/quota|credit/i.test(msg)) hint = 'Похоже, закончился бесплатный лимит символов на этот месяц.';
-      show('elevenStatus','err', 'Не получилось: ' + msg + '. ' + hint);
-    }
-  };
-
-  document.getElementById('saveGroq').onclick = () => {
-    setSetting('groqKey', document.getElementById('groqKey').value.trim());
-    setSetting('groqVoice', document.getElementById('groqVoice').value);
-    show('groqStatus','ok','Сохранено. Теперь кнопки 🔊 в уроках будут говорить голосом Groq.');
-  };
-  document.getElementById('testGroq').onclick = async () => {
-    setSetting('groqKey', document.getElementById('groqKey').value.trim());
-    setSetting('groqVoice', document.getElementById('groqVoice').value);
-    show('groqStatus','busy','Запрашиваю голос…');
-    try { await groqSpeak('Hello! I am your new English voice. Nice to meet you!', 1);
-      show('groqStatus','ok','Работает! Так будут звучать фразы в уроках.');
-    } catch(e){ show('groqStatus','err', ttsErrText(e)); }
-  };
-  document.getElementById('saveGh').onclick = () => {
-    setSetting('ghToken', document.getElementById('ghToken').value.trim());
-    show('ghStatus','ok','Сохранено.');
-  };
-  document.getElementById('testGh').onclick = async () => {
-    setSetting('ghToken', document.getElementById('ghToken').value.trim());
-    show('ghStatus','busy','Проверяю…');
-    try {
-      const r = await gh(`/repos/${REPO.owner}/${REPO.name}`);
-      if (r && r.permissions && (r.permissions.push || r.permissions.admin)) show('ghStatus','ok','Доступ есть — можно загружать уроки.');
-      else show('ghStatus','err','Токен работает, но нет права записи в репозиторий. Проверь Permissions → Contents: Read and write.');
-    } catch(e){ show('ghStatus','err','Не получилось: ' + e.message + '. Проверь токен.'); }
-  };
-  document.getElementById('importFile').addEventListener('change', e => {
-    const f = e.target.files[0];
-    if (f) importProgress(f, ok => { if (ok){ p = loadProgress(); updatePills(); show('impStatus','ok','Прогресс загружен!'); } else show('impStatus','err','Не удалось прочитать файл.'); });
-  });
+  document.getElementById('checkServer').onclick=async()=>{try{await refreshCapabilities();renderSettings(view);show('serverStatus','ok','Подключение проверено.');}catch(e){show('serverStatus','err',e.message);}};
+  document.getElementById('importFile').onchange=e=>{const file=e.target.files[0];if(file)importBackup(file,ok=>{if(ok){p=loadProgress();updatePills();}show('impStatus',ok?'ok':'err',ok?'Копия восстановлена.':'Не удалось восстановить копию. Проверь файл и свободное место в браузере.');});};
 }
 
-function ttsErrText(e){
-  const m = e.message || '';
-  if (m === 'no-key') return 'Сначала вставь API-ключ.';
-  if (m === 'groq-401' || /invalid api key/i.test(m)) return 'Groq не принял ключ (401). Проверь, что ключ скопирован целиком.';
-  if (m === 'groq-429' || /rate limit/i.test(m)) return 'Groq говорит «слишком много запросов» (429). Подожди минуту и попробуй снова.';
-  if (/terms/i.test(m)) return 'Нужно один раз принять условия для голосовой модели: открой console.groq.com/playground, выбери модель canopylabs/orpheus-v1-english и нажми Accept terms. Ответ Groq: «' + m + '»';
-  if (/model/i.test(m) && /(not exist|not found|decommission|access)/i.test(m)) return 'Groq не даёт доступ к голосовой модели. Ответ Groq: «' + m + '». Напиши это Клоду — разберёмся.';
-  return 'Не получилось. Ответ Groq: «' + m + '». Проверь интернет и ключ, или покажи это сообщение Клоду.';
-}
-function show(id, cls, text){ const el = document.getElementById(id); el.className = 'status ' + cls; el.textContent = text; }
+function show(id, cls, text){ const el = document.getElementById(id); if(!el)return; el.className = 'status ' + cls; el.textContent = text; }
 
 /* ================= добавить урок ================= */
-let pickedFile = null;
+let pickedFile = null, filePickVersion=0;
 
 function renderAdd(view){
-  const hasToken = !!getSetting('ghToken');
+  pickedFile=null; filePickVersion++;
+  const hasToken = serverCapabilities.github;
   const levelOpts = COURSE.levels.map(lv => `<option value="${lv.id}">${esc(lv.code)} · ${esc(lv.name)}</option>`).join('');
   view.innerHTML = `<div class="crumbs"><a href="#/">Кабинет</a> → Добавить урок</div>
   <div class="panel">
     <h3>＋ Добавить урок</h3>
     <p class="hint">Выбери HTML-файл урока — название и номер подставятся сами. Урок сохранится на сайт, изменения появятся через минуту-две.</p>
-    ${hasToken ? '' : `<div class="status err" style="display:block">Сначала добавь токен GitHub в <a href="#/settings">настройках</a> — без него сайт не сможет сохранить урок.</div><br>`}
+    ${hasToken ? '' : `<div class="status err" style="display:block">Загрузка недоступна. Проверь серверное подключение в <a href="#/settings">настройках</a>.</div><br>`}
     <div class="field"><label>Что сделать</label><select id="addMode">
       <option value="new">➕ Добавить новый урок</option>
       <option value="update">🔄 Обновить существующий урок (заменить файл новой версией)</option>
@@ -581,8 +517,13 @@ function fillModules(){
 }
 
 async function pickFile(f){
+  const version=++filePickVersion;
+  pickedFile=null;
+  if(!/\.html?$/i.test(f.name)||f.size>2*1024*1024){show('fileInfo','err','Выбери HTML-файл не больше 2 МБ.');return;}
+  let text;try{text=await f.text();}catch(e){show('fileInfo','err','Не удалось прочитать файл.');return;}
+  if(version!==filePickVersion||!document.getElementById('fileInfo'))return;
+  if(!/<html[\s>]/i.test(text)){show('fileInfo','err','Нужен полный HTML-документ урока.');return;}
   pickedFile = f;
-  const text = await f.text();
   const info = document.getElementById('fileInfo');
   info.className = 'status ok';
   info.textContent = '📄 ' + f.name + ' · ' + Math.round(f.size/1024) + ' КБ';
@@ -599,19 +540,18 @@ function slugify(name){
   const base = name.replace(/\.html?$/i,'').toLowerCase()
     .replace(/[а-яё]/g, ch => ({'а':'a','б':'b','в':'v','г':'g','д':'d','е':'e','ё':'e','ж':'zh','з':'z','и':'i','й':'y','к':'k','л':'l','м':'m','н':'n','о':'o','п':'p','р':'r','с':'s','т':'t','у':'u','ф':'f','х':'h','ц':'c','ч':'ch','ш':'sh','щ':'sch','ъ':'','ы':'y','ь':'','э':'e','ю':'yu','я':'ya'}[ch] || ''))
     .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'') || 'lesson';
-  return base;
+  return base.slice(0,100).replace(/-+$/,'');
 }
 
 /* ---- GitHub API ---- */
 async function gh(path, opts = {}){
-  const token = getSetting('ghToken');
-  if (!token) throw new Error('нет токена');
-  const r = await fetch('https://api.github.com' + path, {
-    ...opts,
-    headers: { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json',
-      ...(opts.body ? {'Content-Type':'application/json'} : {}) }
-  });
-  if (r.status === 404) return null;
+  if(!serverCapabilities.github)throw Error('Загрузка доступна только владельцу через сервер');
+  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),30000);let r;
+  try{
+    r=await gatewayResponse('/github',{path,method:opts.method||'GET',...(opts.body?{payload:JSON.parse(opts.body)}:{})},controller.signal);
+  }catch(cause){const error=new Error('GitHub: ответ не получен');error.unknownWrite=opts.method==='PUT';throw error;}
+  finally{clearTimeout(timer);}
+  if (r.status === 404 && (!opts.method || opts.method === 'GET')) return null;
   if (!r.ok) throw new Error('GitHub ' + r.status);
   return r.json();
 }
@@ -627,20 +567,12 @@ function b64ToStr(b64){
   return new TextDecoder().decode(bytes);
 }
 
-/* PUT с обработкой гонки версий: при 409 берём свежую sha и пробуем снова */
-async function ghPutFile(path, contentB64, message){
-  for (let attempt = 0; ; attempt++) {
-    const cur = await gh(`/repos/${REPO.owner}/${REPO.name}/contents/${path}?ref=${REPO.branch}`);
-    try {
-      return await gh(`/repos/${REPO.owner}/${REPO.name}/contents/${path}`, {
-        method: 'PUT',
-        body: JSON.stringify({ message, content: contentB64, branch: REPO.branch, ...(cur ? { sha: cur.sha } : {}) })
-      });
-    } catch(e){
-      if (/409/.test(e.message) && attempt < 3) { await new Promise(r => setTimeout(r, 1500)); continue; }
-      throw e;
-    }
-  }
+/* The user reviewed this exact version; never replace a newer one on retry. */
+async function ghPutFile(path, contentB64, message, expected){
+  if(expected?.content && expected.content.replace(/\s/g,'')===contentB64)return expected;
+  return gh(`/repos/${REPO.owner}/${REPO.name}/contents/${path}`, {
+    method:'PUT',body:JSON.stringify({message,content:contentB64,branch:REPO.branch,...(expected?{sha:expected.sha}:{})})
+  });
 }
 /* Обновление course.json: при конфликте перечитываем свежий курс и применяем правку заново */
 async function ghUpdateCourse(mutate, message){
@@ -650,10 +582,11 @@ async function ghUpdateCourse(mutate, message){
     const course = JSON.parse(b64ToStr(cj.content));
     mutate(course);
     try {
-      return await gh(`/repos/${REPO.owner}/${REPO.name}/contents/course.json`, {
+      await gh(`/repos/${REPO.owner}/${REPO.name}/contents/course.json`, {
         method: 'PUT',
         body: JSON.stringify({ message, content: strToB64(JSON.stringify(course, null, 2)), branch: REPO.branch, sha: cj.sha })
       });
+      return course;
     } catch(e){
       if (/409/.test(e.message) && attempt < 3) { await new Promise(r => setTimeout(r, 1500)); continue; }
       throw e;
@@ -667,11 +600,14 @@ async function uploadLesson(){
   if (uploading) return;
   const btn = document.getElementById('uploadBtn');
   uploading = true; btn.disabled = true; btn.style.opacity = '.5';
+  let uploadedPath=null;
+  const file=pickedFile;
   try {
-    if (!pickedFile) return st('err','Сначала выбери HTML-файл урока.');
+    if (!file) return st('err','Сначала выбери HTML-файл урока.');
     const title = document.getElementById('addTitle').value.trim();
     if (!title) return st('err','Напиши название урока.');
-    const unit = parseInt(document.getElementById('addUnit').value, 10) || 0;
+    const unit = Number(document.getElementById('addUnit').value);
+    if(!Number.isSafeInteger(unit)||unit<1)return st('err','Номер Unit должен быть целым числом от 1.');
     const desc = document.getElementById('addDesc').value.trim();
     const updateMode = document.getElementById('addMode').value === 'update';
     const levelId = document.getElementById('addLevel').value;
@@ -689,35 +625,30 @@ async function uploadLesson(){
       if (!path) return st('err','Выбери, какой урок обновить.');
       slug = path.replace(/^lessons\//,'').replace(/\.html$/,'');
     } else {
-      slug = slugify(pickedFile.name);
+      slug = slugify(file.name);
       path = 'lessons/' + slug + '.html';
     }
 
+    if(!/^lessons\/[a-z0-9][a-z0-9-]{0,119}\.html$/.test(path))throw new Error('Недопустимый путь урока');
     st('busy','1/3 · Загружаю файл урока…');
     const existing = await gh(`/repos/${REPO.owner}/${REPO.name}/contents/${path}?ref=${REPO.branch}`);
-    if (existing && !updateMode) {
-      /* Файл уже в хранилище. Спрашиваем, только если урок реально виден в курсе.
-         Если записи в курсе нет — это остаток прерванной загрузки, молча доделываем. */
-      let inCourse = false;
-      try {
-        const cj0 = await gh(`/repos/${REPO.owner}/${REPO.name}/contents/course.json?ref=${REPO.branch}`);
-        inCourse = !!cj0 && JSON.parse(b64ToStr(cj0.content)).levels
-          .some(L => L.modules.some(M => M.lessons.some(x => x.file === path)));
-      } catch(e){}
-      if (inCourse && !confirm('Урок из файла ' + slug + '.html уже есть на сайте. Заменить его новой версией?')) { st('err','Отменено.'); return; }
-    }
-    const fileB64 = bufToB64(await pickedFile.arrayBuffer());
-    await ghPutFile(path, fileB64, 'Урок: ' + title);
+    if(updateMode&&!existing)throw new Error('Файл выбранного урока удалён. Обнови кабинет перед загрузкой.');
+    if(existing&&!updateMode&&!confirm('Файл '+slug+'.html уже существует. Заменить именно эту версию?')){st('err','Отменено.');return;}
+    const fileB64 = bufToB64(await file.arrayBuffer());
+    await ghPutFile(path,fileB64,'Урок: '+title,existing);
+    uploadedPath=path;
 
     st('busy','2/3 · Обновляю структуру курса…');
     await new Promise(r => setTimeout(r, 900)); /* даём GitHub дописать первый коммит */
-    await ghUpdateCourse(course => {
+    const updatedCourse=await ghUpdateCourse(course => {
       if (updateMode) {
         /* урок остаётся на своём месте — обновляем только его данные */
+        let found=false;
         for (const L of course.levels) for (const M of L.modules) {
           const e = M.lessons.find(x => x.file === path);
-          if (e) { Object.assign(e, { unit, title, description: desc }); M.lessons.sort((a, b) => (a.unit || 999) - (b.unit || 999)); }
+          if (e) { found=true; Object.assign(e, { unit, title, description: desc }); M.lessons.sort((a, b) => (a.unit || 999) - (b.unit || 999)); }
         }
+        if(!found)throw new Error('Урок удалён из каталога другим изменением');
         return;
       }
       const lv = course.levels.find(l => l.id === levelId);
@@ -753,9 +684,12 @@ async function uploadLesson(){
       ? '🎉 Готово! Урок «' + title + '» обновлён новой версией. Через минуту-две обнови страницу — и открой урок заново.'
       : '🎉 Готово! Урок «' + title + '» загружен. Сайт обновится через минуту-две — потом обнови страницу кабинета.');
     pickedFile = null;
+    COURSE=updatedCourse;ALL_LESSONS=COURSE.levels.flatMap(l=>l.modules.flatMap(m=>m.lessons));
   } catch(e){
-    if (/409/.test(e.message)) st('err','GitHub был занят предыдущим сохранением (конфликт версий). Подожди полминуты и нажми кнопку ещё раз — ничего не потерялось.');
-    else if (/401|403/.test(e.message)) st('err','GitHub не принял токен (' + e.message + '). Проверь его в настройках.');
+    if(e.unknownWrite){st('err','GitHub не подтвердил запись. Она могла выполниться. Проверь файл урока и course.json в репозитории перед повторной загрузкой.');return;}
+    if(uploadedPath){st('err','Файл '+uploadedPath+' сохранён, но обновление каталога не подтверждено: '+e.message+'. Выбери тот же файл и повтори загрузку. Не удаляй его из репозитория.');return;}
+    if (/409/.test(e.message)) st('err','Файл изменился во время загрузки. Запись остановлена. Обнови кабинет и проверь новую версию перед повтором.');
+    else if (/401|403/.test(e.message)) st('err','Сервер не подтвердил доступ (' + e.message + '). Проверь вход и настройку сервера.');
     else st('err','Не получилось: ' + e.message + '. Попробуй ещё раз, а если повторится — покажи это сообщение Клоду.');
   } finally {
     uploading = false; btn.disabled = false; btn.style.opacity = '';

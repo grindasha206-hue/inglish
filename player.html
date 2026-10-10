@@ -30,7 +30,7 @@ body{margin:0; display:flex; flex-direction:column; font-family:'Manrope',sans-s
 .done-btn{border:none; cursor:pointer; font-family:'Manrope'; font-weight:800; font-size:13px; padding:8px 16px; border-radius:20px; background:var(--sage); color:#fff; white-space:nowrap;}
 .done-btn:hover{background:#3d7357;}
 .done-btn[disabled]{background:var(--sage-bg); color:var(--sage); cursor:default;}
-iframe{flex:1; width:100%; border:none; background:var(--cream);}
+iframe{flex:1;min-height:0; width:100%; border:none; background:var(--cream);}
 
 .toast{position:fixed; left:50%; bottom:-180px; transform:translateX(-50%); background:linear-gradient(135deg, var(--sage), #3d7357); color:#fff; border-radius:16px; padding:18px 26px; box-shadow:0 10px 30px rgba(0,0,0,0.3); text-align:center; font-family:'Fraunces',serif; font-size:18px; font-weight:800; transition:bottom .45s ease; z-index:100; max-width:92vw;}
 .toast.shown{bottom:26px;}
@@ -39,6 +39,9 @@ iframe{flex:1; width:100%; border:none; background:var(--cream);}
 .toast a{font-family:'Manrope'; font-weight:800; font-size:13.5px; text-decoration:none; padding:8px 18px; border-radius:20px;}
 .toast a.next{background:#fff; color:#3d7357;}
 .toast a.home{background:rgba(255,255,255,0.18); color:#fff; border:1px solid rgba(255,255,255,0.5);}
+@media(max-width:650px){.bar{flex-wrap:wrap;gap:6px;padding:8px}.title{order:-1;flex-basis:100%;font-size:14px}.back,.done-btn,.redo-btn,.voice-pill{min-height:44px;display:inline-flex;align-items:center;justify-content:center;white-space:normal}.redo-btn:not(.shown){display:none}.back{padding:6px 10px}.toast{padding:14px;font-size:16px}.voice-pill{max-width:100%;overflow-wrap:anywhere}}
+:focus-visible{outline:3px solid var(--brick);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.toast{transition:none}}
 </style>
 </head>
 <body>
@@ -52,7 +55,7 @@ iframe{flex:1; width:100%; border:none; background:var(--cream);}
   <button class="done-btn" id="doneBtn">✓ Завершить урок</button>
 </div>
 
-<iframe id="lessonFrame" src="about:blank" title="Урок"></iframe>
+<iframe id="lessonFrame" src="about:blank" sandbox="allow-scripts allow-modals" referrerpolicy="no-referrer" title="Урок"></iframe>
 
 <div class="toast" id="toast">
   🎉 Урок пройден!
@@ -63,10 +66,17 @@ iframe{flex:1; width:100%; border:none; background:var(--cream);}
   </div>
 </div>
 
+<script src="sync-core.js"></script>
+<script src="tts.js"></script>
+<script src="backend-config.js"></script>
+<script src="gateway.js"></script>
 <script src="site.js"></script>
 <script src="progress.js"></script>
+<script src="lesson-schema.js"></script>
+<script src="lesson-frame.js"></script>
+<script src="backup.js"></script>
 <script>
-const p = loadProgress();
+const p = SyncCore.emptyProgress();
 let lesson = null, finished = false, lastScore = 0, lastMax = 0;
 
 init();
@@ -75,11 +85,15 @@ async function init(){
   await authReady;
   const user = currentUser;
   if (!user) { location.href = 'index.html'; return; }
-  await loadCourse();
+  initializeAccountStorage();
+  try{await refreshCapabilities();}catch(e){setSyncStatus('error','Сервер озвучки и загрузки недоступен.');}
+  resumeBackupRestore();
+  resumePendingSync();
+  try { await loadCourse(); } catch(e){ document.getElementById('barTitle').textContent='Не удалось загрузить курс. Обнови страницу.'; return; }
   lesson = lessonById(new URLSearchParams(location.search).get('lesson'));
   if (!lesson) { document.getElementById('barTitle').textContent = 'Урок не найден'; return; }
   const fresh = await mergeCloudIntoLocal(); /* облако новее локального кэша? подтягиваем */
-  p.lessons = fresh.lessons; p.xp = fresh.xp; p.activity = fresh.activity; p.updatedAt = fresh.updatedAt;
+  Object.assign(p,fresh);
 
   document.title = `Unit ${lesson.unit} · ${lesson.title} — Инглиш`;
   document.getElementById('barTitle').textContent = `Unit ${lesson.unit} · ${lesson.title}`;
@@ -94,19 +108,28 @@ async function init(){
   refreshVoiceUI(); /* значок озвучки + возможность переключить Groq ↔ ElevenLabs кликом */
 
   const frame = document.getElementById('lessonFrame');
-  frame.addEventListener('load', () => {
-    skipSave = false;
-    restoreLessonState(frame);
-    watchTyping(frame);
-    installVoice(frame);
+  bridge=LessonFrame.create(frame,{
+    snapshot:(data,result,first)=>{
+      latestCapture=data;latestResult=result;
+      if(first){loadedEpoch=localLessonEnvelope(lesson.id).epoch;lastCapture=data;restoring=false;skipSave=false;}
+      saveLessonState();watchLesson();
+    },
+    error:(reason,data)=>{
+      skipSave=true;restoring=false;bridge.pause();
+      if(reason==='lesson-updated'){keepConflict(lesson.id,{data},['lesson-updated'],cloudUserId());setSyncStatus('error','Урок изменился. Скачай копию старых ответов и нажми «заново».');}
+      else setSyncStatus('error',reason==='restore-failed'?'Не удалось восстановить ответы. Исходная копия сохранена.':reason);
+    },
+    speak:playLessonSpeech
   });
-  frame.src = lesson.file;
+  await openLesson();
 
   document.getElementById('resetBtn').addEventListener('click', () => {
     if (!confirm('Стереть все твои ответы в этом уроке и начать с чистого листа?\nПрогресс, XP и звёзды за прохождение останутся.')) return;
+    TTS.stop();
     skipSave = true; /* не даём автосохранению вернуть старые ответы */
-    try { localStorage.removeItem(stateKey()); } catch(e){}
-    try { frame.contentWindow.location.reload(); } catch(e){ frame.src = lesson.file; }
+    bridge.pause();
+    try { resetLessonState(lesson.id); } catch(e){ skipSave=false;  setSyncStatus('error','Не удалось сбросить ответы: '+e.message); return; }
+    openLesson().catch(e=>setSyncStatus('error',e.message));
   });
 
   markStarted(p, lesson.id);
@@ -117,124 +140,26 @@ async function init(){
   setInterval(watchLesson, 1500);
 }
 
-/* ---- Сохранение написанного в уроке (ответы, текст, галочки) ---- */
-const stateKey = () => 'english.lessonState.' + lesson.id;
-/* Поля урока в стабильном порядке; селект выбора голоса не считаем —
-   он может исчезать, когда включена озвучка Groq, и сбивал бы нумерацию */
-function lessonFields(w){
-  return Array.from(w.document.querySelectorAll('input, textarea, select'))
-    .filter(el => !el.closest('.voice-picker'));
+/* The iframe can send only its own snapshot/result and a speech request. */
+let bridge=null,latestCapture=null,latestResult={score:0,maxScore:0,completed:false};
+let loadedEpoch='legacy',lastCapture,restoring=true,skipSave=true;
+async function openLesson(){
+ TTS.stop();restoring=true;skipSave=true;latestCapture=null;
+ let answers;
+ try{answers=await cloudLoadLessonState(lesson.id);}catch(e){answers=localLessonEnvelope(lesson.id).data;setSyncStatus('error','Облако недоступно. Восстанавливаем локальные ответы.');}
+ await bridge.load(lesson.file,answers);
 }
-let saveTimer = null;
-let restoring = false; /* пока «переигрываем» сохранённое — не сохраняем поверх */
-let skipSave = false;  /* после «⟲ заново» — до перезагрузки урока ничего не сохраняем */
-const sleep = ms => new Promise(r => setTimeout(r, ms));
-
+function captureLessonState(){return latestCapture;}
+function stopWatching(){bridge?.pause();}
 function saveLessonState(){
-  if (restoring || skipSave) return;
-  try {
-    const w = document.getElementById('lessonFrame').contentWindow;
-    if (!w || !w.document || !lesson) return;
-    const d = w.document;
-    const data = {
-      /* всё, что вписано руками */
-      fields: lessonFields(w).map(el =>
-        (el.type === 'checkbox' || el.type === 'radio') ? { c: el.checked ? 1 : 0 } : { v: el.value || '' }),
-      /* нажимала ли «Проверить» */
-      fillChecked: !!(d.getElementById('fillFeedback') || {}).textContent,
-      readChecked: !!(d.getElementById('readFillFeedback') || {}).textContent,
-      /* квиз: какой вариант выбран в каждом вопросе */
-      quiz: Array.from(d.querySelectorAll('#quizList .quiz-opts')).map(g => {
-        const opts = Array.from(g.querySelectorAll('.quiz-opt'));
-        const i = opts.findIndex(o => o.classList.contains('sel-correct') || o.classList.contains('sel-wrong'));
-        return i >= 0 ? i : null;
-      }),
-      /* True / False */
-      tf: Array.from(d.querySelectorAll('#tfList .tf-item')).map(row => {
-        const btns = Array.from(row.querySelectorAll('.tf-btn'));
-        const i = btns.findIndex(b => b.classList.contains('sel-correct') || b.classList.contains('sel-wrong'));
-        return i >= 0 ? i : null;
-      }),
-      /* мемо и «Лексика»: найденные пары */
-      memo: [...new Set(Array.from(d.querySelectorAll('.memo-card.matched')).map(c => c.dataset.pair))],
-      match: [...new Set(Array.from(d.querySelectorAll('#matchEnCol .match-tile.matched')).map(t => t.dataset.idx))],
-      /* «Готово!» в письменном задании — определяем по «✅» в счётчике слов */
-      prodDone: /✅/.test((d.getElementById('wordCount') || {}).textContent || '')
-    };
-    localStorage.setItem(stateKey(), JSON.stringify(data));
-    if (typeof cloudSaveLessonState === 'function') cloudSaveLessonState(lesson.id, data);
-  } catch(e){}
+ if(restoring||skipSave||!lesson||!currentUser||!latestCapture)return;
+ try{
+  if(SyncCore.equal(latestCapture,lastCapture)&&loadedEpoch===localLessonEnvelope(lesson.id).epoch)return;
+  persistLessonState(lesson.id,latestCapture,loadedEpoch,lastCapture);lastCapture=latestCapture;
+ }catch(e){skipSave=true;bridge.pause();setSyncStatus('error',e.message);}
 }
-
-async function restoreLessonState(frame){
-  let data = null;
-  try { data = JSON.parse(localStorage.getItem(stateKey()) || 'null'); } catch(e){}
-  if (!data && typeof cloudLoadLessonState === 'function') {
-    try {
-      data = await cloudLoadLessonState(lesson.id);
-      if (data) localStorage.setItem(stateKey(), JSON.stringify(data)); /* кладём в локальный кэш на будущее */
-    } catch(e){}
-  }
-  if (!data) return;
-  if (Array.isArray(data)) data = { fields: data }; /* старый формат */
-  restoring = true;
-  try {
-    const w = frame.contentWindow;
-    const d = w.document;
-    /* 1. вписанное руками */
-    const els = lessonFields(w);
-    (data.fields || []).forEach((f, i) => {
-      const el = els[i];
-      if (!el) return;
-      if (f.c !== undefined) {
-        if (el.checked !== !!f.c) { el.checked = !!f.c; el.dispatchEvent(new Event('change', { bubbles: true })); }
-      } else if (f.v && el.value !== f.v) {
-        el.value = f.v;
-        el.dispatchEvent(new Event('input', { bubbles: true }));
-      }
-    });
-    /* 2. «переигрываем» клики — урок сам восстановит подсветку, счёт и прогресс */
-    (data.quiz || []).forEach((sel, gi) => {
-      if (sel === null || sel === undefined) return;
-      const g = d.querySelectorAll('#quizList .quiz-opts')[gi];
-      const btn = g && g.querySelectorAll('.quiz-opt')[sel];
-      if (btn && !g.dataset.done) btn.click();
-    });
-    (data.tf || []).forEach((sel, ri) => {
-      if (sel === null || sel === undefined) return;
-      const row = d.querySelectorAll('#tfList .tf-item')[ri];
-      const btn = row && row.querySelectorAll('.tf-btn')[sel];
-      if (btn && !row.dataset.done) btn.click();
-    });
-    for (const idx of (data.match || [])) {
-      const en = d.querySelector(`#matchEnCol .match-tile[data-idx="${idx}"]:not(.matched)`);
-      const ru = d.querySelector(`#matchRuCol .match-tile[data-idx="${idx}"]:not(.matched)`);
-      if (en && ru) { en.click(); ru.click(); }
-    }
-    for (const pair of (data.memo || [])) {
-      const cards = d.querySelectorAll(`.memo-card[data-pair="${pair}"]:not(.matched)`);
-      if (cards.length === 2) { cards[0].click(); cards[1].click(); await sleep(520); }
-    }
-    if (data.fillChecked) { const b = d.getElementById('checkFillBtn'); b && b.click(); }
-    if (data.readChecked) { const b = d.getElementById('checkReadFillBtn'); b && b.click(); }
-    if (data.prodDone && !/✅/.test((d.getElementById('wordCount') || {}).textContent || '')) {
-      const b = d.getElementById('finishBtn'); b && b.click();
-    }
-  } catch(e){}
-  restoring = false;
-}
-
-function watchTyping(frame){
-  try {
-    const doc = frame.contentWindow.document;
-    const onEdit = () => { clearTimeout(saveTimer); saveTimer = setTimeout(saveLessonState, 400); };
-    doc.addEventListener('input', onEdit, true);
-    doc.addEventListener('change', onEdit, true);
-    doc.addEventListener('click', onEdit, true); /* клики в играх тоже сохраняем */
-    setInterval(saveLessonState, 5000); /* страховка */
-    window.addEventListener('beforeunload', saveLessonState);
-  } catch(e){}
-}
+window.addEventListener('pagehide',()=>{saveLessonState();TTS.stop();});
+window.addEventListener('beforeunload',saveLessonState);
 
 /* ---- Подмена озвучки урока на Groq (урок не редактируется) ---- */
 let _activeVoiceProvider = null; /* 'eleven' | 'groq' | null — какой провайдер сейчас реально используется */
@@ -242,8 +167,8 @@ let _activeVoiceProvider = null; /* 'eleven' | 'groq' | null — какой пр
 /* Groq — провайдер по умолчанию. Если явно переключили (кликом по значку) — используем выбор,
    но только если для него есть ключ; иначе тихо откатываемся на то, что реально настроено. */
 function getActiveProvider(){
-  const hasGroq = !!getSetting('groqKey');
-  const hasEleven = !!getSetting('elevenKey');
+  const hasGroq = serverCapabilities.groq;
+  const hasEleven = serverCapabilities.eleven && !!getSetting('elevenVoice');
   if (!hasGroq && !hasEleven) return null;
   const pref = getSetting('activeVoiceProvider');
   if (pref === 'eleven' && hasEleven) return 'eleven';
@@ -251,7 +176,7 @@ function getActiveProvider(){
   return hasGroq ? 'groq' : 'eleven';
 }
 
-function canToggleVoice(){ return !!getSetting('groqKey') && !!getSetting('elevenKey'); }
+function canToggleVoice(){ return serverCapabilities.groq && serverCapabilities.eleven && !!getSetting('elevenVoice'); }
 
 function refreshVoiceUI(){
   const pill = document.getElementById('voicePill');
@@ -259,65 +184,45 @@ function refreshVoiceUI(){
   const toggleable = canToggleVoice();
   if (provider === 'eleven') {
     pill.className = 'voice-pill' + (toggleable ? ' toggle' : '');
-    pill.innerHTML = `🎙 ${getSetting('elevenVoiceName')||'ElevenLabs'}`;
+    pill.textContent = `🎙 ${getSetting('elevenVoiceName')||'ElevenLabs'}`;
   } else if (provider === 'groq') {
     const v = getSetting('groqVoice') || 'hannah';
     pill.className = 'voice-pill' + (toggleable ? ' toggle' : '');
-    pill.innerHTML = `🎙 ${v[0].toUpperCase()+v.slice(1)}`;
+    pill.textContent = `🎙 ${v[0].toUpperCase()+v.slice(1)}`;
   } else {
     pill.className = 'voice-pill off';
     pill.innerHTML = `<a href="index.html#/settings" title="Подключить живой голос">🤖 голос браузера</a>`;
   }
   pill.title = toggleable ? 'Нажми, чтобы переключить голос: Groq ↔ ElevenLabs' : 'Озвучка';
-  const frame = document.getElementById('lessonFrame');
-  if (frame) installVoice(frame);
+
 }
 
 document.getElementById('voicePill').addEventListener('click', (e) => {
   if (!canToggleVoice()) return; /* ключ только один — пусть работает обычная ссылка в значок (если она есть) */
   e.preventDefault();
   const current = getActiveProvider();
+  TTS.stop();
   setSetting('activeVoiceProvider', current === 'groq' ? 'eleven' : 'groq');
   refreshVoiceUI();
 });
 
-function installVoice(frame){
-  try {
-    const w = frame.contentWindow;
-    if (!w || typeof w.speak !== 'function') return;
-    const provider = getActiveProvider();
-    if (!provider) return;
-    _activeVoiceProvider = provider;
-    if (!w.__browserSpeak) w.__browserSpeak = w.speak; /* запоминаем оригинал только один раз — иначе переключение потеряет голос браузера как запасной вариант */
-    const browserSpeak = w.__browserSpeak;
-
-    /* Заменяем внутри урока блок выбора браузерного голоса на понятную надпись */
-    try {
-      const label = provider === 'eleven' ? ('ElevenLabs · ' + (getSetting('elevenVoiceName') || 'Rachel'))
-        : ('Groq · ' + (getSetting('groqVoice') || 'hannah')[0].toUpperCase() + (getSetting('groqVoice') || 'hannah').slice(1));
-      w.document.querySelectorAll('.voice-picker').forEach(vp => {
-        vp.innerHTML = `<label>🎙 Голос: <b style="color:var(--sage,#4F8F6D)">${label}</b></label>` +
-          `<span class="voice-hint">Живая озвучка подключена. Голос меняется в настройках сайта (⚙), а не в уроке.</span>`;
-      });
-      const warn = w.document.getElementById('ttsWarn');
-      if (warn) warn.style.display = 'none';
-    } catch(e){}
-
-    const speakFn = provider === 'eleven' ? elevenSpeak : groqSpeak;
-
-    w.speak = function(text, rate, btn){
-      /* Возвращает промис, который резолвится по-настоящему в конце звучания —
-         иначе «Прослушать всё подряд» / диалоги в Listening обрывают фразы на середине. */
-      btn && btn.classList.add('playing');
-      return speakFn(text, rate)
-        .then(() => { voiceOk(); btn && btn.classList.remove('playing'); })
-        .catch(err => {
-          voiceError(err);
-          btn && btn.classList.remove('playing');
-          try { return browserSpeak(text, rate, btn); } catch(e){}
-        });
-    };
-  } catch(e){ /* нет доступа внутрь iframe */ }
+function browserSpeech(text,rate){
+ TTS.stop();
+ if(!('speechSynthesis'in window))return Promise.reject(Error('Браузерная озвучка недоступна'));
+ return new Promise((resolve,reject)=>{
+  const utterance=new SpeechSynthesisUtterance(text);utterance.lang='en-US';utterance.rate=rate||1;
+  const timer=setTimeout(()=>{speechSynthesis.cancel();reject(Error('Браузерная озвучка не ответила'));},180000);
+  utterance.onend=()=>{clearTimeout(timer);resolve();};utterance.onerror=()=>{clearTimeout(timer);resolve();};
+  speechSynthesis.speak(utterance);
+ });
+}
+async function playLessonSpeech(text,rate){
+ const provider=getActiveProvider();_activeVoiceProvider=provider;
+ if(!provider)return browserSpeech(text,rate);
+ const playback=provider==='eleven'?elevenSpeak(text,rate):groqSpeak(text,rate);
+ const generation=TTS.generation;
+ try{await playback;if(generation===TTS.generation)voiceOk();}
+ catch(e){if(generation!==TTS.generation)return;voiceError(e);return browserSpeech(text,rate);}
 }
 
 /* Провайдер не ответил — показываем причину, чтобы это не оставалось загадкой */
@@ -331,7 +236,7 @@ function voiceError(err){
   else if (/quota|credit/i.test(m)) short = 'ElevenLabs: похоже, закончился бесплатный лимит символов на этот месяц';
   const pill = document.getElementById('voicePill');
   pill.className = 'voice-pill off';
-  pill.innerHTML = `<a href="index.html#/settings" title="${m.replace(/"/g,'&quot;')}">⚠ ${short}</a>`;
+  pill.replaceChildren(); const link=document.createElement('a'); link.href='index.html#/settings'; link.title=m; link.textContent='⚠ '+short; pill.appendChild(link);
 }
 /* Провайдер снова отвечает — возвращаем зелёный значок */
 function voiceOk(){
@@ -340,7 +245,7 @@ function voiceOk(){
   if (pill.className === 'voice-pill') return;
   const v = _activeVoiceProvider === 'eleven' ? (getSetting('elevenVoiceName')||'ElevenLabs') : (getSetting('groqVoice') || 'hannah');
   pill.className = 'voice-pill';
-  pill.innerHTML = `🎙 ${v[0].toUpperCase()+v.slice(1)}`;
+  pill.textContent = `🎙 ${v[0].toUpperCase()+v.slice(1)}`;
 }
 
 document.getElementById('redoBtn').addEventListener('click', async () => {
@@ -353,29 +258,27 @@ document.getElementById('redoBtn').addEventListener('click', async () => {
   b.classList.remove('busy'); b.textContent = '↻ переозвучить';
 });
 
+function readLessonResult(){return latestResult;}
 function watchLesson(){
-  if (!lesson) return;
+  if (!lesson || restoring || skipSave) return;
   try {
-    const w = document.getElementById('lessonFrame').contentWindow;
-    if (!w || !w.document) return;
-    const scoreEl = w.document.getElementById('scoreDisplay');
-    if (scoreEl) lastScore = parseInt(scoreEl.textContent, 10) || 0;
-    if (w.state && w.state.maxScore) lastMax = w.state.maxScore;
-    const badge = w.document.getElementById('finalBadge');
-    if (badge && badge.classList.contains('shown')) {
-      if (!finished) complete(true);
-      else {
-        const st = lessonState(p, lesson.id);
-        if (st && lastScore > (st.bestScore || 0)) markCompleted(p, lesson.id, lastScore, lastMax || 16);
-      }
+    const result=readLessonResult(); lastScore=result.score; lastMax=result.maxScore;
+    if (result.completed && !finished) complete(true);
+    else if (finished) {
+      const st=lessonState(p,lesson.id);
+      if (lastScore>(st?.bestScore||0)) markCompleted(p,lesson.id,lastScore,lastMax);
     }
-  } catch(e){ /* доступа нет — остаётся ручная кнопка */ }
+  } catch(e){ setSyncStatus('error','Не удалось прочитать результат урока.'); }
 }
+function escapeHTML(text){ return String(text).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
 function complete(auto){
-  if (!lesson || finished) return;
+  if (!lesson || finished || restoring || skipSave) return;
+  const result=readLessonResult(); lastScore=result.score; lastMax=result.maxScore;
+  saveLessonState();
+  if(skipSave)return;
   finished = true;
-  const gained = markCompleted(p, lesson.id, lastScore, lastMax || 16);
+  const gained = markCompleted(p, lesson.id, lastScore, lastMax);
   setDoneUi();
   document.getElementById('toastXp').textContent =
     gained > 0 ? `+${gained} XP · счёт ★ ${lastScore}${lastMax ? '/' + lastMax : ''}` : `Результат обновлён · ★ ${lastScore}`;
@@ -396,7 +299,13 @@ function setDoneUi(){
   b.disabled = true;
 }
 
-document.getElementById('doneBtn').addEventListener('click', () => complete(false));
+document.getElementById('doneBtn').addEventListener('click', async () => {
+ if(!bridge||restoring||skipSave||finished)return;
+ const button=document.getElementById('doneBtn');button.disabled=true;
+ try{await bridge.captureAsync();complete(false);}
+ catch(e){setSyncStatus('error',e.message);}
+ finally{button.disabled=finished;}
+});
 </script>
 </body>
 </html>

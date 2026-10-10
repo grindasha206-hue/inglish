@@ -30,166 +30,116 @@ function lessonHome(id){
   return null;
 }
 
-/* ---- настройки (хранятся только в этом браузере) ---- */
-const SET_PREFIX = "english.setting.";
-function getSetting(key){ try { return localStorage.getItem(SET_PREFIX + key) || ""; } catch(e){ return ""; } }
-function setSetting(key, val){
-  try { val ? localStorage.setItem(SET_PREFIX + key, val) : localStorage.removeItem(SET_PREFIX + key); } catch(e){}
+/* Account-specific storage. Unowned legacy data is claimed only after confirmation. */
+function accountKey(name,uid=cloudUserId()) { return 'english.user.'+(uid||'signed-out')+'.'+name; }
+function getSetting(key){ try { return localStorage.getItem(accountKey('setting.'+key))||''; } catch(e){ return ''; } }
+function setSetting(key,val){
+  try { const k=accountKey('setting.'+key); val?localStorage.setItem(k,val):localStorage.removeItem(k); }
+  catch(e){ setSyncStatus('error','Не удалось сохранить настройки в браузере.'); }
 }
-
+function downloadJSON(data,name){
+  const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));
+  const a=document.createElement('a'); a.href=url; a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function initializeAccountStorage(){
+  const uid=cloudUserId(); if (!uid) return;
+  purgeBrowserSecrets();
+  const marker=accountKey('migration.v2');
+  if (localStorage.getItem(marker)) return;
+  const keys=Object.keys(localStorage).filter(k=>k==='english.progress.v1'||k.startsWith('english.lessonState.')||k.startsWith('english.setting.'));
+  if (keys.length && confirm('В браузере найдены данные старой версии без привязки к аккаунту.\nПеренести их в аккаунт '+currentUser.email+'?\nПодтверди только если это твои ответы и ключи.')) {
+    const backup=Object.fromEntries(keys.map(k=>[k,localStorage.getItem(k)]));
+    localStorage.setItem(accountKey('legacy-backup'),JSON.stringify(backup));
+    for (const key of keys) {
+      const value=localStorage.getItem(key);
+      if (key==='english.progress.v1') {
+        try { const old=SyncCore.validateProgress(JSON.parse(value));
+          const raw=localStorage.getItem(accountKey('progress.v2'));
+          localStorage.setItem(accountKey('progress.v2'),JSON.stringify(SyncCore.mergeProgress(old,raw?JSON.parse(raw):SyncCore.emptyProgress())));
+        } catch(e){ setSyncStatus('error','Старый прогресс повреждён. Его копия сохранена для восстановления.'); }
+      } else if (key.startsWith('english.lessonState.')) {
+        const target=accountKey('lessonState.'+key.slice('english.lessonState.'.length));
+        if (!localStorage.getItem(target)) localStorage.setItem(target,value);
+      } else {
+        const target=accountKey('setting.'+key.slice('english.setting.'.length));
+        if (!localStorage.getItem(target)) localStorage.setItem(target,value);
+      }
+    }
+    keys.forEach(k=>localStorage.removeItem(k));
+  }
+  localStorage.setItem(marker,'1');
+}
+let syncState={kind:'saved',message:'Данные в этом браузере'};
+const syncJobs=new Map();
+function setSyncStatus(kind,message){
+  if (kind==='conflict') window.answerConflictMessage=message;
+  if (kind==='saved' && window.answerConflictMessage) { kind='conflict'; message=window.answerConflictMessage; }
+  syncState={kind,message};
+  let el=document.getElementById('syncStatus');
+  if (!el && document.body) {
+    el=document.createElement('div'); el.id='syncStatus'; el.setAttribute('role','status'); el.setAttribute('aria-live','polite');
+    el.style.cssText='font:12px Manrope,sans-serif;padding:4px 14px;background:#fffaf0;color:#5c554c;flex-shrink:0';
+    document.body.appendChild(el);
+  }
+  if (el) { const button=el.querySelector('button'); el.textContent=message; if (button) el.appendChild(button); }
+}
+function queueSync(id,task){
+  syncJobs.set(id,task); setSyncStatus('pending','Есть изменения для отправки в облако…'); flushSync();
+}
+let flushing=false, retryTimer=null;
+async function flushSync(){
+  if (flushing || !cloudUserId()) return;
+  flushing=true; clearTimeout(retryTimer); retryTimer=null;
+  try {
+    for (const [id,task] of syncJobs) {
+      await task(); if (syncJobs.get(id)===task) syncJobs.delete(id);
+    }
+    if (!syncJobs.size) setSyncStatus('saved','✓ Изменения сохранены в облаке');
+  } catch(e){
+    console.warn('Синхронизация отложена:',e);
+    setSyncStatus('error','Облако недоступно. Изменения сохранены в браузере; повторим отправку.');
+    retryTimer=setTimeout(flushSync,15000);
+  } finally { flushing=false; if(syncJobs.size && !retryTimer) setTimeout(flushSync,0); }
+}
+window.addEventListener('online',flushSync);
+window.addEventListener('pagehide',()=>{ /* Pending copies are persisted before network calls. */ });
+function queueProgressSync(p){
+  const uid=cloudUserId(); if (!uid) return;
+  localStorage.setItem(accountKey('pendingProgress',uid),'1');
+  queueSync(uid+':progress',async()=>{
+    if (uid!==cloudUserId()) throw new Error('account-changed');
+    const sent=loadProgress(); const merged=await cloudSaveProgress(sent,uid);
+    if (uid!==cloudUserId()) return;
+    const current=loadProgress(); const latest=SyncCore.mergeProgress(current,merged); storeProgress(latest,uid);
+    if (SyncCore.equal(sent,current)) localStorage.removeItem(accountKey('pendingProgress',uid));
+    else queueProgressSync(latest);
+  });
+}
+function resumePendingSync(){
+  const uid=cloudUserId(); if (!uid) return;
+  if (localStorage.getItem(accountKey('pendingProgress',uid))) queueProgressSync(loadProgress());
+  const prefix=accountKey('lessonState.',uid);
+  Object.keys(localStorage).filter(k=>k.startsWith(prefix)).forEach(k=>{
+    try { const env=JSON.parse(localStorage.getItem(k)); if (env?.pending) queueLessonSync(k.slice(prefix.length),env,uid); } catch(e){}
+  });
+}
 /* ---- Groq TTS (Orpheus) ---- */
 const GROQ_VOICES = ["autumn", "diana", "hannah", "austin", "daniel", "troy"];
-const _ttsCache = new Map();
-let _ttsAudio = null;
-let _ttsQueue = Promise.resolve(); /* запросы к Groq идут строго по одному */
-let _lastTts = null; /* последняя озвученная фраза — для кнопки «перегенерировать» */
-const _sleep = ms => new Promise(res => setTimeout(res, ms));
-
-async function _fetchTts(input, voice, key){
-  /* 1) постоянный кэш браузера — уже озвученные фразы не запрашиваются повторно */
-  const cacheKey = "/tts-cache/v1/" + voice + "/" + encodeURIComponent(input);
-  let store = null;
-  try { store = await caches.open("inglish-tts"); } catch(e){}
-  if (store) {
-    try { const hit = await store.match(cacheKey); if (hit) return await hit.blob(); } catch(e){}
-  }
-  /* 2) запрос с повторами: лимит запросов в минуту (429) — ждём и пробуем снова */
-  for (let attempt = 0; ; attempt++) {
-    const r = await fetch("https://api.groq.com/openai/v1/audio/speech", {
-      method: "POST",
-      headers: { "Authorization": "Bearer " + key, "Content-Type": "application/json" },
-      body: JSON.stringify({ model: "canopylabs/orpheus-v1-english", input, voice, response_format: "wav" })
-    });
-    if (r.status === 429 && attempt < 3) { await _sleep(1800 * (attempt + 1)); continue; }
-    if (!r.ok) {
-      let msg = "groq-" + r.status;
-      try { const j = await r.json(); if (j.error && j.error.message) msg = j.error.message; } catch(e){}
-      throw new Error(msg);
-    }
-    const blob = await r.blob();
-    if (store) { try { await store.put(cacheKey, new Response(blob, { headers: { "Content-Type": "audio/wav" } })); } catch(e){} }
-    return blob;
-  }
-}
-
-async function groqSpeak(text, rate){
-  const key = getSetting("groqKey");
-  if (!key) throw new Error("no-key");
-  const voice = getSetting("groqVoice") || "hannah";
-  /* Точка в конце помогает модели не «фантазировать» продолжение коротких фраз */
-  let input = String(text).trim().slice(0, 190);
-  if (!/[.!?…]$/.test(input)) input += ".";
-  const cacheId = voice + "|" + input;
-  _lastTts = { input, voice, cacheId, rate };
-  let url = _ttsCache.get(cacheId);
-  if (!url) {
-    const task = _ttsQueue.catch(() => {}).then(() => _fetchTts(input, voice, key));
-    _ttsQueue = task;
-    const blob = await task;
-    url = _ttsCache.get(cacheId) || URL.createObjectURL(blob);
-    _ttsCache.set(cacheId, url);
-  }
-  if (_ttsAudio) { _ttsAudio.pause(); _ttsAudio = null; }
-  const audio = new Audio(url);
-  _ttsAudio = audio;
-  /* Замедляем только настоящие кнопки 🐢 (rate ≤ 0.6). Голос Groq и так
-     естественный, поэтому «слегка замедленные» кнопки урока (0.85) играют как 1x. */
-  audio.playbackRate = (rate && rate <= 0.6) ? 0.72 : 1;
-  await audio.play();
-  return new Promise(resolve => { audio.onended = resolve; audio.onpause = resolve; });
-}
-
-/* Модель сгенерировала фразу криво? Выбрасываем её из кэша и просим заново. */
-async function regenerateLastTts(){
-  if (!_lastTts) return false;
-  const { input, voice, cacheId, rate } = _lastTts;
-  _ttsCache.delete(cacheId);
-  try {
-    const store = await caches.open("inglish-tts");
-    await store.delete("/tts-cache/v1/" + voice + "/" + encodeURIComponent(input));
-  } catch(e){}
-  await groqSpeak(input, rate);
-  return true;
-}
-
-/* ---- ElevenLabs TTS (второй вариант озвучки — более "спокойный", без выдумывания) ---- */
-const _elevenCache = new Map();
-let _elevenAudio = null;
-let _elevenQueue = Promise.resolve();
-let _lastEleven = null;
-
-async function _fetchElevenTts(input, voiceId, key){
-  const cacheKey = "/tts-cache/v1/" + voiceId + "/" + encodeURIComponent(input);
-  let store = null;
-  try { store = await caches.open("inglish-tts-11labs"); } catch(e){}
-  if (store) {
-    try { const hit = await store.match(cacheKey); if (hit) return await hit.blob(); } catch(e){}
-  }
-  for (let attempt = 0; ; attempt++) {
-    const r = await fetch("https://api.elevenlabs.io/v1/text-to-speech/" + voiceId, {
-      method: "POST",
-      headers: { "xi-api-key": key, "Content-Type": "application/json" },
-      body: JSON.stringify({
-        text: input,
-        model_id: "eleven_multilingual_v2",
-        voice_settings: { stability: 0.6, similarity_boost: 0.75 }
-      })
-    });
-    if (r.status === 429 && attempt < 3) { await _sleep(1800 * (attempt + 1)); continue; }
-    if (!r.ok) {
-      let msg = "eleven-" + r.status;
-      try { const j = await r.json(); if (j.detail && j.detail.message) msg = j.detail.message; } catch(e){}
-      throw new Error(msg);
-    }
-    const blob = await r.blob();
-    if (store) { try { await store.put(cacheKey, new Response(blob, { headers: { "Content-Type": "audio/mpeg" } })); } catch(e){} }
-    return blob;
-  }
-}
-
-async function elevenSpeak(text, rate){
-  const key = getSetting("elevenKey");
-  if (!key) throw new Error("no-key");
-  const voiceId = getSetting("elevenVoice");
-  if (!voiceId) throw new Error("no-voice");
-  let input = String(text).trim().slice(0, 500);
-  const cacheId = voiceId + "|" + input;
-  _lastEleven = { input, voiceId, cacheId, rate };
-  let url = _elevenCache.get(cacheId);
-  if (!url) {
-    const task = _elevenQueue.catch(() => {}).then(() => _fetchElevenTts(input, voiceId, key));
-    _elevenQueue = task;
-    const blob = await task;
-    url = _elevenCache.get(cacheId) || URL.createObjectURL(blob);
-    _elevenCache.set(cacheId, url);
-  }
-  if (_elevenAudio) { _elevenAudio.pause(); _elevenAudio = null; }
-  const audio = new Audio(url);
-  _elevenAudio = audio;
-  audio.playbackRate = (rate && rate <= 0.6) ? 0.72 : 1;
-  await audio.play();
-  return new Promise(resolve => { audio.onended = resolve; audio.onpause = resolve; });
-}
-
-async function regenerateLastEleven(){
-  if (!_lastEleven) return false;
-  const { input, voiceId, cacheId, rate } = _lastEleven;
-  _elevenCache.delete(cacheId);
-  try {
-    const store = await caches.open("inglish-tts-11labs");
-    await store.delete("/tts-cache/v1/" + voiceId + "/" + encodeURIComponent(input));
-  } catch(e){}
-  await elevenSpeak(input, rate);
-  return true;
-}
-
+const groqTts=TTS.engine({name:'Groq',enabled:()=>serverCapabilities.groq,voice:'groqVoice',defaultVoice:'hannah',model:'canopylabs/orpheus-v1-english',settings:null,cache:'inglish-tts-v2',limit:189,punctuation:true,
+ transport:(input,voice,signal)=>gatewayResponse('/tts',{provider:'groq',text:input,voice},signal)});
+const elevenTts=TTS.engine({name:'ElevenLabs',enabled:()=>serverCapabilities.eleven,voice:'elevenVoice',model:'eleven_multilingual_v2',settings:{stability:0.6,similarity_boost:0.75},cache:'inglish-tts-11labs-v2',limit:500,
+ transport:(text,voice,signal)=>gatewayResponse('/tts',{provider:'eleven',text,voice},signal)});
+function groqSpeak(text,rate){return groqTts.speak(text,rate);}
+function elevenSpeak(text,rate){return elevenTts.speak(text,rate);}
+function regenerateLastTts(){return groqTts.regenerate();}
+function regenerateLastEleven(){return elevenTts.regenerate();}
+window.addEventListener('pagehide',()=>TTS.stop());
 
 /* ============================================================
    ОБЛАЧНАЯ СИНХРОНИЗАЦИЯ (Firebase Firestore)
    localStorage остаётся быстрым локальным кэшем — Firestore
    становится страховкой на случай сброса кэша/данных сайта.
-   Личный ключ "зашит" в код, не в браузер — переживает
-   очистку кэша и работает на любом устройстве, где открыт сайт.
+   Доступ к документам ограничивается правилами Firestore по UID.
    ============================================================ */
 let _cloudDb = null;
 let _cloudDocFns = null;
@@ -218,7 +168,9 @@ let _cloudReady = (async () => {
     _cloudAuth = authMod.getAuth(app);
     _authFns = authMod;
     authMod.onAuthStateChanged(_cloudAuth, (user) => {
+      const previous=currentUser;
       currentUser = user;
+      if (previous && previous.uid!==user?.uid) location.reload();
       if (_authStateResolve) { _authStateResolve(user); _authStateResolve = null; }
     });
     return true;
@@ -229,8 +181,7 @@ let _cloudReady = (async () => {
   }
 })();
 
-/* ---- вход / выход. Регистрация с сайта закрыта — аккаунты создаются
-   только в Firebase Console (Authentication → Users → Add user). ---- */
+/* Accounts are created manually; invitation policy is enforced by Firestore Rules. */
 async function signIn(email, password){
   const ok = await _cloudReady;
   if (!ok || !_cloudAuth) throw new Error("cloud-unavailable");
@@ -242,54 +193,103 @@ async function signIn(email, password){
 async function signOutUser(){
   const ok = await _cloudReady;
   if (ok && _cloudAuth) await _authFns.signOut(_cloudAuth);
-  currentUser = null;
+  currentUser = null; syncJobs.clear(); clearTimeout(retryTimer); retryTimer=null;
 }
 
 function cloudUserId(){ return currentUser ? currentUser.uid : null; }
 
-/* Общий прогресс (XP, streak, статус уроков) — один документ на пользователя, ключ = uid */
-async function cloudSaveProgress(p){
-  const ok = await _cloudReady;
-  const uid = cloudUserId();
-  if (!ok || !uid) return;
-  try {
-    const ref = _cloudDocFns.doc(_cloudDb, "inglishProgress", uid);
-    await _cloudDocFns.setDoc(ref, { ...p, updatedAt: Date.now() });
-  } catch(e){ console.warn("Не удалось сохранить прогресс в облако:", e); }
+/* Transactions preserve independent results from other devices. */
+async function requireCloud(uid){
+  if (!await _cloudReady || !uid || uid!==cloudUserId()) throw new Error('cloud-unavailable');
 }
-
-async function cloudLoadProgress(){
-  const ok = await _cloudReady;
-  const uid = cloudUserId();
-  if (!ok || !uid) return null;
-  try {
-    const ref = _cloudDocFns.doc(_cloudDb, "inglishProgress", uid);
-    const snap = await _cloudDocFns.getDoc(ref);
-    if (!snap.exists()) return null;
-    const data = snap.data();
-    return { lessons: data.lessons || {}, xp: data.xp || 0, activity: data.activity || {}, updatedAt: data.updatedAt || 0 };
-  } catch(e){ console.warn("Не удалось загрузить прогресс из облака:", e); return null; }
+async function cloudSaveProgress(p,uid=cloudUserId()){
+  await requireCloud(uid);
+  const ref=_cloudDocFns.doc(_cloudDb,'inglishProgress',uid);
+  return _cloudDocFns.runTransaction(_cloudDb,async tx=>{
+    const snap=await tx.get(ref);
+    const merged=SyncCore.mergeProgress(snap.exists()?snap.data():SyncCore.emptyProgress(),p);
+    tx.set(ref,{...merged,updatedAt:Date.now()}); return merged;
+  });
 }
-
-/* Детальное состояние конкретного урока (вписанные ответы, квиз, игры), ключ = uid + id урока */
-async function cloudSaveLessonState(lessonId, data){
-  const ok = await _cloudReady;
-  const uid = cloudUserId();
-  if (!ok || !uid) return;
-  try {
-    const ref = _cloudDocFns.doc(_cloudDb, "inglishLessonState", `${uid}__${lessonId}`);
-    await _cloudDocFns.setDoc(ref, { data, updatedAt: Date.now() });
-  } catch(e){ console.warn("Не удалось сохранить состояние урока в облако:", e); }
+async function cloudLoadProgress(uid=cloudUserId()){
+  await requireCloud(uid);
+  const snap=await _cloudDocFns.getDoc(_cloudDocFns.doc(_cloudDb,'inglishProgress',uid));
+  return snap.exists()?SyncCore.validateProgress(snap.data()):null;
 }
-
-async function cloudLoadLessonState(lessonId){
-  const ok = await _cloudReady;
-  const uid = cloudUserId();
-  if (!ok || !uid) return null;
-  try {
-    const ref = _cloudDocFns.doc(_cloudDb, "inglishLessonState", `${uid}__${lessonId}`);
-    const snap = await _cloudDocFns.getDoc(ref);
-    if (!snap.exists()) return null;
-    return snap.data().data || null;
-  } catch(e){ console.warn("Не удалось загрузить состояние урока из облака:", e); return null; }
+function lessonStorageKey(id,uid=cloudUserId()){ return accountKey('lessonState.'+id,uid); }
+function lessonEnvelope(raw){
+  if (!raw) return {schemaVersion:2,epoch:'legacy',revision:0,data:null,base:null,pending:false};
+  if (raw.schemaVersion===2 && typeof raw.epoch==='string') return raw;
+  const legacy=raw.data && raw.updatedAt!==undefined?raw.data:raw;
+  return {schemaVersion:2,epoch:'legacy',revision:0,data:Array.isArray(legacy)?{fields:legacy}:legacy,base:null,pending:false};
+}
+function localLessonEnvelope(id,uid=cloudUserId()){
+  try { return lessonEnvelope(JSON.parse(localStorage.getItem(lessonStorageKey(id,uid))||'null')); }
+  catch(e){ throw new Error('Не удалось прочитать ответы урока. Старая копия не удалена.'); }
+}
+function keepConflict(id,env,paths,uid){
+  const key=accountKey('conflict.'+id+'.'+crypto.randomUUID(),uid);
+  localStorage.setItem(key,JSON.stringify({savedAt:new Date().toISOString(),lessonId:id,paths,data:env.data}));
+  setSyncStatus('conflict','Ответы на двух устройствах различаются. Локальная копия сохранена отдельно.');
+  let button=document.getElementById('downloadConflict');
+  if (!button) { button=document.createElement('button'); button.id='downloadConflict'; button.textContent='Скачать копию ответов'; document.getElementById('syncStatus')?.appendChild(button); }
+  button.onclick=()=>downloadJSON(Object.keys(localStorage).filter(k=>k.startsWith(accountKey('conflict.',uid))).map(k=>JSON.parse(localStorage.getItem(k))),'english-conflicting-answers.json');
+}
+function queueLessonSync(id,env,uid=cloudUserId()){
+  queueSync(uid+':lesson:'+id,async()=>{
+    await requireCloud(uid);
+    const key=lessonStorageKey(id,uid), sent=localLessonEnvelope(id,uid);
+    if (!sent.pending) return;
+    const ref=_cloudDocFns.doc(_cloudDb,'inglishLessonState',uid+'__'+id);
+    const result=await _cloudDocFns.runTransaction(_cloudDb,async tx=>{
+      const snap=await tx.get(ref), remote=lessonEnvelope(snap.exists()?snap.data():null);
+      // A reset is a new generation. Old offline edits cannot resurrect it.
+      if (!sent.reset && sent.epoch!==remote.epoch) return {env:remote,conflicts:['reset']};
+      let merged={data:sent.data,conflicts:[]};
+      if (!sent.reset && remote.data!==null) merged=SyncCore.mergeAnswers(sent.base,sent.data,remote.data);
+      const next={schemaVersion:2,epoch:sent.reset?sent.epoch:remote.epoch,revision:(remote.revision||0)+1,data:merged.data||{},updatedAt:Date.now()};
+      tx.set(ref,next); return {env:next,conflicts:merged.conflicts};
+    });
+    if (uid!==cloudUserId()) return;
+    const current=localLessonEnvelope(id,uid);
+    if (result.conflicts.length) keepConflict(id,sent,result.conflicts,uid);
+    // Rebase edits made while the transaction was in flight; never replace them.
+    if (!SyncCore.equal(current,sent)) {
+      if (current.epoch!==sent.epoch) { queueLessonSync(id,current,uid); return; }
+      const rebased=SyncCore.mergeAnswers(sent.data,current.data,result.env.data);
+      if (rebased.conflicts.length) keepConflict(id,current,rebased.conflicts,uid);
+      const next={...result.env,data:rebased.data,base:result.env.data,pending:true};
+      localStorage.setItem(key,JSON.stringify(next)); queueLessonSync(id,next,uid);
+    } else localStorage.setItem(key,JSON.stringify({...result.env,base:result.env.data,pending:false}));
+  });
+}
+function persistLessonState(id,data,expectedEpoch,previousCapture){
+  const uid=cloudUserId(); if (!uid) return;
+  const old=localLessonEnvelope(id,uid);
+  if (expectedEpoch!==undefined && expectedEpoch!==old.epoch) throw new Error('Урок сброшен на другом устройстве. Перезагрузи страницу, чтобы продолжить.');
+  if (previousCapture!==undefined && old.data && Object.keys(old.data).length) {
+    const merged=SyncCore.mergeAnswers(previousCapture,data,old.data);
+    if (merged.conflicts.length) keepConflict(id,{data},merged.conflicts,uid);
+    data=merged.data;
+  }
+  if (SyncCore.equal(old.data,data)) return;
+  const next={...old,data,base:old.pending?old.base:(old.data??previousCapture??null),pending:true};
+  localStorage.setItem(lessonStorageKey(id,uid),JSON.stringify(next)); queueLessonSync(id,next,uid);
+}
+function resetLessonState(id){
+  const next={schemaVersion:2,epoch:crypto.randomUUID(),revision:0,data:{},base:null,pending:true,reset:true};
+  localStorage.setItem(lessonStorageKey(id),JSON.stringify(next)); queueLessonSync(id,next); return next;
+}
+async function cloudLoadLessonState(id){
+  const uid=cloudUserId(); await requireCloud(uid);
+  const snap=await _cloudDocFns.getDoc(_cloudDocFns.doc(_cloudDb,'inglishLessonState',uid+'__'+id));
+  if (uid!==cloudUserId()) throw new Error('account-changed');
+  const remote=lessonEnvelope(snap.exists()?snap.data():null), local=localLessonEnvelope(id,uid);
+  if (local.pending) { queueLessonSync(id,local,uid); return local.data; }
+  // Legacy local copies were never versioned: preserve a copy before preferring cloud.
+  if (local.data && remote.data && local.revision===0 && !SyncCore.equal(local.data,remote.data)) keepConflict(id,local,['legacy'],uid);
+  const chosen=remote.data!==null?remote:local;
+  localStorage.setItem(lessonStorageKey(id,uid),JSON.stringify({...chosen,base:chosen.data,pending:false}));
+  if (!remote.data && local.data) { persistLessonState(id,local.data); const e=localLessonEnvelope(id); e.pending=true; localStorage.setItem(lessonStorageKey(id),JSON.stringify(e)); queueLessonSync(id,e); }
+  return chosen.data;
 }
