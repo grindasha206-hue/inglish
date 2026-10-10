@@ -594,10 +594,14 @@ function setBar(id, pct){ document.getElementById(id).style.width = pct+'%'; }
 function updateTop(){
   document.getElementById('scoreDisplay').textContent = state.score;
   setBar('bar-p', state.presDone ? 100 : 0);
-  const practicePct = Math.min(100, Math.round((state.practiceScore/9)*100));
+  const practiceDone=[!!document.getElementById('fillFeedback').textContent,matchedCount===memoPairs.length,quizAnswered===quizData.length,matchFound===matchWords.length];
+  const practicePct=Math.round(practiceDone.filter(Boolean).length/practiceDone.length*100);
+  const readingDone=[tfAnswered===tfData.length,!!document.getElementById('readFillFeedback').textContent];
+  for (const id of ['qaFeedback','tomFeedback']) if(document.getElementById(id)) readingDone.push(!!document.getElementById(id).textContent);
+  setBar('bar-read',Math.round(readingDone.filter(Boolean).length/readingDone.length*100));
   setBar('bar-pr', practicePct);
   setBar('bar-prod', state.prodDone ? 100 : 0);
-  if(state.presDone && practicePct>=100 && state.prodDone && soundsVisited){
+  if(state.presDone && practicePct>=100 && readingDone.every(Boolean) && state.prodDone && soundsVisited){
     document.getElementById('finalBadge').classList.add('shown');
   }
 }
@@ -833,6 +837,7 @@ function onMatchClick(el, side, idx){
       matchFound++;
       document.getElementById('matchStatus').textContent = `Найдено пар: ${matchFound} / ${matchWords.length}`;
       matchSelectedEn = null; matchSelectedRu = null; matchLock = false;
+      updateTop();
     } else {
       matchSelectedEn.classList.add('wrong'); matchSelectedRu.classList.add('wrong');
       setTimeout(()=>{
@@ -908,7 +913,7 @@ function calcScore(){
 function fillScoreOrZero(){
   const el = document.getElementById('fillFeedback').textContent;
   const m = el.match(/Правильно: (\d+)/);
-  return m ? Math.min(3, Math.round(parseInt(m[1])/8*3)) : 0;
+  return m ? Math.min(3, Math.round(parseInt(m[1])/document.querySelectorAll('#fillList input').length*3)) : 0;
 }
 
 /* ---------------- PRODUCTION ---------------- */
@@ -1008,6 +1013,8 @@ const vocabObserver = new IntersectionObserver((entries)=>{
   entries.forEach(e=>{ if(e.isIntersecting && !vocabVisited){ vocabVisited = true; setBar('bar-vocab',100); } });
 },{threshold:0.4});
 vocabObserver.observe(document.getElementById('vocabulary'));
+
+window.lessonResult=()=>({score:state.score,maxScore:state.maxScore,completed:document.getElementById('finalBadge').classList.contains('shown')});
 
 updateTop();
 </script>

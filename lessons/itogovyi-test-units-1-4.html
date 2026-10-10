@@ -306,6 +306,7 @@ document.querySelectorAll('.q-input').forEach(i=>i.addEventListener('input', upd
 
 /* ---------------- SUBMIT & GRADE ---------------- */
 document.getElementById('submitTestBtn').addEventListener('click', ()=>{
+  if (Number(document.getElementById('answeredCount').textContent)<24) { alert('Сначала ответь на все 24 вопроса.'); return; }
   let scores = { s1:0, s2:0, s3:0, s4:0, s5:0 };
   let totals = { s1:section1.length, s2:section2.length, s3:section3.length, s4:section4.length, s5:section5.length };
 
@@ -349,6 +350,7 @@ document.getElementById('submitTestBtn').addEventListener('click', ()=>{
     const group = document.querySelector(`.mc-opts[data-sec="5"][data-item="${idx}"]`);
     const picked = group.querySelector('.mc-opt.picked');
     group.querySelectorAll('.mc-opt').forEach(b=>{
+      b.classList.remove('correct','incorrect');
       if(b.dataset.val === item.correct) b.classList.add('correct');
       if(picked && b === picked && b.dataset.val !== item.correct) b.classList.add('incorrect');
     });
@@ -392,6 +394,10 @@ document.getElementById('submitTestBtn').addEventListener('click', ()=>{
   updateAnsweredCount();
 });
 
+window.lessonResult=()=>{
+  const [score,maxScore]=document.getElementById('bigScore').textContent.split('/').map(Number);
+  return {score,maxScore,completed:document.getElementById('resultsCard').classList.contains('shown')};
+};
 updateAnsweredCount();
 </script>
 </body>

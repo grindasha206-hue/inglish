@@ -251,6 +251,7 @@ textarea.write-area:focus{outline:2px solid var(--gold); border-color:var(--gold
           <span class="wb-chip">coat</span><span class="wb-chip">floor</span><span class="wb-chip">room</span>
         </div>
       </div>
+      <p class="hint">Для зачёта: ответь на все вопросы, собери пары во всех раундах, опиши картинку (от 5 слов) и напиши итоговый текст (от 20 слов), затем нажми «Готово!».</p>
       <textarea class="write-area" id="pictureArea" placeholder="This is a room. There is a..."></textarea>
       <div class="actions-row">
         <button class="btn secondary small" id="showPicSample">Показать пример</button>
@@ -588,6 +589,7 @@ const rounds = [
     ["blue","синий"],["red","красный"],["black","чёрный"],["brown","коричневый"],["cheap","дешёвый"],["expensive","дорогой"],["heavy","тяжёлый"],["new","новый"],
   ]},
 ];
+let savedRoundMatches = {};
 let curRound = 0, matchSelectedEn = null, matchSelectedRu = null, matchFound = 0, matchLock = false;
 
 const roundTabsEl = document.getElementById('roundTabs');
@@ -621,6 +623,10 @@ function renderMatch(){
     el.addEventListener('click', ()=>onMatchClick(el, 'ru', w.idx, pairs.length));
     ruCol.appendChild(el);
   });
+  for (const idx of savedRoundMatches[curRound]||[]) {
+    const en=enCol.querySelector('[data-idx="'+idx+'"]'),ru=ruCol.querySelector('[data-idx="'+idx+'"]');
+    if (en&&ru) { onMatchClick(en,'en',idx,pairs.length); onMatchClick(ru,'ru',idx,pairs.length); }
+  }
 }
 function onMatchClick(el, side, idx, total){
   if(matchLock || el.classList.contains('matched')) return;
@@ -633,6 +639,7 @@ function onMatchClick(el, side, idx, total){
       matchSelectedEn.classList.remove('selected'); matchSelectedRu.classList.remove('selected');
       matchSelectedEn.classList.add('matched'); matchSelectedRu.classList.add('matched');
       matchFound++;
+      savedRoundMatches[curRound]=Array.from(document.querySelectorAll('#matchEnCol .matched')).map(el=>Number(el.dataset.idx));
       document.getElementById('matchStatus').textContent = `Найдено пар: ${matchFound} / ${total}`;
       matchSelectedEn = null; matchSelectedRu = null; matchLock = false;
     } else {
@@ -675,6 +682,22 @@ function updateHw(){
 }
 hwChecks.forEach(c=>c.addEventListener('change', updateHw));
 document.getElementById('printHwBtn').addEventListener('click', ()=>window.print());
+window.lessonRound=()=>curRound;
+window.lessonRoundMatches=()=>Object.fromEntries(Object.entries(savedRoundMatches).map(([key,values])=>[key,[...new Set(values)].sort((a,b)=>a-b)]));
+window.restoreRoundMatches=(saved,round)=>{
+  savedRoundMatches={};
+  for (const [key,values] of Object.entries(saved)) if(rounds[key]&&Array.isArray(values)) savedRoundMatches[key]=values.filter(i=>Number.isInteger(i)&&i>=0&&i<rounds[key].pairs.length);
+  curRound=Number.isInteger(round)&&rounds[round]?round:0;
+  document.querySelectorAll('.round-btn').forEach((b,i)=>b.classList.toggle('active',i===curRound)); renderMatch();
+};
+window.lessonResult=()=>{
+  const groups=Array.from(document.querySelectorAll('.tf-item,.quiz-opts'));
+  const answered=groups.every(g=>g.dataset.done==='1');
+  const allPairs=rounds.every((r,i)=>(savedRoundMatches[i]||[]).length===r.pairs.length);
+  const words=id=>(document.getElementById(id).value.trim().split(/\s+/).filter(Boolean).length);
+  return {score:0,maxScore:0,completed:answered&&allPairs&&words('pictureArea')>=5&&words('writeArea')>=20&&/✅/.test(document.getElementById('wordCount').textContent)};
+};
+
 </script>
 </body>
 </html>
