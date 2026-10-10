@@ -13,7 +13,15 @@ async function refreshCapabilities(){
  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),15000);
  try{
   const response=await gatewayResponse('/status',{},controller.signal);
-  if(!response.ok)throw Error('Сервер: '+response.status);
+  if(!response.ok){
+   let reason='';
+   try{
+    const body=await response.json();
+    const known=['Сервер не настроен','Не удалось подтвердить вход','Аккаунт недоступен','Аккаунт не приглашён','Требуется вход','Origin запрещён','Сервер временно недоступен'];
+    if(known.includes(body.error))reason=' — '+body.error;
+   }catch{}
+   throw Error('Сервер: '+response.status+reason);
+  }
   const data=await response.json();serverCapabilities={groq:data.groq===true,eleven:data.eleven===true,github:data.github===true};
   return serverCapabilities;
  }finally{clearTimeout(timer);}
