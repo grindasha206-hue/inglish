@@ -4,6 +4,7 @@ const {session,parentOrigin}=window.__lessonBridgeConfig;
 let restoring=true, enabled=false, timer=null, sequence=0;
 const requests=new Map(),sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 function send(type,payload={}){parent.postMessage({channel:'inglish.lesson.v1',session,type,...payload},parentOrigin);}
+window.stopLessonAudio=()=>send('stop-audio');
 function lessonFields(w){
   return Array.from(w.document.querySelectorAll('input, textarea, select'))
     .filter(el => !el.closest('.voice-picker'));
@@ -14,6 +15,7 @@ function lessonFields(w){
 
 
 function lessonSignature(w){
+  if(typeof w.lessonStateVersion==='string') {let h=2166136261;for(const c of w.lessonStateVersion)h=Math.imul(h^c.charCodeAt(0),16777619);return (h>>>0).toString(16);}
   const labels=lessonFields(w).map(el=>{ const parent=el.parentElement.cloneNode(true); parent.querySelectorAll('.fill-fb,.q-fb,.word-count,.fb-line').forEach(n=>n.remove()); return [el.id,el.type,el.dataset.sec,el.dataset.item,el.dataset.part,parent.textContent.trim()]; });
   labels.push(Array.from(w.document.querySelectorAll('.quiz-q p,.tf-text,.mc-opts')).map(el=>el.textContent.trim()));
   let hash=2166136261; for (const c of JSON.stringify(labels)) hash=Math.imul(hash^c.charCodeAt(0),16777619);
@@ -23,6 +25,7 @@ function captureLessonState(){
     const w=window, d=document;
     const data = {
       signature: lessonSignature(w),
+      ...(typeof w.lessonStateVersion==='string'?{fieldsById:Object.fromEntries(lessonFields(w).filter(el=>el.id).map(el=>[el.id,(el.type==='checkbox'||el.type==='radio')?{c:el.checked?1:0}:{v:el.value||''}])),lessonState:typeof w.getLessonState==='function'?w.getLessonState():{}}:{}),
       /* всё, что вписано руками */
       fields: lessonFields(w).map(el =>
         (el.type === 'checkbox' || el.type === 'radio') ? { c: el.checked ? 1 : 0 } : { v: el.value || '' }),
@@ -41,7 +44,7 @@ function captureLessonState(){
         const i = btns.findIndex(b => b.classList.contains('sel-correct') || b.classList.contains('sel-wrong'));
         return i >= 0 ? i : null;
       }),
-      tfGroups: Object.fromEntries(['tf1List','tf2List','tf3List'].map(id=>[id,Array.from(d.querySelectorAll('#'+id+' .tf-item')).map(row=>Array.from(row.querySelectorAll('.tf-btn')).findIndex(b=>b.classList.contains('sel-correct')||b.classList.contains('sel-wrong')))])),
+      tfGroups: Object.fromEntries(['tf1List','tf2List','tf3List','lsList'].map(id=>[id,Array.from(d.querySelectorAll('#'+id+' .tf-item')).map(row=>Array.from(row.querySelectorAll('.tf-btn')).findIndex(b=>b.classList.contains('sel-correct')||b.classList.contains('sel-wrong')))])),
       mc: Array.from(d.querySelectorAll('.mc-opts')).map(g=>Array.from(g.querySelectorAll('.mc-opt')).findIndex(b=>b.classList.contains('picked'))),
       checked: Object.fromEntries([['checkQaBtn','qaFeedback'],['checkTomBtn','tomFeedback'],['submitTestBtn','resultsCard']].map(([button,feedback])=>[button,feedback==='resultsCard'?!!d.getElementById(feedback)?.classList.contains('shown'):!!d.getElementById(feedback)?.textContent])),
       round: typeof w.lessonRound==='function'?w.lessonRound():0,
@@ -78,7 +81,7 @@ window.addEventListener('message',async event=>{
     /* 1. вписанное руками */
     const els = lessonFields(w);
     (data.fields || []).forEach((f, i) => {
-      const el = els[i];
+      const el = data.fieldsById ? null : els[i];
       if (!el) return;
       if (f.c !== undefined) {
         if (el.checked !== !!f.c) { el.checked = !!f.c; el.dispatchEvent(new Event('change', { bubbles: true })); }
@@ -87,6 +90,11 @@ window.addEventListener('message',async event=>{
         el.dispatchEvent(new Event('input', { bubbles: true }));
       }
     });
+    for(const [id,f] of Object.entries(data.fieldsById||{})){
+      const el=d.getElementById(id);if(!el||!els.includes(el))continue;
+      if(f.c!==undefined){el.checked=!!f.c;el.dispatchEvent(new Event('change',{bubbles:true}));}
+      else {el.value=f.v;el.dispatchEvent(new Event('input',{bubbles:true}));}
+    }
     /* 2. «переигрываем» клики — урок сам восстановит подсветку, счёт и прогресс */
     (data.quiz || []).forEach((sel, gi) => {
       if (sel === null || sel === undefined) return;
@@ -122,6 +130,7 @@ window.addEventListener('message',async event=>{
     }
 
   }
+  if(data?.lessonState&&typeof w.restoreLessonState==='function')w.restoreLessonState(data.lessonState);
   restoring=false;enabled=true;document.body.inert=false;snapshot();
  }catch(error){send('failure',{reason:'restore-failed'});}
 });

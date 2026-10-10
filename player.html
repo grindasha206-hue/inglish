@@ -119,7 +119,7 @@ async function init(){
       if(reason==='lesson-updated'){keepConflict(lesson.id,{data},['lesson-updated'],cloudUserId());setSyncStatus('error','Урок изменился. Скачай копию старых ответов и нажми «заново».');}
       else setSyncStatus('error',reason==='restore-failed'?'Не удалось восстановить ответы. Исходная копия сохранена.':reason);
     },
-    speak:playLessonSpeech
+    speak:playLessonSpeech,stop:()=>TTS.stop()
   });
   await openLesson();
 

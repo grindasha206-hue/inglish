@@ -91,6 +91,13 @@
               "title": "I don't... (present simple negative)",
               "description": "",
               "file": "lessons/urok-present-simple-negative.html"
+            },
+            {
+              "id": "urok-present-simple-questions",
+              "unit": 3,
+              "title": "Do you…? — Present Simple questions",
+              "description": "Вопросы с do/does, короткие ответы и аудирование",
+              "file": "lessons/urok-present-simple-questions.html"
             }
           ]
         }

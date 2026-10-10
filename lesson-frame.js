@@ -18,6 +18,7 @@
      clearTimeout(timer);const first=!ready;ready=true;data=next;handlers.snapshot(next,result,first);
      const pending=captures.get(msg.requestId);if(pending){clearTimeout(pending.timer);captures.delete(msg.requestId);pending.resolve(next);}return;
     }
+    if(msg.type==='stop-audio'&&ready){handlers.stop?.();return;}
     if(msg.type==='speak'&&ready&&Number.isSafeInteger(msg.id)&&typeof msg.text==='string'&&msg.text.length<=20000){
      const activeSession=session;
      try{const played=await handlers.speak(msg.text,typeof msg.rate==='number'&&Number.isFinite(msg.rate)?Math.max(0.1,Math.min(2,msg.rate)):1);if(session===activeSession)send('audio-result',{id:msg.id,...(played===false?{error:'Воспроизведение остановлено'}:{})});}
@@ -31,14 +32,30 @@
    if(!/^lessons\/[a-z0-9][a-z0-9-]{0,119}\.html$/.test(path))throw Error('Недопустимый путь урока');
    const activeSession=session;
    const controller=new AbortController(),fetchTimer=setTimeout(()=>controller.abort(),20000);
-   let source,runtime;
+   let source,runtime,kit;
    try{
-    const responses=await Promise.all([fetch(path,{signal:controller.signal}),fetch('lesson-runtime.js',{signal:controller.signal})]);
+    const responses=await Promise.all([fetch(path,{signal:controller.signal}),fetch('lesson-runtime.js',{signal:controller.signal}),fetch('lesson-kit.js',{signal:controller.signal})]);
     if(responses.some(r=>!r.ok))throw Error('Не удалось загрузить урок');
-    [source,runtime]=await Promise.all(responses.map(r=>r.text()));
+    [source,runtime,kit]=await Promise.all(responses.map(r=>r.text()));
    }finally{clearTimeout(fetchTimer);}
    if(session!==activeSession||closed)return;
    const doc=new DOMParser().parseFromString(source,'text/html');
+   for(const external of doc.querySelectorAll('script[src]')){if(external.getAttribute('src')==='../lesson-kit.js'){external.removeAttribute('src');external.textContent=kit;}}
+   // Inline only raster assets under this lesson's directory; the sandbox keeps connect-src none.
+   for(const img of doc.querySelectorAll('img[data-lesson-image]')){
+    const relative=img.dataset.lessonImage;
+    if(!/^img\/[a-zA-Z0-9][a-zA-Z0-9_-]{0,119}\.(png|jpg|jpeg|webp)$/.test(relative))continue;
+    try{
+     const imageController=new AbortController(),imageTimer=setTimeout(()=>imageController.abort(),5000);
+     let response,blob;try{response=await fetch('lessons/'+relative,{redirect:'error',signal:imageController.signal});if(response.ok)blob=await response.blob();}finally{clearTimeout(imageTimer);}
+     if(!response.ok)continue;
+     
+     if(blob.size>2000000||!/^image\/(png|jpeg|webp)$/.test(blob.type))continue;
+     img.src=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=reject;reader.readAsDataURL(blob);});
+     img.style.display='';const placeholder=doc.getElementById('picPh');if(placeholder)placeholder.style.display='none';
+    }catch{}
+   }
+   if(session!==activeSession||closed)return;
    doc.querySelectorAll('base,meta[http-equiv]').forEach(el=>el.remove());
    const policy=doc.createElement('meta');policy.httpEquiv='Content-Security-Policy';
    policy.content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src data: blob:; media-src blob: data:; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'";
