@@ -82,6 +82,7 @@ header.top p{margin:4px 0 0;opacity:.9;font-size:14px}
 <script src="backend-config.js"></script>
 <script src="gateway.js"></script>
 <script src="site.js"></script>
+<script src="appdata.js"></script>
 <script src="homework-core.js"></script>
 <script src="dictionary-data.js"></script>
 <script src="trainer-extra.js"></script>
@@ -114,21 +115,36 @@ function activeProvider(){
 function browserSpeak(text){return new Promise(res=>{if(!('speechSynthesis' in window))return res(false);speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='en-US';const v=speechSynthesis.getVoices()||[];const pv=v.find(x=>x.lang==='en-GB')||v.find(x=>x.lang&&x.lang.startsWith('en'));if(pv)u.voice=pv;u.onend=()=>res(true);u.onerror=()=>res(false);speechSynthesis.speak(u);});}
 async function speak(text){const p=activeProvider();if(!p)return browserSpeak(text);try{return await(p==='eleven'?elevenSpeak(text,1):groqSpeak(text,1));}catch(e){return browserSpeak(text);}}
 
-/* ===== хранилища (те же, что у словаря и тренажёра) ===== */
-const DKEY=accountKey('dictionary.v1'), TKEY=accountKey('trainer.v1'), LKEY=accountKey('review.log');
-const rd=(k,d)=>{try{return JSON.parse(localStorage.getItem(k)||'null')||d;}catch(e){return d;}};
-const wr=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}};
+/* ===== хранилища: те же, что у словаря и тренажёра (в аккаунте, как ответы уроков) ===== */
+const rdL=k=>{ try{ return JSON.parse(localStorage.getItem(accountKey(k))||'null'); }catch(e){ return null; } };
+const D=await AppStore.open('dictionary', ()=>{ const o=rdL('dictionary.v1'); return o?{words:o}:null; });
+const TR=await AppStore.open('trainer', ()=>{
+  const out={}, items=rdL('trainer.v1'), cfg=rdL('trainer.cfg2'), hs=rdL('trainer.hist');
+  if(items) out.items=items; if(cfg) out.cfg={...cfg,t:1};
+  if(Array.isArray(hs)) out.hist=Object.fromEntries(hs.map(h=>[String(h.t),h]));
+  return Object.keys(out).length?out:null;
+});
+const RV=await AppStore.open('review', ()=>{
+  const lg=rdL('review.log'), n=localStorage.getItem(accountKey('review.new')), out={};
+  if(Array.isArray(lg)) out.log=Object.fromEntries(lg.map(h=>[String(h.t),h]));
+  if(n!==null) out.cfg={new:+n,t:1};
+  return Object.keys(out).length?out:null;
+});
+D.words=D.words||{}; TR.items=TR.items||{}; TR.hist=TR.hist||{}; RV.log=RV.log||{};
+const saveD=()=>AppStore.save('dictionary',{words:D.words},['words']);
+const saveT=()=>AppStore.save('trainer',{items:TR.items,hist:TR.hist,...(TR.cfg?{cfg:TR.cfg}:{})},['items']);
+const saveR=()=>AppStore.save('review',{log:RV.log,...(RV.cfg?{cfg:RV.cfg}:{})});
 const DAY=86400000, STEPS=[0,1,3,7,14,30];
 function wordAnswer(id,ok){
-  const prog=rd(DKEY,{}); const p=prog[id]||(prog[id]={box:0,due:0,star:0,seen:0,wrong:0});
+  const prog=D.words; const p=prog[id]||(prog[id]={box:0,due:0,star:0,seen:0,wrong:0});
   p.seen=(p.seen||0)+1;
   if(ok)p.box=Math.min(5,(p.box||0)+1); else {p.box=1;p.wrong=(p.wrong||0)+1;}
   p.due=Date.now()+STEPS[p.box]*DAY; if(!ok)p.due=Date.now();
-  wr(DKEY,prog);
+  saveD();
 }
 function trainerRecord(id,ok){
-  const prog=rd(TKEY,{}); const p=prog[id]||(prog[id]={ok:0,bad:0,last:-1,t:0});
-  if(ok)p.ok++;else p.bad++; p.last=ok?1:0; p.t=Date.now(); wr(TKEY,prog);
+  const prog=TR.items; const p=prog[id]||(prog[id]={ok:0,bad:0,last:-1,t:0});
+  if(ok)p.ok++;else p.bad++; p.last=ok?1:0; p.t=Date.now(); saveT();
 }
 
 /* ===== что пора повторять ===== */
@@ -139,7 +155,7 @@ await loadCourse().catch(()=>{});
 const hwData={};
 await Promise.all((ALL_LESSONS||[]).map(async l=>{ try{hwData[l.id]=await cloudLoadLessonState(l.id);}catch(e){hwData[l.id]=HW.localData(l.id);} }));
 function gather(){
-  const dprog=rd(DKEY,{}), tprog=rd(TKEY,{}), now=Date.now();
+  const dprog=D.words, tprog=TR.items, now=Date.now();
   const due=WORDS.filter(w=>{const p=dprog[w.id];return p&&p.seen>0&&p.due<=now;}).sort((a,b)=>dprog[a.id].due-dprog[b.id].due);
   const fresh=WORDS.filter(w=>{const p=dprog[w.id];return !p||!p.seen;}).sort((a,b)=>a.n-b.n);
   const mist=ITEMS.filter(it=>tprog[it.id]&&tprog[it.id].last===0);
@@ -147,9 +163,9 @@ function gather(){
   return {due,fresh,mist,hw};
 }
 const CAP_W=15, CAP_E=10;
-let newN=+(localStorage.getItem(accountKey('review.new'))||5);
+let newN=RV.cfg&&Number.isFinite(RV.cfg.new)?RV.cfg.new:5;
 function dash(){
-  const g=gather(), log=rd(LKEY,[]);
+  const g=gather(), log=Object.values(RV.log).sort((a,b)=>b.t-a.t);
   const nw=Math.min(newN,g.fresh.length), dw=Math.min(CAP_W,g.due.length), me=Math.min(CAP_E,g.mist.length);
   const total=dw+nw+me;
   const hwTasks=g.hw.reduce((a,x)=>a+(x.s.total-x.s.done),0);
@@ -162,7 +178,7 @@ function dash(){
    <div class="row"><button class="btn" id="go" ${total?'':'disabled'}>▶ Начать повторение${total?` (${total})`:''}</button><a class="btn sec" href="homework.html">📝 Домашка</a></div>
    ${total?'':'<p class="note" style="margin-top:12px">На сегодня всё повторено 🎉 Добавь новые слова выше или зайди завтра.</p>'}
    ${last?`<p class="note" style="margin-top:14px">Последнее повторение: ${new Date(last.t).toLocaleDateString('ru-RU',{day:'numeric',month:'long'})} — слова ${last.wk}/${last.wn}, задания ${last.er}/${last.en}</p>`:''}`;
-  $('newSel').onchange=e=>{newN=+e.target.value;try{localStorage.setItem(accountKey('review.new'),String(newN));}catch(_){ }dash();};
+  $('newSel').onchange=e=>{newN=+e.target.value;RV.cfg={new:newN,t:Date.now()};saveR();dash();};
   if(total)$('go').onclick=()=>start(g);
 }
 
@@ -231,7 +247,7 @@ function exDone(ok,btn){
   $('sBtns').innerHTML='<button class="btn good" id="nx">Дальше →</button>'; $('nx').focus(); $('nx').onclick=()=>next();
 }
 function finish(){
-  const log=rd(LKEY,[]); log.unshift({t:Date.now(),wk:S.wk,wn:S.wn,er:S.er,en:S.en}); wr(LKEY,log.slice(0,60));
+  const now=Date.now(); RV.log[String(now)]={t:now,wk:S.wk,wn:S.wn,er:S.er,en:S.en}; Object.keys(RV.log).sort((a,b)=>b-a).slice(60).forEach(k=>delete RV.log[k]); saveR();
   const hwHtml=S.hw.length?`<h3 style="margin:18px 0 6px">📝 Домашка, которую осталось сделать</h3>`+S.hw.map(x=>`<div class="src"><div class="tx">Unit ${x.l.unit} · ${esc(x.l.title)}<small>выполнено ${x.s.done} из ${x.s.total}</small></div></div>`).join('')+`<div class="row"><a class="btn" href="homework.html">Перейти к домашке →</a></div>`:'<p class="note" style="margin-top:14px">Невыполненной домашки нет ✅</p>';
   $('res').innerHTML=`<h2 style="font-size:19px">Повторение завершено</h2>
    <div class="src"><div class="n">${S.wk}/${S.wn}</div><div class="tx">Слова<small>${S.wn?'«не знал» вернутся в очередь сразу':'сегодня слов не было'}</small></div></div>

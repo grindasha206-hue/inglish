@@ -53,6 +53,8 @@
     if ((path==='/memo'||path==='/match'||/^\/roundMatches\/[^/]+$/.test(path)) && Array.isArray(local)&&Array.isArray(remote)) return {data:[...new Set([...local,...remote])].sort(),conflicts};
     if (equal(local,base)) return {data:remote,conflicts};
     if (equal(remote,base) || equal(local,remote)) return {data:local,conflicts};
+    // Per-item progress of dictionary/trainer: if both sides changed the same item, the later edit (field t) wins without a conflict.
+    if (/^\/app\/(words|items)\/[^/]+$|^\/app\/cfg$/.test(path) && plain(local) && plain(remote)) return {data:(local.t||0)>(remote.t||0)?local:remote,conflicts};
     if ((plain(local)&&plain(remote)&&(plain(base)||base===undefined)) ||
         (Array.isArray(local)&&Array.isArray(remote)&&(Array.isArray(base)||base===undefined))) {
       const data=Array.isArray(local)?[]:{};

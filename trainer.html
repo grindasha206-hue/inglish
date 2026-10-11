@@ -148,6 +148,7 @@ header.top p{margin:4px 0 0;opacity:.9;font-size:14px}
 <script src="backend-config.js"></script>
 <script src="gateway.js"></script>
 <script src="site.js"></script>
+<script src="appdata.js"></script>
 <script src="trainer-extra.js"></script>
 <script src="trainer-data.js"></script>
 <script>
@@ -155,6 +156,7 @@ header.top p{margin:4px 0 0;opacity:.9;font-size:14px}
 await authReady;
 if(!currentUser){ location.replace("index.html"); return; }
 try{ await refreshCapabilities(); }catch(e){}
+initializeAccountStorage(); resumePendingSync();
 
 const TOPICS = window.TRAINER_TOPICS || [];
 const ITEMS = TOPICS.flatMap(t=>t.items);
@@ -193,11 +195,19 @@ async function speak(text,rate){
   catch(e){ return browserSpeak(text,rate); }
 }
 
-/* ===== прогресс: на каждое задание {ok,bad,last,t} ===== */
-const KEY = (typeof accountKey==='function') ? accountKey('trainer.v1') : 'english.trainer.v1';
-let prog = {};
-try{ prog = JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ prog={}; }
-function save(){ try{ localStorage.setItem(KEY, JSON.stringify(prog)); }catch(e){} }
+/* ===== прогресс: хранится в аккаунте как ответы уроков (app-trainer): задания, настройки, история ===== */
+const _app = await AppStore.open('trainer', ()=>{
+  const rd=k=>{ try{ return JSON.parse(localStorage.getItem(accountKey(k))||'null'); }catch(e){ return null; } };
+  const out={}, items=rd('trainer.v1'), cfg=rd('trainer.cfg2'), hs=rd('trainer.hist');
+  if(items) out.items=items;
+  if(cfg) out.cfg={...cfg,t:1};
+  if(Array.isArray(hs)) out.hist=Object.fromEntries(hs.map(h=>[String(h.t),h]));
+  return Object.keys(out).length?out:null;
+});
+_app.items = _app.items || {}; _app.hist = _app.hist || {};
+let prog = _app.items;
+function persistApp(){ AppStore.save('trainer', {items:_app.items, hist:_app.hist, ...(_app.cfg?{cfg:_app.cfg}:{})}, ['items']); }
+function save(){ persistApp(); }
 function record(id, ok){
   const p = prog[id] || (prog[id]={ok:0,bad:0,last:-1,t:0});
   if(ok) p.ok++; else p.bad++;
@@ -218,10 +228,9 @@ const ELIG = {C:['C','T','X','D'], F:['F','D'], O:['O','D']};
 const elig = (it,fm)=>(it.nt?['C','D']:ELIG[it.type]).filter(f=>fm.includes(f));
 const FM_KEYS = Object.keys(FMT);
 const DEF_COUNTS = {C:3,F:2,O:1,T:2,X:1,D:1};
-const CFG_KEY = (typeof accountKey==='function') ? accountKey('trainer.cfg2') : 'english.trainer.cfg2';
 let cfg = {topics:TOPICS.map(t=>t.id), counts:{...DEF_COUNTS}, src:'all'};
-try{ const c=JSON.parse(localStorage.getItem(CFG_KEY)||'null'); if(c){ cfg.topics=(c.topics||[]).filter(id=>byTopic[id]); FM_KEYS.forEach(k=>{ cfg.counts[k]=Math.max(0,Math.min(50,+((c.counts||{})[k]))||0); }); cfg.src=c.src||'all'; } }catch(e){}
-function saveCfg(){ try{ localStorage.setItem(CFG_KEY, JSON.stringify(cfg)); }catch(e){} }
+{ const c=_app.cfg; if(c){ cfg.topics=(c.topics||[]).filter(id=>byTopic[id]); FM_KEYS.forEach(k=>{ cfg.counts[k]=Math.max(0,Math.min(50,+((c.counts||{})[k]))||0); }); cfg.src=c.src||'all'; } }
+function saveCfg(){ _app.cfg={topics:cfg.topics,counts:cfg.counts,src:cfg.src,t:Date.now()}; persistApp(); }
 const total = c=>FM_KEYS.reduce((a,k)=>a+(c.counts[k]||0),0);
 const activeFmts = c=>FM_KEYS.filter(k=>(c.counts[k]||0)>0);
 
@@ -422,9 +431,13 @@ function results(){
 }
 
 /* ===== история ===== */
-const HKEY = (typeof accountKey==='function') ? accountKey('trainer.hist') : 'english.trainer.hist';
-let hist=[]; try{ hist=JSON.parse(localStorage.getItem(HKEY)||'[]')||[]; }catch(e){ hist=[]; }
-function addHist(h){ hist.unshift(h); hist=hist.slice(0,200); try{ localStorage.setItem(HKEY, JSON.stringify(hist)); }catch(e){} }
+let hist = Object.values(_app.hist).sort((a,b)=>b.t-a.t);
+function addHist(h){
+  _app.hist[String(h.t)] = h;
+  const keys = Object.keys(_app.hist).sort((a,b)=>b-a);
+  keys.slice(200).forEach(k=>delete _app.hist[k]);
+  hist = Object.values(_app.hist).sort((a,b)=>b.t-a.t); persistApp();
+}
 const byId = Object.fromEntries(ITEMS.map(i=>[i.id,i]));
 function fmtDur(s){ return s<60 ? s+' с' : Math.floor(s/60)+' мин '+(s%60)+' с'; }
 function renderHist(){
@@ -447,7 +460,7 @@ function renderHist(){
     return `<div class="hrow"><div class="hsc ${pct>=80?'g':''}">${h.right}/${h.n}</div><div class="hmeta"><b>${esc(h.title)}</b> · ${when}${h.sec?' · '+fmtDur(h.sec):''}<br>${esc(tn)}<br>${chips}</div>${wr.length?`<button class="btn sec" data-hr="${i}" style="padding:5px 12px;font-size:12px">Повторить ошибки (${wr.length})</button>`:''}</div>`;
   }).join('');
   document.querySelectorAll('[data-hr]').forEach(b=>b.onclick=()=>{ const h=hist[+b.dataset.hr]; startSession({counts:{...cfg.counts}, items:h.wrong.map(id=>byId[id]).filter(Boolean)},'Работа над ошибками'); });
-  if($('hClear')) $('hClear').onclick=()=>{ if(confirm('Стереть историю тренировок? Прогресс по темам останется.')){ hist=[]; try{ localStorage.removeItem(HKEY); }catch(e){} renderHist(); } };
+  if($('hClear')) $('hClear').onclick=()=>{ if(confirm('Стереть историю тренировок? Прогресс по темам останется.')){ _app.hist={}; hist=[]; persistApp(); renderHist(); } };
 }
 function setTab(v){
   document.querySelectorAll('#mainTabs .tab').forEach(b=>b.classList.toggle('active', b.dataset.v===v));

@@ -207,6 +207,7 @@ mark{background:rgba(226,150,63,.35);color:inherit;border-radius:3px}
 <script src="backend-config.js"></script>
 <script src="gateway.js"></script>
 <script src="site.js"></script>
+<script src="appdata.js"></script>
 <script src="dictionary-data.js"></script>
 <script>
 (async function(){
@@ -214,6 +215,7 @@ mark{background:rgba(226,150,63,.35);color:inherit;border-radius:3px}
 await authReady;
 if(!currentUser){ location.replace("index.html"); return; }
 try{ await refreshCapabilities(); }catch(e){ /* сервер озвучки недоступен — останется голос браузера */ }
+initializeAccountStorage(); resumePendingSync();
 /* ============ DATA (из course_vocabulary.xlsx) ============ */
 const WORDS = window.DICT_WORDS || [];
 
@@ -266,10 +268,11 @@ function setVoiceNote(){
 }
 
 /* ============ progress (localStorage; на сайте ключ можно привязать к аккаунту) ============ */
-const STORE_KEY = (typeof accountKey==='function' && typeof cloudUserId==='function' && cloudUserId()) ? accountKey('dictionary.v1') : 'english.dict.v1';
-let prog = {};
-try{ prog = JSON.parse(localStorage.getItem(STORE_KEY)||'{}')||{}; }catch(e){ prog = {}; }
-function save(){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(prog)); }catch(e){} renderStats(); if(typeof renderLessons==='function') renderLessons(); }
+/* прогресс лежит в аккаунте (локально + облако), как ответы уроков */
+const _app = await AppStore.open('dictionary', ()=>{ try{ const o=JSON.parse(localStorage.getItem(accountKey('dictionary.v1'))||'null'); return o?{words:o}:null; }catch(e){ return null; } });
+if(!_app.words) _app.words = {};
+let prog = _app.words;
+function save(){ AppStore.save('dictionary', {words:prog}, ['words']); renderStats(); if(typeof renderLessons==='function') renderLessons(); }
 const DAY = 86400000, STEPS = [0,1,3,7,14,30];  /* дни до следующего повтора по коробке 0..5 */
 function P(id){ return prog[id] || (prog[id]={box:0,due:0,star:0,seen:0,wrong:0}); }
 function status(id){ const p=prog[id]; if(!p||!p.seen&&!p.box) return 'new'; return p.box>=4?'known':'learn'; }

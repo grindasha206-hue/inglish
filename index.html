@@ -177,6 +177,7 @@ a{color:inherit;}
 <script src="lesson-schema.js"></script>
 <script src="progress.js"></script>
 <script src="homework-core.js"></script>
+<script src="appdata.js"></script>
 <script src="backup.js"></script>
 <script>
 let p = loadProgress();
@@ -265,8 +266,8 @@ function applyHw(){
   ALL_LESSONS.forEach(l => { const s = HW.summary(HW.localData(l.id)); if (s.on && !s.complete) pending++; });
   /* повторение на сегодня: слова по расписанию + ошибки тренажёра + невыполненная домашка */
   let dueW = 0, mist = 0;
-  try { const d = JSON.parse(localStorage.getItem(accountKey('dictionary.v1')) || '{}'); const now = Date.now(); for (const v of Object.values(d)) if (v && v.seen > 0 && v.due <= now) dueW++; } catch(e){}
-  try { const t = JSON.parse(localStorage.getItem(accountKey('trainer.v1')) || '{}'); for (const v of Object.values(t)) if (v && v.last === 0) mist++; } catch(e){}
+  try { let d = AppStore.peek('dictionary').words; if (!d) d = JSON.parse(localStorage.getItem(accountKey('dictionary.v1')) || '{}'); const now = Date.now(); for (const v of Object.values(d)) if (v && v.seen > 0 && v.due <= now) dueW++; } catch(e){}
+  try { let t = AppStore.peek('trainer').items; if (!t) t = JSON.parse(localStorage.getItem(accountKey('trainer.v1')) || '{}'); for (const v of Object.values(t)) if (v && v.last === 0) mist++; } catch(e){}
   const rvTotal = dueW + mist + pending;
   const rn = document.getElementById('rvNavCount'); if (rn) rn.textContent = rvTotal ? String(rvTotal) : '';
   const rc = document.getElementById('rvCardText');
@@ -285,7 +286,7 @@ function applyHw(){
 let hwLoaded = false;
 async function loadAllHw(){
   if (hwLoaded) return; hwLoaded = true;
-  try { await Promise.all(ALL_LESSONS.map(l => cloudLoadLessonState(l.id).catch(() => null))); } catch(e){}
+  try { await Promise.all([...ALL_LESSONS.map(l => cloudLoadLessonState(l.id).catch(() => null)), AppStore.pull('dictionary'), AppStore.pull('trainer')]); } catch(e){}
   applyHw();
 }
 function render(){
