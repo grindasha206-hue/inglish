@@ -66,6 +66,25 @@ header.top p{margin:4px 0 0;opacity:.9;font-size:14px}
 .sel{border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;font:700 14px 'Manrope';background:#fffdf8;color:var(--ink)}
 .bigsay{font-size:34px;padding:10px 22px;border-radius:16px}
 .sent{font:700 24px 'Fraunces',serif;background:var(--cream);border:1.5px dashed var(--line);border-radius:12px;padding:14px;margin:6px 0}
+.fmtrow{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line)}
+.fmtrow:last-child{border:none}
+.fmtrow .nm{flex:1;font-weight:800;font-size:14.5px}
+.fmtrow .nm small{display:block;font-weight:600;font-size:12px;color:var(--ink-soft)}
+.fmtrow .av{font-size:12px;color:var(--ink-soft);min-width:70px;text-align:right}
+.stp{display:flex;align-items:center;gap:4px}
+.stp button{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--tab-dark);background:#fff;color:var(--tab-dark);font:800 17px 'Manrope';cursor:pointer;line-height:1}
+.stp button:hover{background:var(--tab);color:#fff}
+.stp b{min-width:28px;text-align:center;font-size:16px}
+.tabs{display:flex;gap:8px;margin-bottom:12px}
+.tab{border:1.5px solid var(--line);background:#fff;color:var(--ink-soft);padding:8px 16px;border-radius:20px;font:700 13.5px 'Manrope';cursor:pointer}
+.tab.active{background:var(--tab);color:#fff;border-color:var(--tab-dark)}
+.hrow{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:10px 0;border-bottom:1px dashed var(--line)}
+.hrow:last-child{border:none}
+.hsc{font:800 22px 'Fraunces',serif;color:var(--brick-dark);min-width:64px}
+.hsc.g{color:var(--sage)}
+.hmeta{flex:1;min-width:180px;font-size:13px;color:var(--ink-soft)}
+.hmeta b{color:var(--ink);font-size:14px}
+.ch{display:inline-block;background:var(--cream);border:1px solid var(--line);border-radius:10px;padding:1px 8px;font-size:11.5px;font-weight:700;margin:2px 3px 0 0}
 .mist{margin:6px 0;padding:8px 12px;border-radius:10px;background:var(--coral-bg);font-size:14px}
 </style>
 </head>
@@ -78,22 +97,28 @@ header.top p{margin:4px 0 0;opacity:.9;font-size:14px}
 </div></header>
 
 <main class="wrap">
+<div class="tabs" id="mainTabs"><button class="tab active" data-v="vHome">🛠 Конструктор</button><button class="tab" data-v="vHist">📈 История</button></div>
 <section class="view active" id="vHome">
   <div class="panel cons">
     <h2 style="font-size:20px">🛠 Конструктор тренировки</h2>
     <h3>1. Темы <button class="btn sec" id="tAll" style="padding:3px 10px;font-size:11.5px">все</button> <button class="btn sec" id="tNone" style="padding:3px 10px;font-size:11.5px">очистить</button></h3>
     <div class="tg" id="cTopics"></div>
-    <h3>2. Форматы упражнений</h3>
-    <div class="tg" id="cFmts"></div>
-    <h3>3. Сколько заданий и что брать</h3>
+    <h3>2. Сколько заданий каждого типа</h3>
+    <div id="cFmts"></div>
+    <div class="row" style="margin:8px 0 0"><button class="btn sec" id="pEven" style="padding:5px 12px;font-size:12px">по 2 каждого</button><button class="btn sec" id="pDef" style="padding:5px 12px;font-size:12px">стандарт (10)</button><button class="btn sec" id="pZero" style="padding:5px 12px;font-size:12px">обнулить</button></div>
+    <h3>3. Что брать</h3>
     <div class="row" style="margin:0">
-      <select class="sel" id="cCount"><option>5</option><option>10</option><option>15</option><option>20</option><option>30</option></select>
       <select class="sel" id="cSrc"><option value="all">всё подряд (сначала ошибки и новые)</option><option value="err">только мои ошибки</option><option value="new">только ещё не решённые</option></select>
     </div>
     <div class="row"><button class="btn" id="cGo">▶ Начать</button><span class="mini" id="cInfo" style="align-self:center"></span></div>
   </div>
   <h2 style="font-size:19px;margin:20px 0 10px">Или по уроку</h2>
   <div class="grid" id="topics"></div>
+</section>
+
+<section class="view" id="vHist">
+  <div class="panel" id="hSum"></div>
+  <div class="panel" id="hList"></div>
 </section>
 
 <section class="view" id="vIntro">
@@ -191,16 +216,20 @@ const FMT = {
 };
 const ELIG = {C:['C','T','X','D'], F:['F','D'], O:['O','D']};
 const elig = (it,fm)=>(it.nt?['C','D']:ELIG[it.type]).filter(f=>fm.includes(f));
-const CFG_KEY = (typeof accountKey==='function') ? accountKey('trainer.cfg') : 'english.trainer.cfg';
-let cfg = {topics:TOPICS.map(t=>t.id), fmts:Object.keys(FMT), count:10, src:'all'};
-try{ const c=JSON.parse(localStorage.getItem(CFG_KEY)||'null'); if(c){ cfg.topics=(c.topics||[]).filter(id=>byTopic[id]); cfg.fmts=(c.fmts||[]).filter(f=>FMT[f]); cfg.count=c.count||10; cfg.src=c.src||'all'; } }catch(e){}
+const FM_KEYS = Object.keys(FMT);
+const DEF_COUNTS = {C:3,F:2,O:1,T:2,X:1,D:1};
+const CFG_KEY = (typeof accountKey==='function') ? accountKey('trainer.cfg2') : 'english.trainer.cfg2';
+let cfg = {topics:TOPICS.map(t=>t.id), counts:{...DEF_COUNTS}, src:'all'};
+try{ const c=JSON.parse(localStorage.getItem(CFG_KEY)||'null'); if(c){ cfg.topics=(c.topics||[]).filter(id=>byTopic[id]); FM_KEYS.forEach(k=>{ cfg.counts[k]=Math.max(0,Math.min(50,+((c.counts||{})[k]))||0); }); cfg.src=c.src||'all'; } }catch(e){}
 function saveCfg(){ try{ localStorage.setItem(CFG_KEY, JSON.stringify(cfg)); }catch(e){} }
+const total = c=>FM_KEYS.reduce((a,k)=>a+(c.counts[k]||0),0);
+const activeFmts = c=>FM_KEYS.filter(k=>(c.counts[k]||0)>0);
 
 function poolFor(c){
   let items = c.items || ITEMS.filter(it=>c.topics.includes(it.topic));
   if(c.src==='err') items = items.filter(it=>prog[it.id]&&prog[it.id].last===0);
   if(c.src==='new') items = items.filter(it=>!prog[it.id]);
-  return items.filter(it=>elig(it,c.fmts).length);
+  return items;
 }
 
 /* ===== главная ===== */
@@ -209,15 +238,22 @@ function topicStat(t){
   t.items.forEach(it=>{ const p=prog[it.id]; if(p){ if(p.last===1) mastered++; ok+=p.ok; bad+=p.bad; } });
   return {n, mastered, acc: ok+bad ? Math.round(100*ok/(ok+bad)) : null};
 }
+function availFor(f,pool){ return pool.filter(it=>elig(it,[f]).length).length; }
 function renderCons(){
   $('cTopics').innerHTML = TOPICS.map(t=>`<button class="tgb ${cfg.topics.includes(t.id)?'on':''}" data-t="${t.id}">${t.emoji} ${esc(t.title)}</button>`).join('');
-  $('cFmts').innerHTML = Object.entries(FMT).map(([k,f])=>`<button class="tgb ${cfg.fmts.includes(k)?'on':''}" data-f="${k}">${f.n}<small>${f.d}</small></button>`).join('');
-  $('cCount').value = String(cfg.count); $('cSrc').value = cfg.src;
+  const pool = poolFor(cfg);
+  $('cFmts').innerHTML = FM_KEYS.map(k=>{
+    const av=availFor(k,pool), n=cfg.counts[k]||0;
+    return `<div class="fmtrow"><div class="nm">${FMT[k].n}<small>${FMT[k].d}</small></div><div class="av">доступно: ${av}</div><div class="stp"><button data-m="${k}">−</button><b style="${n>av?'color:var(--coral)':''}">${n}</b><button data-p="${k}">+</button></div></div>`;
+  }).join('');
+  $('cSrc').value = cfg.src;
   document.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{ const id=+b.dataset.t; cfg.topics = cfg.topics.includes(id)?cfg.topics.filter(x=>x!==id):[...cfg.topics,id]; saveCfg(); renderCons(); });
-  document.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{ const k=b.dataset.f; cfg.fmts = cfg.fmts.includes(k)?cfg.fmts.filter(x=>x!==k):[...cfg.fmts,k]; saveCfg(); renderCons(); });
-  const n = poolFor(cfg).length;
-  $('cInfo').textContent = !cfg.topics.length ? 'Выбери хотя бы одну тему' : !cfg.fmts.length ? 'Выбери хотя бы один формат' : n ? `Подходит заданий: ${n}` : 'Под такие настройки заданий нет — измени фильтр';
-  $('cGo').disabled = !n;
+  document.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{ const k=b.dataset.m; cfg.counts[k]=Math.max(0,(cfg.counts[k]||0)-(cfg.counts[k]>5?5:1)); saveCfg(); renderCons(); });
+  document.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{ const k=b.dataset.p; cfg.counts[k]=Math.min(50,(cfg.counts[k]||0)+((cfg.counts[k]||0)>=5?5:1)); saveCfg(); renderCons(); });
+  const tot=total(cfg);
+  const lack = FM_KEYS.filter(k=>(cfg.counts[k]||0)>availFor(k,pool));
+  $('cInfo').textContent = !cfg.topics.length ? 'Выбери хотя бы одну тему' : !tot ? 'Задай количество хотя бы для одного типа' : !pool.length ? 'Под такие настройки заданий нет — измени фильтр' : `Всего в тренировке: ${tot}`+(lack.length?` · не хватает заданий типа: ${lack.map(k=>FMT[k].n).join(', ')} (возьму сколько есть)`:'');
+  $('cGo').disabled = !cfg.topics.length || !tot || !pool.length;
 }
 function renderHome(){
   let tOk=0,tBad=0; Object.values(prog).forEach(p=>{tOk+=p.ok;tBad+=p.bad;});
@@ -230,18 +266,20 @@ function renderHome(){
   }).join('');
   document.querySelectorAll('.topic').forEach(b=>b.onclick=()=>openIntro(byTopic[b.dataset.id]));
 }
-function show(id){ document.querySelectorAll('.view').forEach(v=>v.classList.remove('active')); $(id).classList.add('active'); window.scrollTo(0,0); }
+function show(id){ $('mainTabs').classList.toggle('hidden', !(id==='vHome'||id==='vHist')); document.querySelectorAll('.view').forEach(v=>v.classList.remove('active')); $(id).classList.add('active'); window.scrollTo(0,0); }
 $('tAll').onclick = ()=>{ cfg.topics=TOPICS.map(t=>t.id); saveCfg(); renderCons(); };
 $('tNone').onclick = ()=>{ cfg.topics=[]; saveCfg(); renderCons(); };
-$('cCount').onchange = e=>{ cfg.count=+e.target.value; saveCfg(); };
 $('cSrc').onchange = e=>{ cfg.src=e.target.value; saveCfg(); renderCons(); };
-$('cGo').onclick = ()=>startSession({...cfg}, 'Моя тренировка');
+$('pEven').onclick = ()=>{ FM_KEYS.forEach(k=>cfg.counts[k]=2); saveCfg(); renderCons(); };
+$('pDef').onclick = ()=>{ cfg.counts={...DEF_COUNTS}; saveCfg(); renderCons(); };
+$('pZero').onclick = ()=>{ FM_KEYS.forEach(k=>cfg.counts[k]=0); saveCfg(); renderCons(); };
+$('cGo').onclick = ()=>startSession({...cfg, counts:{...cfg.counts}}, 'Моя тренировка');
 
 /* ===== вступление к теме (урок) ===== */
 function openIntro(t){
   $('iTitle').textContent = t.emoji+' '+t.title;
-  $('iRule').innerHTML = '<b>Правило.</b> '+esc(t.rule)+`<div class="mini">Форматы и число заданий — как в конструкторе (${cfg.fmts.map(f=>FMT[f].n).join(', ')||'не выбраны'}; ${cfg.count}).</div>`;
-  $('iGo').onclick = ()=>{ if(!cfg.fmts.length) return alert('Выбери формат в конструкторе'); startSession({...cfg, topics:[t.id], src:'all'}, t.title); };
+  $('iRule').innerHTML = '<b>Правило.</b> '+esc(t.rule)+`<div class="mini">Типы и число заданий — как в конструкторе: ${activeFmts(cfg).map(k=>FMT[k].n+' ×'+cfg.counts[k]).join(', ')||'не заданы'}.</div>`;
+  $('iGo').onclick = ()=>{ if(!total(cfg)) return alert('Задай количество заданий в конструкторе'); startSession({...cfg, counts:{...cfg.counts}, topics:[t.id], src:'all'}, t.title); };
   $('iBack').onclick = ()=>{ renderHome(); show('vHome'); };
   show('vIntro');
 }
@@ -249,11 +287,22 @@ function openIntro(t){
 /* ===== сессия ===== */
 let S=null;
 function startSession(c,title){
-  const pool = poolFor(c);
-  if(!pool.length) return;
   const rank = it=>{ const p=prog[it.id]; if(!p) return 1; return p.last===0 ? 0 : 2; };
-  const picked = shuffle(shuffle(pool).sort((a,b)=>rank(a)-rank(b)).slice(0,Math.min(c.count,pool.length)));
-  S={title, c, items:picked.map(it=>({it, fmt:shuffle(elig(it,c.fmts))[0]})), i:0, right:0, wrong:[]};
+  let list=[];
+  if(c.items){
+    const af = activeFmts(c);
+    list = c.items.map(it=>({it, fmt:(shuffle(elig(it,af))[0]||shuffle(elig(it,FM_KEYS))[0])}));
+  }else{
+    const pool = poolFor(c), used=new Set();
+    activeFmts(c).sort((a,b)=>availFor(a,pool)-availFor(b,pool)).forEach(f=>{
+      let cand = shuffle(pool.filter(it=>elig(it,[f]).length)).sort((a,b)=>rank(a)-rank(b));
+      const fresh = cand.filter(it=>!used.has(it.id));
+      const take = fresh.concat(cand.filter(it=>used.has(it.id))).slice(0,c.counts[f]);
+      take.forEach(it=>{ used.add(it.id); list.push({it,fmt:f}); });
+    });
+  }
+  if(!list.length) return;
+  S={title, c, items:shuffle(list), i:0, right:0, wrong:[], byFmt:{}, started:Date.now()};
   show('vSess'); renderItem();
 }
 function filled(it){
@@ -331,6 +380,7 @@ function check(){
 function finish(ok, btn){
   const {it,fmt}=cur; cur.answered=true;
   record(it.id, ok);
+  const bf=S.byFmt[fmt]||(S.byFmt[fmt]=[0,0]); bf[1]++; if(ok) bf[0]++;
   if(ok) S.right++; else S.wrong.push(it);
   if(fmt==='C'){
     document.querySelectorAll('.opt').forEach(b=>{ b.disabled=true; if(b.dataset.v===it.a) b.classList.add('ok'); else if(b===btn) b.classList.add('bad'); });
@@ -358,6 +408,7 @@ function results(){
   const n=S.items.length, pct=Math.round(100*S.right/n);
   const msg = pct===100?'Безупречно! 🎉':pct>=80?'Отлично!':pct>=60?'Хорошо, но есть над чем поработать.':'Ничего страшного — ошибки и есть тренировка.';
   const c=S.c, wrong=S.wrong, title=S.title;
+  addHist({t:Date.now(), title, topics:[...new Set(S.items.map(x=>x.it.topic))], right:S.right, n, byFmt:S.byFmt, wrong:wrong.map(w=>w.id), sec:Math.round((Date.now()-S.started)/1000)});
   $('resBox').innerHTML = `<div class="qtype">${esc(title)}</div><div class="score">${S.right} / ${n}</div><p>${msg}</p>`
     + (wrong.length ? '<h3 style="margin:14px 0 6px">Разбор ошибок</h3>'+wrong.map(it=>`<div class="mist">${esc(filled(it))} <button class="ibtn" data-say="${esc(filled(it))}">🔊</button></div>`).join('') : '')
     + `<div class="row"><button class="btn" id="rAgain">Ещё раз</button>`
@@ -365,10 +416,46 @@ function results(){
     + `<button class="btn sec" id="rHome">В конструктор</button></div>`;
   $('rAgain').onclick = ()=>startSession(c,title);
   if(wrong.length) $('rMist').onclick = ()=>startSession({...c, items:wrong, src:'all'},'Работа над ошибками');
-  $('rHome').onclick = ()=>{ renderHome(); show('vHome'); };
+  $('rHome').onclick = ()=>{ renderHome(); setTab('vHome'); };
   document.querySelectorAll('[data-say]').forEach(b=>b.onclick=()=>speak(b.dataset.say));
   show('vRes');
 }
+
+/* ===== история ===== */
+const HKEY = (typeof accountKey==='function') ? accountKey('trainer.hist') : 'english.trainer.hist';
+let hist=[]; try{ hist=JSON.parse(localStorage.getItem(HKEY)||'[]')||[]; }catch(e){ hist=[]; }
+function addHist(h){ hist.unshift(h); hist=hist.slice(0,200); try{ localStorage.setItem(HKEY, JSON.stringify(hist)); }catch(e){} }
+const byId = Object.fromEntries(ITEMS.map(i=>[i.id,i]));
+function fmtDur(s){ return s<60 ? s+' с' : Math.floor(s/60)+' мин '+(s%60)+' с'; }
+function renderHist(){
+  const n=hist.length;
+  if(!n){ $('hSum').innerHTML='<h2 style="font-size:19px">📈 История</h2><p class="mini">Пока пусто. После первой тренировки здесь появятся результаты.</p>'; $('hList').classList.add('hidden'); return; }
+  $('hList').classList.remove('hidden');
+  let r=0,t=0; const f={}; hist.forEach(h=>{ r+=h.right; t+=h.n; Object.entries(h.byFmt||{}).forEach(([k,v])=>{ const a=f[k]||(f[k]=[0,0]); a[0]+=v[0]; a[1]+=v[1]; }); });
+  $('hSum').innerHTML = `<h2 style="font-size:19px">📈 История</h2><div class="stats" style="margin:8px 0"><span class="pill" style="background:var(--cream);color:var(--ink)">Тренировок: ${n}</span><span class="pill" style="background:var(--cream);color:var(--ink)">Ответов: ${t}</span><span class="pill" style="background:var(--cream);color:var(--ink)">Верно: ${Math.round(100*r/t)}%</span></div>`
+    + '<div class="mini" style="margin-bottom:4px">Точность по типам заданий:</div>'
+    + FM_KEYS.filter(k=>f[k]).map(k=>{ const p=Math.round(100*f[k][0]/f[k][1]); return `<div class="fmtrow"><div class="nm" style="font-size:13.5px">${FMT[k].n}</div><div class="bar" style="flex:1;margin:0"><i style="width:${p}%"></i></div><div class="av">${p}% (${f[k][0]}/${f[k][1]})</div></div>`; }).join('')
+    + '<div class="mini" style="margin:10px 0 4px">Точность по темам (по последним ответам на каждое задание):</div>'
+    + TOPICS.map(tp=>{ const s=topicStat(tp); return `<div class="fmtrow"><div class="nm" style="font-size:13.5px">${tp.emoji} ${esc(tp.title)}</div><div class="bar" style="flex:1;margin:0"><i style="width:${Math.round(100*s.mastered/s.n)}%"></i></div><div class="av">${s.mastered}/${s.n}</div></div>`; }).join('')
+    + `<div class="row"><button class="btn sec" id="hClear" style="padding:5px 12px;font-size:12px">Очистить историю</button></div>`;
+  $('hList').innerHTML = hist.slice(0,50).map((h,i)=>{
+    const pct=Math.round(100*h.right/h.n), d=new Date(h.t);
+    const when=d.toLocaleDateString('ru-RU',{day:'numeric',month:'short'})+' '+d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
+    const chips=Object.entries(h.byFmt||{}).map(([k,v])=>`<span class="ch">${FMT[k]?FMT[k].n:k}: ${v[0]}/${v[1]}</span>`).join('');
+    const tn=(h.topics||[]).map(id=>byTopic[id]?byTopic[id].title:'').filter(Boolean).join(', ');
+    const wr=(h.wrong||[]).filter(id=>byId[id]);
+    return `<div class="hrow"><div class="hsc ${pct>=80?'g':''}">${h.right}/${h.n}</div><div class="hmeta"><b>${esc(h.title)}</b> · ${when}${h.sec?' · '+fmtDur(h.sec):''}<br>${esc(tn)}<br>${chips}</div>${wr.length?`<button class="btn sec" data-hr="${i}" style="padding:5px 12px;font-size:12px">Повторить ошибки (${wr.length})</button>`:''}</div>`;
+  }).join('');
+  document.querySelectorAll('[data-hr]').forEach(b=>b.onclick=()=>{ const h=hist[+b.dataset.hr]; startSession({counts:{...cfg.counts}, items:h.wrong.map(id=>byId[id]).filter(Boolean)},'Работа над ошибками'); });
+  if($('hClear')) $('hClear').onclick=()=>{ if(confirm('Стереть историю тренировок? Прогресс по темам останется.')){ hist=[]; try{ localStorage.removeItem(HKEY); }catch(e){} renderHist(); } };
+}
+function setTab(v){
+  document.querySelectorAll('#mainTabs .tab').forEach(b=>b.classList.toggle('active', b.dataset.v===v));
+  $('mainTabs').classList.remove('hidden');
+  if(v==='vHist') renderHist(); else renderHome();
+  show(v);
+}
+document.querySelectorAll('#mainTabs .tab').forEach(b=>b.onclick=()=>setTab(b.dataset.v));
 
 $('sCheck').onclick = check;
 $('sNext').onclick = next;
