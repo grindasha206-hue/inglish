@@ -56,6 +56,16 @@ header.top p{margin:4px 0 0;opacity:.9;font-size:14px}
 .fb b{font-weight:800}
 .ibtn{border:1.5px solid var(--line);background:var(--cream);border-radius:8px;padding:4px 9px;font-size:15px;cursor:pointer}
 .score{font:800 44px 'Fraunces',serif;color:var(--brick-dark)}
+.cons h3{font-size:16px;margin:14px 0 6px}
+.cons h3:first-child{margin-top:0}
+.tg{display:flex;flex-wrap:wrap;gap:8px}
+.tgb{border:1.5px solid var(--line);background:#fff;color:var(--ink-soft);border-radius:20px;padding:7px 14px;font:700 13.5px 'Manrope';cursor:pointer}
+.tgb.on{background:var(--tab);color:#fff;border-color:var(--tab-dark)}
+.tgb small{display:block;font-weight:600;font-size:11px;opacity:.85}
+.mini{font-size:12.5px;color:var(--ink-soft);margin-top:6px}
+.sel{border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;font:700 14px 'Manrope';background:#fffdf8;color:var(--ink)}
+.bigsay{font-size:34px;padding:10px 22px;border-radius:16px}
+.sent{font:700 24px 'Fraunces',serif;background:var(--cream);border:1.5px dashed var(--line);border-radius:12px;padding:14px;margin:6px 0}
 .mist{margin:6px 0;padding:8px 12px;border-radius:10px;background:var(--coral-bg);font-size:14px}
 </style>
 </head>
@@ -63,13 +73,26 @@ header.top p{margin:4px 0 0;opacity:.9;font-size:14px}
 <header class="top"><div class="wrap">
   <a class="backlink" href="index.html">← В кабинет</a>
   <h1>🏋️ Тренажёр по грамматике</h1>
-  <p>Только то, что вы уже прошли: Units 1–7. Сессия — 10 заданий.</p>
+  <p>Только то, что вы уже прошли: Units 1–7. Собери тренировку сам или иди по урокам.</p>
   <div class="stats" id="stats"></div>
 </div></header>
 
 <main class="wrap">
 <section class="view active" id="vHome">
-  <div class="row" id="homeActions"></div>
+  <div class="panel cons">
+    <h2 style="font-size:20px">🛠 Конструктор тренировки</h2>
+    <h3>1. Темы <button class="btn sec" id="tAll" style="padding:3px 10px;font-size:11.5px">все</button> <button class="btn sec" id="tNone" style="padding:3px 10px;font-size:11.5px">очистить</button></h3>
+    <div class="tg" id="cTopics"></div>
+    <h3>2. Форматы упражнений</h3>
+    <div class="tg" id="cFmts"></div>
+    <h3>3. Сколько заданий и что брать</h3>
+    <div class="row" style="margin:0">
+      <select class="sel" id="cCount"><option>5</option><option>10</option><option>15</option><option>20</option><option>30</option></select>
+      <select class="sel" id="cSrc"><option value="all">всё подряд (сначала ошибки и новые)</option><option value="err">только мои ошибки</option><option value="new">только ещё не решённые</option></select>
+    </div>
+    <div class="row"><button class="btn" id="cGo">▶ Начать</button><span class="mini" id="cInfo" style="align-self:center"></span></div>
+  </div>
+  <h2 style="font-size:19px;margin:20px 0 10px">Или по уроку</h2>
   <div class="grid" id="topics"></div>
 </section>
 
@@ -127,20 +150,21 @@ function activeProvider(){
     return hasGroq ? 'groq' : 'eleven';
   }catch(e){ return null; }
 }
-function browserSpeak(text){
+function browserSpeak(text,rate){
   return new Promise(res=>{
     if(!('speechSynthesis' in window)) return res(false);
     speechSynthesis.cancel();
-    const u=new SpeechSynthesisUtterance(text); u.lang='en-US';
+    const u=new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=rate||1;
     const v=(speechSynthesis.getVoices()||[]); const pv=v.find(x=>x.lang==='en-GB')||v.find(x=>x.lang&&x.lang.startsWith('en')); if(pv) u.voice=pv;
     u.onend=()=>res(true); u.onerror=()=>res(false); speechSynthesis.speak(u);
   });
 }
-async function speak(text){
+async function speak(text,rate){
+  rate=rate||1;
   const p=activeProvider();
-  if(!p) return browserSpeak(text);
-  try{ return await (p==='eleven' ? elevenSpeak(text,1) : groqSpeak(text,1)); }
-  catch(e){ return browserSpeak(text); }
+  if(!p) return browserSpeak(text,rate);
+  try{ return await (p==='eleven' ? elevenSpeak(text,rate) : groqSpeak(text,rate)); }
+  catch(e){ return browserSpeak(text,rate); }
 }
 
 /* ===== прогресс: на каждое задание {ok,bad,last,t} ===== */
@@ -155,19 +179,50 @@ function record(id, ok){
 }
 const mistakesList = () => ITEMS.filter(it=>prog[it.id] && prog[it.id].last===0);
 
+/* ===== форматы ===== */
+const FMT = {
+  C:{n:'Выбор',d:'выбери вариант'},
+  F:{n:'Впиши',d:'напиши пропуск'},
+  O:{n:'Собери',d:'слова по порядку'},
+  T:{n:'Верно / ошибка',d:'найди неверное'},
+  X:{n:'Исправь',d:'перепиши без ошибки'},
+  D:{n:'Диктовка',d:'послушай и напиши'}
+};
+const ELIG = {C:['C','T','X','D'], F:['F','D'], O:['O','D']};
+const elig = (it,fm)=>ELIG[it.type].filter(f=>fm.includes(f));
+const CFG_KEY = (typeof accountKey==='function') ? accountKey('trainer.cfg') : 'english.trainer.cfg';
+let cfg = {topics:TOPICS.map(t=>t.id), fmts:Object.keys(FMT), count:10, src:'all'};
+try{ const c=JSON.parse(localStorage.getItem(CFG_KEY)||'null'); if(c){ cfg.topics=(c.topics||[]).filter(id=>byTopic[id]); cfg.fmts=(c.fmts||[]).filter(f=>FMT[f]); cfg.count=c.count||10; cfg.src=c.src||'all'; } }catch(e){}
+function saveCfg(){ try{ localStorage.setItem(CFG_KEY, JSON.stringify(cfg)); }catch(e){} }
+
+function poolFor(c){
+  let items = c.items || ITEMS.filter(it=>c.topics.includes(it.topic));
+  if(c.src==='err') items = items.filter(it=>prog[it.id]&&prog[it.id].last===0);
+  if(c.src==='new') items = items.filter(it=>!prog[it.id]);
+  return items.filter(it=>elig(it,c.fmts).length);
+}
+
 /* ===== главная ===== */
 function topicStat(t){
   const n=t.items.length; let mastered=0, ok=0, bad=0;
   t.items.forEach(it=>{ const p=prog[it.id]; if(p){ if(p.last===1) mastered++; ok+=p.ok; bad+=p.bad; } });
   return {n, mastered, acc: ok+bad ? Math.round(100*ok/(ok+bad)) : null};
 }
+function renderCons(){
+  $('cTopics').innerHTML = TOPICS.map(t=>`<button class="tgb ${cfg.topics.includes(t.id)?'on':''}" data-t="${t.id}">${t.emoji} ${esc(t.title)}</button>`).join('');
+  $('cFmts').innerHTML = Object.entries(FMT).map(([k,f])=>`<button class="tgb ${cfg.fmts.includes(k)?'on':''}" data-f="${k}">${f.n}<small>${f.d}</small></button>`).join('');
+  $('cCount').value = String(cfg.count); $('cSrc').value = cfg.src;
+  document.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{ const id=+b.dataset.t; cfg.topics = cfg.topics.includes(id)?cfg.topics.filter(x=>x!==id):[...cfg.topics,id]; saveCfg(); renderCons(); });
+  document.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{ const k=b.dataset.f; cfg.fmts = cfg.fmts.includes(k)?cfg.fmts.filter(x=>x!==k):[...cfg.fmts,k]; saveCfg(); renderCons(); });
+  const n = poolFor(cfg).length;
+  $('cInfo').textContent = !cfg.topics.length ? 'Выбери хотя бы одну тему' : !cfg.fmts.length ? 'Выбери хотя бы один формат' : n ? `Подходит заданий: ${n}` : 'Под такие настройки заданий нет — измени фильтр';
+  $('cGo').disabled = !n;
+}
 function renderHome(){
   let tOk=0,tBad=0; Object.values(prog).forEach(p=>{tOk+=p.ok;tBad+=p.bad;});
-  $('stats').innerHTML = `<span class="pill">Заданий: ${ITEMS.length}</span><span class="pill">Ответов: ${tOk+tBad}</span><span class="pill">Точность: ${tOk+tBad?Math.round(100*tOk/(tOk+tBad)):'—'}${tOk+tBad?'%':''}</span><span class="pill">Ошибок к разбору: ${mistakesList().length}</span>`;
   const m = mistakesList().length;
-  $('homeActions').innerHTML = `<button class="btn" id="aAll">🎲 Случайные 10 из всех тем</button><button class="btn sec" id="aMist" ${m?'':'disabled'}>🔁 Работа над ошибками (${m})</button>`;
-  $('aAll').onclick = ()=>startSession(ITEMS,'Все темы');
-  $('aMist').onclick = ()=>startSession(mistakesList(),'Работа над ошибками');
+  $('stats').innerHTML = `<span class="pill">Заданий: ${ITEMS.length}</span><span class="pill">Ответов: ${tOk+tBad}</span><span class="pill">Точность: ${tOk+tBad?Math.round(100*tOk/(tOk+tBad))+'%':'—'}</span><span class="pill">Ошибок к разбору: ${m}</span>`;
+  renderCons();
   $('topics').innerHTML = TOPICS.map(t=>{
     const s=topicStat(t);
     return `<button class="topic" data-id="${t.id}"><div class="em">${t.emoji}</div><h3>${esc(t.title)}</h3><div class="meta">Верно сейчас: ${s.mastered} из ${s.n}${s.acc!=null?' · точность '+s.acc+'%':''}</div><div class="bar"><i style="width:${Math.round(100*s.mastered/s.n)}%"></i></div></button>`;
@@ -175,30 +230,29 @@ function renderHome(){
   document.querySelectorAll('.topic').forEach(b=>b.onclick=()=>openIntro(byTopic[b.dataset.id]));
 }
 function show(id){ document.querySelectorAll('.view').forEach(v=>v.classList.remove('active')); $(id).classList.add('active'); window.scrollTo(0,0); }
+$('tAll').onclick = ()=>{ cfg.topics=TOPICS.map(t=>t.id); saveCfg(); renderCons(); };
+$('tNone').onclick = ()=>{ cfg.topics=[]; saveCfg(); renderCons(); };
+$('cCount').onchange = e=>{ cfg.count=+e.target.value; saveCfg(); };
+$('cSrc').onchange = e=>{ cfg.src=e.target.value; saveCfg(); renderCons(); };
+$('cGo').onclick = ()=>startSession({...cfg}, 'Моя тренировка');
 
-/* ===== вступление к теме ===== */
-let curTopic=null;
+/* ===== вступление к теме (урок) ===== */
 function openIntro(t){
-  curTopic=t;
   $('iTitle').textContent = t.emoji+' '+t.title;
-  $('iRule').innerHTML = '<b>Правило.</b> '+esc(t.rule);
-  $('iGo').onclick = ()=>startSession(t.items, t.title);
+  $('iRule').innerHTML = '<b>Правило.</b> '+esc(t.rule)+`<div class="mini">Форматы и число заданий — как в конструкторе (${cfg.fmts.map(f=>FMT[f].n).join(', ')||'не выбраны'}; ${cfg.count}).</div>`;
+  $('iGo').onclick = ()=>{ if(!cfg.fmts.length) return alert('Выбери формат в конструкторе'); startSession({...cfg, topics:[t.id], src:'all'}, t.title); };
   $('iBack').onclick = ()=>{ renderHome(); show('vHome'); };
   show('vIntro');
 }
 
 /* ===== сессия ===== */
-const SIZE=10;
 let S=null;
-function pick(pool){
-  /* сначала ошибочные и новые, потом самые давние; внутри — случайно */
-  const rank = it=>{ const p=prog[it.id]; if(!p) return 1; return p.last===0 ? 0 : 2+Math.min(1,(Date.now()-p.t)/864e5>1?0:1); };
-  const arr = shuffle(pool).sort((a,b)=>rank(a)-rank(b));
-  return shuffle(arr.slice(0,Math.min(SIZE,arr.length)));
-}
-function startSession(pool,title){
+function startSession(c,title){
+  const pool = poolFor(c);
   if(!pool.length) return;
-  S={title, items:pick(pool), i:0, right:0, wrong:[], done:false};
+  const rank = it=>{ const p=prog[it.id]; if(!p) return 1; return p.last===0 ? 0 : 2; };
+  const picked = shuffle(shuffle(pool).sort((a,b)=>rank(a)-rank(b)).slice(0,Math.min(c.count,pool.length)));
+  S={title, c, items:picked.map(it=>({it, fmt:shuffle(elig(it,c.fmts))[0]})), i:0, right:0, wrong:[]};
   show('vSess'); renderItem();
 }
 function filled(it){
@@ -207,27 +261,48 @@ function filled(it){
   if(!/___/.test(it.q)) return a;
   return it.q.replace(/\s*\([^)]*\)/g,'').replace('___',a);
 }
-const TYPE_LABEL={C:'Выбери вариант',F:'Впиши слово',O:'Собери предложение'};
+function withOpt(it,o){ return /___/.test(it.q) ? it.q.replace('___',o) : o; }
+const TYPE_LABEL={C:'Выбери вариант',F:'Впиши слово',O:'Собери предложение',T:'Верно или ошибка?',X:'Исправь ошибку',D:'Диктовка'};
 let cur=null;
 function renderItem(){
-  const it=S.items[S.i]; cur={it, answered:false, built:[], bank:[]};
+  const {it,fmt}=S.items[S.i]; cur={it, fmt, answered:false, built:[], bank:[]};
   $('sNum').textContent = `${S.i+1} / ${S.items.length}`;
   $('sBar').style.width = (100*S.i/S.items.length)+'%';
-  $('sType').textContent = TYPE_LABEL[it.type]+' · '+byTopic[it.topic].title;
-  $('sQ').textContent = it.type==='O' ? 'Расставь слова по порядку' : it.q;
+  $('sType').textContent = TYPE_LABEL[fmt]+' · '+byTopic[it.topic].title;
   $('sFb').classList.add('hidden'); $('sNext').classList.add('hidden'); $('sCheck').classList.remove('hidden'); $('sCheck').disabled=false;
   const body=$('sBody');
-  if(it.type==='C'){
+  if(fmt==='C'){
+    $('sQ').textContent = it.q;
     $('sCheck').classList.add('hidden');
     body.innerHTML = '<div class="opts">'+shuffle(it.opts).map(o=>`<button class="opt" data-v="${esc(o)}">${esc(o)}</button>`).join('')+'</div>';
     body.querySelectorAll('.opt').forEach(b=>b.onclick=()=>finish(b.dataset.v===it.a, b));
-  }else if(it.type==='F'){
+  }else if(fmt==='F'){
+    $('sQ').textContent = it.q;
     body.innerHTML = '<input class="typein" id="fIn" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="впиши пропуск">';
     $('fIn').focus();
-  }else{
+  }else if(fmt==='O'){
+    $('sQ').textContent = 'Расставь слова по порядку';
     cur.bank = shuffle(it.s.split(/\s+/));
     if(cur.bank.join(' ')===it.s) cur.bank = shuffle(cur.bank);
     drawOrder();
+  }else if(fmt==='T'){
+    cur.isTrue = Math.random()<.5;
+    cur.shown = cur.isTrue ? filled(it) : withOpt(it, shuffle(it.opts.filter(o=>o!==it.a))[0]);
+    $('sQ').textContent = 'Это предложение правильное?';
+    $('sCheck').classList.add('hidden');
+    body.innerHTML = `<div class="sent">${esc(cur.shown)}</div><div class="row" style="margin:8px 0 0"><button class="btn good" data-tf="1">✅ Верно</button><button class="btn" data-tf="0">❌ Есть ошибка</button></div>`;
+    body.querySelectorAll('[data-tf]').forEach(b=>b.onclick=()=>finish((b.dataset.tf==='1')===cur.isTrue));
+  }else if(fmt==='X'){
+    cur.shown = withOpt(it, shuffle(it.opts.filter(o=>o!==it.a))[0]);
+    $('sQ').textContent = 'В предложении ошибка. Перепиши его правильно:';
+    body.innerHTML = `<input class="typein" id="fIn" autocomplete="off" autocapitalize="off" spellcheck="false">`;
+    $('fIn').value = cur.shown; $('fIn').focus();
+  }else{ /* D */
+    $('sQ').textContent = 'Послушай и напиши, что услышала';
+    body.innerHTML = `<div class="row" style="margin:0 0 10px"><button class="btn bigsay" id="dSay">🔊</button><button class="btn sec" id="dSlow">🐢 Медленно</button></div><input class="typein" id="fIn" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="напиши предложение">`;
+    const t=filled(it);
+    $('dSay').onclick=()=>speak(t,1); $('dSlow').onclick=()=>speak(t,.7);
+    $('fIn').focus(); speak(t,1);
   }
 }
 function drawOrder(){
@@ -238,32 +313,40 @@ function drawOrder(){
 }
 function check(){
   if(cur.answered) return;
-  const it=cur.it;
-  if(it.type==='F'){
+  const {it,fmt}=cur;
+  if(fmt==='F'){
     const v=norm($('fIn').value); if(!v) return;
     finish(it.a.some(a=>norm(a)===v));
-  }else if(it.type==='O'){
+  }else if(fmt==='O'){
     if(!cur.built.length) return;
     const v=norm(cur.built.join(' '));
     finish([it.s,...it.alt].some(a=>norm(a)===v));
+  }else if(fmt==='X' || fmt==='D'){
+    const v=norm($('fIn').value); if(!v) return;
+    const good = it.type==='O' ? [it.s,...it.alt] : [filled(it), ...(it.type==='F' ? it.a.map(a=>filled({...it,a:[a]})) : [])];
+    finish(good.some(a=>norm(a)===v));
   }
 }
 function finish(ok, btn){
-  const it=cur.it; cur.answered=true;
+  const {it,fmt}=cur; cur.answered=true;
   record(it.id, ok);
   if(ok) S.right++; else S.wrong.push(it);
-  if(it.type==='C'){
+  if(fmt==='C'){
     document.querySelectorAll('.opt').forEach(b=>{ b.disabled=true; if(b.dataset.v===it.a) b.classList.add('ok'); else if(b===btn) b.classList.add('bad'); });
-  }else if(it.type==='F'){ $('fIn').disabled=true; }
-  else drawOrder();
+  }else if(fmt==='T'){ document.querySelectorAll('[data-tf]').forEach(b=>b.disabled=true); }
+  else if(fmt==='O'){ drawOrder(); }
+  else { $('fIn').disabled=true; }
   const sent = filled(it);
+  let head;
+  if(ok) head = '✅ <b>Верно!</b>' + (fmt==='T' && !cur.isTrue ? ' Правильно: <b>'+esc(sent)+'</b>' : '');
+  else if(fmt==='T') head = cur.isTrue ? '❌ <b>Это предложение верное:</b> '+esc(sent) : '❌ <b>Тут ошибка.</b> Правильно: <b>'+esc(sent)+'</b>';
+  else head = '❌ <b>Не совсем.</b> Правильно: <b>'+esc(sent)+'</b>';
   $('sFb').className = 'fb '+(ok?'ok':'bad');
-  $('sFb').innerHTML = (ok?'✅ <b>Верно!</b>':'❌ <b>Не совсем.</b> Правильно: <b>'+esc(sent)+'</b>')
-    + ` <button class="ibtn" id="fbSay" title="Озвучить">🔊</button>`
+  $('sFb').innerHTML = head + ` <button class="ibtn" id="fbSay" title="Озвучить">🔊</button>`
     + (ok?'':`<div style="margin-top:6px;color:var(--ink-soft)">Правило: ${esc(byTopic[it.topic].rule)}</div>`);
   $('fbSay').onclick = ()=>speak(sent);
   $('sCheck').classList.add('hidden'); $('sNext').classList.remove('hidden'); $('sNext').focus();
-  if(ok) speak(sent);
+  if(ok && fmt!=='D') speak(sent);
 }
 function next(){
   S.i++;
@@ -273,18 +356,14 @@ function next(){
 function results(){
   const n=S.items.length, pct=Math.round(100*S.right/n);
   const msg = pct===100?'Безупречно! 🎉':pct>=80?'Отлично!':pct>=60?'Хорошо, но есть над чем поработать.':'Ничего страшного — ошибки и есть тренировка.';
-  $('resBox').innerHTML = `<div class="qtype">${esc(S.title)}</div><div class="score">${S.right} / ${n}</div><p>${msg}</p>`
-    + (S.wrong.length ? '<h3 style="margin:14px 0 6px">Разбор ошибок</h3>'+S.wrong.map(it=>`<div class="mist">${esc(filled(it))} <button class="ibtn" data-say="${esc(filled(it))}">🔊</button></div>`).join('') : '')
-    + `<div class="row"><button class="btn" id="rAgain">Ещё 10</button>`
-    + (S.wrong.length?`<button class="btn sec" id="rMist">Повторить ошибки</button>`:'')
-    + `<button class="btn sec" id="rHome">К темам</button></div>`;
-  const title=S.title, pool=S.pool||null, items=S.items, wrong=S.wrong;
-  $('rAgain').onclick = ()=>{
-    if(title==='Все темы') startSession(ITEMS,title);
-    else if(title==='Работа над ошибками') mistakesList().length ? startSession(mistakesList(),title) : (renderHome(),show('vHome'));
-    else { const t=TOPICS.find(x=>x.title===title); startSession(t.items,title); }
-  };
-  if(wrong.length) $('rMist').onclick = ()=>startSession(wrong,'Работа над ошибками');
+  const c=S.c, wrong=S.wrong, title=S.title;
+  $('resBox').innerHTML = `<div class="qtype">${esc(title)}</div><div class="score">${S.right} / ${n}</div><p>${msg}</p>`
+    + (wrong.length ? '<h3 style="margin:14px 0 6px">Разбор ошибок</h3>'+wrong.map(it=>`<div class="mist">${esc(filled(it))} <button class="ibtn" data-say="${esc(filled(it))}">🔊</button></div>`).join('') : '')
+    + `<div class="row"><button class="btn" id="rAgain">Ещё раз</button>`
+    + (wrong.length?`<button class="btn sec" id="rMist">Повторить ошибки</button>`:'')
+    + `<button class="btn sec" id="rHome">В конструктор</button></div>`;
+  $('rAgain').onclick = ()=>startSession(c,title);
+  if(wrong.length) $('rMist').onclick = ()=>startSession({...c, items:wrong, src:'all'},'Работа над ошибками');
   $('rHome').onclick = ()=>{ renderHome(); show('vHome'); };
   document.querySelectorAll('[data-say]').forEach(b=>b.onclick=()=>speak(b.dataset.say));
   show('vRes');
