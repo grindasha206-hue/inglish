@@ -124,7 +124,13 @@ a{color:inherit;}
 .hwchip.ok{background:var(--sage-bg);color:var(--sage)}
 .hwchip.no{background:#FBE7E3;color:#D65B4A}
 .hwchip.pin::before{content:"📌 "}
-#hwNavCount:not(:empty){background:var(--brick);color:#fff;border-radius:10px;padding:0 7px;margin-left:5px;font-size:11.5px}
+#hwNavCount:not(:empty),#rvNavCount:not(:empty){background:var(--brick);color:#fff;border-radius:10px;padding:0 7px;margin-left:5px;font-size:11.5px}
+.review-card{display:flex;align-items:center;gap:16px;background:var(--paper);border:1.5px solid var(--tab);border-radius:14px;padding:16px 20px;margin:0 0 18px;text-decoration:none;color:inherit;box-shadow:var(--shadow)}
+.review-card:hover{transform:translateY(-2px)}
+.review-card .ic{font-size:30px}
+.review-card .t{font:800 18px 'Fraunces',serif;color:var(--brick-dark)}
+.review-card .d{font-size:13px;color:var(--ink-soft)}
+.review-card .go{margin-left:auto;font-weight:800;color:var(--tab-dark);white-space:nowrap}
 .footer-tools{margin-top:36px; padding-top:14px; border-top:1px dashed var(--line); font-size:12.5px; color:var(--ink-soft); display:flex; gap:12px; flex-wrap:wrap; align-items:center;}
 .footer-tools a{color:var(--tab-dark); font-weight:700; text-decoration:none;}
 @media(max-width:600px){input,textarea,select{font-size:16px!important}.btn,.mini-btn{min-height:44px}.form-row{grid-template-columns:1fr}.topbar{flex-wrap:wrap}.panel{overflow-wrap:anywhere}}
@@ -138,6 +144,7 @@ a{color:inherit;}
   <a class="logo" href="#/">Ing<span>lish</span> ✳</a>
   <a class="nav-link" href="dictionary.html">📖 Словарь</a>
   <a class="nav-link" href="trainer.html">🏋️ Тренажёр</a>
+  <a class="nav-link" href="review.html">🔁 Повторение<span id="rvNavCount"></span></a>
   <a class="nav-link" href="homework.html">📝 Домашка<span id="hwNavCount"></span></a>
   <a class="nav-link" href="#/add">＋ Добавить урок</a>
   <a class="nav-link" href="#/settings">⚙ Настройки</a>
@@ -256,6 +263,14 @@ function applyHw(){
   if (!window.HW || !ALL_LESSONS.length) return;
   let pending = 0;
   ALL_LESSONS.forEach(l => { const s = HW.summary(HW.localData(l.id)); if (s.on && !s.complete) pending++; });
+  /* повторение на сегодня: слова по расписанию + ошибки тренажёра + невыполненная домашка */
+  let dueW = 0, mist = 0;
+  try { const d = JSON.parse(localStorage.getItem(accountKey('dictionary.v1')) || '{}'); const now = Date.now(); for (const v of Object.values(d)) if (v && v.seen > 0 && v.due <= now) dueW++; } catch(e){}
+  try { const t = JSON.parse(localStorage.getItem(accountKey('trainer.v1')) || '{}'); for (const v of Object.values(t)) if (v && v.last === 0) mist++; } catch(e){}
+  const rvTotal = dueW + mist + pending;
+  const rn = document.getElementById('rvNavCount'); if (rn) rn.textContent = rvTotal ? String(rvTotal) : '';
+  const rc = document.getElementById('rvCardText');
+  if (rc) rc.textContent = rvTotal ? `Слов: ${dueW} · ошибок из тренажёра: ${mist} · домашка: ${pending} ${pending===1?'урок':'уроков'}` : 'На сегодня всё повторено 🎉 Можно добавить новые слова';
   const nav = document.getElementById('hwNavCount'); if (nav) nav.textContent = pending ? String(pending) : '';
   let doneCount = 0, total = 0;
   document.querySelectorAll('[data-hw]').forEach(el => {
@@ -355,6 +370,7 @@ function renderHome(view){
   }).join('');
 
   view.innerHTML = `${hero}
+    <a class="review-card" href="review.html"><div class="ic">🔁</div><div><div class="t">Повторение на сегодня</div><div class="d" id="rvCardText">…</div></div><div class="go">Начать →</div></a>
     <div class="stats">
       <div class="stat"><div class="label">Серия дней</div><div class="value">${streak} 🔥</div><div class="week">${week}</div></div>
       <div class="stat"><div class="label">Уровень</div><div class="value">${li.level}</div><div class="sub">${li.into} / ${li.need} XP до уровня ${li.level+1}</div><div class="bar"><i style="width:${li.pct}%"></i></div></div>

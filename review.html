@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Повторение · Инглиш</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&family=Manrope:wght@400;500;600;700;800&display=swap');
+:root{--cream:#FBF6EC;--paper:#FFFCF5;--ink:#2A2622;--ink-soft:#5c554c;--brick:#AD3B2C;--brick-dark:#8E2E22;--tab:#E2963F;--tab-dark:#C97B2A;--sage:#4F8F6D;--sage-bg:#E6F1EA;--coral:#D65B4A;--coral-bg:#FBE7E3;--gold:#CBA35C;--line:#E4DACB;--shadow:0 6px 18px rgba(42,38,34,.10)}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 15% 8%,rgba(203,163,92,.10),transparent 40%),var(--cream);color:var(--ink);font-family:'Manrope',sans-serif;line-height:1.5;padding-bottom:60px}
+h1,h2,h3{font-family:'Fraunces',serif;margin:0}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px}
+header.top{background:linear-gradient(135deg,var(--brick),var(--brick-dark));color:#fff;padding:22px 0 16px}
+header.top h1{font-size:26px}
+header.top p{margin:4px 0 0;opacity:.9;font-size:14px}
+.backlink{color:#fff;opacity:.85;text-decoration:none;font-size:13px;font-weight:700;display:inline-block;margin-bottom:6px}
+.view{display:none;padding-top:18px}.view.active{display:block}
+.hidden{display:none!important}
+.panel{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:18px;margin-bottom:12px}
+.src{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px dashed var(--line)}
+.src:last-child{border:none}
+.src .n{font:800 30px 'Fraunces',serif;color:var(--brick-dark);min-width:52px;text-align:center}
+.src .n.z{color:var(--sage)}
+.src .tx{flex:1;font-weight:800;font-size:15px}
+.src .tx small{display:block;font-weight:500;color:var(--ink-soft);font-size:12.5px}
+.sel{border:1.5px solid var(--line);border-radius:10px;padding:6px 10px;font:700 13.5px 'Manrope';background:#fffdf8;color:var(--ink)}
+.btn{border:none;cursor:pointer;font:800 15px 'Manrope';padding:12px 26px;border-radius:26px;background:var(--brick);color:#fff;box-shadow:0 4px 10px rgba(173,59,44,.25);text-decoration:none;display:inline-block}
+.btn.sec{background:transparent;color:var(--brick);border:1.5px solid var(--brick);box-shadow:none;padding:8px 16px;font-size:13px}
+.btn.good{background:var(--sage)}.btn.bad{background:var(--coral)}
+.btn:disabled{opacity:.45;cursor:default}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.prog{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:800;color:var(--ink-soft)}
+.bar{height:8px;background:var(--line);border-radius:6px;overflow:hidden;flex:1}
+.bar i{display:block;height:100%;background:var(--sage)}
+.kind{font-size:11.5px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);font-weight:800;margin-top:12px}
+.big{font:800 36px 'Fraunces',serif;color:var(--brick-dark);margin:10px 0 2px}
+.q{font:700 22px 'Fraunces',serif;margin:12px 0}
+.rev{background:var(--cream);border:1.5px dashed var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;font-size:15px}
+.opts{display:grid;gap:8px}
+.opt{border:1.5px solid var(--line);background:#fffdf8;border-radius:12px;padding:12px 16px;font:700 16px 'Manrope';cursor:pointer;text-align:left;color:var(--ink)}
+.opt.ok{background:var(--sage-bg);border-color:var(--sage)}.opt.bad{background:var(--coral-bg);border-color:var(--coral)}
+.typein{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;font:700 17px 'Manrope';background:#fffdf8;color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;min-height:48px;padding:8px;border-radius:12px}
+.ans{background:#fffdf8;border:1.5px dashed var(--line)}
+.chip{border:1.5px solid var(--tab-dark);background:#fff;border-radius:10px;padding:8px 14px;font:700 16px 'Manrope';cursor:pointer;color:var(--ink)}
+.fb{margin-top:12px;border-radius:12px;padding:12px 14px;font-size:14.5px}
+.fb.ok{background:var(--sage-bg);border:1.5px solid var(--sage)}.fb.bad{background:var(--coral-bg);border:1.5px solid var(--coral)}
+.ibtn{border:1.5px solid var(--line);background:var(--cream);border-radius:8px;padding:4px 9px;font-size:15px;cursor:pointer}
+.score{font:800 40px 'Fraunces',serif;color:var(--brick-dark)}
+.mist{margin:6px 0;padding:8px 12px;border-radius:10px;background:var(--coral-bg);font-size:14px}
+.note{font-size:12.5px;color:var(--ink-soft)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="backlink" href="index.html">← В кабинет</a>
+  <h1>🔁 Повторение на сегодня</h1>
+  <p>Слова, ошибки из тренажёра и домашка — в одной тренировке.</p>
+</div></header>
+<main class="wrap">
+
+<section class="view active" id="vDash">
+  <div class="panel" id="dash"></div>
+</section>
+
+<section class="view" id="vSess">
+  <div class="panel">
+    <div class="prog"><span id="sNum"></span><div class="bar"><i id="sBar" style="width:0"></i></div><button class="btn sec" id="sQuit" style="padding:4px 12px;font-size:12px">Выйти</button></div>
+    <div class="kind" id="sKind"></div>
+    <div id="sBody"></div>
+    <div class="fb hidden" id="sFb"></div>
+    <div class="row" id="sBtns"></div>
+  </div>
+</section>
+
+<section class="view" id="vRes"><div class="panel" id="res"></div></section>
+</main>
+
+<script src="sync-core.js"></script>
+<script src="tts.js"></script>
+<script src="backend-config.js"></script>
+<script src="gateway.js"></script>
+<script src="site.js"></script>
+<script src="homework-core.js"></script>
+<script src="dictionary-data.js"></script>
+<script src="trainer-extra.js"></script>
+<script src="trainer-data.js"></script>
+<script>
+(async function(){
+await authReady;
+if(!currentUser){ location.replace("index.html"); return; }
+initializeAccountStorage();
+try{ await refreshCapabilities(); }catch(e){}
+resumePendingSync();
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const norm=s=>String(s||'').toLowerCase().replace(/[’‘´`]/g,"'").replace(/[?.!,;:]/g,'').replace(/\s+/g,' ').trim();
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+function show(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));$(id).classList.add('active');window.scrollTo(0,0);}
+
+/* ===== озвучка ===== */
+function activeProvider(){
+  try{
+    const hasGroq=typeof serverCapabilities!=='undefined'&&serverCapabilities.groq;
+    const hasEleven=typeof serverCapabilities!=='undefined'&&serverCapabilities.eleven&&!!getSetting('elevenVoice');
+    if(!hasGroq&&!hasEleven)return null;
+    const pref=getSetting('activeVoiceProvider');
+    if(pref==='eleven'&&hasEleven)return 'eleven';
+    if(pref==='groq'&&hasGroq)return 'groq';
+    return hasGroq?'groq':'eleven';
+  }catch(e){return null;}
+}
+function browserSpeak(text){return new Promise(res=>{if(!('speechSynthesis' in window))return res(false);speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='en-US';const v=speechSynthesis.getVoices()||[];const pv=v.find(x=>x.lang==='en-GB')||v.find(x=>x.lang&&x.lang.startsWith('en'));if(pv)u.voice=pv;u.onend=()=>res(true);u.onerror=()=>res(false);speechSynthesis.speak(u);});}
+async function speak(text){const p=activeProvider();if(!p)return browserSpeak(text);try{return await(p==='eleven'?elevenSpeak(text,1):groqSpeak(text,1));}catch(e){return browserSpeak(text);}}
+
+/* ===== хранилища (те же, что у словаря и тренажёра) ===== */
+const DKEY=accountKey('dictionary.v1'), TKEY=accountKey('trainer.v1'), LKEY=accountKey('review.log');
+const rd=(k,d)=>{try{return JSON.parse(localStorage.getItem(k)||'null')||d;}catch(e){return d;}};
+const wr=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}};
+const DAY=86400000, STEPS=[0,1,3,7,14,30];
+function wordAnswer(id,ok){
+  const prog=rd(DKEY,{}); const p=prog[id]||(prog[id]={box:0,due:0,star:0,seen:0,wrong:0});
+  p.seen=(p.seen||0)+1;
+  if(ok)p.box=Math.min(5,(p.box||0)+1); else {p.box=1;p.wrong=(p.wrong||0)+1;}
+  p.due=Date.now()+STEPS[p.box]*DAY; if(!ok)p.due=Date.now();
+  wr(DKEY,prog);
+}
+function trainerRecord(id,ok){
+  const prog=rd(TKEY,{}); const p=prog[id]||(prog[id]={ok:0,bad:0,last:-1,t:0});
+  if(ok)p.ok++;else p.bad++; p.last=ok?1:0; p.t=Date.now(); wr(TKEY,prog);
+}
+
+/* ===== что пора повторять ===== */
+const WORDS=window.DICT_WORDS||[]; WORDS.forEach(w=>{w.id=w.n;});
+const TOPICS=window.TRAINER_TOPICS||[]; const ITEMS=TOPICS.flatMap(t=>t.items);
+const byTopic=Object.fromEntries(TOPICS.map(t=>[t.id,t]));
+await loadCourse().catch(()=>{});
+const hwData={};
+await Promise.all((ALL_LESSONS||[]).map(async l=>{ try{hwData[l.id]=await cloudLoadLessonState(l.id);}catch(e){hwData[l.id]=HW.localData(l.id);} }));
+function gather(){
+  const dprog=rd(DKEY,{}), tprog=rd(TKEY,{}), now=Date.now();
+  const due=WORDS.filter(w=>{const p=dprog[w.id];return p&&p.seen>0&&p.due<=now;}).sort((a,b)=>dprog[a.id].due-dprog[b.id].due);
+  const fresh=WORDS.filter(w=>{const p=dprog[w.id];return !p||!p.seen;}).sort((a,b)=>a.n-b.n);
+  const mist=ITEMS.filter(it=>tprog[it.id]&&tprog[it.id].last===0);
+  const hw=(ALL_LESSONS||[]).map(l=>({l,s:HW.summary(hwData[l.id])})).filter(x=>x.s.on&&!x.s.complete);
+  return {due,fresh,mist,hw};
+}
+const CAP_W=15, CAP_E=10;
+let newN=+(localStorage.getItem(accountKey('review.new'))||5);
+function dash(){
+  const g=gather(), log=rd(LKEY,[]);
+  const nw=Math.min(newN,g.fresh.length), dw=Math.min(CAP_W,g.due.length), me=Math.min(CAP_E,g.mist.length);
+  const total=dw+nw+me;
+  const hwTasks=g.hw.reduce((a,x)=>a+(x.s.total-x.s.done),0);
+  const last=log[0];
+  $('dash').innerHTML=`<h2 style="font-size:19px;margin-bottom:6px">Сегодня</h2>
+   <div class="src"><div class="n ${g.due.length?'':'z'}">${g.due.length}</div><div class="tx">Слов пора повторить<small>${g.due.length?`в тренировку войдут ${dw}`:'по расписанию повторений пока всё'}</small></div></div>
+   <div class="src"><div class="n ${g.fresh.length?'':'z'}">+<select class="sel" id="newSel">${[0,5,10,15].map(n=>`<option ${n===newN?'selected':''}>${n}</option>`).join('')}</select></div><div class="tx">Новых слов<small>из словаря, по порядку уроков (ещё не изучено: ${g.fresh.length})</small></div></div>
+   <div class="src"><div class="n ${g.mist.length?'':'z'}">${g.mist.length}</div><div class="tx">Ошибок из тренажёра<small>${g.mist.length?`в тренировку войдут ${me}`:'нет ошибок к разбору'}</small></div></div>
+   <div class="src"><div class="n ${g.hw.length?'':'z'}">${hwTasks}</div><div class="tx">Заданий домашки не выполнено<small>${g.hw.length?g.hw.map(x=>'Unit '+x.l.unit).join(', ')+' — покажу в конце':'нет добавленной домашки'}</small></div></div>
+   <div class="row"><button class="btn" id="go" ${total?'':'disabled'}>▶ Начать повторение${total?` (${total})`:''}</button><a class="btn sec" href="homework.html">📝 Домашка</a></div>
+   ${total?'':'<p class="note" style="margin-top:12px">На сегодня всё повторено 🎉 Добавь новые слова выше или зайди завтра.</p>'}
+   ${last?`<p class="note" style="margin-top:14px">Последнее повторение: ${new Date(last.t).toLocaleDateString('ru-RU',{day:'numeric',month:'long'})} — слова ${last.wk}/${last.wn}, задания ${last.er}/${last.en}</p>`:''}`;
+  $('newSel').onchange=e=>{newN=+e.target.value;try{localStorage.setItem(accountKey('review.new'),String(newN));}catch(_){ }dash();};
+  if(total)$('go').onclick=()=>start(g);
+}
+
+/* ===== сессия ===== */
+let S=null,cur=null;
+function start(g){
+  const list=[
+    ...g.due.slice(0,CAP_W).map(w=>({k:'w',w})),
+    ...g.fresh.slice(0,newN).map(w=>({k:'w',w,fresh:1})),
+    ...shuffle(g.mist).slice(0,CAP_E).map(it=>({k:'t',it}))
+  ];
+  S={items:shuffle(list),i:0,wk:0,wn:0,er:0,en:0,wrongW:[],wrongE:[],hw:g.hw};
+  show('vSess'); next(true);
+}
+function next(first){
+  if(!first)S.i++;
+  if(S.i>=S.items.length)return finish();
+  cur={d:S.items[S.i],done:false,built:[],bank:[]};
+  $('sNum').textContent=`${S.i+1} / ${S.items.length}`; $('sBar').style.width=(100*S.i/S.items.length)+'%';
+  $('sFb').classList.add('hidden'); $('sBtns').innerHTML='';
+  cur.d.k==='w'?renderWord():renderEx();
+}
+function renderWord(){
+  const w=cur.d.w;
+  $('sKind').textContent=cur.d.fresh?'Новое слово':'Слово · повторение';
+  $('sBody').innerHTML=`<div class="big">${esc(w.word)} <button class="ibtn" id="say">🔊</button></div><div class="note">${w.ipa?esc(w.ipa):''}</div><div id="rev" class="rev hidden"><b>${esc(w.ru)}</b>${w.ex?`<div class="note" style="margin-top:4px">${esc(w.ex)}</div>`:''}</div>`;
+  $('say').onclick=()=>speak(w.word); speak(w.word);
+  $('sBtns').innerHTML='<button class="btn" id="showR">Показать перевод</button>';
+  $('showR').onclick=()=>{ $('rev').classList.remove('hidden'); $('sBtns').innerHTML='<button class="btn good" id="yes">✅ Знал</button><button class="btn bad" id="no">❌ Не знал</button>';
+    $('yes').onclick=()=>wordDone(true); $('no').onclick=()=>wordDone(false); };
+}
+function wordDone(ok){
+  const w=cur.d.w; wordAnswer(w.id,ok); S.wn++; if(ok)S.wk++; else S.wrongW.push(w); next();
+}
+const filled=it=>{ if(it.type==='O')return it.s; const a=it.type==='C'?it.a:it.a[0]; return /___/.test(it.q)?it.q.replace(/\s*\([^)]*\)/g,'').replace('___',a):a; };
+function renderEx(){
+  const it=cur.d.it;
+  $('sKind').textContent='Упражнение · '+byTopic[it.topic].title;
+  if(it.type==='C'){
+    $('sBody').innerHTML=`<div class="q">${esc(it.q)}</div><div class="opts">${shuffle(it.opts).map(o=>`<button class="opt" data-v="${esc(o)}">${esc(o)}</button>`).join('')}</div>`;
+    document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>exDone(b.dataset.v===it.a,b));
+  }else if(it.type==='F'){
+    $('sBody').innerHTML=`<div class="q">${esc(it.q)}</div><input class="typein" id="fIn" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="впиши пропуск">`;
+    $('fIn').focus(); $('sBtns').innerHTML='<button class="btn" id="chk">Проверить</button>'; $('chk').onclick=()=>{const v=norm($('fIn').value);if(v)exDone(it.a.some(a=>norm(a)===v));};
+  }else{
+    cur.bank=shuffle(it.s.split(/\s+/)); if(cur.bank.join(' ')===it.s)cur.bank=shuffle(cur.bank);
+    drawOrder(); $('sBtns').innerHTML='<button class="btn" id="chk">Проверить</button>';
+    $('chk').onclick=()=>{ if(!cur.built.length)return; const v=norm(cur.built.join(' ')); exDone([it.s,...it.alt].some(a=>norm(a)===v)); };
+  }
+}
+function drawOrder(){
+  $('sBody').innerHTML=`<div class="q">Расставь слова по порядку</div><div class="chips ans">${cur.built.map((w,i)=>`<button class="chip" data-a="${i}">${esc(w)}</button>`).join('')}</div><div class="chips">${cur.bank.map((w,i)=>`<button class="chip" data-b="${i}">${esc(w)}</button>`).join('')}</div>`;
+  if(cur.done)return;
+  document.querySelectorAll('[data-b]').forEach(b=>b.onclick=()=>{cur.built.push(cur.bank.splice(+b.dataset.b,1)[0]);drawOrder();});
+  document.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{cur.bank.push(cur.built.splice(+b.dataset.a,1)[0]);drawOrder();});
+}
+function exDone(ok,btn){
+  if(cur.done)return; cur.done=true; const it=cur.d.it;
+  trainerRecord(it.id,ok); S.en++; if(ok)S.er++; else S.wrongE.push(it);
+  if(it.type==='C')document.querySelectorAll('.opt').forEach(b=>{b.disabled=true;if(b.dataset.v===it.a)b.classList.add('ok');else if(b===btn)b.classList.add('bad');});
+  else if(it.type==='F')$('fIn').disabled=true; else drawOrder();
+  const sent=filled(it);
+  $('sFb').className='fb '+(ok?'ok':'bad'); $('sFb').classList.remove('hidden');
+  $('sFb').innerHTML=(ok?'✅ <b>Верно!</b>':'❌ <b>Не совсем.</b> Правильно: <b>'+esc(sent)+'</b>')+' <button class="ibtn" id="fbSay">🔊</button>'+(ok?'':`<div class="note" style="margin-top:6px">Правило: ${esc(byTopic[it.topic].rule)}</div>`);
+  $('fbSay').onclick=()=>speak(sent); if(ok)speak(sent);
+  $('sBtns').innerHTML='<button class="btn good" id="nx">Дальше →</button>'; $('nx').focus(); $('nx').onclick=()=>next();
+}
+function finish(){
+  const log=rd(LKEY,[]); log.unshift({t:Date.now(),wk:S.wk,wn:S.wn,er:S.er,en:S.en}); wr(LKEY,log.slice(0,60));
+  const hwHtml=S.hw.length?`<h3 style="margin:18px 0 6px">📝 Домашка, которую осталось сделать</h3>`+S.hw.map(x=>`<div class="src"><div class="tx">Unit ${x.l.unit} · ${esc(x.l.title)}<small>выполнено ${x.s.done} из ${x.s.total}</small></div></div>`).join('')+`<div class="row"><a class="btn" href="homework.html">Перейти к домашке →</a></div>`:'<p class="note" style="margin-top:14px">Невыполненной домашки нет ✅</p>';
+  $('res').innerHTML=`<h2 style="font-size:19px">Повторение завершено</h2>
+   <div class="src"><div class="n">${S.wk}/${S.wn}</div><div class="tx">Слова<small>${S.wn?'«не знал» вернутся в очередь сразу':'сегодня слов не было'}</small></div></div>
+   <div class="src"><div class="n">${S.er}/${S.en}</div><div class="tx">Упражнения<small>${S.en?'ошибки остаются в тренажёре до верного ответа':'сегодня упражнений не было'}</small></div></div>`
+   +((S.wrongW.length||S.wrongE.length)?'<h3 style="margin:14px 0 6px">Разбор</h3>'+S.wrongW.map(w=>`<div class="mist"><b>${esc(w.word)}</b> — ${esc(w.ru)} <button class="ibtn" data-say="${esc(w.word)}">🔊</button></div>`).join('')+S.wrongE.map(it=>`<div class="mist">${esc(filled(it))} <button class="ibtn" data-say="${esc(filled(it))}">🔊</button></div>`).join(''):'')
+   +hwHtml+`<div class="row"><button class="btn sec" id="again">Ещё повторение</button><a class="btn sec" href="index.html">В кабинет</a></div>`;
+  document.querySelectorAll('[data-say]').forEach(b=>b.onclick=()=>speak(b.dataset.say));
+  $('again').onclick=()=>{dash();show('vDash');};
+  show('vRes');
+}
+$('sQuit').onclick=()=>{ if(confirm('Выйти? Уже данные ответы сохранены.')){dash();show('vDash');} };
+dash();
+})();
+</script>
+</body>
+</html>
