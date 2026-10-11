@@ -162,6 +162,19 @@ const T=[
    O('What do you do?')
   ]}
 ];
+/* докидываем задания из trainer-extra.js до 50 на каждый тип (C/F/O) в теме */
+(function(){
+  const X=window.TRAINER_EXTRA||{};
+  const key=it=>it.type+'|'+(it.q||it.s)+'|'+(it.a&&it.a.join?it.a.join('/'):it.a);
+  T.forEach(t=>{
+    const seen=new Set(t.items.map(key)), cnt={C:0,F:0,O:0};
+    t.items.forEach(it=>cnt[it.type]++);
+    (X[t.id]||[]).forEach(it=>{
+      if(cnt[it.type]>=50||seen.has(key(it))) return;
+      seen.add(key(it)); cnt[it.type]++; t.items.push(it);
+    });
+  });
+})();
 T.forEach(t=>t.items.forEach((it,i)=>{ it.id=t.id+'-'+i; it.topic=t.id; }));
 window.TRAINER_TOPICS = T;
 })();

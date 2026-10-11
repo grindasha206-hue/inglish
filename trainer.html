@@ -123,6 +123,7 @@ header.top p{margin:4px 0 0;opacity:.9;font-size:14px}
 <script src="backend-config.js"></script>
 <script src="gateway.js"></script>
 <script src="site.js"></script>
+<script src="trainer-extra.js"></script>
 <script src="trainer-data.js"></script>
 <script>
 (async function(){
@@ -189,7 +190,7 @@ const FMT = {
   D:{n:'Диктовка',d:'послушай и напиши'}
 };
 const ELIG = {C:['C','T','X','D'], F:['F','D'], O:['O','D']};
-const elig = (it,fm)=>ELIG[it.type].filter(f=>fm.includes(f));
+const elig = (it,fm)=>(it.nt?['C','D']:ELIG[it.type]).filter(f=>fm.includes(f));
 const CFG_KEY = (typeof accountKey==='function') ? accountKey('trainer.cfg') : 'english.trainer.cfg';
 let cfg = {topics:TOPICS.map(t=>t.id), fmts:Object.keys(FMT), count:10, src:'all'};
 try{ const c=JSON.parse(localStorage.getItem(CFG_KEY)||'null'); if(c){ cfg.topics=(c.topics||[]).filter(id=>byTopic[id]); cfg.fmts=(c.fmts||[]).filter(f=>FMT[f]); cfg.count=c.count||10; cfg.src=c.src||'all'; } }catch(e){}
