@@ -21,6 +21,29 @@ function lessonSignature(w){
   let hash=2166136261; for (const c of JSON.stringify(labels)) hash=Math.imul(hash^c.charCodeAt(0),16777619);
   return (hash>>>0).toString(16);
 }
+/* Домашка: общее состояние с разделом «Домашка» (флаг «в домашке», галочки, тексты заданий). */
+let hwMeta={on:0,c:[],t:{}};
+function hwChecks(){return Array.from(document.querySelectorAll('.hw-check'));}
+function hwTexts(){const t={};for(let i=1;i<=9;i++){const el=document.getElementById('hwText'+i);if(el)t[i]=el;}return t;}
+function captureHomework(){
+  const checks=hwChecks(), areas=hwTexts();
+  const c=checks.length?checks.map(x=>x.checked?1:0):(hwMeta.c||[]);
+  const t={...(hwMeta.t||{})};
+  for(const [i,el] of Object.entries(areas))t[i]=el.value||'';
+  if(!checks.length&&!hwMeta.on&&!c.length&&!Object.keys(t).length)return undefined;
+  return {on:hwMeta.on?1:0,c:c.slice(0,10),...(Object.keys(t).length?{t}:{})};
+}
+function applyHomework(h){
+  if(!h)return;
+  hwMeta={on:h.on?1:0,c:Array.isArray(h.c)?h.c.slice(0,10):[],t:{...(h.t||{})}};
+  const checks=hwChecks();
+  (h.c||[]).forEach((v,i)=>{const el=checks[i];if(v===null||v===undefined||!el)return;if(el.checked!==!!v){el.checked=!!v;el.dispatchEvent(new Event('change',{bubbles:true}));}});
+  const areas=hwTexts();
+  for(const [i,text] of Object.entries(h.t||{})){
+    const el=areas[i];
+    if(el&&el.value!==text){el.value=text;el.dispatchEvent(new Event('input',{bubbles:true}));}
+  }
+}
 function captureLessonState(){
     const w=window, d=document;
     const data = {
@@ -55,6 +78,7 @@ function captureLessonState(){
       /* «Готово!» в письменном задании — определяем по «✅» в счётчике слов */
       prodDone: /✅/.test((d.getElementById('wordCount') || {}).textContent || '')
     };
+    const hw=captureHomework(); if(hw)data.homework=hw;
     return data;
 }
 
@@ -71,6 +95,7 @@ window.addEventListener('message',async event=>{
    const request=requests.get(msg.id);if(!request)return;requests.delete(msg.id);clearTimeout(request.timer);msg.error?request.reject(new Error(msg.error)):request.resolve();return;
  }
  if(msg.type==='capture'){snapshot(msg.requestId);return;}
+ if(msg.type==='hw-flag'){hwMeta.on=msg.on?1:0;snapshot();return;}
  if(msg.type==='pause'){enabled=false;return;}
  if(msg.type!=='restore'||enabled)return;
  let data=Array.isArray(msg.data)?{fields:msg.data}:msg.data;
@@ -131,6 +156,7 @@ window.addEventListener('message',async event=>{
     }
 
   }
+  if(data?.homework)applyHomework(data.homework);
   if(data?.lessonState&&typeof w.restoreLessonState==='function')w.restoreLessonState(data.lessonState);
   restoring=false;enabled=true;document.body.inert=false;snapshot();
  }catch(error){send('failure',{reason:'restore-failed'});}

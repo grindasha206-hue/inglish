@@ -68,7 +68,7 @@
    timer=setTimeout(()=>handlers.error('Урок не ответил. Перезагрузи страницу.',stored),30000);
    frame.srcdoc='<!DOCTYPE html>\n'+doc.documentElement.outerHTML;
   }
-  return {load,capture:()=>data,request:()=>send('capture'),captureAsync:()=>new Promise((resolve,reject)=>{if(!ready||paused){reject(Error('Урок ещё не готов'));return;}const requestId=crypto.randomUUID();const timer=setTimeout(()=>{captures.delete(requestId);reject(Error('Не удалось получить свежие ответы. Попробуй ещё раз.'));},4000);captures.set(requestId,{resolve,reject,timer});send('capture',{requestId});}),pause:()=>{paused=true;ready=false;cancelCaptures();send('pause');},destroy:()=>{closed=true;cancelCaptures();clearTimeout(timer);root.removeEventListener('message',receive);frame.srcdoc='';}};
+  return {load,setHomework:on=>send('hw-flag',{on:on?1:0}),capture:()=>data,request:()=>send('capture'),captureAsync:()=>new Promise((resolve,reject)=>{if(!ready||paused){reject(Error('Урок ещё не готов'));return;}const requestId=crypto.randomUUID();const timer=setTimeout(()=>{captures.delete(requestId);reject(Error('Не удалось получить свежие ответы. Попробуй ещё раз.'));},4000);captures.set(requestId,{resolve,reject,timer});send('capture',{requestId});}),pause:()=>{paused=true;ready=false;cancelCaptures();send('pause');},destroy:()=>{closed=true;cancelCaptures();clearTimeout(timer);root.removeEventListener('message',receive);frame.srcdoc='';}};
  }
  root.LessonFrame={create};
 })(window);

@@ -120,6 +120,11 @@ a{color:inherit;}
 .drop{border:2px dashed var(--gold); border-radius:12px; padding:22px; text-align:center; color:var(--ink-soft); font-size:13.5px; cursor:pointer; background:var(--cream); transition:.15s;}
 .drop:hover,.drop.over{border-color:var(--tab-dark); background:#f6ecd9;}
 .drop b{color:var(--brick-dark);}
+.hwchip{display:inline-block;margin-top:5px;font-size:11.5px;font-weight:800;border-radius:11px;padding:2px 10px}
+.hwchip.ok{background:var(--sage-bg);color:var(--sage)}
+.hwchip.no{background:#FBE7E3;color:#D65B4A}
+.hwchip.pin::before{content:"📌 "}
+#hwNavCount:not(:empty){background:var(--brick);color:#fff;border-radius:10px;padding:0 7px;margin-left:5px;font-size:11.5px}
 .footer-tools{margin-top:36px; padding-top:14px; border-top:1px dashed var(--line); font-size:12.5px; color:var(--ink-soft); display:flex; gap:12px; flex-wrap:wrap; align-items:center;}
 .footer-tools a{color:var(--tab-dark); font-weight:700; text-decoration:none;}
 @media(max-width:600px){input,textarea,select{font-size:16px!important}.btn,.mini-btn{min-height:44px}.form-row{grid-template-columns:1fr}.topbar{flex-wrap:wrap}.panel{overflow-wrap:anywhere}}
@@ -133,6 +138,7 @@ a{color:inherit;}
   <a class="logo" href="#/">Ing<span>lish</span> ✳</a>
   <a class="nav-link" href="dictionary.html">📖 Словарь</a>
   <a class="nav-link" href="trainer.html">🏋️ Тренажёр</a>
+  <a class="nav-link" href="homework.html">📝 Домашка<span id="hwNavCount"></span></a>
   <a class="nav-link" href="#/add">＋ Добавить урок</a>
   <a class="nav-link" href="#/settings">⚙ Настройки</a>
   <div class="top-pills">
@@ -163,6 +169,7 @@ a{color:inherit;}
 <script src="site.js"></script>
 <script src="lesson-schema.js"></script>
 <script src="progress.js"></script>
+<script src="homework-core.js"></script>
 <script src="backup.js"></script>
 <script>
 let p = loadProgress();
@@ -202,6 +209,7 @@ async function start(){
   }
   await mergeCloudIntoLocal(); /* подтягиваем облако, если оно новее локального кэша */
   render();
+  loadAllHw();
 }
 
 function showLogin(){
@@ -243,11 +251,34 @@ document.getElementById('logoutLink').addEventListener('click', async (e) => {
   location.reload();
 });
 
+/* ---- домашка: бейджи «выполнена / не выполнена» по урокам ---- */
+function applyHw(){
+  if (!window.HW || !ALL_LESSONS.length) return;
+  let pending = 0;
+  ALL_LESSONS.forEach(l => { const s = HW.summary(HW.localData(l.id)); if (s.on && !s.complete) pending++; });
+  const nav = document.getElementById('hwNavCount'); if (nav) nav.textContent = pending ? String(pending) : '';
+  let doneCount = 0, total = 0;
+  document.querySelectorAll('[data-hw]').forEach(el => {
+    const s = HW.summary(HW.localData(el.dataset.hw));
+    total++; if (s.complete) doneCount++;
+    el.className = 'hwchip ' + (s.complete ? 'ok' : 'no') + (s.on ? ' pin' : '');
+    el.textContent = s.complete ? '📝 ДЗ выполнена' : ('📝 ДЗ не выполнена · ' + s.done + '/' + s.total);
+  });
+  const sum = document.getElementById('hwModSum');
+  if (sum && total) sum.textContent = '· ДЗ выполнено ' + doneCount + ' из ' + total;
+}
+let hwLoaded = false;
+async function loadAllHw(){
+  if (hwLoaded) return; hwLoaded = true;
+  try { await Promise.all(ALL_LESSONS.map(l => cloudLoadLessonState(l.id).catch(() => null))); } catch(e){}
+  applyHw();
+}
 function render(){
   if (!currentUser || !COURSE) return;
   p = loadProgress();
   updatePills();
   const hash = location.hash || '#/';
+  setTimeout(applyHw, 0);
   const parts = hash.replace(/^#\//,'').split('/').filter(Boolean);
   const view = document.getElementById('view');
   window.scrollTo(0,0);
@@ -378,12 +409,12 @@ function renderModule(view, lv, m){
     else right = `<span class="todo">впереди</span>`;
     return `<a class="row-card${done?' done':''}${isNext?' next':''}" href="player.html?lesson=${l.id}">
       <div class="badge">${done ? '✓' : (isNext ? '▶' : l.unit)}</div>
-      <div class="info"><div class="t">Unit ${l.unit} · ${esc(l.title)}</div><div class="d">${esc(l.description || '')}</div></div>
+      <div class="info"><div class="t">Unit ${l.unit} · ${esc(l.title)}</div><div class="d">${esc(l.description || '')}</div><span data-hw="${l.id}"></span></div>
       <div class="right">${right}</div>
     </a>`;
   }).join('');
   view.innerHTML = `<div class="crumbs"><a href="#/">Кабинет</a> → <a href="#/level/${lv.id}">${esc(lv.code)}</a> → ${esc(m.title)}</div>
-    <div class="sec-head"><h2>${esc(m.title)}</h2><div class="sub">${mpr.total} ${lessonWord(mpr.total)} · пройдено ${mpr.done}</div></div>
+    <div class="sec-head"><h2>${esc(m.title)}</h2><div class="sub">${mpr.total} ${lessonWord(mpr.total)} · пройдено ${mpr.done} <span id="hwModSum"></span></div></div>
     <div class="card-list">${cards || ''}</div>
     ${cards ? '' : '<div class="empty-note">В модуле пока нет уроков.</div>'}`;
 }

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Домашка · Инглиш</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&family=Manrope:wght@400;500;600;700;800&display=swap');
+:root{--cream:#FBF6EC;--paper:#FFFCF5;--ink:#2A2622;--ink-soft:#5c554c;--brick:#AD3B2C;--brick-dark:#8E2E22;--tab:#E2963F;--tab-dark:#C97B2A;--sage:#4F8F6D;--sage-bg:#E6F1EA;--coral:#D65B4A;--coral-bg:#FBE7E3;--gold:#CBA35C;--line:#E4DACB;--shadow:0 6px 18px rgba(42,38,34,.10)}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 15% 8%,rgba(203,163,92,.10),transparent 40%),var(--cream);color:var(--ink);font-family:'Manrope',sans-serif;line-height:1.5;padding-bottom:60px}
+h1,h2,h3{font-family:'Fraunces',serif;margin:0}
+.wrap{max-width:820px;margin:0 auto;padding:0 16px}
+header.top{background:linear-gradient(135deg,var(--brick),var(--brick-dark));color:#fff;padding:22px 0 16px}
+header.top h1{font-size:26px}
+header.top p{margin:4px 0 0;opacity:.9;font-size:14px}
+.backlink{color:#fff;opacity:.85;text-decoration:none;font-size:13px;font-weight:700;display:inline-block;margin-bottom:6px}
+.backlink:hover{opacity:1;text-decoration:underline}
+.stats{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.pill{background:rgba(255,255,255,.18);border-radius:20px;padding:4px 12px;font-size:13px;font-weight:700}
+.tabs{display:flex;gap:8px;margin:18px 0 12px;flex-wrap:wrap}
+.tab{border:1.5px solid var(--line);background:#fff;color:var(--ink-soft);padding:8px 16px;border-radius:20px;font:700 13.5px 'Manrope';cursor:pointer}
+.tab.active{background:var(--tab);color:#fff;border-color:var(--tab-dark)}
+.hidden{display:none!important}
+.card{background:#fff;border:1.5px solid var(--line);border-radius:14px;margin-bottom:12px;box-shadow:var(--shadow);overflow:hidden}
+.card.done{border-color:var(--sage)}
+.card>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:14px 16px}
+.card>summary::-webkit-details-marker{display:none}
+.card .ttl{flex:1;min-width:0}
+.card .ttl b{font:800 16px 'Fraunces',serif;color:var(--brick-dark)}
+.card .ttl small{display:block;font-size:12.5px;color:var(--ink-soft)}
+.chip{font-size:12px;font-weight:800;border-radius:12px;padding:3px 11px;white-space:nowrap}
+.chip.no{background:var(--coral-bg);color:var(--coral)}
+.chip.ok{background:var(--sage-bg);color:var(--sage)}
+.chip.none{background:var(--cream);color:var(--ink-soft);border:1px solid var(--line)}
+.body{border-top:1px dashed var(--line);padding:6px 16px 14px}
+.task{display:flex;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line)}
+.task:last-of-type{border-bottom:none}
+.task input[type=checkbox]{width:20px;height:20px;accent-color:var(--sage);flex-shrink:0;margin-top:3px}
+.task .tx{flex:1;min-width:0;font-size:14.5px}
+.task .tx b{color:var(--brick-dark)}
+.task.on .tx{opacity:.75}
+textarea{width:100%;margin-top:8px;border:1.5px solid var(--line);border-radius:10px;padding:9px 12px;font:500 14px 'Manrope';background:#fffdf8;color:var(--ink);resize:vertical;min-height:64px}
+textarea:focus{outline:2px solid var(--tab);border-color:var(--tab)}
+.saved{font-size:11.5px;color:var(--ink-soft);height:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.btn{border:none;cursor:pointer;font:800 13px 'Manrope';padding:8px 16px;border-radius:22px;background:var(--brick);color:#fff;text-decoration:none;display:inline-block}
+.btn.sec{background:transparent;color:var(--brick);border:1.5px solid var(--brick)}
+.empty{background:#fff;border:1.5px dashed var(--line);border-radius:14px;padding:26px;text-align:center;color:var(--ink-soft)}
+.lrow{display:flex;align-items:center;gap:12px;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:10px 14px;margin-bottom:8px}
+.lrow .ttl{flex:1;min-width:0;font-weight:700;font-size:14.5px}
+.lrow .ttl small{display:block;font-weight:500;color:var(--ink-soft);font-size:12.5px}
+.bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:var(--sage)}
+.note{font-size:12.5px;color:var(--ink-soft);margin-top:14px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="backlink" href="index.html">← В кабинет</a>
+  <h1>📝 Домашка</h1>
+  <p>Задания из уроков — выполняй здесь, не заходя в урок. Всё синхронно с уроком.</p>
+  <div class="stats" id="stats"></div>
+</div></header>
+<main class="wrap">
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-v="todo">К выполнению</button>
+    <button class="tab" data-v="done">Выполненные</button>
+    <button class="tab" data-v="all">Все уроки</button>
+  </div>
+  <div id="status" class="note">Загружаю…</div>
+  <div id="list"></div>
+  <div class="note" id="foot"></div>
+</main>
+
+<script src="sync-core.js"></script>
+<script src="tts.js"></script>
+<script src="backend-config.js"></script>
+<script src="gateway.js"></script>
+<script src="site.js"></script>
+<script src="lesson-schema.js"></script>
+<script src="homework-core.js"></script>
+<script>
+(async function(){
+await authReady;
+if(!currentUser){ location.replace("index.html"); return; }
+initializeAccountStorage();
+try{ await refreshCapabilities(); }catch(e){}
+resumePendingSync();
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+try{ await loadCourse(); }catch(e){ $('status').textContent='Не удалось загрузить курс. Обнови страницу.'; return; }
+const lessons=ALL_LESSONS;
+
+/* --- тексты заданий берём из самого урока --- */
+const tasks={};   /* id -> [{lead, text}] */
+async function loadTasks(l){
+  try{
+    const r=await fetch(l.file); if(!r.ok) throw 0;
+    const doc=new DOMParser().parseFromString(await r.text(),'text/html');
+    tasks[l.id]=[...doc.querySelectorAll('.hw-item')].map(it=>{
+      const c=it.cloneNode(true);
+      c.querySelectorAll('input,textarea,label[for^="hwText"],.print-answer').forEach(x=>x.remove());
+      let t=c.textContent.replace(/\s+/g,' ').trim().replace(/^\d+\.\s*/,'');
+      const m=t.match(/^([^.!?]{2,40}\.)\s+(.*)$/);
+      return m?{lead:m[1],text:m[2]}:{lead:'',text:t};
+    });
+  }catch(e){ tasks[l.id]=[]; }
+}
+/* --- состояние (общее с уроком) --- */
+const data={};   /* id -> объект ответов урока или null (текущие правки) */
+const saved={};  /* id -> последнее сохранённое состояние (база для слияния) */
+async function loadState(l){
+  try{ data[l.id]=await cloudLoadLessonState(l.id); }
+  catch(e){ data[l.id]=HW.localData(l.id); }
+  saved[l.id]=data[l.id]?JSON.parse(JSON.stringify(data[l.id])):null;
+}
+await Promise.all(lessons.flatMap(l=>[loadTasks(l),loadState(l)]));
+$('status').classList.add('hidden');
+
+const N=id=>(tasks[id]&&tasks[id].length)||HW.DEFAULT_TASKS;
+const sum=id=>HW.summary(data[id],N(id));
+const hwOf=id=>({on:0,c:[],t:{},...((data[id]&&data[id].homework)||{})});
+
+/* --- запись: тот же конверт, что и у урока --- */
+const timers={};
+function persist(id){
+  const prev=saved[id]||null;
+  const work=JSON.parse(JSON.stringify(data[id]||{}));
+  work.homework=JSON.parse(JSON.stringify(hwOf(id)));
+  let clean; try{ clean=LessonSchema.state(work); }catch(e){ $('foot').textContent='Не удалось сохранить: '+e.message; return; }
+  try{ persistLessonState(id,clean,undefined,prev||undefined); const now=localLessonEnvelope(id).data||clean; saved[id]=JSON.parse(JSON.stringify(now)); data[id]=now; }
+  catch(e){ $('foot').textContent='Не удалось сохранить: '+e.message; }
+}
+function mutate(id,fn,delay){
+  const hw=hwOf(id);
+  while(hw.c.length<N(id)) hw.c.push(null);
+  fn(hw);
+  data[id]={...(data[id]||{}),homework:hw};
+  clearTimeout(timers[id]);
+  if(delay){ timers[id]=setTimeout(()=>persist(id),delay); } else persist(id);
+}
+window.addEventListener('pagehide',()=>{ for(const id of Object.keys(timers)){ clearTimeout(timers[id]); persist(id); } });
+
+/* --- отрисовка --- */
+let view='todo';
+function chip(id){
+  const s=sum(id);
+  if(s.complete) return '<span class="chip ok">✅ выполнена</span>';
+  return `<span class="chip no">не выполнена · ${s.done}/${s.total}</span>`;
+}
+function taskHtml(id){
+  const hw=hwOf(id), list=tasks[id]||[];
+  if(!list.length) return '<p class="note">Не удалось загрузить задания урока. Открой урок, чтобы увидеть их.</p>';
+  return list.map((t,i)=>`<div class="task${hw.c[i]===1?' on':''}" data-i="${i}"><input type="checkbox" data-c="${i}" ${hw.c[i]===1?'checked':''} aria-label="Задание ${i+1}: сделано"><div class="tx"><b>${i+1}. ${esc(t.lead)}</b> ${esc(t.text)}<textarea data-t="${i+1}" placeholder="Твой ответ (сохраняется сам)">${esc((hw.t||{})[i+1]||'')}</textarea><div class="saved" data-s="${i+1}"></div></div></div>`).join('');
+}
+function card(l){
+  const s=sum(l.id);
+  return `<details class="card${s.complete?' done':''}" data-id="${l.id}" ${s.complete?'':'open'}><summary><div class="ttl"><b>Unit ${l.unit} · ${esc(l.title)}</b><small data-sm>Выполнено ${s.done} из ${s.total}</small><div class="bar"><i data-bar style="width:${Math.round(100*s.done/s.total)}%"></i></div></div><span data-chip>${chip(l.id)}</span></summary><div class="body">${taskHtml(l.id)}<div class="row"><a class="btn sec" href="player.html?lesson=${l.id}">Открыть урок</a><button class="btn sec" data-rm="${l.id}">Убрать из домашки</button></div></div></details>`;
+}
+function render(){
+  const added=lessons.filter(l=>sum(l.id).on);
+  const todo=added.filter(l=>!sum(l.id).complete), done=added.filter(l=>sum(l.id).complete);
+  $('stats').innerHTML=`<span class="pill">К выполнению: ${todo.length}</span><span class="pill">Выполнено: ${done.length}</span>`;
+  document.querySelectorAll('.tab').forEach(b=>{ b.classList.toggle('active',b.dataset.v===view); b.textContent={todo:'К выполнению',done:'Выполненные',all:'Все уроки'}[b.dataset.v]+(b.dataset.v==='todo'?' ('+todo.length+')':b.dataset.v==='done'?' ('+done.length+')':''); });
+  let html='';
+  if(view==='all'){
+    html=lessons.map(l=>{ const s=sum(l.id);
+      return `<div class="lrow"><div class="ttl">Unit ${l.unit} · ${esc(l.title)}<small>${s.on?'в домашке':'не добавлена'} · задания: ${s.done}/${s.total}</small></div>${s.on?chip(l.id):'<span class="chip none">—</span>'}${s.on?`<button class="btn sec" data-rm="${l.id}">Убрать</button>`:`<button class="btn" data-add="${l.id}">＋ В домашку</button>`}</div>`; }).join('');
+  }else{
+    const list=view==='todo'?todo:done;
+    html=list.length?list.map(card).join(''):`<div class="empty">${view==='todo'?'Здесь пока пусто.<br>Открой урок и нажми «📝 В домашку» или добавь урок на вкладке «Все уроки».':'Пока нет выполненных домашних заданий.'}</div>`;
+  }
+  $('list').innerHTML=html;
+  $('foot').textContent='';
+  bind();
+}
+function refreshCard(id){
+  const el=document.querySelector(`.card[data-id="${id}"]`); if(!el) return;
+  const s=sum(id);
+  el.classList.toggle('done',s.complete);
+  el.querySelector('[data-sm]').textContent=`Выполнено ${s.done} из ${s.total}`;
+  el.querySelector('[data-bar]').style.width=Math.round(100*s.done/s.total)+'%';
+  el.querySelector('[data-chip]').innerHTML=chip(id);
+  const added=lessons.filter(l=>sum(l.id).on), done=added.filter(l=>sum(l.id).complete).length;
+  $('stats').innerHTML=`<span class="pill">К выполнению: ${added.length-done}</span><span class="pill">Выполнено: ${done}</span>`;
+}
+function bind(){
+  document.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>{ mutate(b.dataset.add,hw=>{hw.on=1;}); render(); });
+  document.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{ if(confirm('Убрать урок из домашки? Ответы сохранятся.')){ mutate(b.dataset.rm,hw=>{hw.on=0;}); render(); } });
+  document.querySelectorAll('.card').forEach(card=>{
+    const id=card.dataset.id;
+    card.querySelectorAll('[data-c]').forEach(cb=>cb.onchange=()=>{
+      const i=+cb.dataset.c; mutate(id,hw=>{hw.c[i]=cb.checked?1:0;});
+      cb.closest('.task').classList.toggle('on',cb.checked); refreshCard(id);
+    });
+    card.querySelectorAll('[data-t]').forEach(ta=>ta.oninput=()=>{
+      const k=ta.dataset.t, s=card.querySelector(`[data-s="${k}"]`);
+      mutate(id,hw=>{hw.t={...(hw.t||{}),[k]:ta.value};},600);
+      if(s) s.textContent='сохраняю…';
+      clearTimeout(ta._t); ta._t=setTimeout(()=>{ if(s) s.textContent='✓ сохранено'; },700);
+    });
+  });
+}
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{ view=b.dataset.v; render(); });
+$('foot').textContent='';
+render();
+})();
+</script>
+</body>
+</html>

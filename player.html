@@ -52,6 +52,8 @@ iframe{flex:1;min-height:0; width:100%; border:none; background:var(--cream);}
   <div class="voice-pill off" id="voicePill" title="Озвучка">…</div>
   <button class="redo-btn" id="redoBtn" title="Фраза прозвучала неправильно? Нажми — я озвучу её заново другим дублем.">↻ переозвучить</button>
   <button class="redo-btn shown" id="resetBtn" title="Стереть свои ответы в этом уроке и начать с чистого листа (прогресс и XP останутся)">⟲ заново</button>
+  <button class="redo-btn shown" id="hwBtn" disabled title="Добавить домашнее задание этого урока в раздел «Домашка» — его можно выполнять без захода в урок">📝 В домашку</button>
+  <a class="back hw-link" id="hwLink" href="homework.html" style="display:none">К домашке →</a>
   <button class="done-btn" id="doneBtn">✓ Завершить урок</button>
 </div>
 
@@ -110,8 +112,8 @@ async function init(){
   const frame = document.getElementById('lessonFrame');
   bridge=LessonFrame.create(frame,{
     snapshot:(data,result,first)=>{
-      latestCapture=data;latestResult=result;
-      if(first){loadedEpoch=localLessonEnvelope(lesson.id).epoch;lastCapture=data;restoring=false;skipSave=false;}
+      latestCapture=data;latestResult=result;updateHwBtn();
+      if(first){const env=localLessonEnvelope(lesson.id);loadedEpoch=env.epoch;/* если раздел «Домашка» уже правил этот урок — база слияния = то, что реально хранится */lastCapture=(env.data&&env.data.homework)?env.data:data;restoring=false;skipSave=false;}
       saveLessonState();watchLesson();
     },
     error:(reason,data)=>{
@@ -149,6 +151,19 @@ async function openLesson(){
  try{answers=await cloudLoadLessonState(lesson.id);}catch(e){answers=localLessonEnvelope(lesson.id).data;setSyncStatus('error','Облако недоступно. Восстанавливаем локальные ответы.');}
  await bridge.load(lesson.file,answers);
 }
+function updateHwBtn(){
+ const b=document.getElementById('hwBtn'),l=document.getElementById('hwLink');if(!b)return;
+ const hw=latestCapture&&latestCapture.homework,on=!!(hw&&hw.on),n=hw&&hw.c?hw.c.filter(x=>x===1).length:0,tot=hw&&hw.c&&hw.c.length||5;
+ b.disabled=!latestCapture;
+ b.textContent=on?(n>=tot?'✅ ДЗ выполнена':'✓ В домашке ('+n+'/'+tot+')'):'📝 В домашку';
+ b.title=on?'Убрать из раздела «Домашка»':'Добавить домашнее задание этого урока в раздел «Домашка» — его можно выполнять без захода в урок';
+ l.style.display=on?'':'none';
+}
+document.getElementById('hwBtn').addEventListener('click',()=>{
+ if(!latestCapture||!bridge)return;
+ const on=!(latestCapture.homework&&latestCapture.homework.on);
+ bridge.setHomework(on);
+});
 function captureLessonState(){return latestCapture;}
 function stopWatching(){bridge?.pause();}
 function saveLessonState(){

@@ -3,7 +3,7 @@
   if(raw===null)return null;
   if(Array.isArray(raw))raw={fields:raw};
   if(!raw||typeof raw!=='object'||Array.isArray(raw)||JSON.stringify(raw).length>500000)throw Error('Некорректные ответы урока');
-  const allowed=['signature','fieldsById','lessonState','fields','fillChecked','readChecked','quiz','tf','tfGroups','mc','checked','round','roundMatches','memo','match','prodDone'];
+  const allowed=['signature','fieldsById','lessonState','fields','fillChecked','readChecked','quiz','tf','tfGroups','mc','checked','round','roundMatches','memo','match','prodDone','homework'];
   if(Object.keys(raw).some(k=>!allowed.includes(k)))throw Error('Неизвестные поля ответов');
   const number=n=>Number.isInteger(n)&&n>=-1&&n<=2000;
   const selections=a=>Array.isArray(a)&&a.length<=2000&&a.every(n=>n===null||number(n));
@@ -18,6 +18,7 @@
    else if(['quiz','tf','mc'].includes(k))valid=selections(v);
    else if(k==='tfGroups')valid=map(v,k=>['tf1List','tf2List','tf3List','lsList'].includes(k),selections);
    else if(k==='checked')valid=map(v,k=>['checkQaBtn','checkTomBtn','submitTestBtn'].includes(k),x=>typeof x==='boolean');
+   else if(k==='homework')valid=!!v&&typeof v==='object'&&!Array.isArray(v)&&Object.keys(v).every(x=>['on','c','t'].includes(x))&&(v.on===undefined||v.on===0||v.on===1)&&(v.c===undefined||(Array.isArray(v.c)&&v.c.length<=10&&v.c.every(x=>x===0||x===1||x===null)))&&(v.t===undefined||map(v.t,k=>/^[1-9]$/.test(k),x=>typeof x==='string'&&x.length<=20000));
    else if(k==='round')valid=number(v)&&v>=0;
    else if(k==='roundMatches')valid=map(v,k=>/^\d{1,4}$/.test(k),x=>selections(x)&&x.every(n=>n!==null&&n>=0));
    else if(['memo','match'].includes(k))valid=Array.isArray(v)&&v.length<=2000&&v.every(x=>typeof x==='string'&&/^\d{1,4}$/.test(x));
