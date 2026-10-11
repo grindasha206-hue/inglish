@@ -32,15 +32,16 @@
    if(!/^lessons\/[a-z0-9][a-z0-9-]{0,119}\.html$/.test(path))throw Error('Недопустимый путь урока');
    const activeSession=session;
    const controller=new AbortController(),fetchTimer=setTimeout(()=>controller.abort(),20000);
-   let source,runtime,kit;
+   let source,runtime,kit,template,theme;
    try{
-    const responses=await Promise.all([fetch(path,{signal:controller.signal}),fetch('lesson-runtime.js',{signal:controller.signal}),fetch('lesson-kit.js',{signal:controller.signal})]);
+    const responses=await Promise.all([fetch(path,{signal:controller.signal}),fetch('lesson-runtime.js',{signal:controller.signal}),fetch('lesson-kit.js',{signal:controller.signal}),fetch('lesson-template.js',{signal:controller.signal}),fetch('lesson-theme.css',{signal:controller.signal})]);
     if(responses.some(r=>!r.ok))throw Error('Не удалось загрузить урок');
-    [source,runtime,kit]=await Promise.all(responses.map(r=>r.text()));
+    [source,runtime,kit,template,theme]=await Promise.all(responses.map(r=>r.text()));
    }finally{clearTimeout(fetchTimer);}
    if(session!==activeSession||closed)return;
    const doc=new DOMParser().parseFromString(source,'text/html');
-   for(const external of doc.querySelectorAll('script[src]')){if(external.getAttribute('src')==='../lesson-kit.js'){external.removeAttribute('src');external.textContent=kit;}}
+   for(const external of doc.querySelectorAll('script[src]')){if(external.getAttribute('src')==='../lesson-kit.js'){external.removeAttribute('src');external.textContent=kit;}else if(external.getAttribute('src')==='../lesson-template.js'){external.removeAttribute('src');external.textContent=template;}}
+   for(const link of doc.querySelectorAll('link[rel=stylesheet]'))if(link.getAttribute('href')==='../lesson-theme.css'){const style=doc.createElement('style');style.textContent=theme;link.replaceWith(style);}
    // Inline only raster assets under this lesson's directory; the sandbox keeps connect-src none.
    for(const img of doc.querySelectorAll('img[data-lesson-image]')){
     const relative=img.dataset.lessonImage;

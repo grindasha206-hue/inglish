@@ -73,7 +73,8 @@ window.addEventListener('message',async event=>{
  if(msg.type==='capture'){snapshot(msg.requestId);return;}
  if(msg.type==='pause'){enabled=false;return;}
  if(msg.type!=='restore'||enabled)return;
- const data=Array.isArray(msg.data)?{fields:msg.data}:msg.data;
+ let data=Array.isArray(msg.data)?{fields:msg.data}:msg.data;
+ if(data&&typeof window.migrateLessonState==='function')data=window.migrateLessonState(data);
  try{
   if(data?.signature&&data.signature!==lessonSignature(window)){send('failure',{reason:'lesson-updated'});return;}
   const w=window,d=document;
