@@ -5,7 +5,8 @@ async function gatewayResponse(path,body={},signal){
  if(base.protocol!=='https:'||base.username||base.password||base.pathname!=='/'||base.search||base.hash)throw Error('Неверный адрес сервера');
  if(!currentUser)throw Error('Сначала войди в аккаунт');
  const token=await currentUser.getIdToken();
- return fetch(base.origin+path,{method:'POST',headers:{Authorization:'Bearer '+token,'Content-Type':'application/json'},body:JSON.stringify(body),signal});
+ // Keep authentication in the HTTPS body to avoid Safari's CORS preflight.
+ return fetch(base.origin+path,{method:'POST',mode:'cors',credentials:'omit',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify({idToken:token,payload:body}),signal});
 }
 async function refreshCapabilities(){
  serverCapabilities={groq:false,eleven:false,github:false};
