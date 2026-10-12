@@ -86,3 +86,66 @@ textarea{background-color:#FFFDFB}
 .bar .back{border-radius:999px}
 .done-btn{background:var(--brick)!important}
 .done-btn:hover{background:var(--brick-dark)!important}
+
+/* ---------- раскладка кабинета как в макете ---------- */
+.wrap{max-width:1080px!important}
+.soft-hero-row{display:flex;flex-wrap:wrap;gap:28px;align-items:center;margin-top:18px}
+.soft-hero-row .hero{flex:999 1 520px;min-width:0;padding:38px 40px 32px!important;display:block!important}
+.hero h1{font-size:38px!important;line-height:1.15;margin:8px 0 8px!important}
+.soft-accent{color:#D9648A}
+.hero p{font-size:16px!important;max-width:540px}
+.soft-hero-actions{margin-top:20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.soft-sticker{position:absolute;right:26px;top:-30px;width:74px;height:74px;transform:rotate(10deg)}
+.soft-polaroid{position:relative;flex:1 1 240px;min-width:220px;max-width:300px;margin:0 auto;background:#fff;padding:12px 12px 46px;border-radius:6px;box-shadow:0 12px 28px rgba(190,110,130,.2);transform:rotate(3deg)}
+.soft-polaroid::before{content:"";position:absolute;top:-13px;left:50%;margin-left:-48px;width:96px;height:26px;transform:rotate(4deg);background-color:rgba(190,214,236,.85);background-image:radial-gradient(rgba(255,255,255,.85) 1.6px,transparent 1.8px);background-size:11px 11px}
+.soft-photo{height:230px;border-radius:3px;overflow:hidden;background:linear-gradient(180deg,#CFE0F1 0%,#F4D6DE 55%,#F6B9A8 100%)}
+.soft-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.soft-caption{position:absolute;left:0;right:0;bottom:10px;text-align:center;font-family:'Caveat',cursive;font-weight:700;font-size:24px;color:#8F2E52}
+
+.review-card{display:flex!important;flex-wrap:wrap;align-items:center;gap:22px!important;padding:24px 28px!important;margin:26px 0!important;border-radius:16px!important}
+.review-card:hover{transform:none!important}
+.soft-review-head{flex:1 1 220px}
+.review-card .t{font-weight:700!important;line-height:1}
+.review-card .d{margin-top:6px;font-size:14px!important;line-height:1.5}
+.soft-notes{display:flex;flex-wrap:wrap;gap:16px;flex:2 1 420px}
+.soft-note{flex:1 1 110px;background:var(--paper);border-radius:10px;padding:14px 16px;box-shadow:0 6px 14px rgba(190,110,130,.14);transform:rotate(-1.5deg)}
+.soft-note:nth-child(2){transform:rotate(1deg)}
+.soft-note:nth-child(3){transform:rotate(-.5deg)}
+.soft-note b{display:block;font-family:'Comfortaa',sans-serif;font-weight:700;font-size:34px;line-height:1;color:#D9648A}
+.soft-note span{display:block;font-size:13.5px;font-weight:700;margin-top:4px}
+
+.stats{gap:18px!important;margin-top:0!important}
+.stat{padding:20px 22px!important}
+.stat .value small{font-size:17px;color:var(--ink-soft);font-weight:700}
+.stat .bar{height:12px;border-radius:8px;background:#F9E3E9;overflow:hidden;margin:12px 0 8px}
+.stat .bar i{display:block;height:100%;border-radius:8px;background:linear-gradient(90deg,#F3B3C5,#D9648A)}
+.stat .bar.green i{background:linear-gradient(90deg,#BFE0CC,#6FA98A)}
+.week{gap:6px!important;margin-top:12px!important}
+.day .heart{width:26px;height:26px;display:block;margin:0 auto}
+.day .dot{display:none}
+
+.soft-ribbon{margin:34px auto 0;display:flex;align-items:center;justify-content:center;gap:12px;padding:12px 34px;border-radius:999px;background:linear-gradient(90deg,#F9D5DF,#F3B3C5,#F9D5DF);max-width:440px;box-sizing:border-box;font-family:'Caveat',cursive;font-weight:700;font-size:26px;color:#5E2038}
+.soft-ribbon svg{width:18px;height:18px}
+
+.row-card .badge{border-radius:50%!important}
+.row-card .info .t{font-weight:700!important}
+
+@media(max-width:640px){
+  .soft-hero-row .hero{padding:30px 20px 24px!important}
+  .hero h1{font-size:28px!important}
+  .soft-sticker{width:54px;height:54px;right:14px;top:-20px}
+  .soft-polaroid{display:none}
+  .soft-photo{height:180px}
+  .stats{grid-template-columns:1fr!important}
+}
+
+/* ---------- разделы: стикеры и сетки как в макете ---------- */
+.cons,#dash{position:relative}
+.cons::before,#dash::before{content:"";position:absolute;top:-13px;left:32px;width:104px;height:26px;transform:rotate(-3deg);background-color:rgba(243,179,197,.8);background-image:radial-gradient(rgba(255,255,255,.85) 1.6px,transparent 1.8px);background-size:11px 11px;pointer-events:none}
+#cFmts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 18px}
+#cFmts .fmtrow{background:var(--cream);border:none!important;border-radius:12px;padding:10px 12px}
+@media(max-width:720px){#cFmts{grid-template-columns:1fr}}
+.cons h3{font-family:'Caveat',cursive;font-size:26px!important;font-weight:700;color:var(--brick)}
+.panel{box-shadow:0 10px 24px rgba(190,110,130,.12)}
+.src .n{color:#D9648A!important}
+.src .n.z{color:#6FA98A!important}
