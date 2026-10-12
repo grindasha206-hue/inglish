@@ -163,7 +163,7 @@ window.addEventListener('message',async event=>{
 });
 // Shared accessibility and small-screen behavior, applied before the first snapshot.
 const style=document.createElement('style');style.textContent=`
-:focus-visible{outline:3px solid #AD3B2C;outline-offset:3px}
+:focus-visible{outline:3px solid #BE456F;outline-offset:3px}
 .table-scroll{max-width:100%;overflow-x:auto}
 @media(max-width:600px){input,textarea,select{font-size:16px!important}button,.match-tile,.memo-card{min-height:44px}.actions-row{flex-wrap:wrap}body{overflow-wrap:anywhere}.table-scroll table{min-width:320px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}

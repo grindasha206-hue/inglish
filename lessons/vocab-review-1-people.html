@@ -4,22 +4,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vocabulary Review 1 · Люди</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Comfortaa:wght@500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap');
 
 :root{
-  --cream:#FBF6EC; --paper:#FFFCF5; --ink:#2A2622; --ink-soft:#5c554c;
-  --brick:#AD3B2C; --brick-dark:#8E2E22; --tab:#E2963F; --tab-dark:#C97B2A;
+  --cream:#FDF4F1; --paper:#FFFDFB; --ink:#3A2E33; --ink-soft:#6B5A61;
+  --brick:#BE456F; --brick-dark:#8F2E52; --tab:#C4507A; --tab-dark:#9E3460;
   --sage:#4F8F6D; --sage-bg:#E6F1EA; --coral:#D65B4A; --coral-bg:#FBE7E3;
-  --gold:#CBA35C; --line:#E4DACB; --shadow: 0 6px 18px rgba(42,38,34,0.10);
+  --gold:#E8A0B4; --line:#F1D9DF; --shadow: 0 6px 18px rgba(150,80,100,0.10);
   --plum:#6B4E71; --plum-bg:#EFE6F0;
 }
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{margin:0; background:radial-gradient(circle at 15% 8%, rgba(203,163,92,0.10), transparent 40%), var(--cream); color:var(--ink); font-family:'Manrope', sans-serif; line-height:1.55; padding-bottom:80px;}
-h1,h2,h3,.display{font-family:'Fraunces', serif;}
+body{margin:0; background:radial-gradient(circle at 15% 8%, rgba(232,160,180,0.10), transparent 40%), var(--cream); color:var(--ink); font-family:'Nunito', sans-serif; line-height:1.55; padding-bottom:80px;}
+h1,h2,h3,.display{font-family:'Comfortaa',sans-serif;}
 
 .topbar{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:1px solid var(--line); padding:10px 18px; display:flex; align-items:center; gap:14px; box-shadow:0 2px 10px rgba(0,0,0,0.04);}
-.topbar .book-title{font-family:'Fraunces', serif; font-weight:700; font-size:14.5px; color:var(--plum); white-space:nowrap;}
+.topbar .book-title{font-family:'Comfortaa',sans-serif; font-weight:700; font-size:14.5px; color:var(--plum); white-space:nowrap;}
 .progress-steps{display:flex; gap:4px; flex:1; align-items:center;}
 .pstep{flex:1; height:8px; border-radius:6px; background:var(--line); position:relative; overflow:hidden;}
 .pstep i{display:block; height:100%; width:0%; border-radius:6px; background:linear-gradient(90deg, var(--gold), var(--plum)); transition:width .5s ease;}
@@ -28,15 +28,15 @@ h1,h2,h3,.display{font-family:'Fraunces', serif;}
 .page{max-width:920px; margin:26px auto; background:var(--paper); border-radius:4px; box-shadow:var(--shadow); border:1px solid var(--line); overflow:hidden;}
 
 .unit-banner{background:linear-gradient(135deg, var(--plum) 0%, #4d3752 100%); color:#fff; padding:26px 30px 22px 96px; position:relative;}
-.unit-tag{position:absolute; left:0; top:0; bottom:0; width:76px; background:#4d3752; display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Fraunces',serif; border-right:2px solid rgba(255,255,255,0.15); text-align:center;}
+.unit-tag{position:absolute; left:0; top:0; bottom:0; width:76px; background:#4d3752; display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Comfortaa',sans-serif; border-right:2px solid rgba(255,255,255,0.15); text-align:center;}
 .unit-tag .u{font-size:10px; letter-spacing:1.5px; opacity:.8; padding:0 4px;}
 .unit-tag .n{font-size:24px; font-weight:800;}
 .unit-banner h1{margin:0; font-size:26px; font-weight:800; letter-spacing:.3px;}
 .unit-banner p{margin:6px 0 0; opacity:.9; font-size:14px;}
 
 .section{display:flex; border-top:1px solid var(--line);}
-.section .tab{width:56px; flex-shrink:0; background:var(--gold); color:#fff; font-family:'Fraunces',serif; font-weight:800; font-size:20px; display:flex; align-items:flex-start; justify-content:center; padding-top:22px;}
-.section.alt .tab{background:#B08A3E;}
+.section .tab{width:56px; flex-shrink:0; background:var(--gold); color:#fff; font-family:'Comfortaa',sans-serif; font-weight:800; font-size:20px; display:flex; align-items:flex-start; justify-content:center; padding-top:22px;}
+.section.alt .tab{background:#B0577A;}
 .section .content{padding:24px 28px 30px; flex:1; min-width:0;}
 .section h2{margin:0 0 4px; font-size:21px; color:var(--plum);}
 .eyebrow{font-size:11.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-soft); font-weight:700; margin-bottom:4px;}
@@ -48,26 +48,26 @@ h1,h2,h3,.display{font-family:'Fraunces', serif;}
 .theme-title .n{background:var(--plum-bg); color:var(--plum); border-radius:10px; padding:1px 8px; font-size:11px;}
 .word-chip-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(140px,1fr)); gap:8px; margin-bottom:18px;}
 .word-chip{background:#fff; border:1.5px solid var(--line); border-radius:9px; padding:7px 10px; font-size:12.5px;}
-.word-chip b{color:var(--brick-dark); font-family:'Fraunces',serif; font-size:13.5px; display:block;}
+.word-chip b{color:var(--brick-dark); font-family:'Comfortaa',sans-serif; font-size:13.5px; display:block;}
 .word-chip .ru{color:var(--ink-soft); font-size:11.5px;}
 .word-chip .ipa-pos{color:var(--tab-dark); font-size:11px; font-style:italic; display:block; margin-top:1px;}
 .word-chip .play-btn{float:right; margin-top:-2px;}
 
 .play-btn{border:1.5px solid var(--line); background:var(--cream); cursor:pointer; border-radius:7px; padding:3px 7px; font-size:12px; line-height:1; transition:.15s;}
-.play-btn:hover{background:var(--gold); border-color:#B08A3E;}
+.play-btn:hover{background:var(--gold); border-color:#B0577A;}
 .play-btn.playing{background:var(--plum); border-color:#4d3752; color:#fff;}
 .voice-picker{display:flex; align-items:center; gap:8px; flex-wrap:wrap; background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:8px 12px; margin:10px 0; font-size:13px;}
 .voice-picker label{font-weight:700; color:var(--ink-soft);}
 .speed-btns{display:flex; gap:6px;}
 .speed-btn{border:1.5px solid var(--line); background:#fff; padding:5px 12px; border-radius:16px; font-size:12.5px; font-weight:700; cursor:pointer; color:var(--ink-soft);}
 .speed-btn.active{background:var(--plum); color:#fff; border-color:#4d3752;}
-.voice-picker select{border:1.5px solid var(--line); border-radius:6px; padding:4px 8px; font-family:'Manrope'; font-size:13px; background:#fff; color:var(--ink); max-width:220px;}
+.voice-picker select{border:1.5px solid var(--line); border-radius:6px; padding:4px 8px; font-family:'Nunito'; font-size:13px; background:#fff; color:var(--ink); max-width:220px;}
 
 /* reading */
 .read-text{background:#fff; border:1.5px solid var(--line); border-radius:14px; padding:18px 20px; margin:16px 0; font-size:14.5px;}
 .read-text p{margin:0 0 10px;}
 .read-text p:last-child{margin-bottom:0;}
-.chunk{background:linear-gradient(180deg, transparent 60%, rgba(203,163,92,0.4) 60%); font-weight:700; color:var(--brick-dark); padding:0 1px;}
+.chunk{background:linear-gradient(180deg, transparent 60%, rgba(232,160,180,0.4) 60%); font-weight:700; color:var(--brick-dark); padding:0 1px;}
 .dialog-bubbles{display:flex; flex-direction:column; gap:8px; margin:16px 0;}
 .d-bubble{background:#fff; border:1.5px solid var(--line); border-radius:16px; padding:9px 14px; font-size:14px; max-width:80%; box-shadow:0 3px 8px rgba(0,0,0,0.05);}
 .d-bubble.q{border-color:var(--gold);}
@@ -90,7 +90,7 @@ h1,h2,h3,.display{font-family:'Fraunces', serif;}
 .scene-box svg{max-width:100%; height:auto;}
 .word-bank{display:flex; gap:7px; flex-wrap:wrap; justify-content:center; margin-top:14px;}
 .wb-chip{background:var(--plum-bg); color:var(--plum); border-radius:14px; padding:4px 12px; font-size:12.5px; font-weight:700;}
-textarea.write-area{width:100%; min-height:110px; border:1.5px solid var(--line); border-radius:10px; padding:14px; font-family:'Manrope'; font-size:14.5px; color:var(--ink); background:#fffdf8; resize:vertical; margin-top:12px;}
+textarea.write-area{width:100%; min-height:110px; border:1.5px solid var(--line); border-radius:10px; padding:14px; font-family:'Nunito'; font-size:14.5px; color:var(--ink); background:#FFFDFB; resize:vertical; margin-top:12px;}
 textarea.write-area:focus{outline:2px solid var(--gold); border-color:var(--gold);}
 .word-count{font-size:12.5px; color:var(--ink-soft); margin-top:6px;}
 .reveal-box{margin-top:14px; border-left:3px solid var(--gold); background:var(--cream); padding:12px 16px; border-radius:6px; font-size:13.5px; display:none;}
@@ -98,8 +98,8 @@ textarea.write-area:focus{outline:2px solid var(--gold); border-color:var(--gold
 
 /* games */
 .game-tabs{display:flex; gap:8px; margin:18px 0 20px; flex-wrap:wrap;}
-.game-tab-btn{border:1.5px solid var(--line); background:#fff; color:var(--ink-soft); padding:8px 16px; border-radius:20px; font-family:'Manrope'; font-weight:700; font-size:13px; cursor:pointer; transition:.2s;}
-.game-tab-btn.active{background:var(--gold); color:#fff; border-color:#B08A3E;}
+.game-tab-btn{border:1.5px solid var(--line); background:#fff; color:var(--ink-soft); padding:8px 16px; border-radius:20px; font-family:'Nunito'; font-weight:700; font-size:13px; cursor:pointer; transition:.2s;}
+.game-tab-btn.active{background:var(--gold); color:#fff; border-color:#B0577A;}
 .game-panel{display:none;}
 .game-panel.active{display:block; animation:fadeIn .35s ease;}
 @keyframes fadeIn{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
@@ -123,7 +123,7 @@ textarea.write-area:focus{outline:2px solid var(--gold); border-color:var(--gold
 .round-btn{border:1.5px solid var(--line); background:#fff; padding:5px 12px; border-radius:14px; font-size:12px; font-weight:700; cursor:pointer; color:var(--ink-soft);}
 .round-btn.active{background:var(--plum); color:#fff; border-color:#4d3752;}
 
-.btn{border:none; cursor:pointer; font-family:'Manrope'; font-weight:800; padding:10px 20px; border-radius:24px; font-size:14px; letter-spacing:.2px; background:var(--plum); color:#fff; box-shadow:0 4px 10px rgba(107,78,113,0.25); transition:.15s;}
+.btn{border:none; cursor:pointer; font-family:'Nunito'; font-weight:800; padding:10px 20px; border-radius:24px; font-size:14px; letter-spacing:.2px; background:var(--plum); color:#fff; box-shadow:0 4px 10px rgba(107,78,113,0.25); transition:.15s;}
 .btn:hover{transform:translateY(-1px);}
 .btn.secondary{background:transparent; color:var(--plum); border:1.5px solid var(--plum); box-shadow:none;}
 .btn.small{padding:6px 14px; font-size:12.5px;}
@@ -133,7 +133,7 @@ textarea.write-area:focus{outline:2px solid var(--gold); border-color:var(--gold
 .hw-item{display:flex; gap:10px; align-items:flex-start; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:11px 14px; font-size:13.5px; cursor:pointer; transition:.15s;}
 .hw-item:has(.hw-check:checked){background:var(--sage-bg); border-color:var(--sage);}
 .hw-check{margin-top:3px; width:16px; height:16px; accent-color:var(--sage); flex-shrink:0;}
-.hw-item b{color:var(--brick-dark); font-family:'Fraunces',serif;}
+.hw-item b{color:var(--brick-dark); font-family:'Comfortaa',sans-serif;}
 
 @media print{
   .topbar, .unit-banner, .no-print{ display:none !important; }
@@ -393,25 +393,25 @@ textarea.write-area:focus{outline:2px solid var(--gold); border-color:var(--gold
             <path d="M75 130 Q90 150 105 130" stroke="#5A8FA8" stroke-width="5" fill="none"></path>
             <circle cx="75" cy="128" r="5" fill="#5A8FA8"></circle>
             <circle cx="105" cy="128" r="5" fill="#5A8FA8"></circle>
-            <circle cx="90" cy="90" r="26" fill="#F2C29B"></circle>
-            <path d="M64 84 Q90 55 116 84 Q118 100 110 108 Q112 78 90 74 Q68 78 70 108 Q62 100 64 84Z" fill="#3A2A1A"></path>
-            <circle cx="80" cy="92" r="2.6" fill="#2A2622"></circle>
-            <circle cx="100" cy="92" r="2.6" fill="#2A2622"></circle>
-            <path d="M80 102 Q90 108 100 102" stroke="#2A2622" stroke-width="2" fill="none" stroke-linecap="round"></path>
+            <circle cx="90" cy="90" r="26" fill="#F3B3C5"></circle>
+            <path d="M64 84 Q90 55 116 84 Q118 100 110 108 Q112 78 90 74 Q68 78 70 108 Q62 100 64 84Z" fill="#3A2E33"></path>
+            <circle cx="80" cy="92" r="2.6" fill="#3A2E33"></circle>
+            <circle cx="100" cy="92" r="2.6" fill="#3A2E33"></circle>
+            <path d="M80 102 Q90 108 100 102" stroke="#3A2E33" stroke-width="2" fill="none" stroke-linecap="round"></path>
             <rect x="70" y="205" width="15" height="30" fill="#4A6B7A"></rect>
             <rect x="95" y="205" width="15" height="30" fill="#4A6B7A"></rect>
           </g>
           <!-- figure 2: teacher -->
           <g>
             <ellipse cx="210" cy="240" rx="46" ry="9" fill="#D9C6DD"></ellipse>
-            <rect x="176" y="118" width="68" height="95" rx="18" fill="#AD3B2C"></rect>
-            <circle cx="210" cy="86" r="27" fill="#EBB489"></circle>
-            <path d="M182 80 Q210 48 238 80 Q240 96 230 104 Q234 70 210 68 Q186 70 190 104 Q180 96 182 80Z" fill="#2A2622"></path>
-            <circle cx="199" cy="88" r="2.6" fill="#2A2622"></circle>
-            <circle cx="221" cy="88" r="2.6" fill="#2A2622"></circle>
-            <path d="M199 98 Q210 104 221 98" stroke="#2A2622" stroke-width="2" fill="none" stroke-linecap="round"></path>
-            <rect x="185" y="213" width="16" height="32" fill="#2A2622"></rect>
-            <rect x="219" y="213" width="16" height="32" fill="#2A2622"></rect>
+            <rect x="176" y="118" width="68" height="95" rx="18" fill="#BE456F"></rect>
+            <circle cx="210" cy="86" r="27" fill="#EDA9BE"></circle>
+            <path d="M182 80 Q210 48 238 80 Q240 96 230 104 Q234 70 210 68 Q186 70 190 104 Q180 96 182 80Z" fill="#3A2E33"></path>
+            <circle cx="199" cy="88" r="2.6" fill="#3A2E33"></circle>
+            <circle cx="221" cy="88" r="2.6" fill="#3A2E33"></circle>
+            <path d="M199 98 Q210 104 221 98" stroke="#3A2E33" stroke-width="2" fill="none" stroke-linecap="round"></path>
+            <rect x="185" y="213" width="16" height="32" fill="#3A2E33"></rect>
+            <rect x="219" y="213" width="16" height="32" fill="#3A2E33"></rect>
             <!-- small blackboard prop -->
             <rect x="250" y="150" width="46" height="34" rx="3" fill="#2E4A3E" stroke="#8A6A3A" stroke-width="4"></rect>
             <path d="M258 165 L270 165 M258 172 L282 172" stroke="#fff" stroke-width="2"></path>
@@ -420,16 +420,16 @@ textarea.write-area:focus{outline:2px solid var(--gold); border-color:var(--gold
           <g>
             <ellipse cx="335" cy="238" rx="42" ry="9" fill="#D9C6DD"></ellipse>
             <rect x="303" y="122" width="64" height="90" rx="18" fill="#4F8F6D"></rect>
-            <circle cx="335" cy="90" r="25" fill="#F2C29B"></circle>
+            <circle cx="335" cy="90" r="25" fill="#F3B3C5"></circle>
             <path d="M310 84 Q335 55 360 84 Q362 100 353 108 Q356 76 335 72 Q314 76 317 108 Q308 100 310 84Z" fill="#4A3222"></path>
-            <circle cx="325" cy="92" r="2.6" fill="#2A2622"></circle>
-            <circle cx="345" cy="92" r="2.6" fill="#2A2622"></circle>
-            <path d="M325 102 Q335 108 345 102" stroke="#2A2622" stroke-width="2" fill="none" stroke-linecap="round"></path>
+            <circle cx="325" cy="92" r="2.6" fill="#3A2E33"></circle>
+            <circle cx="345" cy="92" r="2.6" fill="#3A2E33"></circle>
+            <path d="M325 102 Q335 108 345 102" stroke="#3A2E33" stroke-width="2" fill="none" stroke-linecap="round"></path>
             <rect x="312" y="211" width="15" height="30" fill="#2E5C42"></rect>
             <rect x="337" y="211" width="15" height="30" fill="#2E5C42"></rect>
             <!-- backpack -->
-            <rect x="358" y="140" width="22" height="34" rx="6" fill="#C97B2A"></rect>
-            <rect x="362" y="146" width="14" height="6" rx="2" fill="#8E2E22"></rect>
+            <rect x="358" y="140" width="22" height="34" rx="6" fill="#9E3460"></rect>
+            <rect x="362" y="146" width="14" height="6" rx="2" fill="#8F2E52"></rect>
           </g>
         </svg>
         <div class="word-bank">

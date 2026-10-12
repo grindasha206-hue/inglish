@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Словарь · Инглиш</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&family=Manrope:wght@400;500;600;700;800&display=swap');
-:root{--cream:#FBF6EC;--paper:#FFFCF5;--ink:#2A2622;--ink-soft:#5c554c;--brick:#AD3B2C;--brick-dark:#8E2E22;--tab:#E2963F;--tab-dark:#C97B2A;--sage:#4F8F6D;--sage-bg:#E6F1EA;--coral:#D65B4A;--coral-bg:#FBE7E3;--gold:#CBA35C;--line:#E4DACB;--shadow:0 6px 18px rgba(42,38,34,.10)}
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Comfortaa:wght@500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap');
+:root{--cream:#FDF4F1;--paper:#FFFDFB;--ink:#3A2E33;--ink-soft:#6B5A61;--brick:#BE456F;--brick-dark:#8F2E52;--tab:#C4507A;--tab-dark:#9E3460;--sage:#4F8F6D;--sage-bg:#E6F1EA;--coral:#D65B4A;--coral-bg:#FBE7E3;--gold:#E8A0B4;--line:#F1D9DF;--shadow:0 6px 18px rgba(150,80,100,.10)}
 *{box-sizing:border-box}
-body{margin:0;background:radial-gradient(circle at 15% 8%,rgba(203,163,92,.10),transparent 40%),var(--cream);color:var(--ink);font-family:'Manrope',sans-serif;line-height:1.5;padding-bottom:60px}
-h1,h2,h3{font-family:'Fraunces',serif;margin:0}
+body{margin:0;background:radial-gradient(circle at 15% 8%,rgba(232,160,180,.10),transparent 40%),var(--cream);color:var(--ink);font-family:'Nunito',sans-serif;line-height:1.5;padding-bottom:60px}
+h1,h2,h3{font-family:'Comfortaa',sans-serif;margin:0}
 .wrap{max-width:960px;margin:0 auto;padding:0 16px}
 header.top{background:linear-gradient(135deg,var(--brick),var(--brick-dark));color:#fff;padding:22px 0 16px}
 header.top h1{font-size:26px}
@@ -21,13 +21,13 @@ header.top p{margin:4px 0 0;opacity:.9;font-size:14px}
 .pill{background:rgba(255,255,255,.18);border-radius:20px;padding:4px 12px;font-size:13px;font-weight:700}
 nav.tabs{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);box-shadow:0 2px 10px rgba(0,0,0,.04)}
 nav.tabs .wrap{display:flex;gap:6px;padding-top:8px;padding-bottom:8px}
-.tabbtn{border:1.5px solid var(--line);background:#fff;color:var(--ink-soft);padding:8px 16px;border-radius:20px;font:700 13.5px 'Manrope';cursor:pointer}
+.tabbtn{border:1.5px solid var(--line);background:#fff;color:var(--ink-soft);padding:8px 16px;border-radius:20px;font:700 13.5px 'Nunito';cursor:pointer}
 .tabbtn.active{background:var(--tab);color:#fff;border-color:var(--tab-dark)}
 section.view{display:none;padding-top:18px}
 section.view.active{display:block}
 .toolbar{display:grid;grid-template-columns:1fr;gap:10px;background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:12px}
 .toolbar .row{display:flex;gap:8px;flex-wrap:wrap}
-input[type=search],select{border:1.5px solid var(--line);border-radius:10px;padding:9px 12px;font:600 14px 'Manrope';background:#fffdf8;color:var(--ink);min-width:0}
+input[type=search],select{border:1.5px solid var(--line);border-radius:10px;padding:9px 12px;font:600 14px 'Nunito';background:#FFFDFB;color:var(--ink);min-width:0}
 input[type=search]{flex:1;min-width:200px}
 input:focus,select:focus{outline:2px solid var(--tab);border-color:var(--tab)}
 .count{font-size:13px;color:var(--ink-soft);margin:10px 2px;font-weight:700}
@@ -36,7 +36,7 @@ input:focus,select:focus{outline:2px solid var(--tab);border-color:var(--tab)}
 .wcard:hover{border-color:var(--tab)}
 .wcard.open{grid-column:1/-1;border-color:var(--tab);box-shadow:var(--shadow)}
 .wtop{display:flex;align-items:center;gap:10px}
-.wword{font:800 18px 'Fraunces',serif;color:var(--brick-dark)}
+.wword{font:800 18px 'Comfortaa',sans-serif;color:var(--brick-dark)}
 .wipa{font-size:12.5px;color:var(--tab-dark);font-style:italic}
 .wru{font-size:14px;color:var(--ink-soft);margin-top:2px}
 .sp{flex:1}
@@ -52,8 +52,8 @@ input:focus,select:focus{outline:2px solid var(--tab);border-color:var(--tab)}
 .badge{display:inline-block;font-size:11.5px;font-weight:800;border-radius:10px;padding:2px 9px;background:var(--cream);border:1px solid var(--line);color:var(--ink-soft);margin-right:4px}
 .badge.a2{background:var(--coral-bg);color:var(--coral);border-color:var(--coral)}
 .badge.a1{background:var(--sage-bg);color:var(--sage);border-color:var(--sage)}
-mark{background:rgba(226,150,63,.35);color:inherit;border-radius:3px}
-.btn{border:none;cursor:pointer;font:800 14px 'Manrope';padding:10px 20px;border-radius:24px;background:var(--brick);color:#fff;box-shadow:0 4px 10px rgba(173,59,44,.25)}
+mark{background:rgba(196,80,122,.35);color:inherit;border-radius:3px}
+.btn{border:none;cursor:pointer;font:800 14px 'Nunito';padding:10px 20px;border-radius:24px;background:var(--brick);color:#fff;box-shadow:0 4px 10px rgba(190,69,111,.25)}
 .btn.sec{background:transparent;color:var(--brick);border:1.5px solid var(--brick);box-shadow:none}
 .btn.good{background:var(--sage);box-shadow:0 4px 10px rgba(79,143,109,.25)}
 .btn.small{padding:6px 14px;font-size:12.5px}
@@ -66,7 +66,7 @@ mark{background:rgba(226,150,63,.35);color:inherit;border-radius:3px}
 .fc.flip .fc-inner{transform:rotateY(180deg)}
 .fc-face{position:absolute;inset:0;border-radius:18px;background:#fff;border:2px solid var(--line);box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;backface-visibility:hidden}
 .fc-face.back{transform:rotateY(180deg);background:var(--cream)}
-.fc-big{font:800 34px 'Fraunces',serif;color:var(--brick-dark)}
+.fc-big{font:800 34px 'Comfortaa',sans-serif;color:var(--brick-dark)}
 .fc-sub{font-size:14px;color:var(--ink-soft);margin-top:8px}
 .fc-ex{font-style:italic;margin-top:10px;font-size:14.5px}
 .progressbar{height:8px;border-radius:6px;background:var(--line);overflow:hidden;max-width:560px;margin:0 auto}
@@ -75,10 +75,10 @@ mark{background:rgba(226,150,63,.35);color:inherit;border-radius:3px}
 .actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
 .opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:560px;margin:14px auto}
 @media(max-width:560px){.opts{grid-template-columns:1fr}.fc-big{font-size:28px}}
-.opt{border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:12px;font:700 15px 'Manrope';cursor:pointer;color:var(--ink)}
+.opt{border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:12px;font:700 15px 'Nunito';cursor:pointer;color:var(--ink)}
 .opt.ok{background:var(--sage-bg);border-color:var(--sage);color:#2f5741}
 .opt.bad{background:var(--coral-bg);border-color:var(--coral);color:var(--coral)}
-.typein{display:block;margin:14px auto;width:100%;max-width:360px;border:1.5px solid var(--line);border-radius:10px;padding:10px;font:700 18px 'Manrope';text-align:center}
+.typein{display:block;margin:14px auto;width:100%;max-width:360px;border:1.5px solid var(--line);border-radius:10px;padding:10px;font:700 18px 'Nunito';text-align:center}
 .typein.ok{border-color:var(--sage);background:var(--sage-bg)}.typein.bad{border-color:var(--coral);background:var(--coral-bg)}
 .fb{text-align:center;font-weight:800;min-height:24px;margin-top:6px}
 .fb.ok{color:var(--sage)}.fb.bad{color:var(--coral)}
@@ -86,9 +86,9 @@ mark{background:rgba(226,150,63,.35);color:inherit;border-radius:3px}
 .empty{text-align:center;color:var(--ink-soft);padding:30px 10px}
 .hidden{display:none!important}
 .lcard{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;align-items:center}
-.lnum{width:52px;height:52px;border-radius:12px;background:var(--brick);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;font:800 20px 'Fraunces',serif;line-height:1}
-.lnum small{font:700 9px 'Manrope';letter-spacing:1.5px;opacity:.8}
-.ltitle{font:800 17px 'Fraunces',serif;color:var(--brick-dark)}
+.lnum{width:52px;height:52px;border-radius:12px;background:var(--brick);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;font:800 20px 'Comfortaa',sans-serif;line-height:1}
+.lnum small{font:700 9px 'Nunito';letter-spacing:1.5px;opacity:.8}
+.ltitle{font:800 17px 'Comfortaa',sans-serif;color:var(--brick-dark)}
 .lmeta{font-size:13px;color:var(--ink-soft)}
 .lbar{height:8px;border-radius:6px;background:var(--line);overflow:hidden;margin-top:6px;display:flex}
 .lbar i{display:block;height:100%}
@@ -97,6 +97,7 @@ mark{background:rgba(226,150,63,.35);color:inherit;border-radius:3px}
 .lwords{grid-column:1/-1;font-size:13px;color:var(--ink-soft)}
 .hint{font-size:12.5px;color:var(--ink-soft)}
 </style>
+<link rel="stylesheet" href="soft-theme.css">
 </head>
 <body>
 <header class="top"><div class="wrap">
