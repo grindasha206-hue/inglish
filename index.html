@@ -142,17 +142,18 @@ a{color:inherit;}
 <body>
 
 <div class="topbar" id="topbar" style="display:none">
-  <a class="logo" href="#/">Ing<span>lish</span> ✳</a>
-  <a class="nav-link" href="dictionary.html">📖 Словарь</a>
-  <a class="nav-link" href="trainer.html">🏋️ Тренажёр</a>
-  <a class="nav-link" href="review.html">🔁 Повторение<span id="rvNavCount"></span></a>
-  <a class="nav-link" href="homework.html">📝 Домашка<span id="hwNavCount"></span></a>
-  <a class="nav-link" href="#/add">＋ Добавить урок</a>
-  <a class="nav-link" href="#/settings">⚙ Настройки</a>
+  <a class="logo" href="#/"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.3C.9 8 3 4.5 6.3 4.5c2 0 3.3 1.1 4.2 2.4.3.4.9.4 1.2 0 .9-1.3 2.2-2.4 4.2-2.4 3.3 0 5.4 3.5 3.9 7.2C19.5 16.4 12 21 12 21z" fill="#F3B3C5" stroke="#D9648A" stroke-width="1.4" stroke-linejoin="round"/></svg>Inglish</a>
+  <nav class="soft-nav">
+  <a class="nav-link" href="dictionary.html">Словарь</a>
+  <a class="nav-link" href="trainer.html">Тренажёр</a>
+  <a class="nav-link" href="review.html">Повторение<span id="rvNavCount"></span></a>
+  <a class="nav-link" href="homework.html">Домашка<span id="hwNavCount"></span></a>
+  <a class="nav-link" href="#/settings">Настройки</a>
+  </nav>
   <div class="top-pills">
-    <div class="pill streak" id="streakPill">🔥 …</div>
-    <div class="pill xp" id="xpPill">✦ …</div>
-    <a class="nav-link" href="#" id="logoutLink" title="Выйти">⎋ Выйти</a>
+    <div class="pill streak" id="streakPill">…</div>
+    <div class="pill xp" id="xpPill">…</div>
+    <a class="logout" href="#" id="logoutLink" title="Выйти из аккаунта">Выйти</a>
   </div>
 </div>
 
@@ -194,8 +195,8 @@ function progressOf(list){ const done = list.filter(isDone).length; return { don
 
 function updatePills(){
   const s = currentStreak(p);
-  document.getElementById('streakPill').textContent = `🔥 ${s} ${dayWord(s)}`;
-  document.getElementById('xpPill').textContent = `✦ ${p.xp} XP`;
+  document.getElementById('streakPill').textContent = `серия ${s} ${dayWord(s)}`;
+  document.getElementById('xpPill').textContent = `${p.xp} XP`;
 }
 
 /* ================= роутер ================= */
@@ -280,8 +281,9 @@ function applyHw(){
   document.querySelectorAll('[data-hw]').forEach(el => {
     const s = HW.summary(HW.localData(el.dataset.hw));
     total++; if (s.complete) doneCount++;
-    el.className = 'hwchip ' + (s.complete ? 'ok' : 'no') + (s.on ? ' pin' : '');
-    el.textContent = s.complete ? '📝 ДЗ выполнена' : ('📝 ДЗ не выполнена · ' + s.done + '/' + s.total);
+    const none = !s.complete && !s.on && !s.done;
+    el.className = 'hwchip ' + (s.complete ? 'ok' : (none ? 'none' : 'no'));
+    el.textContent = s.complete ? 'ДЗ выполнена' : (none ? 'ДЗ ещё не добавлена' : 'ДЗ не выполнена · ' + s.done + '/' + s.total);
   });
   const sum = document.getElementById('hwModSum');
   if (sum && total) sum.textContent = '· ДЗ выполнено ' + doneCount + ' из ' + total;
@@ -384,6 +386,12 @@ function renderHome(view){
     </a>`;
   }).join('');
 
+  /* текущий модуль: где следующий урок (или последний, если всё пройдено) */
+  const anchor = next || ALL_LESSONS[ALL_LESSONS.length-1];
+  const home = anchor ? lessonHome(anchor.id) : null;
+  const homeModule = home ? `<div class="sec-head"><h2>${esc(home.level.code)} · ${esc(home.level.name)}</h2><div class="sub">${esc(home.module.title.toLowerCase())} <span id="hwModSum"></span></div><a class="soft-all" href="#/level/${home.level.id}">все модули →</a></div>
+    <div class="card-list">${home.module.lessons.map(l => lessonRow(l, next)).join('')}</div>` : `<div class="sec-head"><h2>Уровни</h2></div><div class="level-grid">${levels}</div>`;
+
   view.innerHTML = `${hero}
     <div class="review-card">
       <div class="soft-review-head">
@@ -402,8 +410,7 @@ function renderHome(view){
       <div class="stat"><div class="label">Уровень</div><div class="value">${li.level}</div><div class="bar"><i style="width:${li.pct}%"></i></div><div class="sub">${li.into} / ${li.need} XP до уровня ${li.level+1}</div></div>
       <div class="stat"><div class="label">Уроки</div><div class="value">${all.done} <small>из ${all.total}</small></div><div class="bar green"><i style="width:${all.pct}%"></i></div><div class="sub">пройдено во всех уровнях</div></div>
     </div>
-    <div class="sec-head"><h2>Уровни</h2><div class="sub">от простого к сложному</div></div>
-    <div class="level-grid">${levels}</div>
+    ${homeModule}
     <div class="soft-ribbon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${HEART}" fill="none" stroke="#8F2E52" stroke-width="1.8" stroke-linejoin="round"/></svg>Practice makes perfect!</div>
     <div class="footer-tools"><span>Прогресс хранится в аккаунте и синхронизируется.</span><a href="#/settings">Настройки, резервная копия прогресса →</a></div>`;
 }
@@ -442,29 +449,34 @@ function renderLevel(view, lv){
 function renderModule(view, lv, m){
   const next = nextLesson(p);
   const mpr = progressOf(m.lessons);
-  const cards = m.lessons.map(l => {
-    const st = p.lessons[l.id];
-    const done = st?.status === 'done';
-    const isNext = next && next.id === l.id;
-    let right;
-    if (done) right = `<span class="score">★ ${esc(st.bestScore ?? 0)}${st.maxScore ? '/' + esc(st.maxScore) : ''}</span>`;
-    else if (isNext) right = `<span class="cta">начать →</span>`;
-    else right = `<span class="todo">впереди</span>`;
-    return `<a class="row-card${done?' done':''}${isNext?' next':''}" href="player.html?lesson=${l.id}">
-      <div class="badge">${done ? '✓' : (isNext ? '▶' : l.unit)}</div>
-      <div class="info"><div class="t">Unit ${l.unit} · ${esc(l.title)}</div><div class="d">${esc(l.description || '')}</div><span data-hw="${l.id}"></span></div>
-      <div class="right">${right}</div>
-    </a>`;
-  }).join('');
+  const cards = m.lessons.map(l => lessonRow(l, next)).join('');
   view.innerHTML = `<div class="crumbs"><a href="#/">Кабинет</a> → <a href="#/level/${lv.id}">${esc(lv.code)}</a> → ${esc(m.title)}</div>
     <div class="sec-head"><h2>${esc(m.title)}</h2><div class="sub">${mpr.total} ${lessonWord(mpr.total)} · пройдено ${mpr.done} <span id="hwModSum"></span></div></div>
     <div class="card-list">${cards || ''}</div>
     ${cards ? '' : '<div class="empty-note">В модуле пока нет уроков.</div>'}`;
 }
 
+/* строка урока — одна для кабинета и модуля */
+function lessonRow(l, next){
+  const st = p.lessons[l.id];
+  const done = st?.status === 'done';
+  const isNext = next && next.id === l.id;
+  let right;
+  if (done) right = `<span class="score">★ ${esc(st.bestScore ?? 0)}${st.maxScore ? '/' + esc(st.maxScore) : ''}</span>`;
+  else if (isNext) right = `<span class="cta">начать →</span>`;
+  else right = `<span class="todo">впереди</span>`;
+  return `<a class="row-card${done?' done':''}${isNext?' next':''}" href="player.html?lesson=${l.id}">
+    <span class="badge">${done ? '✓' : esc(l.unit)}</span>
+    <span class="info"><span class="t">Unit ${esc(l.unit)} · ${esc(l.title)}</span><span class="d">${esc(l.description || '')}</span></span>
+    <span data-hw="${l.id}"></span>
+    <span class="right">${right}</span>
+  </a>`;
+}
+
 /* ================= настройки ================= */
 function renderSettings(view){
   view.innerHTML=`<div class="crumbs"><a href="#/">Кабинет</a> → Настройки</div>
+  <div class="panel"><h3>Уроки</h3><p class="hint">Новый урок можно добавить из файла.</p><a class="mini-btn" href="#/add">＋ Добавить урок</a></div>
   <div class="panel"><h3>Озвучка и загрузка уроков</h3>
     <p class="hint">Ключи хранятся на сервере. Здесь выбираются только голоса. ${window.BACKEND_URL?'':'Сервер пока не подключён: работает голос браузера.'}</p>
     <p class="hint">Groq: ${serverCapabilities.groq?'подключён':'недоступен'} · ElevenLabs: ${serverCapabilities.eleven?'подключён':'недоступен'} · Загрузка: ${serverCapabilities.github?'доступна владельцу':'недоступна'}</p>

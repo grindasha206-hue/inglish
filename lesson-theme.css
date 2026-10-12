@@ -1,10 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Comfortaa:wght@500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap');
 
 :focus-visible{outline:3px solid #BE456F;outline-offset:3px}
 @media(max-width:600px){input,textarea,select{font-size:16px!important}button,.memo-card,.match-tile{min-height:44px}}
 .print-answer{display:none}
 @media print{#homework textarea{display:none}.print-answer{display:block;white-space:pre-wrap;overflow-wrap:anywhere;margin:8px 0}}
 
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Comfortaa:wght@500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap');
 
 :root{
   --cream:#FDF4F1; --paper:#FFFDFB; --ink:#3A2E33; --ink-soft:#6B5A61;
@@ -226,3 +226,90 @@ textarea.hw-area{min-height:78px; font-size:13.5px;}
 
 /* Нежное оформление: бумага в горошек (только внешний вид) */
 body{background-color:var(--cream)!important;background-image:radial-gradient(#F2D2DB 1px,transparent 1.3px)!important;background-size:22px 22px!important}
+
+/* ================= Урок по макету «нежный вариант» ================= */
+body{font-family:'Nunito',sans-serif!important;color:var(--ink)}
+/* блоки урока — пилюли A–H (заливка = прогресс блока) */
+.topbar{background:rgba(255,253,251,.94)!important;border-bottom:1.5px solid var(--line)!important;box-shadow:none!important;padding:12px 24px!important;flex-wrap:wrap;gap:10px!important}
+.topbar .book-title{display:none!important}
+.progress-steps{display:flex!important;flex-wrap:wrap;gap:8px!important;flex:1;align-items:center}
+.pstep{flex:0 0 auto!important;height:auto!important;padding:6px 14px;border-radius:999px!important;background:#fff!important;border:1.5px solid var(--line);position:relative;overflow:hidden;font:700 13px 'Nunito',sans-serif;color:var(--ink-soft)}
+.pstep i{position:absolute;left:0;top:0;bottom:0;height:auto!important;border-radius:0!important;background:#F9D5DF!important;z-index:0}
+.pstep::after{position:relative;z-index:1}
+#step-p::after{content:"A · Правило"}#step-vocab::after{content:"B · Слова"}#step-pr::after{content:"C · Практика"}#step-read::after{content:"D · Чтение"}
+#step-sound::after{content:"E · Звуки"}#step-listen::after{content:"F · Аудирование"}#step-prod::after{content:"G · Пишем"}#step-hw::after{content:"H · Домашка"}
+.score-pill{background:var(--sage-bg)!important;color:#2F6B50!important;padding:7px 14px!important;border-radius:999px!important;font-weight:800!important}
+
+/* страница — без рамки, на бумаге в горошек */
+.page{max-width:1120px!important;background:transparent!important;border:0!important;box-shadow:none!important;overflow:visible!important;padding:0 24px;box-sizing:border-box}
+.unit-banner{background:none!important;color:var(--ink)!important;text-align:center;padding:34px 0 18px!important}
+.unit-tag{position:static!important;display:inline-flex!important;flex-direction:row!important;gap:8px;background:none!important;border:0!important;box-shadow:none!important;width:auto!important;height:auto!important;padding:0!important;color:var(--ink)!important;font-family:'Comfortaa',sans-serif!important;font-weight:700!important;letter-spacing:2px;text-transform:uppercase}
+.unit-tag .u,.unit-tag .n{font-size:22px!important;opacity:1!important;font-weight:700!important;color:var(--ink)!important;letter-spacing:2px}
+.unit-banner h1{margin:4px 0 10px!important;font-family:'Comfortaa',sans-serif!important;font-weight:700!important;font-size:64px!important;line-height:1.05!important;color:#D9648A!important}
+.unit-banner h1 span{display:block;margin-top:6px;font-size:20px!important;color:var(--ink-soft)!important;opacity:1!important;font-weight:600!important;letter-spacing:0}
+.unit-banner p{display:inline-block;margin:6px 0 0!important;padding:6px 30px;border-radius:999px;background:linear-gradient(90deg,rgba(243,179,197,.35),#F3B3C5,rgba(243,179,197,.35));font-family:'Caveat',cursive;font-weight:700;font-size:22px!important;color:#5E2038!important;opacity:1!important}
+
+/* блоки — бумажные листы со скотчем и круглым стикером-буквой */
+.section{display:block!important;position:relative;margin:34px 0!important;background:var(--paper)!important;border:1.5px solid var(--line)!important;border-radius:16px!important;box-shadow:0 10px 24px rgba(190,110,130,.12)!important}
+.section::before{content:"";position:absolute;top:-12px;left:70px;width:96px;height:24px;transform:rotate(-3deg);background-color:rgba(243,179,197,.85);background-image:radial-gradient(rgba(255,255,255,.85) 1.6px,transparent 1.8px);background-size:11px 11px;z-index:1}
+.section:nth-of-type(even)::before{background-color:rgba(190,214,236,.85);transform:rotate(3deg)}
+.section .tab,.section.alt .tab{position:absolute!important;top:-18px;left:-14px;width:48px!important;height:48px!important;padding:0!important;border-radius:50%!important;background:var(--brick)!important;color:#fff!important;display:flex!important;align-items:center!important;justify-content:center!important;font:700 21px 'Comfortaa',sans-serif!important;box-shadow:0 6px 14px rgba(190,69,111,.3);z-index:2}
+.section .content{padding:32px 36px 32px!important}
+.section .eyebrow{font-family:'Caveat',cursive!important;font-weight:700!important;font-size:26px!important;letter-spacing:0!important;text-transform:none!important;color:var(--brick)!important}
+.section h2{font-family:'Comfortaa',sans-serif!important;font-weight:700!important;font-size:28px!important;color:var(--ink)!important;margin:2px 0 8px!important}
+.section h3{font-family:'Comfortaa',sans-serif!important;color:var(--brick)!important}
+.section p.lead{font-size:16.5px!important;color:var(--ink-soft)!important;line-height:1.65}
+
+/* карточки-контрасты */
+.cue-cards{gap:18px!important;margin-top:20px!important}
+.cue-card{flex:1 1 220px;width:auto!important;background:var(--paper)!important;border:1.5px solid var(--line)!important;border-radius:14px!important;padding:20px 22px!important;font:700 17px 'Comfortaa',sans-serif!important;font-style:normal!important;color:var(--ink)!important;text-align:center;box-shadow:0 8px 20px rgba(190,110,130,.1)}
+.cue-card:nth-child(odd){transform:rotate(-.8deg)}
+.cue-card:nth-child(even){transform:rotate(.8deg);background:var(--pink-bg,#FDEAEF)!important}
+.cue-card b{display:table!important;margin:0 auto 10px!important;padding:3px 22px;border:2px solid #D9648A;border-radius:999px;color:#D9648A!important;font-size:18px!important}
+
+/* картинка — полароид со скотчем */
+.pic-slot{position:relative;max-width:440px;margin:26px auto!important;background:#fff!important;padding:12px 12px 16px!important;border:0!important;border-radius:6px!important;box-shadow:0 12px 28px rgba(190,110,130,.2)!important;transform:rotate(2deg)}
+.pic-slot::before{content:"";position:absolute;top:-13px;left:50%;margin-left:-48px;width:96px;height:26px;transform:rotate(-4deg);background-color:rgba(243,179,197,.85);background-image:radial-gradient(rgba(255,255,255,.85) 1.6px,transparent 1.8px);background-size:11px 11px;z-index:1}
+.pic-slot img{border-radius:3px}
+.pic-ph{height:240px;border-radius:3px!important;border:0!important;background:linear-gradient(180deg,#CFE0F1 0%,#F4D6DE 55%,#F6B9A8 100%)!important;font-family:'Caveat',cursive;font-weight:700;font-size:24px;color:#8F2E52!important}
+.pic-ph span{display:none}
+.pic-slot figcaption{border:0!important;background:none!important;text-align:center;font-family:'Caveat',cursive;font-weight:700;font-size:22px!important;color:#8F2E52!important;padding:12px 6px 0!important;font-style:normal!important}
+
+/* диалог */
+.d-bubble{border-radius:18px!important}
+.d-bubble.q{background:var(--paper)!important;border:1.5px solid #D9648A!important}
+.d-bubble.a{background:var(--sage-bg)!important;border:1.5px solid #9CC9AF!important}
+
+/* таблицы формы */
+.gram-box{background:var(--paper)!important;border:1.5px solid var(--line)!important;border-radius:14px!important;padding:22px 26px!important;box-shadow:0 8px 20px rgba(190,110,130,.1)}
+.gram-box h3{font-size:18px!important;margin:0 0 12px!important}
+.formtable td{padding:10px 8px!important;border-bottom:1.5px dashed #F0C3D0!important;font-size:16px!important}
+.formtable tr:last-child td{border-bottom:0!important}
+.formtable .short{color:var(--brick)!important;font-weight:800!important}
+
+/* «частая ошибка» — розовый стикер */
+.mini-note{border-radius:14px!important;border:1.5px dashed #F0C3D0!important;background:var(--cream)!important}
+.mini-note.warn{position:relative;background:#FDEAEF!important;border:0!important;padding:22px 24px!important;transform:rotate(.6deg);box-shadow:0 8px 20px rgba(190,110,130,.12);margin:22px 0!important;font-size:16px}
+.mini-note.warn::before{content:"";position:absolute;top:-12px;right:30px;width:80px;height:24px;transform:rotate(6deg);background-color:rgba(243,179,197,.9);background-image:radial-gradient(rgba(255,255,255,.85) 1.6px,transparent 1.8px);background-size:11px 11px}
+.mini-note.warn b:first-child{display:block;font-family:'Comfortaa',sans-serif;font-size:15px;letter-spacing:1px;text-transform:uppercase;color:var(--brick);margin-bottom:6px}
+.template-mistake{display:inline-block;background:#FDEAEF!important;border:0!important;border-radius:12px!important;padding:12px 18px!important;font-family:'Caveat',cursive!important;font-weight:700!important;font-size:22px!important;color:#5E2038!important;transform:rotate(-.5deg)}
+
+/* кнопки, поля, игры */
+.btn{border-radius:999px!important;font-family:'Nunito',sans-serif!important}
+.play-btn{border-radius:50%!important;border:1.5px solid #F3B3C5!important;background:#FDE6EC!important}
+.blank-input,.typein,input[type=text]{border:0!important;border-bottom:2px dashed #E3B3C2!important;background:#FFF6F8!important;border-radius:6px 6px 0 0!important;font-family:'Nunito',sans-serif!important;font-weight:700}
+.blank-input.correct{background:var(--sage-bg)!important;border-bottom:2px solid #6FA98A!important;color:#2F6B50!important}
+.blank-input.wrong{background:#FDE6EC!important;border-bottom:2px solid #D9648A!important;color:#A63B63!important}
+.game-tab-btn,.speed-btn,.tf-btn,.quiz-opt,.mc-opt{border-radius:999px!important}
+.game-tab-btn.active,.speed-btn.active{background:var(--brick)!important;border-color:var(--brick)!important;color:#fff!important}
+.memo-card,.match-tile{border-radius:14px!important}
+.vocab-row,.chunk-card,.sound-block,.read-text,.reveal-box{border-radius:14px!important;border-color:var(--line)!important}
+.read-text{background:#FFFDFB!important;border:1.5px dashed #F0C3D0!important}
+.write-area{border:1.5px solid var(--line)!important;border-radius:12px!important;background-color:#FFFDFB!important;background-image:repeating-linear-gradient(transparent 0 29px,#F3D6DE 29px 30px)!important;line-height:30px!important;background-attachment:local}
+.hw-item{border-radius:12px!important;border-color:var(--line)!important;background:var(--paper)!important}
+.hw-item b{color:var(--brick)!important;font-family:'Nunito',sans-serif!important}
+.hw-check{accent-color:var(--brick)!important}
+.hw-area{font:500 22px/30px 'Caveat',cursive!important;background-color:#FFFDFB!important;background-image:repeating-linear-gradient(transparent 0 29px,#F3D6DE 29px 30px)!important;border-radius:10px!important}
+.badge-final{border-radius:999px!important;background:linear-gradient(90deg,#F9D5DF,#F3B3C5,#F9D5DF)!important;color:#5E2038!important;font-family:'Caveat',cursive!important;font-size:26px!important}
+.footer-note{font-family:'Caveat',cursive;font-size:22px;color:var(--brick-dark)}
+@media(max-width:640px){.page{padding:0 14px}.unit-banner h1{font-size:40px!important}.section .content{padding:28px 18px!important}.section .tab{left:-6px}}

@@ -51,11 +51,11 @@ iframe{flex:1;min-height:0; width:100%; border:none; background:var(--cream);}
   <a class="back" id="backLink" href="index.html">← Кабинет</a>
   <div class="title" id="barTitle">Урок</div>
   <div class="voice-pill off" id="voicePill" title="Озвучка">…</div>
-  <button class="redo-btn" id="redoBtn" title="Фраза прозвучала неправильно? Нажми — я озвучу её заново другим дублем.">↻ переозвучить</button>
-  <button class="redo-btn shown" id="resetBtn" title="Стереть свои ответы в этом уроке и начать с чистого листа (прогресс и XP останутся)">⟲ заново</button>
-  <button class="redo-btn shown" id="hwBtn" disabled title="Добавить домашнее задание этого урока в раздел «Домашка» — его можно выполнять без захода в урок">📝 В домашку</button>
+  <button class="redo-btn" id="redoBtn" title="Фраза прозвучала неправильно? Нажми — я озвучу её заново другим дублем.">переозвучить</button>
+  <button class="redo-btn shown" id="resetBtn" title="Стереть свои ответы в этом уроке и начать с чистого листа (прогресс и XP останутся)">заново</button>
+  <button class="redo-btn shown" id="hwBtn" disabled title="Добавить домашнее задание этого урока в раздел «Домашка» — его можно выполнять без захода в урок">В домашку</button>
   <a class="back hw-link" id="hwLink" href="homework.html" style="display:none">К домашке →</a>
-  <button class="done-btn" id="doneBtn">✓ Завершить урок</button>
+  <button class="done-btn" id="doneBtn">Завершить урок</button>
 </div>
 
 <iframe id="lessonFrame" src="about:blank" sandbox="allow-scripts allow-modals" referrerpolicy="no-referrer" title="Урок"></iframe>
@@ -156,7 +156,7 @@ function updateHwBtn(){
  const b=document.getElementById('hwBtn'),l=document.getElementById('hwLink');if(!b)return;
  const hw=latestCapture&&latestCapture.homework,on=!!(hw&&hw.on),n=hw&&hw.c?hw.c.filter(x=>x===1).length:0,tot=hw&&hw.c&&hw.c.length||5;
  b.disabled=!latestCapture;
- b.textContent=on?(n>=tot?'✅ ДЗ выполнена':'✓ В домашке ('+n+'/'+tot+')'):'📝 В домашку';
+ b.textContent=on?(n>=tot?'ДЗ выполнена':'✓ В домашке ('+n+'/'+tot+')'):'В домашку';
  b.title=on?'Убрать из раздела «Домашка»':'Добавить домашнее задание этого урока в раздел «Домашка» — его можно выполнять без захода в урок';
  l.style.display=on?'':'none';
 }
@@ -200,14 +200,14 @@ function refreshVoiceUI(){
   const toggleable = canToggleVoice();
   if (provider === 'eleven') {
     pill.className = 'voice-pill' + (toggleable ? ' toggle' : '');
-    pill.textContent = `🎙 ${getSetting('elevenVoiceName')||'ElevenLabs'}`;
+    pill.textContent = `голос: ${getSetting('elevenVoiceName')||'ElevenLabs'}`;
   } else if (provider === 'groq') {
     const v = getSetting('groqVoice') || 'hannah';
     pill.className = 'voice-pill' + (toggleable ? ' toggle' : '');
-    pill.textContent = `🎙 ${v[0].toUpperCase()+v.slice(1)}`;
+    pill.textContent = `голос: ${v[0].toUpperCase()+v.slice(1)}`;
   } else {
     pill.className = 'voice-pill off';
-    pill.innerHTML = `<a href="index.html#/settings" title="Подключить живой голос">🤖 голос браузера</a>`;
+    pill.innerHTML = `<a href="index.html#/settings" title="Подключить живой голос">голос браузера</a>`;
   }
   pill.title = toggleable ? 'Нажми, чтобы переключить голос: Groq ↔ ElevenLabs' : 'Озвучка';
 
@@ -261,7 +261,7 @@ function voiceOk(){
   if (pill.className === 'voice-pill') return;
   const v = _activeVoiceProvider === 'eleven' ? (getSetting('elevenVoiceName')||'ElevenLabs') : (getSetting('groqVoice') || 'hannah');
   pill.className = 'voice-pill';
-  pill.textContent = `🎙 ${v[0].toUpperCase()+v.slice(1)}`;
+  pill.textContent = `голос: ${v[0].toUpperCase()+v.slice(1)}`;
 }
 
 document.getElementById('redoBtn').addEventListener('click', async () => {
@@ -271,7 +271,7 @@ document.getElementById('redoBtn').addEventListener('click', async () => {
     if (_activeVoiceProvider === 'eleven') await regenerateLastEleven();
     else await regenerateLastTts();
   } catch(e){ voiceError(e); }
-  b.classList.remove('busy'); b.textContent = '↻ переозвучить';
+  b.classList.remove('busy'); b.textContent = 'переозвучить';
 });
 
 function readLessonResult(){return latestResult;}

@@ -56,12 +56,11 @@ textarea:focus{outline:2px solid var(--tab);border-color:var(--tab)}
 </style>
 <link rel="stylesheet" href="soft-theme.css">
 </head>
-<body>
+<body class="page-hw">
 <header class="top"><div class="wrap">
   <a class="backlink" href="index.html">← В кабинет</a>
-  <h1>📝 Домашка</h1>
-  <p>Задания из уроков — выполняй здесь, не заходя в урок. Всё синхронно с уроком.</p>
-  <div class="stats" id="stats"></div>
+  <div class="soft-head"><h1>Домашка</h1><span class="soft-sub">делай здесь — в уроке всё отметится само</span></div>
+  <div class="stats hidden" id="stats"></div>
 </div></header>
 <main class="wrap">
   <div class="tabs" id="tabs">
@@ -72,6 +71,7 @@ textarea:focus{outline:2px solid var(--tab);border-color:var(--tab)}
   <div id="status" class="note">Загружаю…</div>
   <div id="list"></div>
   <div class="note" id="foot"></div>
+  <div class="soft-footline" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M12 2l2.6 6.6 7 .5-5.4 4.5 1.7 6.9L12 16.8 6.1 20.5l1.7-6.9L2.4 9.1l7-.5z" fill="none" stroke="#E3A3B6" stroke-width="1.5" stroke-linejoin="round"/></svg><span>маленькими шагами — каждый день</span><svg width="22" height="22" viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.6-9.3C.9 8 3 4.5 6.3 4.5c2 0 3.3 1.1 4.2 2.4.3.4.9.4 1.2 0 .9-1.3 2.2-2.4 4.2-2.4 3.3 0 5.4 3.5 3.9 7.2C19.5 16.4 12 21 12 21z" fill="none" stroke="#E3A3B6" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
 </main>
 
 <script src="sync-core.js"></script>
@@ -147,13 +147,13 @@ window.addEventListener('pagehide',()=>{ for(const id of Object.keys(timers)){ c
 let view='todo';
 function chip(id){
   const s=sum(id);
-  if(s.complete) return '<span class="chip ok">✅ выполнена</span>';
+  if(s.complete) return '<span class="chip ok">выполнена</span>';
   return `<span class="chip no">не выполнена · ${s.done}/${s.total}</span>`;
 }
 function taskHtml(id){
   const hw=hwOf(id), list=tasks[id]||[];
   if(!list.length) return '<p class="note">Не удалось загрузить задания урока. Открой урок, чтобы увидеть их.</p>';
-  return list.map((t,i)=>`<div class="task${hw.c[i]===1?' on':''}" data-i="${i}"><input type="checkbox" data-c="${i}" ${hw.c[i]===1?'checked':''} aria-label="Задание ${i+1}: сделано"><div class="tx"><b>${i+1}. ${esc(t.lead)}</b> ${esc(t.text)}<textarea data-t="${i+1}" placeholder="Твой ответ (сохраняется сам)">${esc((hw.t||{})[i+1]||'')}</textarea><div class="saved" data-s="${i+1}"></div></div></div>`).join('');
+  return list.map((t,i)=>`<div class="task${hw.c[i]===1?' on':''}" data-i="${i}"><input type="checkbox" data-c="${i}" ${hw.c[i]===1?'checked':''} aria-label="Задание ${i+1}: сделано"><div class="tx"><b>${i+1}. ${esc(t.lead)}</b> ${esc(t.text)}<textarea data-t="${i+1}" placeholder="твои записи…">${esc((hw.t||{})[i+1]||'')}</textarea><div class="saved" data-s="${i+1}"></div></div></div>`).join('');
 }
 function card(l){
   const s=sum(l.id);
@@ -163,7 +163,7 @@ function render(){
   const added=lessons.filter(l=>sum(l.id).on);
   const todo=added.filter(l=>!sum(l.id).complete), done=added.filter(l=>sum(l.id).complete);
   $('stats').innerHTML=`<span class="pill">К выполнению: ${todo.length}</span><span class="pill">Выполнено: ${done.length}</span>`;
-  document.querySelectorAll('.tab').forEach(b=>{ b.classList.toggle('active',b.dataset.v===view); b.textContent={todo:'К выполнению',done:'Выполненные',all:'Все уроки'}[b.dataset.v]+(b.dataset.v==='todo'?' ('+todo.length+')':b.dataset.v==='done'?' ('+done.length+')':''); });
+  document.querySelectorAll('.tab').forEach(b=>{ b.classList.toggle('active',b.dataset.v===view); b.textContent={todo:'К выполнению',done:'Выполненные',all:'Все уроки'}[b.dataset.v]+(b.dataset.v==='todo'?' · '+todo.length:b.dataset.v==='done'?' · '+done.length:''); });
   let html='';
   if(view==='all'){
     html=lessons.map(l=>{ const s=sum(l.id);
@@ -199,7 +199,7 @@ function bind(){
       const k=ta.dataset.t, s=card.querySelector(`[data-s="${k}"]`);
       mutate(id,hw=>{hw.t={...(hw.t||{}),[k]:ta.value};},600);
       if(s) s.textContent='сохраняю…';
-      clearTimeout(ta._t); ta._t=setTimeout(()=>{ if(s) s.textContent='✓ сохранено'; },700);
+      clearTimeout(ta._t); ta._t=setTimeout(()=>{ if(s) s.textContent='сохранено'; },700);
     });
   });
 }

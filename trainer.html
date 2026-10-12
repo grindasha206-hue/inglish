@@ -92,29 +92,38 @@ header.top p{margin:4px 0 0;opacity:.9;font-size:14px}
 <body>
 <header class="top"><div class="wrap">
   <a class="backlink" href="index.html">← В кабинет</a>
-  <h1>🏋️ Тренажёр по грамматике</h1>
-  <p>Только то, что вы уже прошли: Units 1–7. Собери тренировку сам или иди по урокам.</p>
-  <div class="stats" id="stats"></div>
+  <div class="soft-head"><h1>Тренажёр</h1><span class="soft-sub">собери тренировку сама</span><span class="soft-sp"></span>
+  <div class="tabs" id="mainTabs"><button class="tab active" data-v="vHome">Конструктор</button><button class="tab" data-v="vHist">История</button></div></div>
+  <div class="stats hidden" id="stats"></div>
 </div></header>
 
 <main class="wrap">
-<div class="tabs" id="mainTabs"><button class="tab active" data-v="vHome">🛠 Конструктор</button><button class="tab" data-v="vHist">📈 История</button></div>
 <section class="view active" id="vHome">
+  <div class="soft-cols">
   <div class="panel cons">
-    <h2 style="font-size:20px">🛠 Конструктор тренировки</h2>
-    <h3>1. Темы <button class="btn sec" id="tAll" style="padding:3px 10px;font-size:11.5px">все</button> <button class="btn sec" id="tNone" style="padding:3px 10px;font-size:11.5px">очистить</button></h3>
+    <h3>1. темы <button class="btn sec soft-xs" id="tAll">все</button> <button class="btn sec soft-xs" id="tNone">очистить</button></h3>
     <div class="tg" id="cTopics"></div>
-    <h3>2. Сколько заданий каждого типа</h3>
+    <h3>2. сколько заданий каждого типа</h3>
     <div id="cFmts"></div>
-    <div class="row" style="margin:8px 0 0"><button class="btn sec" id="pEven" style="padding:5px 12px;font-size:12px">по 2 каждого</button><button class="btn sec" id="pDef" style="padding:5px 12px;font-size:12px">стандарт (10)</button><button class="btn sec" id="pZero" style="padding:5px 12px;font-size:12px">обнулить</button></div>
-    <h3>3. Что брать</h3>
-    <div class="row" style="margin:0">
-      <select class="sel" id="cSrc"><option value="all">всё подряд (сначала ошибки и новые)</option><option value="err">только мои ошибки</option><option value="new">только ещё не решённые</option></select>
-    </div>
-    <div class="row"><button class="btn" id="cGo">▶ Начать</button><span class="mini" id="cInfo" style="align-self:center"></span></div>
+    <div class="row soft-presets" style="margin:8px 0 0"><button class="btn sec" id="pEven" style="padding:5px 12px;font-size:12px">по 2 каждого</button><button class="btn sec" id="pDef" style="padding:5px 12px;font-size:12px">стандарт (10)</button><button class="btn sec" id="pZero" style="padding:5px 12px;font-size:12px">обнулить</button></div>
+    <h3>3. что брать</h3>
+    <div class="tg" id="cSrcChips"></div>
+    <div class="hidden"><select class="sel" id="cSrc"><option value="all">всё подряд (сначала ошибки и новые)</option><option value="err">только мои ошибки</option><option value="new">только ещё не решённые</option></select></div>
+    <div class="soft-go"><button class="btn" id="cGo">Начать</button><span class="mini" id="cInfo"></span></div>
   </div>
-  <h2 style="font-size:19px;margin:20px 0 10px">Или по уроку</h2>
-  <div class="grid" id="topics"></div>
+  <div class="soft-side">
+    <div class="soft-sample">
+      <div class="soft-kicker">так выглядит задание · 3 / 20</div>
+      <div class="soft-mini-bar"><i style="width:15%"></i></div>
+      <div class="soft-sample-q">Это предложение правильное?</div>
+      <div class="soft-sample-s">She don't like coffee.</div>
+      <div class="soft-sample-btns"><span class="soft-b ok">Верно</span><span class="soft-b">Есть ошибка</span></div>
+      <div class="soft-sample-fb"><b>Верно!</b> Правильно: <b>She doesn't like coffee.</b></div>
+    </div>
+    <div class="soft-or">или по уроку ↓</div>
+  </div>
+  </div>
+  <div class="grid soft-topics" id="topics"></div>
 </section>
 
 <section class="view" id="vHist">
@@ -226,11 +235,13 @@ function topicStat(t){
 }
 function availFor(f,pool){ return pool.filter(it=>elig(it,[f]).length).length; }
 function renderCons(){
-  $('cTopics').innerHTML = TOPICS.map(t=>`<button class="tgb ${cfg.topics.includes(t.id)?'on':''}" data-t="${t.id}">${t.emoji} ${esc(t.title)}</button>`).join('');
+  $('cTopics').innerHTML = TOPICS.map(t=>`<button class="tgb ${cfg.topics.includes(t.id)?'on':''}" data-t="${t.id}">${esc(t.title)}</button>`).join('');
+  $('cSrcChips').innerHTML = [['all','всё подряд'],['err','только мои ошибки'],['new','только новые']].map(([v,l])=>`<button class="tgb ${cfg.src===v?'on':''}" data-src="${v}">${l}</button>`).join('');
+  document.querySelectorAll('[data-src]').forEach(b=>b.onclick=()=>{ cfg.src=b.dataset.src; saveCfg(); renderCons(); });
   const pool = poolFor(cfg);
   $('cFmts').innerHTML = FM_KEYS.map(k=>{
     const av=availFor(k,pool), n=cfg.counts[k]||0;
-    return `<div class="fmtrow"><div class="nm">${FMT[k].n}<small>${FMT[k].d}</small></div><div class="av">доступно: ${av}</div><div class="stp"><button data-m="${k}">−</button><b style="${n>av?'color:var(--coral)':''}">${n}</b><button data-p="${k}">+</button></div></div>`;
+    return `<div class="fmtrow ${n?'on':''}"><div class="nm">${FMT[k].n}<small>${FMT[k].d}</small></div><div class="av">доступно: ${av}</div><div class="stp"><button data-m="${k}">−</button><b style="${n>av?'color:var(--coral)':''}">${n}</b><button data-p="${k}">+</button></div></div>`;
   }).join('');
   $('cSrc').value = cfg.src;
   document.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{ const id=+b.dataset.t; cfg.topics = cfg.topics.includes(id)?cfg.topics.filter(x=>x!==id):[...cfg.topics,id]; saveCfg(); renderCons(); });
@@ -238,7 +249,10 @@ function renderCons(){
   document.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{ const k=b.dataset.p; cfg.counts[k]=Math.min(50,(cfg.counts[k]||0)+((cfg.counts[k]||0)>=5?5:1)); saveCfg(); renderCons(); });
   const tot=total(cfg);
   const lack = FM_KEYS.filter(k=>(cfg.counts[k]||0)>availFor(k,pool));
-  $('cInfo').textContent = !cfg.topics.length ? 'Выбери хотя бы одну тему' : !tot ? 'Задай количество хотя бы для одного типа' : !pool.length ? 'Под такие настройки заданий нет — измени фильтр' : `Всего в тренировке: ${tot}`+(lack.length?` · не хватает заданий типа: ${lack.map(k=>FMT[k].n).join(', ')} (возьму сколько есть)`:'');
+  const plural=(n,a,b,c)=>{const m10=n%10,m100=n%100;return m10===1&&m100!==11?a:(m10>=2&&m10<=4&&(m100<10||m100>=20)?b:c);};
+  const parts=activeFmts(cfg).map(k=>`${cfg.counts[k]} «${FMT[k].n.toLowerCase()}»`).join(' + ');
+  $('cGo').textContent = tot ? `Начать · ${tot} ${plural(tot,'задание','задания','заданий')}` : 'Начать';
+  $('cInfo').textContent = !cfg.topics.length ? 'Выбери хотя бы одну тему' : !tot ? 'Задай количество хотя бы для одного типа' : !pool.length ? 'Под такие настройки заданий нет — измени фильтр' : parts+(lack.length?` · не хватает: ${lack.map(k=>FMT[k].n).join(', ')} (возьму сколько есть)`:'');
   $('cGo').disabled = !cfg.topics.length || !tot || !pool.length;
 }
 function renderHome(){
@@ -248,7 +262,7 @@ function renderHome(){
   renderCons();
   $('topics').innerHTML = TOPICS.map(t=>{
     const s=topicStat(t);
-    return `<button class="topic" data-id="${t.id}"><div class="em">${t.emoji}</div><h3>${esc(t.title)}</h3><div class="meta">Верно сейчас: ${s.mastered} из ${s.n}${s.acc!=null?' · точность '+s.acc+'%':''}</div><div class="bar"><i style="width:${Math.round(100*s.mastered/s.n)}%"></i></div></button>`;
+    return `<button class="topic" data-id="${t.id}"><h3>${esc(t.title)}</h3><div class="meta">${s.mastered||s.acc!=null?`верно ${s.mastered} из ${s.n}${s.acc!=null?' · '+s.acc+'%':''}`:'ещё не начато'}</div><div class="bar"><i style="width:${Math.round(100*s.mastered/s.n)}%"></i></div></button>`;
   }).join('');
   document.querySelectorAll('.topic').forEach(b=>b.onclick=()=>openIntro(byTopic[b.dataset.id]));
 }

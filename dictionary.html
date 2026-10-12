@@ -102,16 +102,14 @@ mark{background:rgba(196,80,122,.35);color:inherit;border-radius:3px}
 <body>
 <header class="top"><div class="wrap">
   <a class="backlink" href="index.html">← В кабинет</a>
-  <h1>📖 Словарь курса</h1>
-  <p>Все слова из уроков: ищи, смотри перевод и примеры, повторяй карточками и проверяй себя тестом.</p>
-  <div class="stats" id="stats"></div>
+  <div class="soft-head"><h1>Словарь</h1><span class="soft-sub" id="dictSub">слова из твоих уроков</span><span class="soft-sp"></span><div class="stats" id="stats"></div></div>
 </div></header>
 
 <nav class="tabs"><div class="wrap">
-  <button class="tabbtn active" data-view="vLessons">🎓 По урокам</button>
-  <button class="tabbtn" data-view="vDict">📚 Словарь</button>
-  <button class="tabbtn" data-view="vCards">🃏 Карточки</button>
-  <button class="tabbtn" data-view="vQuiz">⚡ Тест</button>
+  <button class="tabbtn active" data-view="vLessons">По урокам</button>
+  <button class="tabbtn" data-view="vDict">Словарь</button>
+  <button class="tabbtn" data-view="vCards">Карточки</button>
+  <button class="tabbtn" data-view="vQuiz">Тест</button>
 </div></nav>
 
 <div class="wrap"><div class="voice-note" id="voiceNote" style="color:var(--ink-soft);margin-top:10px"></div></div>
@@ -123,21 +121,24 @@ mark{background:rgba(196,80,122,.35);color:inherit;border-radius:3px}
 </section>
 
 <section class="view" id="vDict">
-  <div class="toolbar">
-    <div class="row"><input type="search" id="q" placeholder="Поиск: слово, перевод, пример…" autocomplete="off"></div>
+  <div class="toolbar soft-search">
     <div class="row">
-      <select id="fUnit"></select>
-      <select id="fPos"></select>
-      <select id="fCefr"></select>
-      <select id="fStatus">
+      <label class="soft-q"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="#BE456F" stroke-width="2"/><path d="M16.5 16.5L21 21" stroke="#BE456F" stroke-width="2" stroke-linecap="round"/></svg><input type="search" id="q" placeholder="найди слово по-английски или по-русски" autocomplete="off" aria-label="Поиск слова"></label>
+      <select id="fUnit" aria-label="Урок"></select>
+      <select id="fStatus" aria-label="Статус">
         <option value="">Любой статус</option><option value="new">Новые</option><option value="learn">Учу</option><option value="known">Выучены</option><option value="star">★ Сложные</option>
       </select>
-      <select id="fSort"><option value="order">По порядку курса</option><option value="az">А → Я</option><option value="ru">По переводу</option></select>
-      <select id="fHas"><option value="">Все слова</option><option value="chunk">Только с выражениями</option></select>
     </div>
+    <details class="soft-more"><summary>ещё фильтры</summary><div class="row">
+      <select id="fPos" aria-label="Часть речи"></select>
+      <select id="fCefr" aria-label="Уровень"></select>
+      <select id="fSort" aria-label="Порядок"><option value="order">По порядку курса</option><option value="az">А → Я</option><option value="ru">По переводу</option></select>
+      <select id="fHas" aria-label="Выражения"><option value="">Все слова</option><option value="chunk">Только с выражениями</option></select>
+    </div></details>
   </div>
   <div class="count" id="count"></div>
   <div class="list" id="list"></div>
+  <div class="soft-legend"><span><i class="dot k"></i>выучено</span><span><i class="dot l"></i>учу</span><span><i class="dot"></i>новое</span></div>
 </section>
 
 <section class="view" id="vCards">
@@ -261,7 +262,8 @@ function renderStats(){
   const total=WORDS.length;
   let known=0, learn=0, due=0, star=0;
   WORDS.forEach(w=>{ const s=status(w.id); if(s==='known')known++; else if(s==='learn')learn++; if(s!=='new'&&isDue(w.id))due++; if(prog[w.id]&&prog[w.id].star)star++; });
-  $('stats').innerHTML = `<span class="pill">Всего слов: ${total}</span><span class="pill">Выучено: ${known}</span><span class="pill">Учу: ${learn}</span><span class="pill">Пора повторить: ${due}</span><span class="pill">★ ${star}</span>`;
+  $('stats').innerHTML = `<span class="pill ok">выучено ${known}</span><span class="pill">учу ${learn}</span><span class="pill hot">пора повторить ${due}</span>`;
+  if($('dictSub')) $('dictSub').textContent = `${total} слов из твоих уроков`;
 }
 
 /* ============ tabs ============ */
@@ -283,15 +285,15 @@ function renderLessons(){
     const ws=WORDS.filter(w=>w.unit===u), k=ws.filter(w=>status(w.id)==='known').length, l=ws.filter(w=>status(w.id)==='learn').length, due=ws.filter(w=>status(w.id)!=='new'&&isDue(w.id)).length;
     const sample=ws.slice(0,8).map(w=>w.word).join(', ')+(ws.length>8?'…':'');
     return `<div class="lcard">
-      <div class="lnum"><small>UNIT</small>${u}</div>
+      <div class="lnum">${u}</div>
       <div><div class="ltitle">${esc(UNIT_TITLES[u]||'')}</div>
         <div class="lmeta">${ws.length} слов · выучено ${k} · учу ${l} · новых ${ws.length-k-l}${due?` · <b>пора повторить: ${due}</b>`:''}</div>
         <div class="lbar"><i class="k" style="width:${k/ws.length*100}%"></i><i class="l" style="width:${l/ws.length*100}%"></i></div></div>
       <div class="lwords">${esc(sample)}</div>
       <div class="lact">
-        <button class="btn small" data-lu="${u}" data-go="cards">🃏 Учить карточками</button>
-        <button class="btn sec small" data-lu="${u}" data-go="quiz">⚡ Тест</button>
-        <button class="btn sec small" data-lu="${u}" data-go="dict">📚 Список слов</button>
+        <button class="btn small" data-lu="${u}" data-go="cards">Учить карточками</button>
+        <button class="btn sec small" data-lu="${u}" data-go="quiz">Тест</button>
+        <button class="btn sec small" data-lu="${u}" data-go="dict">Список слов</button>
       </div></div>`;
   }).join('');
 }
@@ -343,17 +345,19 @@ function renderList(){
     const s=status(w.id), p=prog[w.id]||{}, open=openId===w.id;
     return `<div class="wcard ${open?'open':''}" data-id="${w.id}">
       <div class="wtop"><span class="dot ${s==='known'?'k':s==='learn'?'l':''}" title="${s==='known'?'выучено':s==='learn'?'учу':'новое'}"></span>
-        <div><span class="wword">${hl(w.word,q)}</span> <span class="wipa">${esc(w.ipa)}</span><div class="wru">${hl(w.ru,q)}</div></div>
+        <div class="wmain"><span class="wword">${hl(w.word,q)}</span>${open?` <span class="wipa">${esc(w.ipa)}</span> <span class="wru-inline">${hl(w.ru,q)}</span>`:`<div class="wru">${hl(w.ru,q)}</div>`}</div>
         <span class="sp"></span>
-        <button class="ibtn" data-act="say" data-id="${w.id}" title="Послушать">🔊</button>
-        <button class="ibtn ${p.star?'on':''}" data-act="star" data-id="${w.id}" title="Сложное слово">★</button>
+        <button class="ibtn play" data-act="say" data-id="${w.id}" aria-label="Послушать"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5v14l12-7z" fill="#BE456F"/></svg></button>
+        ${open?`<button class="ibtn star ${p.star?'on':''}" data-act="star" data-id="${w.id}" aria-label="Сложное слово"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.6 6.6 7 .5-5.4 4.5 1.7 6.9L12 16.8 6.1 20.5l1.7-6.9L2.4 9.1l7-.5z" fill="currentColor"/></svg></button>`:''}
       </div>
       <div class="detail">
-        <div class="line"><span class="lab">Пример</span><div>${w.ex?hl(w.ex,q)+' <button class="ibtn" data-act="sayex" data-id="'+w.id+'">🔊</button>':'—'}</div></div>
-        ${w.chunk?`<div class="line"><span class="lab">Выражение</span><div><b>${hl(w.chunk,q)}</b> <button class="ibtn" data-act="saych" data-id="${w.id}">🔊</button></div></div>`:''}
-        <div class="line"><span class="lab">О слове</span><div><span class="badge">${esc(w.pos)}</span><span class="badge ${w.cefr==='A2'?'a2':w.cefr==='A1'?'a1':''}">${esc(w.cefr)}</span><span class="badge">${esc(uTitle(w.unit))}</span><span class="badge">частотность: ${esc(w.freq)}</span></div></div>
+        <div class="dgrid">
+          <div><div class="lab">пример</div><div>${w.ex?hl(w.ex,q)+' <button class="ibtn mini" data-act="sayex" data-id="'+w.id+'" aria-label="Озвучить пример"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5v14l12-7z" fill="#BE456F"/></svg></button>':'—'}</div></div>
+          <div><div class="lab">сочетание</div><div>${w.chunk?hl(w.chunk,q)+' <button class="ibtn mini" data-act="saych" data-id="'+w.id+'" aria-label="Озвучить сочетание"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5v14l12-7z" fill="#BE456F"/></svg></button>':'—'}</div></div>
+          <div><div class="lab">урок</div><div><span class="badge ${w.cefr==='A2'?'a2':w.cefr==='A1'?'a1':''}">${esc(w.cefr)}</span> ${esc(uTitle(w.unit))}</div></div>
+        </div>
         <div class="actions" style="justify-content:flex-start">
-          <button class="btn good small" data-act="known" data-id="${w.id}">✓ Выучено</button>
+          <button class="btn good small" data-act="known" data-id="${w.id}">Выучено</button>
           <button class="btn sec small" data-act="reset" data-id="${w.id}">Сбросить прогресс</button>
         </div>
       </div></div>`;

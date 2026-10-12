@@ -56,13 +56,29 @@ header.top p{margin:4px 0 0;opacity:.9;font-size:14px}
 <body>
 <header class="top"><div class="wrap">
   <a class="backlink" href="index.html">← В кабинет</a>
-  <h1>🔁 Повторение на сегодня</h1>
-  <p>Слова, ошибки из тренажёра и домашка — в одной тренировке.</p>
+  <div class="soft-head"><h1>Повторение</h1><span class="soft-sub">на сегодня — всё в одной тренировке</span></div>
 </div></header>
-<main class="wrap">
-
+<main class="wrap"><div class="soft-cols rv">
+<div class="soft-left">
 <section class="view active" id="vDash">
   <div class="panel" id="dash"></div>
+</section>
+</div>
+<div class="soft-right">
+<section class="view active" id="vIdle">
+  <div class="panel soft-tilt-l">
+    <div class="soft-kicker">так выглядит повторение · 5 / 21</div>
+    <div class="soft-mini-bar"><i style="width:24%"></i></div>
+    <div class="kind">слово · повторение</div>
+    <div class="big">bookshop</div>
+    <div class="note">/ˈbʊkʃɒp/</div>
+    <div class="rev"><b>книжный магазин</b><div class="note" style="margin-top:4px">She works in a bookshop.</div></div>
+    <div class="soft-sample-btns"><span class="soft-b good">Знала</span><span class="soft-b bad">Не знала</span></div>
+  </div>
+  <div class="soft-result-note">
+    <div class="soft-hand">в конце — итог</div>
+    <div>Слова и упражнения со счётом, разбор ошибок и сколько осталось по домашке.</div>
+  </div>
 </section>
 
 <section class="view" id="vSess">
@@ -76,7 +92,8 @@ header.top p{margin:4px 0 0;opacity:.9;font-size:14px}
 </section>
 
 <section class="view" id="vRes"><div class="panel" id="res"></div></section>
-</main>
+</div>
+</div></main>
 
 <script src="sync-core.js"></script>
 <script src="tts.js"></script>
@@ -100,7 +117,15 @@ const $=id=>document.getElementById(id);
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const norm=s=>String(s||'').toLowerCase().replace(/[’‘´`]/g,"'").replace(/[?.!,;:]/g,'').replace(/\s+/g,' ').trim();
 const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
-function show(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));$(id).classList.add('active');window.scrollTo(0,0);}
+function show(id){
+  /* слева всегда «сегодня», справа — пример, сессия или итог */
+  const right=id==='vDash'?'vIdle':id;
+  ['vIdle','vSess','vRes'].forEach(v=>$(v).classList.toggle('active',v===right));
+  $('vDash').classList.add('active');
+  document.body.classList.toggle('in-session',id!=='vDash');
+  if(id==='vRes'&&typeof dash==='function')dash();
+  if(window.innerWidth<900||id==='vDash')window.scrollTo(0,0);
+}
 
 /* ===== озвучка ===== */
 function activeProvider(){return AppVoice.provider();}
@@ -161,15 +186,15 @@ function dash(){
   const total=dw+nw+me;
   const hwTasks=g.hw.reduce((a,x)=>a+(x.s.total-x.s.done),0);
   const last=log[0];
-  $('dash').innerHTML=`<h2 style="font-size:19px;margin-bottom:6px">Сегодня</h2>
-   <div class="src"><div class="n ${g.due.length?'':'z'}">${g.due.length}</div><div class="tx">Слов пора повторить<small>${g.due.length?`в тренировку войдут ${dw}`:'по расписанию повторений пока всё'}</small></div></div>
-   <div class="src"><div class="n ${g.fresh.length?'':'z'}">+<select class="sel" id="newSel">${[0,5,10,15].map(n=>`<option ${n===newN?'selected':''}>${n}</option>`).join('')}</select></div><div class="tx">Новых слов<small>из словаря, по порядку уроков (ещё не изучено: ${g.fresh.length})</small></div></div>
-   <div class="src"><div class="n ${g.mist.length?'':'z'}">${g.mist.length}</div><div class="tx">Ошибок из тренажёра<small>${g.mist.length?`в тренировку войдут ${me}`:'нет ошибок к разбору'}</small></div></div>
-   <div class="src"><div class="n ${g.hw.length?'':'z'}">${hwTasks}</div><div class="tx">Заданий домашки не выполнено<small>${g.hw.length?g.hw.map(x=>'Unit '+x.l.unit).join(', ')+' — покажу в конце':'нет добавленной домашки'}</small></div></div>
-   <div class="row"><button class="btn" id="go" ${total?'':'disabled'}>▶ Начать повторение${total?` (${total})`:''}</button><a class="btn sec" href="homework.html">📝 Домашка</a></div>
+  $('dash').innerHTML=`<div class="soft-hand" style="margin-bottom:6px">сегодня</div>
+   <div class="src"><div class="n ${g.due.length?'':'z'}">${g.due.length}</div><div class="tx">слов пора повторить<small>${g.due.length?`по расписанию: через 1, 3, 7, 14 дней · войдут ${dw}`:'по расписанию повторений пока всё'}</small></div></div>
+   <div class="src"><div class="n ${g.fresh.length?'':'z'}">+${Math.min(newN,g.fresh.length)}</div><div class="tx">новых слов<small>по порядку уроков</small></div><div class="soft-chips">${[0,5,10].map(n=>`<button class="soft-chip ${n===newN?'on':''}" data-new="${n}">${n}</button>`).join('')}</div></div>
+   <div class="src"><div class="n ${g.mist.length?'':'z'}">${g.mist.length}</div><div class="tx">ошибки из тренажёра<small>${g.mist.length?`в тренировку войдут ${me}`:'нет ошибок к разбору'}</small></div></div>
+   <div class="src"><div class="n ${g.hw.length?'':'z'}">${hwTasks}</div><div class="tx">заданий домашки<small>${g.hw.length?g.hw.map(x=>'Unit '+x.l.unit).join(', ')+' — покажу в конце':'нет добавленной домашки'}</small></div></div>
+   <button class="btn soft-wide" id="go" ${total?'':'disabled'}>Начать повторение${total?` · ${total}`:''}</button>
    ${total?'':'<p class="note" style="margin-top:12px">На сегодня всё повторено 🎉 Добавь новые слова выше или зайди завтра.</p>'}
-   ${last?`<p class="note" style="margin-top:14px">Последнее повторение: ${new Date(last.t).toLocaleDateString('ru-RU',{day:'numeric',month:'long'})} — слова ${last.wk}/${last.wn}, задания ${last.er}/${last.en}</p>`:''}`;
-  $('newSel').onchange=e=>{newN=+e.target.value;RV.cfg={new:newN,t:Date.now()};saveR();dash();};
+   ${last?`<p class="note" style="margin-top:10px;text-align:center">последнее повторение: ${new Date(last.t).toLocaleDateString('ru-RU',{day:'numeric',month:'long'})} — слова ${last.wk}/${last.wn}, задания ${last.er}/${last.en}</p>`:''}`;
+  document.querySelectorAll('[data-new]').forEach(b=>b.onclick=()=>{newN=+b.dataset.new;RV.cfg={new:newN,t:Date.now()};saveR();dash();});
   if(total)$('go').onclick=()=>start(g);
 }
 
@@ -195,10 +220,10 @@ function next(first){
 function renderWord(){
   const w=cur.d.w;
   $('sKind').textContent=cur.d.fresh?'Новое слово':'Слово · повторение';
-  $('sBody').innerHTML=`<div class="big">${esc(w.word)} <button class="ibtn" id="say">🔊</button></div><div class="note">${w.ipa?esc(w.ipa):''}</div><div id="rev" class="rev hidden"><b>${esc(w.ru)}</b>${w.ex?`<div class="note" style="margin-top:4px">${esc(w.ex)}</div>`:''}</div>`;
+  $('sBody').innerHTML=`<div class="big">${esc(w.word)} <button class="ibtn play" id="say" aria-label="Озвучить"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5v14l12-7z" fill="#BE456F"/></svg></button></div><div class="note">${w.ipa?esc(w.ipa):''}</div><div id="rev" class="rev hidden"><b>${esc(w.ru)}</b>${w.ex?`<div class="note" style="margin-top:4px">${esc(w.ex)}</div>`:''}</div>`;
   $('say').onclick=()=>speak(w.word); speak(w.word);
   $('sBtns').innerHTML='<button class="btn" id="showR">Показать перевод</button>';
-  $('showR').onclick=()=>{ $('rev').classList.remove('hidden'); $('sBtns').innerHTML='<button class="btn good" id="yes">✅ Знал</button><button class="btn bad" id="no">❌ Не знал</button>';
+  $('showR').onclick=()=>{ $('rev').classList.remove('hidden'); $('sBtns').innerHTML='<button class="btn good" id="yes">Знала</button><button class="btn bad" id="no">Не знала</button>';
     $('yes').onclick=()=>wordDone(true); $('no').onclick=()=>wordDone(false); };
 }
 function wordDone(ok){
@@ -241,7 +266,7 @@ function finish(){
   const now=Date.now(); RV.log[String(now)]={t:now,wk:S.wk,wn:S.wn,er:S.er,en:S.en}; Object.keys(RV.log).sort((a,b)=>b-a).slice(60).forEach(k=>delete RV.log[k]); saveR();
   const hwHtml=S.hw.length?`<h3 style="margin:18px 0 6px">📝 Домашка, которую осталось сделать</h3>`+S.hw.map(x=>`<div class="src"><div class="tx">Unit ${x.l.unit} · ${esc(x.l.title)}<small>выполнено ${x.s.done} из ${x.s.total}</small></div></div>`).join('')+`<div class="row"><a class="btn" href="homework.html">Перейти к домашке →</a></div>`:'<p class="note" style="margin-top:14px">Невыполненной домашки нет ✅</p>';
   $('res').innerHTML=`<h2 style="font-size:19px">Повторение завершено</h2>
-   <div class="src"><div class="n">${S.wk}/${S.wn}</div><div class="tx">Слова<small>${S.wn?'«не знал» вернутся в очередь сразу':'сегодня слов не было'}</small></div></div>
+   <div class="src"><div class="n">${S.wk}/${S.wn}</div><div class="tx">Слова<small>${S.wn?'«не знала» вернутся в очередь сразу':'сегодня слов не было'}</small></div></div>
    <div class="src"><div class="n">${S.er}/${S.en}</div><div class="tx">Упражнения<small>${S.en?'ошибки остаются в тренажёре до верного ответа':'сегодня упражнений не было'}</small></div></div>`
    +((S.wrongW.length||S.wrongE.length)?'<h3 style="margin:14px 0 6px">Разбор</h3>'+S.wrongW.map(w=>`<div class="mist"><b>${esc(w.word)}</b> — ${esc(w.ru)} <button class="ibtn" data-say="${esc(w.word)}">🔊</button></div>`).join('')+S.wrongE.map(it=>`<div class="mist">${esc(filled(it))} <button class="ibtn" data-say="${esc(filled(it))}">🔊</button></div>`).join(''):'')
    +hwHtml+`<div class="row"><button class="btn sec" id="again">Ещё повторение</button><a class="btn sec" href="index.html">В кабинет</a></div>`;
