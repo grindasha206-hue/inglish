@@ -208,6 +208,7 @@ mark{background:rgba(196,80,122,.35);color:inherit;border-radius:3px}
 <script src="backend-config.js"></script>
 <script src="gateway.js"></script>
 <script src="site.js"></script>
+<script src="app-voice.js"></script>
 <script src="appdata.js"></script>
 <script src="dictionary-data.js"></script>
 <script>
@@ -229,40 +230,9 @@ WORDS.forEach((w,i)=>{ w.id=w.n; w.i=i; });
 const byId = Object.fromEntries(WORDS.map(w=>[w.id,w]));
 
 /* ============ озвучка: голос сайта (Groq / ElevenLabs через сервер), при сбое — голос браузера ============ */
-function activeProvider(){
-  try{
-    const hasGroq = typeof serverCapabilities!=='undefined' && serverCapabilities.groq;
-    const hasEleven = typeof serverCapabilities!=='undefined' && serverCapabilities.eleven && !!getSetting('elevenVoice');
-    if(!hasGroq && !hasEleven) return null;
-    const pref = getSetting('activeVoiceProvider');
-    if(pref==='eleven' && hasEleven) return 'eleven';
-    if(pref==='groq' && hasGroq) return 'groq';
-    return hasGroq ? 'groq' : 'eleven';
-  }catch(e){ return null; }
-}
-function browserSpeak(text, rate){
-  return new Promise(res=>{
-    if(!('speechSynthesis' in window)) return res(false);
-    speechSynthesis.cancel();
-    const u=new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=rate||1;
-    const v=(speechSynthesis.getVoices()||[]); const pv=v.find(x=>x.lang==='en-GB')||v.find(x=>x.lang&&x.lang.startsWith('en')); if(pv) u.voice=pv;
-    u.onend=()=>res(true); u.onerror=()=>res(false); speechSynthesis.speak(u);
-  });
-}
-let speakErr=false;
-async function speak(text, rate){
-  const provider=activeProvider();
-  if(!provider) return browserSpeak(text, rate);
-  try{
-    const gen=TTS.generation;
-    const played = await (provider==='eleven' ? elevenSpeak(text, rate) : groqSpeak(text, rate));
-    if(speakErr){ speakErr=false; setVoiceNote(); }
-    return played;
-  }catch(e){
-    if(!speakErr){ speakErr=true; $('voiceNote').textContent='⚠ Живой голос не ответил — используется голос браузера. '+(e&&e.message?'('+e.message+')':''); }
-    return browserSpeak(text, rate);
-  }
-}
+function activeProvider(){return AppVoice.provider();}
+function speak(text,rate){return AppVoice.speak(text,rate);}
+
 function setVoiceNote(){
   const p=activeProvider();
   $('voiceNote').textContent = p ? '🎙 Озвучка: '+(p==='eleven'?(getSetting('elevenVoiceName')||'ElevenLabs'):(getSetting('groqVoice')||'hannah')) : '🤖 Озвучка: голос браузера (живой голос подключается в Настройках кабинета)';

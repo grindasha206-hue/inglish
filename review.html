@@ -83,6 +83,7 @@ header.top p{margin:4px 0 0;opacity:.9;font-size:14px}
 <script src="backend-config.js"></script>
 <script src="gateway.js"></script>
 <script src="site.js"></script>
+<script src="app-voice.js"></script>
 <script src="appdata.js"></script>
 <script src="homework-core.js"></script>
 <script src="dictionary-data.js"></script>
@@ -102,19 +103,8 @@ const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math
 function show(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));$(id).classList.add('active');window.scrollTo(0,0);}
 
 /* ===== озвучка ===== */
-function activeProvider(){
-  try{
-    const hasGroq=typeof serverCapabilities!=='undefined'&&serverCapabilities.groq;
-    const hasEleven=typeof serverCapabilities!=='undefined'&&serverCapabilities.eleven&&!!getSetting('elevenVoice');
-    if(!hasGroq&&!hasEleven)return null;
-    const pref=getSetting('activeVoiceProvider');
-    if(pref==='eleven'&&hasEleven)return 'eleven';
-    if(pref==='groq'&&hasGroq)return 'groq';
-    return hasGroq?'groq':'eleven';
-  }catch(e){return null;}
-}
-function browserSpeak(text){return new Promise(res=>{if(!('speechSynthesis' in window))return res(false);speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='en-US';const v=speechSynthesis.getVoices()||[];const pv=v.find(x=>x.lang==='en-GB')||v.find(x=>x.lang&&x.lang.startsWith('en'));if(pv)u.voice=pv;u.onend=()=>res(true);u.onerror=()=>res(false);speechSynthesis.speak(u);});}
-async function speak(text){const p=activeProvider();if(!p)return browserSpeak(text);try{return await(p==='eleven'?elevenSpeak(text,1):groqSpeak(text,1));}catch(e){return browserSpeak(text);}}
+function activeProvider(){return AppVoice.provider();}
+function speak(text,rate){return AppVoice.speak(text,rate);}
 
 /* ===== хранилища: те же, что у словаря и тренажёра (в аккаунте, как ответы уроков) ===== */
 const rdL=k=>{ try{ return JSON.parse(localStorage.getItem(accountKey(k))||'null'); }catch(e){ return null; } };
