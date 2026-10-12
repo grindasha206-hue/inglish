@@ -157,20 +157,29 @@ a{color:inherit;}
   </div>
 </div>
 
-<div id="loginWrap" style="display:none; min-height:calc(100vh - 40px); flex-direction:column; align-items:center; justify-content:center; padding:20px;">
+<div id="loginWrap" style="display:flex; min-height:calc(100vh - 40px); flex-direction:column; align-items:center; justify-content:center; padding:20px;">
   <a class="logo" href="#/" style="font-size:30px; margin-bottom:22px; pointer-events:none;">Ing<span>lish</span> ✳</a>
   <div class="panel" style="max-width:380px; width:100%; box-sizing:border-box;">
     <h3>Вход</h3>
     <p class="hint">Доступ по приглашению — аккаунт заводит администратор сайта.</p>
     <div class="field"><label>Email</label><input type="email" id="loginEmail" autocomplete="username"></div>
     <div class="field"><label>Пароль</label><input type="password" id="loginPassword" autocomplete="current-password"></div>
-    <button class="btn brick" id="loginBtn" style="width:100%">Войти</button>
-    <div class="status" id="loginStatus"></div>
+    <button class="btn brick" id="loginBtn" disabled style="width:100%">Войти</button>
+    <div class="status busy" id="loginStatus" role="status">Проверяем вход…</div><button type="button" class="mini-btn" id="retryStartup" hidden onclick="location.reload()">Обновить страницу</button>
   </div>
 </div>
 
 <div class="wrap" id="view" style="display:none">Загружаю…</div>
 
+<script>
+window.startupTimer=setTimeout(function(){
+ var status=document.getElementById('loginStatus');
+ if(document.getElementById('loginWrap').style.display!=='none'){
+  status.className='status err';status.textContent='Не удалось завершить подключение. Проверь интернет и попробуй обновить страницу.';
+  document.getElementById('retryStartup').hidden=false;
+ }
+},12000);
+</script>
 <script src="sync-core.js"></script>
 <script src="tts.js"></script>
 <script src="backend-config.js"></script>
@@ -204,10 +213,11 @@ window.addEventListener('hashchange', render);
 
 async function start(){
   await authReady; /* дожидаемся, что Firebase закончил проверку — само значение промиса больше не используем */
+  clearTimeout(window.startupTimer);
   const user = currentUser; /* всегда свежее значение, в отличие от единожды застывшего authReady */
   if (!user) { showLogin(); return; }
   initializeAccountStorage();
-  try{await refreshCapabilities();}catch(e){setSyncStatus('error','Сервер озвучки и загрузки недоступен.');}
+  refreshCapabilities().catch(()=>setSyncStatus('error','Сервер озвучки и загрузки недоступен.'));
   resumeBackupRestore();
   resumePendingSync();
   document.getElementById('topbar').style.display = 'flex';
@@ -217,12 +227,23 @@ async function start(){
     document.getElementById('view').innerHTML = '<div class="empty-note">Не удалось загрузить курс (course.json). Обнови страницу.</div>';
     return;
   }
-  await mergeCloudIntoLocal(); /* подтягиваем облако, если оно новее локального кэша */
   render();
+  // The account's local progress can be displayed while Firestore connects.
+  mergeCloudIntoLocal().then(()=>{
+    if(currentUser?.uid===user.uid){
+      if(!location.hash||location.hash==='#/'||location.hash.startsWith('#/level/'))render();
+      else updatePills();
+      loadAllHw();
+    }
+  }).catch(()=>setSyncStatus('error','Не удалось загрузить облачный прогресс. Сохранённые данные доступны в этом браузере.'));
   loadAllHw();
 }
 
 function showLogin(){
+  document.getElementById('loginBtn').disabled=false;
+  document.getElementById('loginStatus').className='status';
+  document.getElementById('loginStatus').textContent='';
+  document.getElementById('retryStartup').hidden=true;
   document.getElementById('topbar').style.display = 'none';
   document.getElementById('view').style.display = 'none';
   document.getElementById('loginWrap').style.display = 'flex';
