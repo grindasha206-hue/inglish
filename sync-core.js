@@ -49,8 +49,38 @@
   const equal=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
   // Three-way merge: independent edits survive. Conflicts retain the cloud value;
   // callers keep a separate, downloadable copy of local conflicting answers.
+  // Each page contributes an independent, monotonically increasing counter component.
+  // Re-sending the same component is idempotent; components from two pages are added.
+  function mergeAppItem(base,local,remote,path){
+    const keys=path.startsWith('/app/words/')?['seen','wrong']:['ok','bad'];
+    const counter=v=>plain(v.counts)?v.counts:{base:Object.fromEntries(keys.map(k=>[k,v[k]||0])),actors:{}};
+    const lc=counter(local),rc=counter(remote),counts={base:{},actors:{}};
+    for(const key of keys)counts.base[key]=Math.max(lc.base?.[key]||0,rc.base?.[key]||0);
+    for(const id of new Set([...Object.keys(lc.actors||{}),...Object.keys(rc.actors||{})])){
+      if(['__proto__','constructor','prototype'].includes(id))continue;
+      counts.actors[id]=Object.fromEntries(keys.map(k=>[k,Math.max(lc.actors?.[id]?.[k]||0,rc.actors?.[id]?.[k]||0)]));
+    }
+    const later=(local.t||0)===(remote.t||0)?(JSON.stringify(local)>JSON.stringify(remote)?local:remote):((local.t||0)>(remote.t||0)?local:remote);
+    const schedule=v=>[v?.box,v?.due,v?.last];
+    const scheduled=equal(schedule(local),schedule(base))?remote:equal(schedule(remote),schedule(base))?local:later;
+    const out={};
+    for(const key of new Set([...Object.keys(local),...Object.keys(remote)])){
+      if(keys.includes(key)||key==='counts'||['__proto__','constructor','prototype'].includes(key))continue;
+      // Schedule fields form one unit; other fields (e.g. the star) merge independently.
+      if(['box','due','last'].includes(key))out[key]=scheduled[key];
+      else if(key==='t')out[key]=Math.max(local.t||0,remote.t||0);
+      else if(equal(local[key],base?.[key]))out[key]=remote[key];
+      else if(equal(remote[key],base?.[key])||equal(local[key],remote[key]))out[key]=local[key];
+      else out[key]=later[key];
+      if(out[key]===undefined)delete out[key];
+    }
+    out.counts=counts;
+    for(const key of keys)out[key]=counts.base[key]+Object.values(counts.actors).reduce((sum,v)=>sum+(v[key]||0),0);
+    return out;
+  }
   function mergeAnswers(base,local,remote,path='',conflicts=[]){
     if ((path==='/memo'||path==='/match'||/^\/roundMatches\/[^/]+$/.test(path)) && Array.isArray(local)&&Array.isArray(remote)) return {data:[...new Set([...local,...remote])].sort(),conflicts};
+    if (/^\/app\/(words|items)\/[^/]+$/.test(path)&&plain(local)&&plain(remote)&&(local.counts||remote.counts))return {data:mergeAppItem(base,local,remote,path),conflicts};
     if (equal(local,base)) return {data:remote,conflicts};
     if (equal(remote,base) || equal(local,remote)) return {data:local,conflicts};
     // Per-item progress of dictionary/trainer: if both sides changed the same item, the later edit (field t) wins without a conflict.
@@ -67,5 +97,5 @@
     }
     conflicts.push(path); return {data:remote,conflicts};
   }
-  root.SyncCore={plain,safeId,clone,validateProgress,emptyProgress,mergeProgress,mergeAnswers,equal};
+  root.SyncCore={plain,safeId,clone,validateProgress,emptyProgress,mergeProgress,mergeAnswers,mergeAppItem,equal};
 })(typeof window !== 'undefined' ? window : globalThis);
