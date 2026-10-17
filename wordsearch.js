@@ -2,7 +2,7 @@
 'use strict';
 const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const catalog=window.WORDSEARCH_CATALOG,core=window.WordSearch,colors=['#f7c9d8','#cde4d7','#f5dfb2','#cfdff5','#e3d2f0','#bfe3e1','#f5cfba','#e0e6b8','#d7d3f4','#f0d3e6'];
-let app={hist:{}},source='catalog',mode='en',currentId=null,puzzle=null,anchor=null,pointer=null,dragStart=null,lastCell=null,moved=false,ready=false,pulling=false;
+let app={hist:{}},source='catalog',mode='en',currentId=null,puzzle=null,anchor=null,pointer=null,dragStart=null,lastCell=null,moved=false,pencil=false,ready=false,pulling=false;
 function game(){return app.hist[currentId];}
 function definition(id){return catalog.find(d=>d.id===id);}
 function gamesFor(def,m=mode){return Object.entries(app.hist).filter(([,g])=>g.definitionId===def.id&&g.mode===m).sort((a,b)=>(b[1].created-a[1].created)||b[0].localeCompare(a[0]));}
@@ -49,7 +49,7 @@ function openGame(id,focus=true){
  $('history').innerHTML=rounds.map(([key,record],i)=>`<option value="${esc(key)}"${key===id?' selected':''}>${record.created?new Date(record.created).toLocaleDateString('ru-RU')+' · '+new Date(record.created).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'}):'Первая сетка'} · ${foundCount(record)}/${record.words.length}</option>`).join('');
  $('lessonLink').hidden=!def?.lessonFile;
  if(def?.lessonFile)$('lessonLink').href='player.html?lesson='+encodeURIComponent(def.lessonId);
- $('feedback').textContent='';renderGameProgress();if(focus){$('gameTitle').focus();window.scrollTo({top:0,behavior:'smooth'});}
+ setPencil(false);$('feedback').textContent='';renderGameProgress();if(focus){$('gameTitle').focus();window.scrollTo({top:0,behavior:'smooth'});}
 }
 function renderGameProgress(){
  const g=game();if(!g)return;const n=foundCount(g),h=g.words.filter(w=>g.hints?.[w.en.toUpperCase()]===true).length;
@@ -57,9 +57,22 @@ function renderGameProgress(){
  $('count').textContent='Найдено '+n+' из '+g.words.length;$('hintCount').textContent='Подсказки: '+h;$('bar').max=g.words.length;$('bar').value=n;$('complete').hidden=n!==g.words.length;
  $('words').innerHTML=g.words.map((w,i)=>{const word=w.en.toUpperCase(),solved=g.found?.[word],hint=g.hints?.[word],visible=g.mode==='en'||solved||hint;
   return `<li class="${solved?'solved':''}" style="--fill:${colors[i%colors.length]}"><span class="word-label">${visible?`<span lang="en">${esc(word)}</span><small>${esc(w.ru)}</small>`:esc(w.ru)}${hint?'<small>С подсказкой</small>':''}</span>${visible?`<button data-speak="${esc(w.en)}" aria-label="Озвучить ${esc(w.en)}">♪</button>`:''}${!solved?`<button class="hint-btn" data-hint="${esc(word)}" aria-label="Подсказка: ${esc(g.mode==='en'?w.en:w.ru)}">?</button>`:''}</li>`;}).join('');
- for(const b of $('board').children){b.classList.remove('found','selected','hint');b.style.removeProperty('--fill');b.setAttribute('aria-label',b.textContent+', строка '+(+b.dataset.r+1)+', столбец '+(+b.dataset.c+1));}
+ for(const b of $('board').children){b.classList.remove('found','selected','hint','pencil-mark');b.style.removeProperty('--fill');b.setAttribute('aria-label',b.textContent+', строка '+(+b.dataset.r+1)+', столбец '+(+b.dataset.c+1));}
  g.words.forEach((w,i)=>{const word=w.en.toUpperCase();if(!g.found?.[word])return;const p=puzzle.placements.find(p=>p.word===word);for(const [r,c]of core.cells(p)){const b=cellButton([r,c]);b.classList.add('found');b.style.setProperty('--fill',colors[i%colors.length]);b.setAttribute('aria-label',b.getAttribute('aria-label')+', найдено '+word);}});
+ for(const b of $('board').children){if(g.notes?.[b.dataset.r+'-'+b.dataset.c]===true){b.classList.add('pencil-mark');b.setAttribute('aria-label',b.getAttribute('aria-label')+', пометка карандашом');}}
+ $('clearNotes').disabled=!Object.values(g.notes||{}).some(value=>value===true);
 }
+function setPencil(on){
+ pencil=on;anchor=null;pointer=null;paint(null,null);
+ $('pencil').setAttribute('aria-pressed',String(on));$('board').classList.toggle('pencil-mode',on);
+ $('pencilHelp').textContent=on?'Карандаш включён. Нажми на клетку, чтобы поставить или снять пометку. Чтобы выделить слово, выключи карандаш.':'Включи карандаш, чтобы отмечать клетки для себя.';
+}
+function note(cell){
+ const id=cell.join('-'),marked=game().notes?.[id]===true;
+ try{commit(next=>{const record=next.hist[currentId];record.notes||={};record.notes[id]=!marked;});renderGameProgress();$('feedback').textContent=marked?'Пометка снята.':'Клетка отмечена карандашом.';}catch(error){showError(error);}
+}
+$('pencil').onclick=()=>setPencil(!pencil);
+$('clearNotes').onclick=()=>{try{commit(next=>{const record=next.hist[currentId];for(const key of Object.keys(record.notes||{}))record.notes[key]=false;});anchor=null;renderGameProgress();$('feedback').textContent='Пометки стёрты. Найденные слова сохранены.';}catch(error){showError(error);}};
 function cellButton([r,c]){return $('board').children[r*puzzle.size+c];}
 function coords(target){const b=target?.closest?.('#board button');return b?[+b.dataset.r,+b.dataset.c]:null;}
 function atPoint(e){return coords(document.elementFromPoint(e.clientX,e.clientY));}
@@ -70,10 +83,10 @@ function finish(start,end){
  if(game().found?.[word]){$('feedback').textContent='Это слово уже найдено.';return;}
  try{commit(next=>{next.hist[currentId].found[word]=true;});renderGameProgress();$('feedback').textContent=word+' — найдено!';}catch(e){showError(e);}
 }
-function activate(cell){if(anchor)finish(anchor,cell);else{anchor=cell;paint(cell,cell);$('feedback').textContent='Теперь выбери последнюю букву. Escape — отменить.';}}
-$('board').addEventListener('pointerdown',e=>{if(!e.isPrimary||e.button!==0)return;const cell=coords(e.target);if(!cell)return;pointer=e.pointerId;dragStart=anchor||cell;lastCell=cell;moved=false;$('board').setPointerCapture(pointer);paint(dragStart,cell);e.preventDefault();});
-$('board').addEventListener('pointermove',e=>{if(pointer!==e.pointerId)return;const cell=atPoint(e);if(!cell)return;if(cell.join()!==lastCell.join())moved=true;lastCell=cell;paint(dragStart,cell);});
-$('board').addEventListener('pointerup',e=>{if(pointer!==e.pointerId)return;const end=atPoint(e);if(end){if(moved||anchor)finish(dragStart,end);else activate(end);}else{anchor=null;paint(null,null);}pointer=null;if($('board').hasPointerCapture(e.pointerId))$('board').releasePointerCapture(e.pointerId);e.preventDefault();});
+function activate(cell){if(pencil){note(cell);return;}if(anchor)finish(anchor,cell);else{anchor=cell;paint(cell,cell);$('feedback').textContent='Теперь выбери последнюю букву. Escape — отменить.';}}
+$('board').addEventListener('pointerdown',e=>{if(!e.isPrimary||e.button!==0)return;const cell=coords(e.target);if(!cell)return;pointer=e.pointerId;dragStart=anchor||cell;lastCell=cell;moved=false;$('board').setPointerCapture(pointer);if(!pencil)paint(dragStart,cell);e.preventDefault();});
+$('board').addEventListener('pointermove',e=>{if(pointer!==e.pointerId)return;const cell=atPoint(e);if(!cell)return;if(cell.join()!==lastCell.join())moved=true;lastCell=cell;if(!pencil)paint(dragStart,cell);});
+$('board').addEventListener('pointerup',e=>{if(pointer!==e.pointerId)return;const end=atPoint(e);if(end){if(pencil){if(!moved)activate(end);}else if(moved||anchor)finish(dragStart,end);else activate(end);}else{anchor=null;paint(null,null);}pointer=null;if($('board').hasPointerCapture(e.pointerId))$('board').releasePointerCapture(e.pointerId);e.preventDefault();});
 $('board').addEventListener('pointercancel',()=>{pointer=null;anchor=null;paint(null,null);});
 $('board').addEventListener('click',e=>{if(e.detail===0){const cell=coords(e.target);if(cell)activate(cell);}});
 $('board').addEventListener('keydown',e=>{const cell=coords(e.target);if(!cell)return;const steps={ArrowUp:[-1,0],ArrowDown:[1,0],ArrowLeft:[0,-1],ArrowRight:[0,1]};if(e.key==='Escape'){anchor=null;paint(null,null);$('feedback').textContent='Выделение отменено.';return;}if(!steps[e.key])return;e.preventDefault();const next=cell.map((x,i)=>Math.max(0,Math.min(puzzle.size-1,x+steps[e.key][i])));e.target.tabIndex=-1;const button=cellButton(next);button.tabIndex=0;button.focus();if(anchor)paint(anchor,next);});
