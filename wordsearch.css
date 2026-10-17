@@ -5,3 +5,6 @@
 
 /* Expanded topic navigation. */
 .filters{grid-template-columns:1.2fr 1fr 1fr}.filters .search{grid-column:span 2}#resultCount{margin:12px 0 0}.card .details{min-height:22px}@media(max-width:900px){.filters{grid-template-columns:1fr 1fr}.filters .search{grid-column:auto}}@media(max-width:480px){.filters .search{grid-column:1/-1}}
+
+/* Original line icons: one drawing per topic, same pen weight and palette. */
+.icon svg{display:block;width:32px;height:32px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
