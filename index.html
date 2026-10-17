@@ -146,6 +146,7 @@ a{color:inherit;}
   <nav class="soft-nav">
   <a class="nav-link" href="dictionary.html">Словарь</a>
   <a class="nav-link" href="trainer.html">Тренажёр</a>
+  <a class="nav-link" href="wordsearch.html">Филворды</a>
   <a class="nav-link" href="review.html">Повторение<span id="rvNavCount"></span></a>
   <a class="nav-link" href="homework.html">Домашка<span id="hwNavCount"></span></a>
   <a class="nav-link" href="#/settings">Настройки</a>
@@ -189,7 +190,7 @@ window.startupTimer=setTimeout(function(){
 <script src="progress.js"></script>
 <script src="homework-core.js"></script>
 <script src="appdata.js"></script>
-<script src="backup.js"></script>
+<script src="backup.js?v=wordsearch1"></script>
 <script>
 let p = loadProgress();
 
@@ -426,6 +427,7 @@ function renderHome(view){
       </div>
       <a class="btn" href="review.html">Начать →</a>
     </div>
+    <div class="review-card"><div><div class="t">Филворды</div><div class="d">Темы по настроению и слова твоих уроков. Незаконченная сетка ждёт тебя в аккаунте.</div></div><a class="btn" href="wordsearch.html">Найти слова →</a></div>
     <div class="stats">
       <div class="stat"><div class="label">Серия дней</div><div class="value">${streak} <small>подряд</small></div><div class="week">${week}</div></div>
       <div class="stat"><div class="label">Уровень</div><div class="value">${li.level}</div><div class="bar"><i style="width:${li.pct}%"></i></div><div class="sub">${li.into} / ${li.need} XP до уровня ${li.level+1}</div></div>

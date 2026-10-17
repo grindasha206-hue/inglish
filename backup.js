@@ -13,7 +13,7 @@ async function exportFullBackup(){
  try{
   if(flushing||syncJobs.size)throw Error('Дождись отправки текущих изменений');
   const uid=cloudUserId(),prefix=accountKey('lessonState.',uid);
-  const ids=new Set(['app-dictionary','app-trainer','app-review',...ALL_LESSONS.map(l=>l.id),...Object.keys(localStorage).filter(k=>k.startsWith(prefix)).map(k=>k.slice(prefix.length))]);
+  const ids=new Set(['app-dictionary','app-trainer','app-review','app-wordsearch',...ALL_LESSONS.map(l=>l.id),...Object.keys(localStorage).filter(k=>k.startsWith(prefix)).map(k=>k.slice(prefix.length))]);
   const lessons={};setSyncStatus('pending','Собираем ответы из браузера и облака…');
   for(const id of ids){if(!SyncCore.safeId(id))continue;lessons[id]=await cloudLoadLessonState(id);if(uid!==cloudUserId())throw Error('Аккаунт изменился');}
   const remote=await cloudLoadProgress(uid);
