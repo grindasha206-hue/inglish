@@ -142,6 +142,27 @@ const T=[
    O('Where does she work?'),
    O('How much does the book cost?')
   ]},
+ {id:8,title:'Сейчас или обычно?',emoji:'⏱️',rule:'Present continuous (am/is/are + -ing) — то, что происходит сейчас: now, at the moment, Look! · Present simple — обычно, всегда, иногда: every day, usually, often. Глаголы like, want, need, know, understand, remember, prefer — только present simple.',
+  items:[
+   C('Look! It ___.','is snowing','snows','snow'),
+   C('It often ___ here in winter.','snows','is snowing','snow'),
+   C('Shh! The baby ___.','is sleeping','sleeps','sleep'),
+   C('My dad ___ in a hospital.','works','is working','work'),
+   C("I'm hungry. I ___ a sandwich.",'want','am wanting','wants'),
+   C('Sorry, I ___ what you mean.',"don't understand","am not understanding","doesn't understand"),
+   C('___ you know that woman?','Do','Are','Does'),
+   C('What ___ you doing? — I\'m writing an email.','are','do','does'),
+   C('What ___ your sister do? — She\'s a dentist.','does','is','do'),
+   C('Какое предложение правильное?',"He plays the guitar, but he isn't playing now.","He is playing the guitar every day.","He plays the guitar now."),
+   F('Mia can\'t talk now. She ___ (have) lunch.','is having',"'s having"),
+   F('Mia usually ___ (have) lunch at one.','has'),
+   F('Ben ___ (not/like) tea.',"doesn't like",'does not like'),
+   F('Turn off the radio. I ___ (not/listen) to it.',"am not listening","'m not listening"),
+   F('We ___ (not/watch) TV very often.',"don't watch",'do not watch'),
+   O('She is cooking dinner now.',"She's cooking dinner now."),
+   O('He usually walks to work.'),
+   O('I don\'t remember her name.','I do not remember her name.')
+  ]},
  {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),

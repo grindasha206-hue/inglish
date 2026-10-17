@@ -98,6 +98,13 @@
               "title": "Do you…? — Present Simple questions",
               "description": "Вопросы с do/does, короткие ответы и аудирование",
               "file": "lessons/urok-present-simple-questions.html"
+            },
+            {
+              "id": "urok-present-continuous-simple",
+              "unit": 4,
+              "title": "I am doing / I do — сейчас или обычно",
+              "description": "Present continuous и present simple: что происходит сейчас и что бывает обычно",
+              "file": "lessons/urok-present-continuous-simple.html"
             }
           ]
         }
