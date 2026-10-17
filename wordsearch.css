@@ -2,3 +2,6 @@
 
 /* Pencil notes are independent of found-word colors and never hide a letter. */
 .board-tools{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:18px}.board-tools .secondary{padding:8px 16px}.board-tools .text-btn{font-size:13px}#pencil[aria-pressed="true"]{background:#ebe7f3;border-color:#8b78a5;color:#514166}#pencilHelp{margin:6px 0 0;font-size:13px}#board button{position:relative}#board button.pencil-mark::after{content:'';position:absolute;inset:2px;border:2px solid #79688e;border-radius:50%;pointer-events:none}#board.pencil-mode button{cursor:crosshair}#board.pencil-mode{outline:2px dashed #b8a7cc;outline-offset:3px}.board-tools button:disabled{cursor:default;opacity:.45}
+
+/* Expanded topic navigation. */
+.filters{grid-template-columns:1.2fr 1fr 1fr}.filters .search{grid-column:span 2}#resultCount{margin:12px 0 0}.card .details{min-height:22px}@media(max-width:900px){.filters{grid-template-columns:1fr 1fr}.filters .search{grid-column:auto}}@media(max-width:480px){.filters .search{grid-column:1/-1}}

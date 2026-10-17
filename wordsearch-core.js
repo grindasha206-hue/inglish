@@ -27,6 +27,26 @@ function validate(puzzle,words){
  return true;
 }
 function compatible(a,b){return !a.includes(b)&&!b.includes(a)&&!a.includes([...b].reverse().join(''))&&!b.includes([...a].reverse().join(''));}
+/* Largest compatible subset up to ten, shuffled by a stable round seed. */
+function pickWords(pool,seed,limit=10){
+ if(!Number.isInteger(limit)||limit<2||limit>10)throw Error('Некорректный размер набора');
+ const list=shuffle([...new Map(pool.map(w=>[String(w.en).toUpperCase(),w])).values()],random(seed));
+ if(list.some(w=>!/^[A-Z]{3,14}$/.test(String(w.en).toUpperCase())))throw Error('Некорректное слово в теме');
+ let best=[];
+ function search(chosen,candidates){
+  if(chosen.length>best.length)best=chosen;
+  if(best.length===limit||chosen.length+candidates.length<=best.length)return;
+  for(let i=0;i<candidates.length;i++){
+   if(chosen.length+candidates.length-i<=best.length)return;
+   const word=candidates[i];
+   search([...chosen,word],candidates.slice(i+1).filter(other=>compatible(word.en.toUpperCase(),other.en.toUpperCase())));
+   if(best.length===limit)return;
+  }
+ }
+ search([],list);
+ if(best.length<2)throw Error('В теме недостаточно совместимых слов');
+ return best;
+}
 function generate(input,seed){
  const words=input.map(w=>String(w).toUpperCase());
  if(words.length<2||words.length>10||words.some(w=>!/^[A-Z]{3,14}$/.test(w))||new Set(words).size!==words.length)throw Error('Нужны 2–10 разных английских слов от 3 до 14 букв');
@@ -52,5 +72,5 @@ function generate(input,seed){
  throw Error('Не удалось создать проверенную сетку. Попробуй ещё раз.');
 }
 function selected(puzzle,start,end){return puzzle.placements.find(p=>(key(p.start)===key(start)&&key(p.end)===key(end))||(key(p.end)===key(start)&&key(p.start)===key(end)))?.word||null;}
-root.WordSearch={generate,validate,occurrences,cells,selected,hash,compatible};
+root.WordSearch={generate,validate,occurrences,cells,selected,hash,compatible,pickWords};
 })(typeof window==='undefined'?globalThis:window);
