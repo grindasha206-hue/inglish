@@ -289,6 +289,27 @@ const T=[
    O('It was raining, so we didn\'t go out.'),
    O('The birds were singing in the garden.')
   ]},
+  {id:14,title:'Past continuous или past simple',emoji:'⚡',rule:'Past continuous (was/were + -ing) — действие было в процессе: I was reading. Past simple — что случилось или законченное действие: the phone rang, we played tennis from 10 to 11.30. Часто вместе: I was reading when the phone rang. She fell asleep while she was reading.',
+  items:[
+   C('Jack ___ a book when his phone rang.','was reading','read','reads'),
+   C('When his phone rang, he ___ reading.','stopped','was stopping','stops'),
+   C('I ___ Tom this morning. He was waiting for the bus.','saw','was seeing','see'),
+   C('It ___ when I got up.',"wasn't raining","didn't rain","isn't raining"),
+   C('She fell asleep ___ she was reading.','while','what','during'),
+   C('What ___ you doing at 10.30?','were','did','was'),
+   C('What ___ you do yesterday morning?','did','were','was'),
+   C('We ___ tennis from 10 to 11.30.','played','were playing','play'),
+   C('Какое предложение правильное?','I was cooking when the lights went out.','I cooked when the lights were going out.','I was cooking when the lights were go out.'),
+   C('He ___ and broke his arm.','fell','was falling','falls'),
+   F('I ___ (read) a book when the phone rang.','was reading'),
+   F('It ___ (rain) when we went out.','was raining'),
+   F('I ___ (see) Lucy while I was waiting for the bus.','saw'),
+   F('At 2.30 I ___ (work).','was working'),
+   F('They ___ (not/watch) TV when I arrived.',"weren't watching",'were not watching'),
+   O('I was reading when the phone rang.'),
+   O('She fell asleep while she was watching a film.'),
+   O('What were you doing at ten o\'clock?')
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),

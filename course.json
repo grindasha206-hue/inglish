@@ -153,6 +153,13 @@
               "title": "I was doing — past continuous",
               "description": "Что происходило в определённый момент прошлого",
               "file": "lessons/urok-past-continuous.html"
+            },
+            {
+              "id": "urok-past-continuous-simple",
+              "unit": 5,
+              "title": "I was doing и I did",
+              "description": "Past continuous и past simple: что было в процессе и что случилось",
+              "file": "lessons/urok-past-continuous-simple.html"
             }
           ]
         }
