@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 81 · all, most, some, any, no/none</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Comfortaa:wght@500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --cream:#FDF4F1; --paper:#FFFDFB; --ink:#3A2E33; --ink-soft:#6B5A61;
+  --brick:#BE456F; --brick-dark:#8F2E52; --tab:#C4507A; --tab-dark:#9E3460;
+  --sage:#4F8F6D; --sage-bg:#E6F1EA; --coral:#D65B4A; --coral-bg:#FBE7E3;
+  --gold:#E8A0B4; --line:#F1D9DF; --shadow: 0 6px 18px rgba(150,80,100,0.10);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; background:radial-gradient(circle at 15% 8%, rgba(232,160,180,0.10), transparent 40%), var(--cream); color:var(--ink); font-family:'Nunito', sans-serif; line-height:1.55; padding-bottom:80px;}
+h1,h2,h3,.display{font-family:'Comfortaa',sans-serif;}
+
+.topbar{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:1px solid var(--line); padding:10px 18px; display:flex; align-items:center; gap:14px; box-shadow:0 2px 10px rgba(0,0,0,0.04);}
+.topbar .book-title{font-family:'Comfortaa',sans-serif; font-weight:700; font-size:15px; color:var(--brick-dark); white-space:nowrap;}
+.progress-steps{display:flex; gap:5px; flex:1; align-items:center;}
+.pstep{flex:1; height:8px; border-radius:6px; background:var(--line); position:relative; overflow:hidden;}
+.pstep i{display:block; height:100%; width:0%; border-radius:6px; background:linear-gradient(90deg, var(--tab), var(--brick)); transition:width .5s ease;}
+.score-pill{font-size:13px; font-weight:700; background:var(--sage-bg); color:var(--sage); padding:5px 12px; border-radius:20px; white-space:nowrap;}
+
+.page{max-width:900px; margin:26px auto; background:var(--paper); border-radius:4px; box-shadow:var(--shadow); border:1px solid var(--line); overflow:hidden;}
+
+.unit-banner{background:linear-gradient(135deg, var(--brick) 0%, var(--brick-dark) 100%); color:#fff; padding:26px 30px 22px 96px; position:relative;}
+.unit-tag{position:absolute; left:0; top:0; bottom:0; width:76px; background:var(--brick-dark); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Comfortaa',sans-serif; border-right:2px solid rgba(255,255,255,0.15);}
+.unit-tag .u{font-size:11px; letter-spacing:2px; opacity:.75;}
+.unit-tag .n{font-size:30px; font-weight:800;}
+.unit-banner h1{margin:0; font-size:27px; font-weight:800; letter-spacing:.3px;}
+.unit-banner p{margin:6px 0 0; opacity:.9; font-size:14.5px;}
+
+.section{display:flex; border-top:1px solid var(--line);}
+.section .tab{width:56px; flex-shrink:0; background:var(--tab); color:#fff; font-family:'Comfortaa',sans-serif; font-weight:800; font-size:20px; display:flex; align-items:flex-start; justify-content:center; padding-top:22px;}
+.section.alt .tab{background:var(--tab-dark);}
+.section .content{padding:24px 28px 30px; flex:1; min-width:0;}
+.section h2{margin:0 0 4px; font-size:22px; color:var(--brick-dark);}
+.eyebrow{font-size:11.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-soft); font-weight:700; margin-bottom:4px;}
+.section p.lead{color:var(--ink-soft); margin-top:4px; font-size:14.5px;}
+
+.dialog-wrap{display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; margin:18px 0 6px;}
+.dialog-figure{width:110px; text-align:center; flex-shrink:0;}
+.dialog-avatar{width:96px; height:120px; margin:0 auto;}
+.dialog-avatar svg{width:100%; height:100%;}
+.dialog-figure .name{font-family:'Comfortaa',sans-serif; font-weight:700; font-size:12.5px; letter-spacing:1px; color:var(--brick-dark); margin-top:4px;}
+.dialog-bubbles{display:flex; flex-direction:column; gap:8px; flex:1; min-width:260px; max-width:420px;}
+.d-bubble{background:#fff; border:1.5px solid var(--line); border-radius:16px; padding:8px 14px; font-size:13.5px; box-shadow:0 3px 8px rgba(0,0,0,0.05);}
+.d-bubble.q{border-color:var(--tab);}
+.d-bubble.a{align-self:flex-end; background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.d-bubble b{color:var(--brick-dark);}
+.d-bubble.a b{color:var(--sage);}
+
+.gram-tables{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:22px;}
+@media(max-width:620px){.gram-tables{grid-template-columns:1fr;}}
+.gram-box h3{font-size:13px; text-transform:uppercase; letter-spacing:1px; color:var(--ink-soft); margin:0 0 8px;}
+table.formtable{width:100%; border-collapse:collapse; font-size:13.5px; background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;}
+table.formtable td{padding:7px 10px; border-bottom:1px solid var(--line);}
+table.formtable tr:last-child td{border-bottom:none;}
+table.formtable td.pron{color:var(--ink-soft); width:34%;}
+table.formtable td.verb{font-weight:700; color:var(--brick-dark);}
+table.formtable td.short{color:var(--ink-soft); font-style:italic;}
+
+.chunk{background:linear-gradient(180deg, transparent 60%, rgba(196,80,122,0.35) 60%); font-weight:700; color:var(--brick-dark); padding:0 1px;}
+
+.mini-note{margin-top:16px; background:var(--sage-bg); border-left:3px solid var(--sage); padding:10px 14px; border-radius:6px; font-size:13.5px; color:#2f5741;}
+.mini-note b{color:var(--sage);}
+.mini-note i{color:var(--ink-soft); font-style:italic;}
+.mini-note.warn{background:var(--coral-bg); border-left-color:var(--coral); color:#7A2848;}
+.mini-note.warn b{color:var(--coral);}
+
+.vocab-table{margin-top:14px; display:flex; flex-direction:column; gap:8px;}
+.vocab-row{display:grid; grid-template-columns:auto 1fr auto auto; align-items:center; gap:12px; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:9px 14px;}
+@media(max-width:560px){.vocab-row{grid-template-columns:1fr; gap:4px;}}
+.vocab-word{font-weight:800; color:var(--brick-dark); font-size:14.5px; font-family:'Comfortaa',sans-serif;}
+.vocab-ipa{font-size:12.5px; color:var(--tab-dark); font-style:italic;}
+.vocab-ru{font-size:13.5px; color:var(--ink-soft);}
+.chunk-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px;}
+@media(max-width:600px){.chunk-grid{grid-template-columns:1fr;}}
+.chunk-row{display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--cream); border:1.5px dashed var(--gold); border-radius:10px; padding:9px 14px;}
+.chunk-en{font-weight:800; color:var(--brick-dark); font-size:14px; display:block;}
+.chunk-ipa{font-size:11.5px; color:var(--tab-dark); font-style:italic; display:block; margin-top:1px;}
+.chunk-ru{font-size:12.5px; color:var(--ink-soft); display:block; margin-top:1px; font-weight:400;}
+
+.game-tabs{display:flex; gap:8px; margin:18px 0 20px; flex-wrap:wrap;}
+.game-tab-btn{border:1.5px solid var(--line); background:#fff; color:var(--ink-soft); padding:8px 16px; border-radius:20px; font-family:'Nunito'; font-weight:700; font-size:13px; cursor:pointer; transition:.2s;}
+.game-tab-btn.active{background:var(--tab); color:#fff; border-color:var(--tab-dark);}
+.game-panel{display:none;}
+.game-panel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
+
+.fill-item{display:flex; align-items:flex-start; gap:10px; flex-wrap:wrap; padding:12px 4px; border-bottom:1px dashed var(--line);}
+.fill-item:last-child{border-bottom:none;}
+.fill-num{width:22px; height:22px; border-radius:50%; background:var(--cream); border:1px solid var(--line); font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; color:var(--ink-soft); flex-shrink:0; margin-top:3px;}
+.fill-body{flex:1; min-width:220px;}
+.fill-words{font-size:13px; color:var(--ink-soft); margin-bottom:6px; font-style:italic;}
+.blank-input{width:130px; padding:5px 8px; border:1.5px solid var(--line); border-radius:6px; font-family:'Nunito'; font-weight:700; font-size:14px; text-align:center; background:#FFFDFB; color:var(--brick-dark);}
+.blank-input:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.blank-input.correct{border-color:var(--sage); background:var(--sage-bg); color:#2f5741;}
+.blank-input.wrong{border-color:var(--coral); background:var(--coral-bg); color:var(--coral);}
+.fill-fb{font-size:16px; margin-top:6px;}
+
+.btn{border:none; cursor:pointer; font-family:'Nunito'; font-weight:800; padding:10px 20px; border-radius:24px; font-size:14px; letter-spacing:.2px; background:var(--brick); color:#fff; box-shadow:0 4px 10px rgba(190,69,111,0.25); transition:.15s;}
+.btn:hover{transform:translateY(-1px); box-shadow:0 6px 14px rgba(190,69,111,0.32);}
+.btn.secondary{background:transparent; color:var(--brick); border:1.5px solid var(--brick); box-shadow:none;}
+.btn.small{padding:6px 14px; font-size:12.5px;}
+.actions-row{display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; align-items:center;}
+.fb-line{font-size:13.5px; font-weight:700; color:var(--ink-soft);}
+
+.memo-wrap{display:flex; flex-direction:column; align-items:center; gap:14px;}
+.memo-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; max-width:520px; width:100%;}
+@media(max-width:500px){.memo-grid{grid-template-columns:repeat(3,1fr);}}
+.memo-card{aspect-ratio:1/1; border-radius:10px; cursor:pointer; position:relative; perspective:600px;}
+.memo-inner{width:100%; height:100%; position:relative; transform-style:preserve-3d; transition:transform .45s;}
+.memo-card.flipped .memo-inner, .memo-card.matched .memo-inner{transform:rotateY(180deg);}
+.memo-face{position:absolute; inset:0; border-radius:10px; display:flex; align-items:center; justify-content:center; backface-visibility:hidden; font-weight:800; text-align:center; padding:4px; font-size:12.5px;}
+.memo-face.back{background:linear-gradient(135deg, var(--tab), var(--tab-dark)); color:#fff; font-family:'Comfortaa',sans-serif; font-size:22px;}
+.memo-face.front{background:#fff; border:2px solid var(--line); color:var(--brick-dark); transform:rotateY(180deg);}
+.memo-card.matched .memo-face.front{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.memo-status{font-size:13.5px; color:var(--ink-soft); font-weight:700;}
+
+.quiz-q{margin-bottom:18px;}
+.quiz-q p{font-weight:700; margin:0 0 8px; font-size:14.5px;}
+.quiz-opts{display:flex; gap:8px; flex-wrap:wrap;}
+.quiz-opt{border:1.5px solid var(--line); background:#fff; padding:7px 15px; border-radius:20px; font-weight:700; font-size:13.5px; cursor:pointer; color:var(--ink);}
+.quiz-opt.sel-correct{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.quiz-opt.sel-wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+.quiz-opt.reveal-correct{border-color:var(--sage); box-shadow:inset 0 0 0 1px var(--sage);}
+
+.match-wrap{display:flex; gap:14px; max-width:520px; margin:0 auto;}
+.match-col{flex:1; display:flex; flex-direction:column; gap:8px;}
+.match-tile{background:#fff; border:1.5px solid var(--line); border-radius:8px; padding:9px 12px; font-size:13.5px; font-weight:700; cursor:pointer; text-align:center; color:var(--ink); transition:.15s;}
+.match-tile.selected{border-color:var(--tab); background:var(--cream); box-shadow:inset 0 0 0 1.5px var(--tab);}
+.match-tile.matched{background:var(--sage-bg); border-color:var(--sage); color:#2f5741; cursor:default;}
+.match-tile.wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+
+.read-text{background:#fff; border:1.5px solid var(--line); border-radius:14px; padding:18px 20px; margin:16px 0; font-size:14.5px;}
+.read-text p{margin:0 0 10px;}
+.read-text p:last-child{margin-bottom:0;}
+.tf-item{display:flex; align-items:center; justify-content:space-between; gap:10px; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:9px 14px; margin-bottom:8px;}
+.tf-text{font-size:13.5px; flex:1;}
+.tf-btns{display:flex; gap:6px; flex-shrink:0;}
+.tf-btn{border:1.5px solid var(--line); background:var(--cream); padding:5px 12px; border-radius:16px; font-weight:800; font-size:12.5px; cursor:pointer; color:var(--ink-soft);}
+.tf-btn.sel-correct{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.tf-btn.sel-wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+.tf-btn.reveal-correct{box-shadow:inset 0 0 0 1px var(--sage); border-color:var(--sage);}
+
+.tts-warn{display:none; font-size:12.5px; color:var(--coral); background:var(--coral-bg); padding:8px 12px; border-radius:6px; margin:8px 0 0;}
+.tts-warn.shown{display:block;}
+.voice-picker{display:flex; align-items:center; gap:8px; flex-wrap:wrap; background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:8px 12px; margin-top:10px; font-size:13px;}
+.voice-picker label{font-weight:700; color:var(--ink-soft);}
+.voice-picker select{border:1.5px solid var(--line); border-radius:6px; padding:4px 8px; font-family:'Nunito'; font-size:13px; background:#fff; color:var(--ink); max-width:220px;}
+.voice-hint{font-size:11.5px; color:var(--ink-soft); flex-basis:100%;}
+.sound-block{margin-top:22px; padding-top:16px; border-top:1px dashed var(--line);}
+.sound-block:first-of-type{border-top:none; margin-top:16px;}
+.sound-block h3{font-size:15.5px; margin:0 0 6px; color:var(--brick-dark); font-weight:700;}
+.ipa{font-family:'Nunito'; font-weight:500; font-size:12px; color:var(--ink-soft); font-style:italic;}
+.sound-note{font-size:13.5px; color:var(--ink-soft); margin:0 0 12px;}
+.sound-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+.sound-grid.three{grid-template-columns:repeat(3,1fr);}
+@media(max-width:600px){.sound-grid, .sound-grid.three{grid-template-columns:1fr;}}
+.sound-pair{background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px;}
+.sound-pair.wide{grid-column:1/-1;}
+.sp-text{font-size:14.5px; font-weight:600; flex:1;}
+.sp-text.big{font-size:19px; text-align:center; font-family:'Comfortaa',sans-serif; color:var(--brick-dark);}
+.sp-controls{display:flex; gap:6px; flex-shrink:0;}
+.play-btn{border:1.5px solid var(--line); background:var(--cream); cursor:pointer; border-radius:8px; padding:6px 10px; font-size:15px; line-height:1; transition:.15s;}
+.play-btn:hover{background:var(--tab); border-color:var(--tab-dark);}
+.play-btn.playing{background:var(--brick); border-color:var(--brick-dark);}
+b.stress{color:var(--brick-dark); text-decoration:underline; text-decoration-color:var(--gold); text-decoration-thickness:2px; text-underline-offset:3px;}
+
+.prompt-list{list-style:none; padding:0; margin:14px 0; display:grid; gap:8px;}
+.prompt-list li{background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:8px 12px; font-size:13.5px; display:flex; gap:8px; align-items:baseline;}
+.prompt-list li b{color:var(--brick-dark); font-family:'Comfortaa',sans-serif;}
+textarea.write-area{width:100%; min-height:140px; border:1.5px solid var(--line); border-radius:10px; padding:14px; font-family:'Nunito'; font-size:14.5px; color:var(--ink); background:#FFFDFB; resize:vertical;}
+textarea.write-area:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.word-count{font-size:12.5px; color:var(--ink-soft); margin-top:6px;}
+.cue-cards{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;}
+.cue-card{background:#fff; border:1.5px dashed var(--gold); border-radius:10px; padding:10px 14px; font-size:13px; width:160px; color:var(--ink-soft); font-style:italic;}
+.cue-card b{display:block; font-style:normal; color:var(--brick-dark); font-family:'Comfortaa',sans-serif; font-size:14px; margin-bottom:3px;}
+.reveal-box{margin-top:14px; border-left:3px solid var(--tab); background:var(--cream); padding:12px 16px; border-radius:6px; font-size:13.5px; display:none;}
+.reveal-box.shown{display:block;}
+
+.hw-list{display:flex; flex-direction:column; gap:10px; margin-top:16px;}
+.hw-item{display:flex; gap:10px; align-items:flex-start; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:11px 14px; font-size:13.5px; cursor:pointer; transition:.15s;}
+.hw-item:has(.hw-check:checked){background:var(--sage-bg); border-color:var(--sage);}
+.hw-check{margin-top:3px; width:16px; height:16px; accent-color:var(--sage); flex-shrink:0;}
+.hw-item b{color:var(--brick-dark); font-family:'Comfortaa',sans-serif;}
+.hw-item i{color:var(--ink-soft); font-style:italic;}
+
+@media print{
+  .topbar, .unit-banner, #presentation, #vocabulary, #practice, #reading, #sounds, #production, .badge-final, .footer-note, .no-print{ display:none !important; }
+  body{ background:#fff; padding:0; }
+  .page{ box-shadow:none; border:none; margin:0; max-width:100%; }
+  .section{ border-top:none; }
+  .section .tab{ display:none; }
+  .section .content{ padding:10px; }
+  .hw-item{ break-inside:avoid; }
+}
+
+.footer-note{text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:24px; padding:0 20px;}
+.badge-final{display:none; text-align:center; margin:26px auto 0; max-width:900px; background:linear-gradient(135deg, var(--sage), #3d7357); color:#fff; border-radius:14px; padding:22px; font-family:'Comfortaa',sans-serif; font-size:19px; font-weight:700; box-shadow:var(--shadow);}
+.badge-final.shown{display:block; animation:fadeIn .5s ease;}
+.badge-final span{display:block; font-family:'Nunito'; font-weight:500; font-size:13.5px; margin-top:6px; opacity:.9;}
+
+/* Generated textbook illustrations; contain each complete scene without cropping. */
+.dialog-figure.art-figure{width:148px}
+.lisa-figure.art-figure{width:164px}
+.dialog-avatar.art-avatar{width:144px;height:auto}
+.lisa-avatar.art-avatar{width:160px;height:auto}
+.art-avatar img.lesson-portrait{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--line);box-shadow:0 5px 16px rgba(150,80,100,.10)}
+.scene-box img.lesson-scene{display:block;width:100%;max-width:720px;height:auto;margin:0 auto;border-radius:10px}
+.pic-slot img.lesson-scene{display:block;width:100%;height:auto;max-height:none;object-fit:contain}
+@media(max-width:560px){
+ .dialog-wrap .art-figure{width:112px}
+ .dialog-avatar.art-avatar{width:108px}
+ .dialog-wrap .dialog-bubbles{min-width:0;flex-basis:100%;max-width:none;order:2}
+ .dialog-wrap .dialog-figure:last-child{order:1}
+ .dialog-wrap .dialog-figure:first-child{order:0}
+ .lisa-avatar.art-avatar{width:140px}
+ .scene-box{padding:10px}
+}
+
+</style>
+<link rel="stylesheet" href="../lesson-theme.css"></head>
+<body><div class="topbar">
+  <div class="book-title">Essential Grammar · Unit 81</div>
+  <div class="progress-steps">
+    <div class="pstep" id="step-p"><i id="bar-p"></i></div>
+    <div class="pstep" id="step-vocab"><i id="bar-vocab"></i></div>
+    <div class="pstep" id="step-pr"><i id="bar-pr"></i></div>
+    <div class="pstep" id="step-read"><i id="bar-read"></i></div>
+    <div class="pstep" id="step-sound"><i id="bar-sound"></i></div>
+    <div class="pstep" id="step-listen"><i id="bar-listen"></i></div>
+    <div class="pstep" id="step-prod"><i id="bar-prod"></i></div>
+    <div class="pstep" id="step-hw"><i id="bar-hw"></i></div>
+  </div>
+  <div class="score-pill">★ <span id="scoreDisplay">0</span>/20</div>
+</div>
+
+<div class="page"><div class="unit-banner">
+    <div class="unit-tag"><span class="u">UNIT</span><span class="n">81</span></div>
+    <h1>all · most · some · any · no/none</h1>
+    <p>most people / most of the people; all of it, none of them</p>
+  </div><div class="section" id="presentation">
+    <div class="tab">A</div>
+    <div class="content">
+      <div class="eyebrow">Presentation</div>
+      <h2>all · most · some · any · no/none</h2>
+      <div class="gram-box" style="margin:14px 0"><h3>A · Compare</h3><div style="display:flex;gap:12px;flex-wrap:wrap;margin:12px 0"><div style="flex:1 1 240px"><p><b>children/money/books</b> etc. (in general):</p><ul class="prompt-list"><li><span style="display:block"><b>Children</b> like playing.<br>(= children in general)</span></li><li><span style="display:block"><b>Money</b> isn't everything.<br>(= money in general)</span></li><li><span style="display:block">I enjoy reading <b>books</b>.</span></li><li><span style="display:block">Everybody needs <b>friends</b>.</span></li></ul></div><div style="flex:1 1 240px"><p><b>the children / the money / these books</b> etc.:</p><ul class="prompt-list"><li><span style="display:block">Where are <b>the children</b>?<br>(= our children)</span></li><li><span style="display:block">I want to buy a car, but I don't have <b>the money</b>. (= the money for a car)</span></li><li><span style="display:block">Have you read <b>these books</b>?</span></li><li><span style="display:block">I often go out with <b>my friends</b>.</span></li></ul></div></div></div>
+      <div class="gram-box" style="margin:14px 0"><h3>B · most / most of …, some / some of … etc.</h3><div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:10px 0"><div style="text-align:center;flex:0 0 90px"><div style="position:relative;width:60px;height:60px;margin:0 auto;border:2px solid #2B4A6F;background:linear-gradient(to top,#2B4A6F 100%,#fff 100%)"></div><div style="font-size:13px;margin-top:4px">all</div></div><div style="text-align:center;flex:0 0 90px"><div style="position:relative;width:60px;height:60px;margin:0 auto;border:2px solid #2B4A6F;background:linear-gradient(to top,#2B4A6F 75%,#fff 75%)"></div><div style="font-size:13px;margin-top:4px">most</div></div><div style="text-align:center;flex:0 0 90px"><div style="position:relative;width:60px;height:60px;margin:0 auto;border:2px solid #2B4A6F;background:linear-gradient(to top,#2B4A6F 25%,#fff 25%)"></div><div style="font-size:13px;margin-top:4px">some</div></div><div style="text-align:center;flex:0 0 90px"><div style="position:relative;width:60px;height:60px;margin:0 auto;border:2px solid #2B4A6F;background:linear-gradient(to top,#2B4A6F 0%,#fff 0%)"><div style="font:900 34px sans-serif;line-height:58px;text-align:center">?</div></div><div style="font-size:13px;margin-top:4px">any</div></div><div style="text-align:center;flex:0 0 90px"><div style="position:relative;width:60px;height:60px;margin:0 auto;border:2px solid #2B4A6F;background:linear-gradient(to top,#2B4A6F 0%,#fff 0%)"><svg width="60" height="60" style="position:absolute;inset:0"><line x1="0" y1="0" x2="60" y2="60" stroke="#3B82C4" stroke-width="2"/><line x1="60" y1="0" x2="0" y2="60" stroke="#3B82C4" stroke-width="2"/></svg></div><div style="font-size:13px;margin-top:4px">no / none / not + any</div></div></div><div style="display:flex;gap:12px;flex-wrap:wrap;margin:12px 0"><div style="flex:1 1 240px"><p><b>most/some</b> etc. + <i>noun</i></p><div style="overflow-x:auto"><table style="border-collapse:collapse;margin:10px 0;background:#FFFDFB;font-size:15px"><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;text-align:center;font-weight:800;line-height:1.8">all<br>most<br>some<br>any<br>no</td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none"><span style="text-decoration:line-through;color:#B33">of</span></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;line-height:1.8">cities<br>children<br>books<br>money</td></tr></table></div><ul class="prompt-list"><li><span style="display:block"><b>Most children</b> like playing.<br>(= children in general)</span></li><li><span style="display:block">I don't want <b>any money</b>.</span></li><li><span style="display:block"><b>Some books</b> are better than others.</span></li><li><span style="display:block">He has <b>no friends</b>.</span></li><li><span style="display:block"><b>All cities</b> have the same problems.<br>(= cities in general)</span></li></ul><p>Здесь <b>of</b> не используем:</p><ul class="prompt-list"><li><span style="display:block"><b>Most people</b> drive too fast.<br><i>(не Most of people)</i></span></li><li><span style="display:block"><b>Some birds</b> can't fly.<br><i>(не Some of birds)</i></span></li></ul></div><div style="flex:1 1 240px"><p><b>most of/some of</b> etc. + <b>the/this/my …</b> etc.</p><div style="overflow-x:auto"><table style="border-collapse:collapse;margin:10px 0;background:#FFFDFB;font-size:15px"><tr><td rowspan="1" colspan="2" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;text-align:center;font-weight:800">all &nbsp;(of)</td><td rowspan="2" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;line-height:1.8">the …<br>this/that …<br>these/those …<br>my/your … etc.</td></tr><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;text-align:center;font-weight:800;line-height:1.8">most<br>some<br>any<br>none</td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;font-weight:800">of</td></tr></table></div><ul class="prompt-list"><li><span style="display:block"><b>Most of the children</b> at this school are under 11 years old.</span></li><li><span style="display:block">I don't want <b>any of this money</b>.</span></li><li><span style="display:block"><b>Some of these books</b> are very old.</span></li><li><span style="display:block"><b>None of my friends</b> live near me.</span></li></ul><p>Можно <b>all the …</b> или <b>all of the …</b> (с <b>of</b> или без):</p><ul class="prompt-list"><li><span style="display:block"><b>All the students</b> in our class passed the exam. (<i>or</i> <b>All of the students</b> …)</span></li><li><span style="display:block">Amy has lived in London <b>all her life</b>. (<i>or</i> … <b>all of her life</b>.)</span></li></ul></div></div></div>
+      <div class="gram-box" style="margin:14px 0"><h3>C · all of it / most of them / none of us etc.</h3><div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center"><div style="flex:1 1 320px"><ul class="prompt-list"><li><span style="display:block">You can have <b>some of</b> this cake, but not <b>all of it</b>.</span></li><li><span style="display:block">A: Do you know those people?<br>B: <b>Most of them</b>, but not <b>all of them</b>.</span></li><li><span style="display:block"><b>Some of us</b> are going out tonight. Why don't you come with us?</span></li><li><span style="display:block">I have a lot of books, but I haven't read <b>any of them</b>.</span></li><li><span style="display:block">'How many of these books have you read?' '<b>None of them</b>.'</span></li></ul></div><div style="flex:0 0 160px"><div style="overflow-x:auto"><table style="border-collapse:collapse;margin:10px 0;background:#FFFDFB;font-size:15px"><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;text-align:center;font-weight:800;line-height:1.8">all<br>most<br>some<br>any<br>none</td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;font-weight:800">of</td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;line-height:1.8">it<br>them<br>us<br>you</td></tr></table></div></div></div></div>
+    </div>
+  </div><div class="section" id="vocabulary"><div class="tab">B</div><div class="content"><div class="eyebrow">Vocabulary</div><h2>Новые слова этого урока</h2><p class="lead">Нажмите на динамик, чтобы услышать слово. Все слова встретятся дальше в чтении и упражнениях.</p><div id="vocabTable" class="vocab-table"></div><h3>Соседи слов <span class="ipa">chunks / collocations</span></h3><p class="sound-note">Учите сочетаниями: так слова легче вспоминаются в речи.</p><div id="chunkGrid" class="chunk-grid"></div></div></div><div class="section" id="practice">
+    <div class="tab">C</div>
+    <div class="content">
+      <div class="eyebrow">Practice</div>
+      <h2>Тренируемся</h2>
+      <p class="lead">Выберите игру и заработайте звёзды ★. Ответы проверяются сразу.</p>
+      <div class="game-tabs">
+        <button class="game-tab-btn active" data-panel="panel-fill">✏️ most / most of / none of</button>
+        <button class="game-tab-btn" data-panel="panel-memo">🃏 Мемо</button>
+        <button class="game-tab-btn" data-panel="panel-quiz">⚡ Квиз</button>
+        <button class="game-tab-btn" data-panel="panel-vocabmatch">📚 Лексика</button>
+      </div>
+      <div class="game-panel active" id="panel-fill">
+        <p class="lead" style="margin-top:0">Впишите most, some, of, none, it или them.</p>
+        <div id="fillList"></div>
+        <div class="actions-row">
+          <button class="btn" id="checkFillBtn">Проверить</button>
+          <button class="btn secondary small" id="resetFillBtn">Сбросить</button>
+          <span class="fb-line" id="fillFeedback"></span>
+        </div>
+      </div>
+      <div class="game-panel" id="panel-memo">
+        <p class="lead" style="margin-top:0">Найдите пары: английское слово и его русский перевод.</p>
+        <div class="memo-wrap">
+          <div class="memo-grid" id="memoGrid"></div>
+          <div class="memo-status" id="memoStatus">Найдено пар: 0 / 6</div>
+          <button class="btn secondary small" id="restartMemoBtn">Перемешать заново</button>
+        </div>
+      </div>
+      <div class="game-panel" id="panel-quiz">
+        <div id="quizList"></div>
+        <div class="actions-row"><span class="fb-line" id="quizFeedback"></span></div>
+      </div>
+      <div class="game-panel" id="panel-vocabmatch">
+        <p class="lead" style="margin-top:0">Нажмите на английское слово, затем на его перевод.</p>
+        <div class="match-wrap">
+          <div class="match-col" id="matchEnCol"></div>
+          <div class="match-col" id="matchRuCol"></div>
+        </div>
+        <div class="actions-row">
+          <span class="fb-line" id="matchStatus">Найдено пар: 0 / 10</span>
+          <button class="btn secondary small" id="restartMatchBtn">Перемешать заново</button>
+        </div>
+      </div>
+    </div>
+  </div><div class="section alt" id="reading">
+    <div class="tab">D</div>
+    <div class="content"><div class="actions-row"><button class="btn secondary small" id="playReadingBtn">🔊 Прослушать текст</button><button class="btn secondary stop-audio">Остановить</button></div>
+      <div class="eyebrow">Reading</div>
+      <h2>My English class</h2>
+      <p class="lead">Найдите all, most, some, none и of.</p>
+      <div class="read-text"><p>There are thirty students in my English class. Most of them are women, and some of them are men. All of us work during the day.</p><p>Most people in the class want to travel. Some of the students have been to London, but none of them have been to Australia.</p><p>Our teacher gives us a lot of <span class="chunk">homework</span>. I do most of it, but not all of it! Some <span class="chunk">exercise</span>s are very difficult.</p><p>Last week we had a <span class="chunk">test</span>. All the students passed, but none of us got 100%. Most children love tests — but not <span class="chunk">adults</span>!</p></div>
+    <h3>1 · True / False</h3><div id="tfList"></div><div class="fb-line" id="tfFeedback"></div><h3>2 · Наш класс</h3><p class="sound-note">Впишите слово.</p><div id="tomFillList"></div><div class="actions-row"><button class="btn small" id="checkTomBtn">Проверить</button><span class="fb-line" id="tomFeedback"></span></div><h3>3 · Слова из текста</h3><div id="readFillList"></div><div class="actions-row"><button class="btn small" id="checkReadFillBtn">Проверить</button><span class="fb-line" id="readFillFeedback"></span></div>
+  </div></div><div class="section" id="sounds">
+    <div class="tab">E</div>
+    <div class="content"><p class="mini-note">Синтезированный голос помогает прочитать фразы, но не гарантирует точную интонацию. Повторяйте за ним и сравнивайте.</p>
+      <div class="eyebrow">Sounds &amp; Speech</div>
+      <h2>most / some / none на слух</h2>
+      <p class="lead">Слушайте и повторяйте.</p>
+      <p class="tts-warn" id="ttsWarn"></p>
+      <div class="sound-block"><h3>1 · in general</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">Most children like playing.</div><div class="sp-controls"><button class="play-btn" data-text="Most children like playing." data-rate="1">🔊</button><button class="play-btn slow" data-text="Most children like playing." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">Some birds can't fly.</div><div class="sp-controls"><button class="play-btn" data-text="Some birds can&#x27;t fly." data-rate="1">🔊</button><button class="play-btn slow" data-text="Some birds can&#x27;t fly." data-rate="0.6">🐢</button></div></div></div></div><div class="sound-block"><h3>2 · of the / of these</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">Most of the children are under eleven.</div><div class="sp-controls"><button class="play-btn" data-text="Most of the children are under eleven." data-rate="1">🔊</button><button class="play-btn slow" data-text="Most of the children are under eleven." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">None of my friends live near me.</div><div class="sp-controls"><button class="play-btn" data-text="None of my friends live near me." data-rate="1">🔊</button><button class="play-btn slow" data-text="None of my friends live near me." data-rate="0.6">🐢</button></div></div></div></div><div class="sound-block"><h3>3 · of it / of them / of us</h3><div class="sound-grid three"><div class="sound-pair"><div class="sp-text">You can have some of this cake, but not all of it.</div><div class="sp-controls"><button class="play-btn" data-text="You can have some of this cake, but not all of it." data-rate="1">🔊</button><button class="play-btn slow" data-text="You can have some of this cake, but not all of it." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">None of them.</div><div class="sp-controls"><button class="play-btn" data-text="None of them." data-rate="1">🔊</button><button class="play-btn slow" data-text="None of them." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">Some of us are going out.</div><div class="sp-controls"><button class="play-btn" data-text="Some of us are going out." data-rate="1">🔊</button><button class="play-btn slow" data-text="Some of us are going out." data-rate="0.6">🐢</button></div></div></div></div>
+      <div class="actions-row">
+        <button class="btn secondary small" id="playAllBtn">🔊 Прослушать всё подряд</button>
+      </div>
+    </div>
+  </div><div class="section alt" id="listening">
+    <div class="tab">F</div>
+    <div class="content">
+      <div class="eyebrow">Listening</div>
+      <h2>Слушаем вслепую</h2>
+      <p class="lead">Друзья о книгах.</p>
+      <div class="speed-picker">
+        <label>Скорость:</label>
+        <div class="speed-btns">
+          <button class="speed-btn" data-rate="0.6">🐢 Медленно</button>
+          <button class="speed-btn active" data-rate="0.95">🔊 Обычно</button>
+        </div>
+      </div>
+      <div class="actions-row">
+        <button class="btn secondary stop-audio">Остановить</button>
+        <button class="btn" id="playListeningBtn">▶️ Слушать диалог</button>
+      </div>
+      <h3 style="font-size:14.5px; margin:18px 0 8px; color:var(--brick-dark);">Вопросы по прослушанному</h3>
+      <div id="lsList"></div>
+      <div class="actions-row"><span class="fb-line" id="lsFeedback"></span></div>
+      <div class="actions-row">
+        <button class="btn secondary small" id="toggleScriptBtn" disabled="">📜 Скрипт — после ответов на все вопросы</button>
+      </div>
+      <div class="reveal-box" id="scriptBox">Have you read all these books?
+No, only some of them.
+Which ones?
+Most of the English ones. None of the French ones.
+Can I borrow any of them?
+Sure, take all of them!</div>
+    </div>
+  </div><div class="section alt" id="production">
+    <div class="tab">G</div>
+    <div class="content">
+      <div class="eyebrow">Production</div>
+      <h2>Мои друзья и коллеги</h2>
+      <p class="lead">Напишите 6–8 предложений о людях вокруг вас: Most of my friends …, Some of them …, None of us …, All the people …</p>
+      <ul class="prompt-list"><li><b>Most of my friends …</b></li><li><b>Some of them …</b></li><li><b>None of us …</b></li><li><b>All people … / Most people …</b></li></ul>
+      <textarea class="write-area" id="writeArea" placeholder="Most of my friends live in Oryol..."></textarea>
+      <div class="word-count" id="wordCount">0 слов</div>
+      <div class="actions-row">
+        <button class="btn" id="finishBtn">Готово!</button>
+        <button class="btn secondary" id="sampleBtn">Показать пример</button>
+      </div>
+      <div class="reveal-box" id="sampleBox"><b>Пример:</b> Most of my friends live in Oryol, but some of them live in Moscow. All of us like travelling. None of my friends have been to Japan. Most of my colleagues are women. Some of them have children. Most people in my town are friendly.</div>
+      <div class="cue-cards">
+        <div class="cue-card"><b>Карточка 1</b>most people или most of the people? Объясните разницу.</div>
+        <div class="cue-card"><b>Карточка 2</b>Спросите: How many of your friends …? — Most / Some / None of them.</div>
+        <div class="cue-card"><b>Карточка 3</b>all of it / none of it — придумайте примеры про еду.</div>
+      </div>
+    </div>
+  </div><div class="section" id="homework">
+    <div class="tab">H</div>
+    <div class="content">
+      <div class="eyebrow">Homework</div>
+      <h2>Домашнее задание</h2>
+      <p class="lead">Отметьте галочкой то, что выполнили. Можно распечатать этот блок.</p>
+      <div class="hw-list">
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>1. Письменно.</b> Напишите по 2 предложения с most, some, any, none, all.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>2. of.</b> Напишите 4 пары: most people / most of the people.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>3. Слушаем и повторяем.</b> Откройте блок <i>E · Sounds</i>.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>4. Слова.</b> Выучите 12 новых слов.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>5. Повторение.</b> Пройдите квиз ещё раз без ошибок.</span></label>
+      </div>
+      <div class="actions-row">
+        <span class="fb-line" id="hwFeedback">Выполнено: 0 / 5</span>
+        <button class="btn secondary small no-print" id="printHwBtn">🖨️ Распечатать задание</button>
+      </div>
+    </div>
+  </div></div><div class="badge-final" id="finalBadge">Урок пройден!<span>Все обязательные задания выполнены.</span></div>
+
+<p class="footer-note">Based on Essential Grammar in Use, 4th Edition (Cambridge University Press, 2015), Unit 81 — original exercises created for this lesson.</p>
+<script src="../lesson-kit.js?v=20261018-games1"></script><script src="../lesson-template.js?v=20261018-games1"></script><script>window.lessonConfig={"vocabData": [{"word": "most", "ipa": "/məʊst/", "ru": "большинство"}, {"word": "none", "ipa": "/nʌn/", "ru": "ни один"}, {"word": "in general", "ipa": "/ɪn ˈdʒenrəl/", "ru": "в целом"}, {"word": "bird", "ipa": "/bɜːd/", "ru": "птица"}, {"word": "fly", "ipa": "/flaɪ/", "ru": "летать"}, {"word": "drive", "ipa": "/draɪv/", "ru": "водить"}, {"word": "life", "ipa": "/laɪf/", "ru": "жизнь"}, {"word": "under", "ipa": "/ˈʌndə/", "ru": "младше; под"}, {"word": "awake", "ipa": "/əˈweɪk/", "ru": "бодрствующий"}, {"word": "fail", "ipa": "/feɪl/", "ru": "провалить"}, {"word": "bracket", "ipa": "/ˈbrækɪt/", "ru": "скобка"}, {"word": "adult", "ipa": "/ˈædʌlt/", "ru": "взрослый"}], "chunkData": [{"en": "most people", "ipa": "", "ru": "большинство людей"}, {"en": "some of these books", "ipa": "", "ru": "некоторые из этих книг"}, {"en": "none of my friends", "ipa": "", "ru": "никто из моих друзей"}, {"en": "all her life", "ipa": "", "ru": "всю её жизнь"}, {"en": "all of it", "ipa": "", "ru": "всё это"}, {"en": "none of them", "ipa": "", "ru": "ни один из них"}], "fillData": [{"sentence": "___ children like playing. (большинство)", "answers": ["Most"]}, {"sentence": "Most ___ drive too fast. (люди)", "answers": ["people"]}, {"sentence": "___ birds can't fly. (некоторые)", "answers": ["Some"]}, {"sentence": "He has ___ friends.", "answers": ["no"]}, {"sentence": "Most ___ the children are under 11.", "answers": ["of"]}, {"sentence": "I don't want any ___ this money.", "answers": ["of"]}, {"sentence": "___ of my friends live near me. (никто)", "answers": ["None"]}, {"sentence": "All ___ students passed the exam.", "answers": ["the"]}, {"sentence": "You can have some of this cake, but not all of ___.", "answers": ["it"]}, {"sentence": "Do you know those people? — Most of ___.", "answers": ["them"]}, {"sentence": "___ of us are going out tonight. (некоторые)", "answers": ["Some"]}, {"sentence": "How many have you read? — None of ___.", "answers": ["them"]}], "memoPairs": [["most", "большинство"], ["none", "ни один"], ["bird", "птица"], ["adult", "взрослый"], ["awake", "бодрствующий"], ["fail", "провалить"]], "quizData": [{"q": "___ people drive too fast.", "opts": ["Most", "Most of"], "correct": "Most"}, {"q": "___ the children are under 11.", "opts": ["Most of", "Most"], "correct": "Most of"}, {"q": "Some ___ can't fly.", "opts": ["birds", "of birds"], "correct": "birds"}, {"q": "___ my friends live near me.", "opts": ["None of", "No"], "correct": "None of"}, {"q": "He has ___ friends.", "opts": ["no", "none"], "correct": "no"}, {"q": "I haven't read any of ___.", "opts": ["them", "they"], "correct": "them"}, {"q": "Not all of ___.", "opts": ["it", "its"], "correct": "it"}, {"q": "___ of us are going out.", "opts": ["Some", "Any"], "correct": "Some"}], "matchWords": [{"en": "most", "ru": "большинство"}, {"en": "none", "ru": "ни один"}, {"en": "in general", "ru": "в целом"}, {"en": "bird", "ru": "птица"}, {"en": "fly", "ru": "летать"}, {"en": "drive", "ru": "водить"}, {"en": "life", "ru": "жизнь"}, {"en": "under", "ru": "младше; под"}, {"en": "awake", "ru": "бодрствующий"}, {"en": "fail", "ru": "провалить"}], "tfGroups": {"tfList": {"data": [{"text": "Most of the students are women.", "correct": true}, {"text": "None of them work.", "correct": false}, {"text": "Some students have been to London.", "correct": true}, {"text": "Some have been to Australia.", "correct": false}, {"text": "The writer does all of the homework.", "correct": false}, {"text": "All the students passed the test.", "correct": true}], "feedback": "tfFeedback"}, "lsList": {"data": [{"text": "The speaker has read some of the books.", "correct": true}, {"text": "The speaker has read the French ones.", "correct": false}, {"text": "The friend can take all of them.", "correct": true}, {"text": "The friend can't borrow any.", "correct": false}], "feedback": "lsFeedback"}}, "readFillData": [{"sentence": "___ of them are women.", "answers": ["Most"]}, {"sentence": "___ of us work during the day.", "answers": ["All"]}, {"sentence": "___ people in the class want to travel.", "answers": ["Most"]}, {"sentence": "___ of them have been to Australia.", "answers": ["none"]}, {"sentence": "I do most of ___.", "answers": ["it"]}, {"sentence": "___ the students passed.", "answers": ["All"]}], "tomData": [{"sentence": "There are thirty ___ in my class.", "answers": ["students"]}, {"sentence": "Our teacher gives us a lot of ___.", "answers": ["homework"]}, {"sentence": "Some exercises are very ___.", "answers": ["difficult"]}, {"sentence": "Last week we had a ___.", "answers": ["test"]}, {"sentence": "none of us got ___%.", "answers": ["100"]}, {"sentence": "but not ___!", "answers": ["adults"]}], "slug": "urok-all-most-some", "exam": false, "legacySignature": "", "legacyFields": [], "questionTask": false, "listeningLines": ["Have you read all these books?", "No, only some of them.", "Which ones?", "Most of the English ones. None of the French ones.", "Can I borrow any of them?", "Sure, take all of them!"], "readingLines": ["There are thirty students in my English class. Most of them are women, and some of them are men. All of us work during the day.", "Most people in the class want to travel. Some of the students have been to London, but none of them have been to Australia.", "Our teacher gives us a lot of homework. I do most of it, but not all of it! Some exercises are very difficult.", "Last week we had a test. All the students passed, but none of us got 100%. Most children love tests — but not adults!"]};
+LessonTemplate.mount(window.lessonConfig);</script></body></html>

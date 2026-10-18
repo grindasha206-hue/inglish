@@ -790,6 +790,27 @@
               "title": "somebody/anything/nowhere",
               "description": "some-/any-/no- + body/thing/where",
               "file": "lessons/urok-somebody-nowhere.html"
+            },
+            {
+              "id": "urok-every-all",
+              "unit": 7,
+              "title": "every and all",
+              "description": "every / all; every day / all day; everybody",
+              "file": "lessons/urok-every-all.html"
+            },
+            {
+              "id": "urok-all-most-some",
+              "unit": 8,
+              "title": "all, most, some, any, no/none",
+              "description": "most / most of; all of it, none of them",
+              "file": "lessons/urok-all-most-some.html"
+            },
+            {
+              "id": "urok-both-either-neither",
+              "unit": 9,
+              "title": "both, either, neither",
+              "description": "both, either, neither",
+              "file": "lessons/urok-both-either-neither.html"
             }
           ]
         }
