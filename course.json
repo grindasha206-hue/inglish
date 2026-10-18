@@ -762,6 +762,13 @@
               "title": "one/ones",
               "description": "one = a…; this one, the one, the brown one, some new ones",
               "file": "lessons/urok-one-ones.html"
+            },
+            {
+              "id": "urok-some-any",
+              "unit": 3,
+              "title": "some and any",
+              "description": "some и any; something, anybody",
+              "file": "lessons/urok-some-any.html"
             }
           ]
         }

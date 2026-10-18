@@ -1268,6 +1268,18 @@ const T=[
    O('Which one do you want?'),
    O('I like the brown one.')
   ]},
+  {id:76,title:'some and any',emoji:'🥛',rule:"some — в утверждениях: I have some money. any — в отрицаниях и большинстве вопросов: I don't have any money. Is there any milk? Но some в предложениях и просьбах: Would you like some coffee? Can I have some soup? Без существительного: Jessica took some. I don't want any. somebody/something — в утверждениях, anybody/anything — в отрицаниях и вопросах.",
+  items:[
+   C('I don\'t have ___ money.','any','some','a'),
+   C('Would you like ___ tea?','some','any','a'),
+   C('She didn\'t say ___.','anything','something','nothing'),
+   C('___ is at the door.','Somebody','Anybody','Nobody'),
+   F('There\'s ___ milk in the fridge.','some'),
+   F('Is there ___ milk?','any'),
+   F('Can I have ___ soup, please?','some'),
+   O("I don't have any money."),
+   O('Would you like some coffee?')
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),
