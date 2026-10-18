@@ -268,6 +268,27 @@ const T=[
    O("We didn't stay long at the party.",'We did not stay long at the party.'),
    O('What time did you arrive?')
   ]},
+  {id:13,title:'Past continuous',emoji:'🎞️',rule:'was/were + -ing — действие было в процессе в определённый момент прошлого: At 4 o\'clock he was swimming. Отрицание: wasn\'t/weren\'t + -ing. Вопрос: Was he…? What were you doing? Present: I\'m working → past: I was working.',
+  items:[
+   C("At 8 o'clock I ___ breakfast.",'was having','were having','had having'),
+   C('They ___ TV when I called.','were watching','was watching','watching'),
+   C('What ___ you doing at midnight?','were','did','was'),
+   C('It ___ raining when we went out.',"wasn't","weren't","didn't"),
+   C('run → -ing','running','runing','runnning'),
+   C('lie → -ing','lying','lieing','liing'),
+   C("'Was Tom driving?' 'Yes, he ___.'",'was','did','were'),
+   C("I'm working now. At 10.30 last night I ___.",'was working','am working','worked'),
+   C('Какое предложение правильное?','We were living in Paris in 2010.','We was living in Paris in 2010.','We were live in Paris in 2010.'),
+   C('The sun ___ and the birds were singing.','was shining','were shining','is shining'),
+   F("At 4 o'clock Paul ___ (swim) in the pool.",'was swimming'),
+   F('Sorry, I ___ (not/listen).',"wasn't listening",'was not listening'),
+   F('___ she wearing a skirt yesterday?','Was'),
+   F('They ___ (not/work) at 10 o\'clock.',"weren't working",'were not working'),
+   F('He ___ (carry) a big bag.','was carrying'),
+   O('What were you doing at three o\'clock?'),
+   O('It was raining, so we didn\'t go out.'),
+   O('The birds were singing in the garden.')
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),

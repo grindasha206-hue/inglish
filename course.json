@@ -146,6 +146,13 @@
               "title": "I didn't… / Did you…?",
               "description": "Past simple: отрицание, вопросы и краткие ответы",
               "file": "lessons/urok-past-simple-negative-questions.html"
+            },
+            {
+              "id": "urok-past-continuous",
+              "unit": 4,
+              "title": "I was doing — past continuous",
+              "description": "Что происходило в определённый момент прошлого",
+              "file": "lessons/urok-past-continuous.html"
             }
           ]
         }
