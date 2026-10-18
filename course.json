@@ -303,6 +303,13 @@
               "title": "will / shall 2",
               "description": "I'll — предложения и решения; Shall I…? Shall we…?",
               "file": "lessons/urok-will-shall-2.html"
+            },
+            {
+              "id": "itogovyi-test-future",
+              "unit": 5,
+              "title": "Итоговый тест · модуль 7",
+              "description": "Будущее: present continuous, going to, will, shall",
+              "file": "lessons/itogovyi-test-future.html"
             }
           ]
         }
