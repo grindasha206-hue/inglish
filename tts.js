@@ -1,11 +1,16 @@
 /* Shared TTS transport. Existing providers, no build step. */
 (function(root){
-  function chunks(text,limit){
-    let rest=String(text).trim(); const out=[];
+  function chunks(text,limit,sentences=false){
+    const input=String(text).trim(),out=[];
+    // Orpheus can finish after the first sentence of a multi-sentence request.
+    // Keep paragraph/sentence boundaries; never send the next sentence in that request.
+    const pieces=sentences?input.split(/\r?\n+/).flatMap(line=>line.match(/.+?(?:[.!?…]+["”’')\]]*(?=\s|$)|$)/g)||[]):[input];
+    for(const piece of pieces){let rest=piece.replace(/\s+/g,' ').trim();
     while(rest){
       let end=Math.min(rest.length,limit);
       if(end<rest.length){const space=rest.lastIndexOf(' ',end);if(space>limit/2)end=space;}
       out.push(rest.slice(0,end).trim());rest=rest.slice(end).trim();
+    }
     }
     return out;
   }
@@ -74,7 +79,7 @@
       const input=String(text).trim();if(!input)return;
       if(input.length>20000)throw new Error('Слишком длинный текст для озвучки');
       const token=++root.TTS.generation;stop();last={text:input,rate,voice};
-      for(let part of chunks(input,config.limit)){
+      for(let part of chunks(input,config.limit,config.punctuation)){
         if(config.punctuation&&!/[.!?…]$/.test(part))part+='.';
         if(token!==root.TTS.generation)return false;
         const url=await urlFor(part,voice,key);
@@ -86,7 +91,7 @@
     async function regenerate(){
       if(!last)return false;
       const saved=last;
-      for(let part of chunks(saved.text,config.limit)){
+      for(let part of chunks(saved.text,config.limit,config.punctuation)){
         if(config.punctuation&&!/[.!?…]$/.test(part))part+='.';
         const id=await address(part,saved.voice);if(urls.has(id)){URL.revokeObjectURL(urls.get(id));urls.delete(id);}
         try{await(await caches.open(config.cache)).delete(id);}catch{}
