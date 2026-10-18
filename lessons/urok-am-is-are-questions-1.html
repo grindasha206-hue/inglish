@@ -214,6 +214,25 @@ textarea.write-area:focus{outline:2px solid var(--tab); border-color:var(--tab);
 .badge-final{display:none; text-align:center; margin:26px auto 0; max-width:900px; background:linear-gradient(135deg, var(--sage), #3d7357); color:#fff; border-radius:14px; padding:22px; font-family:'Comfortaa',sans-serif; font-size:19px; font-weight:700; box-shadow:var(--shadow);}
 .badge-final.shown{display:block; animation:fadeIn .5s ease;}
 .badge-final span{display:block; font-family:'Nunito'; font-weight:500; font-size:13.5px; margin-top:6px; opacity:.9;}
+
+/* Generated textbook illustrations; contain each complete scene without cropping. */
+.dialog-figure.art-figure{width:148px}
+.lisa-figure.art-figure{width:164px}
+.dialog-avatar.art-avatar{width:144px;height:auto}
+.lisa-avatar.art-avatar{width:160px;height:auto}
+.art-avatar img.lesson-portrait{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--line);box-shadow:0 5px 16px rgba(150,80,100,.10)}
+.scene-box img.lesson-scene{display:block;width:100%;max-width:720px;height:auto;margin:0 auto;border-radius:10px}
+.pic-slot img.lesson-scene{display:block;width:100%;height:auto;max-height:none;object-fit:contain}
+@media(max-width:560px){
+ .dialog-wrap .art-figure{width:112px}
+ .dialog-avatar.art-avatar{width:108px}
+ .dialog-wrap .dialog-bubbles{min-width:0;flex-basis:100%;max-width:none;order:2}
+ .dialog-wrap .dialog-figure:last-child{order:1}
+ .dialog-wrap .dialog-figure:first-child{order:0}
+ .lisa-avatar.art-avatar{width:140px}
+ .scene-box{padding:10px}
+}
+
 </style>
 <link rel="stylesheet" href="../lesson-theme.css"></head>
 <body><div class="topbar">
@@ -245,16 +264,9 @@ textarea.write-area:focus{outline:2px solid var(--tab); border-color:var(--tab);
       <p class="lead">В вопросе am/is/are «выпрыгивает» перед подлежащим. Прочитайте короткое интервью и обратите внимание на порядок слов.</p><div class="cue-cards"><div class="cue-card">You are a student.</div><div class="cue-card">Are you a student?</div></div>
 
       <div class="dialog-wrap">
-        <div class="dialog-figure">
-          <div class="dialog-avatar">
-            <svg viewBox="0 0 96 120">
-              <rect x="24" y="60" width="48" height="60" rx="18" fill="#C0392B"></rect>
-              <circle cx="48" cy="42" r="24" fill="#F3B3C5"></circle>
-              <path d="M24 40 Q48 8 72 40 Q74 55 66 62 Q70 32 48 28 Q26 32 30 62 Q22 55 24 40Z" fill="#3A2E33"></path>
-              <circle cx="39" cy="44" r="2.6" fill="#3A2E33"></circle>
-              <circle cx="57" cy="44" r="2.6" fill="#3A2E33"></circle>
-              <path d="M40 54 Q48 58 56 54" stroke="#3A2E33" stroke-width="1.8" fill="none" stroke-linecap="round"></path>
-            </svg>
+        <div class="dialog-figure art-figure">
+          <div class="dialog-avatar art-avatar">
+            <img class="lesson-portrait" src="img/interviewer-v1.webp" data-lesson-image="img/interviewer-v1.webp" alt="Собеседница Дэвида с блокнотом в руках." width="480" height="600" decoding="async" fetchpriority="high">
           </div>
           <div class="name">INTERVIEWER</div>
         </div>
@@ -268,16 +280,9 @@ textarea.write-area:focus{outline:2px solid var(--tab); border-color:var(--tab);
           <div class="d-bubble q"><b>Are you</b> married?</div>
           <div class="d-bubble a">No, I'm <b>not</b>.</div>
         </div>
-        <div class="dialog-figure">
-          <div class="dialog-avatar">
-            <svg viewBox="0 0 96 120">
-              <rect x="24" y="60" width="48" height="60" rx="18" fill="#2E7D62"></rect>
-              <circle cx="48" cy="42" r="24" fill="#EDA9BE"></circle>
-              <path d="M22 38 Q48 12 74 38 Q76 44 72 48 Q70 30 48 27 Q26 30 24 48 Q20 44 22 38Z" fill="#4A3222"></path>
-              <circle cx="39" cy="44" r="2.6" fill="#3A2E33"></circle>
-              <circle cx="57" cy="44" r="2.6" fill="#3A2E33"></circle>
-              <path d="M40 54 Q48 58 56 54" stroke="#3A2E33" stroke-width="1.8" fill="none" stroke-linecap="round"></path>
-            </svg>
+        <div class="dialog-figure art-figure">
+          <div class="dialog-avatar art-avatar">
+            <img class="lesson-portrait" src="img/david-v1.webp" data-lesson-image="img/david-v1.webp" alt="Дэвид, 25-летний студент в зелёном свитере с рюкзаком." width="480" height="600" decoding="async" fetchpriority="high">
           </div>
           <div class="name">DAVID</div>
         </div>

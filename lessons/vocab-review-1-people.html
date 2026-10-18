@@ -141,6 +141,25 @@ textarea.write-area:focus{outline:2px solid var(--gold); border-color:var(--gold
 }
 
 .footer-note{text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:24px; padding:0 20px;}
+
+/* Generated textbook illustrations; contain each complete scene without cropping. */
+.dialog-figure.art-figure{width:148px}
+.lisa-figure.art-figure{width:164px}
+.dialog-avatar.art-avatar{width:144px;height:auto}
+.lisa-avatar.art-avatar{width:160px;height:auto}
+.art-avatar img.lesson-portrait{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--line);box-shadow:0 5px 16px rgba(150,80,100,.10)}
+.scene-box img.lesson-scene{display:block;width:100%;max-width:720px;height:auto;margin:0 auto;border-radius:10px}
+.pic-slot img.lesson-scene{display:block;width:100%;height:auto;max-height:none;object-fit:contain}
+@media(max-width:560px){
+ .dialog-wrap .art-figure{width:112px}
+ .dialog-avatar.art-avatar{width:108px}
+ .dialog-wrap .dialog-bubbles{min-width:0;flex-basis:100%;max-width:none;order:2}
+ .dialog-wrap .dialog-figure:last-child{order:1}
+ .dialog-wrap .dialog-figure:first-child{order:0}
+ .lisa-avatar.art-avatar{width:140px}
+ .scene-box{padding:10px}
+}
+
 </style>
 <link rel="stylesheet" href="../lesson-theme.css"></head>
 <body><div class="topbar">
@@ -383,55 +402,7 @@ textarea.write-area:focus{outline:2px solid var(--gold); border-color:var(--gold
       <h2>Опишите сцену</h2>
       <p class="lead">Посмотрите на картинку и опишите людей своими словами — используйте слова-подсказки.</p>
       <div class="scene-box">
-        <svg viewBox="0 0 420 260" width="420">
-          <rect x="0" y="0" width="420" height="260" fill="#F5EEF6"></rect>
-          <rect x="0" y="200" width="420" height="60" fill="#E4D5E7"></rect>
-          <!-- figure 1: doctor -->
-          <g>
-            <ellipse cx="90" cy="235" rx="42" ry="9" fill="#D9C6DD"></ellipse>
-            <rect x="60" y="120" width="60" height="90" rx="18" fill="#FFFFFF" stroke="#D9C6DD" stroke-width="2"></rect>
-            <path d="M75 130 Q90 150 105 130" stroke="#5A8FA8" stroke-width="5" fill="none"></path>
-            <circle cx="75" cy="128" r="5" fill="#5A8FA8"></circle>
-            <circle cx="105" cy="128" r="5" fill="#5A8FA8"></circle>
-            <circle cx="90" cy="90" r="26" fill="#F3B3C5"></circle>
-            <path d="M64 84 Q90 55 116 84 Q118 100 110 108 Q112 78 90 74 Q68 78 70 108 Q62 100 64 84Z" fill="#3A2E33"></path>
-            <circle cx="80" cy="92" r="2.6" fill="#3A2E33"></circle>
-            <circle cx="100" cy="92" r="2.6" fill="#3A2E33"></circle>
-            <path d="M80 102 Q90 108 100 102" stroke="#3A2E33" stroke-width="2" fill="none" stroke-linecap="round"></path>
-            <rect x="70" y="205" width="15" height="30" fill="#4A6B7A"></rect>
-            <rect x="95" y="205" width="15" height="30" fill="#4A6B7A"></rect>
-          </g>
-          <!-- figure 2: teacher -->
-          <g>
-            <ellipse cx="210" cy="240" rx="46" ry="9" fill="#D9C6DD"></ellipse>
-            <rect x="176" y="118" width="68" height="95" rx="18" fill="#BE456F"></rect>
-            <circle cx="210" cy="86" r="27" fill="#EDA9BE"></circle>
-            <path d="M182 80 Q210 48 238 80 Q240 96 230 104 Q234 70 210 68 Q186 70 190 104 Q180 96 182 80Z" fill="#3A2E33"></path>
-            <circle cx="199" cy="88" r="2.6" fill="#3A2E33"></circle>
-            <circle cx="221" cy="88" r="2.6" fill="#3A2E33"></circle>
-            <path d="M199 98 Q210 104 221 98" stroke="#3A2E33" stroke-width="2" fill="none" stroke-linecap="round"></path>
-            <rect x="185" y="213" width="16" height="32" fill="#3A2E33"></rect>
-            <rect x="219" y="213" width="16" height="32" fill="#3A2E33"></rect>
-            <!-- small blackboard prop -->
-            <rect x="250" y="150" width="46" height="34" rx="3" fill="#2E4A3E" stroke="#8A6A3A" stroke-width="4"></rect>
-            <path d="M258 165 L270 165 M258 172 L282 172" stroke="#fff" stroke-width="2"></path>
-          </g>
-          <!-- figure 3: student -->
-          <g>
-            <ellipse cx="335" cy="238" rx="42" ry="9" fill="#D9C6DD"></ellipse>
-            <rect x="303" y="122" width="64" height="90" rx="18" fill="#4F8F6D"></rect>
-            <circle cx="335" cy="90" r="25" fill="#F3B3C5"></circle>
-            <path d="M310 84 Q335 55 360 84 Q362 100 353 108 Q356 76 335 72 Q314 76 317 108 Q308 100 310 84Z" fill="#4A3222"></path>
-            <circle cx="325" cy="92" r="2.6" fill="#3A2E33"></circle>
-            <circle cx="345" cy="92" r="2.6" fill="#3A2E33"></circle>
-            <path d="M325 102 Q335 108 345 102" stroke="#3A2E33" stroke-width="2" fill="none" stroke-linecap="round"></path>
-            <rect x="312" y="211" width="15" height="30" fill="#2E5C42"></rect>
-            <rect x="337" y="211" width="15" height="30" fill="#2E5C42"></rect>
-            <!-- backpack -->
-            <rect x="358" y="140" width="22" height="34" rx="6" fill="#9E3460"></rect>
-            <rect x="362" y="146" width="14" height="6" rx="2" fill="#8F2E52"></rect>
-          </g>
-        </svg>
+        <img class="lesson-scene" src="img/people-scene-v1.webp" data-lesson-image="img/people-scene-v1.webp" alt="Трое друзей: слева мужчина-врач со стетоскопом, в центре женщина-учитель с книгой, справа студент с рюкзаком." width="1280" height="853" decoding="async" loading="lazy">
         <div class="word-bank">
           <span class="wb-chip">father</span><span class="wb-chip">doctor</span><span class="wb-chip">teacher</span>
           <span class="wb-chip">student</span><span class="wb-chip">friend</span><span class="wb-chip">good</span>

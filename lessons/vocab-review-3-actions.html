@@ -137,6 +137,25 @@ textarea.write-area:focus{outline:2px solid var(--gold); border-color:var(--gold
 .footer-note{text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:24px; padding:0 20px;}
 .badge-final{text-align:center; margin:26px auto 0; max-width:900px; background:linear-gradient(135deg, var(--sage), #3d7357); color:#fff; border-radius:14px; padding:22px; font-family:'Comfortaa',sans-serif; font-size:19px; font-weight:700; box-shadow:var(--shadow);}
 .badge-final span{display:block; font-family:'Nunito'; font-weight:500; font-size:13.5px; margin-top:6px; opacity:.9;}
+
+/* Generated textbook illustrations; contain each complete scene without cropping. */
+.dialog-figure.art-figure{width:148px}
+.lisa-figure.art-figure{width:164px}
+.dialog-avatar.art-avatar{width:144px;height:auto}
+.lisa-avatar.art-avatar{width:160px;height:auto}
+.art-avatar img.lesson-portrait{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--line);box-shadow:0 5px 16px rgba(150,80,100,.10)}
+.scene-box img.lesson-scene{display:block;width:100%;max-width:720px;height:auto;margin:0 auto;border-radius:10px}
+.pic-slot img.lesson-scene{display:block;width:100%;height:auto;max-height:none;object-fit:contain}
+@media(max-width:560px){
+ .dialog-wrap .art-figure{width:112px}
+ .dialog-avatar.art-avatar{width:108px}
+ .dialog-wrap .dialog-bubbles{min-width:0;flex-basis:100%;max-width:none;order:2}
+ .dialog-wrap .dialog-figure:last-child{order:1}
+ .dialog-wrap .dialog-figure:first-child{order:0}
+ .lisa-avatar.art-avatar{width:140px}
+ .scene-box{padding:10px}
+}
+
 </style>
 <link rel="stylesheet" href="../lesson-theme.css"></head>
 <body><div class="topbar">
@@ -376,30 +395,7 @@ textarea.write-area:focus{outline:2px solid var(--gold); border-color:var(--gold
       <h2>Опишите, кто что делает</h2>
       <p class="lead">Посмотрите на картинку и опишите действия людей — используйте present continuous.</p>
       <div class="scene-box">
-        <svg viewBox="0 0 420 230" width="420">
-          <rect x="0" y="0" width="420" height="150" fill="#E3EEF4"></rect>
-          <rect x="0" y="150" width="420" height="80" fill="#BFE0C8"></rect>
-          <path d="M0 150 Q60 130 120 150 T240 150 T360 150 T420 150 L420 175 L0 175 Z" fill="#7FB8E0" opacity="0.5"></path>
-          <!-- runner -->
-          <g>
-            <circle cx="70" cy="95" r="16" fill="#F3B3C5"></circle>
-            <path d="M62 82 Q70 70 78 82" stroke="#3A2E33" stroke-width="4" fill="none"></path>
-            <path d="M70 110 L55 140 M70 110 L90 130 M70 110 L60 100 M70 110 L95 105" stroke="#2A6F97" stroke-width="6" fill="none" stroke-linecap="round"></path>
-          </g>
-          <!-- swimmer in water -->
-          <g>
-            <ellipse cx="210" cy="168" rx="60" ry="14" fill="#5CA8D6" opacity="0.6"></ellipse>
-            <circle cx="210" cy="155" r="14" fill="#EDA9BE"></circle>
-            <path d="M198 150 L182 160 M222 150 L238 158" stroke="#8F2E52" stroke-width="5" fill="none" stroke-linecap="round"></path>
-          </g>
-          <!-- football player -->
-          <g>
-            <circle cx="340" cy="100" r="16" fill="#F3B3C5"></circle>
-            <path d="M330 90 Q340 78 350 90" stroke="#3A2E33" stroke-width="4" fill="none"></path>
-            <path d="M340 116 L328 150 M340 116 L358 145" stroke="#4F8F6D" stroke-width="6" fill="none" stroke-linecap="round"></path>
-            <circle cx="365" cy="150" r="9" fill="#fff" stroke="#3A2E33" stroke-width="1.5"></circle>
-          </g>
-        </svg>
+        <img class="lesson-scene" src="img/sports-scene-v1.webp" data-lesson-image="img/sports-scene-v1.webp" alt="Солнечный день: слева человек бежит, в центре пловец плывёт в бассейне, справа человек играет в футбол." width="1280" height="853" decoding="async" loading="lazy">
         <div class="word-bank">
           <span class="wb-chip">run</span><span class="wb-chip">swim</span><span class="wb-chip">play</span>
           <span class="wb-chip">football</span><span class="wb-chip">sport</span><span class="wb-chip">sunny</span>

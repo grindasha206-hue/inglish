@@ -135,6 +135,25 @@ textarea.write-area:focus{outline:2px solid var(--gold); border-color:var(--gold
 }
 
 .footer-note{text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:24px; padding:0 20px;}
+
+/* Generated textbook illustrations; contain each complete scene without cropping. */
+.dialog-figure.art-figure{width:148px}
+.lisa-figure.art-figure{width:164px}
+.dialog-avatar.art-avatar{width:144px;height:auto}
+.lisa-avatar.art-avatar{width:160px;height:auto}
+.art-avatar img.lesson-portrait{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--line);box-shadow:0 5px 16px rgba(150,80,100,.10)}
+.scene-box img.lesson-scene{display:block;width:100%;max-width:720px;height:auto;margin:0 auto;border-radius:10px}
+.pic-slot img.lesson-scene{display:block;width:100%;height:auto;max-height:none;object-fit:contain}
+@media(max-width:560px){
+ .dialog-wrap .art-figure{width:112px}
+ .dialog-avatar.art-avatar{width:108px}
+ .dialog-wrap .dialog-bubbles{min-width:0;flex-basis:100%;max-width:none;order:2}
+ .dialog-wrap .dialog-figure:last-child{order:1}
+ .dialog-wrap .dialog-figure:first-child{order:0}
+ .lisa-avatar.art-avatar{width:140px}
+ .scene-box{padding:10px}
+}
+
 </style>
 <link rel="stylesheet" href="../lesson-theme.css"></head>
 <body><div class="topbar">
@@ -372,30 +391,7 @@ textarea.write-area:focus{outline:2px solid var(--gold); border-color:var(--gold
       <h2>Опишите комнату</h2>
       <p class="lead">Посмотрите на картинку и опишите, что где находится — используйте слова-подсказки.</p>
       <div class="scene-box">
-        <svg viewBox="0 0 420 260" width="420">
-          <rect x="0" y="0" width="420" height="260" fill="#EAF3F4"></rect>
-          <rect x="0" y="220" width="420" height="40" fill="#D8E6E8"></rect>
-          <!-- bed -->
-          <rect x="20" y="130" width="120" height="70" rx="8" fill="#fff" stroke="#C9D8DA" stroke-width="2"></rect>
-          <rect x="20" y="130" width="120" height="22" rx="8" fill="#8FB8C0"></rect>
-          <rect x="28" y="118" width="34" height="26" rx="8" fill="#fff" stroke="#C9D8DA" stroke-width="2"></rect>
-          <!-- clock on wall -->
-          <circle cx="200" cy="55" r="20" fill="#fff" stroke="#BE456F" stroke-width="3"></circle>
-          <line x1="200" y1="55" x2="200" y2="42" stroke="#3A2E33" stroke-width="2"></line>
-          <line x1="200" y1="55" x2="210" y2="58" stroke="#3A2E33" stroke-width="2"></line>
-          <!-- table + chair with figure reading -->
-          <rect x="240" y="165" width="70" height="8" fill="#9E3460"></rect>
-          <rect x="248" y="173" width="6" height="35" fill="#9E3460"></rect>
-          <rect x="296" y="173" width="6" height="35" fill="#9E3460"></rect>
-          <rect x="265" y="190" width="20" height="28" fill="#4A6B7A"></rect>
-          <circle cx="275" cy="175" r="16" fill="#F3B3C5"></circle>
-          <path d="M259 172 Q275 150 291 172 Q292 182 286 187 Q288 165 275 163 Q262 165 264 187 Q258 182 259 172Z" fill="#3A2E33"></path>
-          <rect x="258" y="150" width="30" height="20" rx="2" fill="#fff" stroke="#C9D8DA" stroke-width="1.5"></rect>
-          <!-- bag and coat on floor -->
-          <rect x="340" y="200" width="30" height="24" rx="4" fill="#8F2E52"></rect>
-          <path d="M348 200 Q355 188 362 200" stroke="#8F2E52" stroke-width="3" fill="none"></path>
-          <path d="M20 210 Q40 195 60 210 L60 230 L20 230 Z" fill="#2E6E7A"></path>
-        </svg>
+        <img class="lesson-scene" src="img/room-scene-v1.webp" data-lesson-image="img/room-scene-v1.webp" alt="Уютная комната: слева кровать, в центре человек сидит на стуле и читает книгу за столом, на стене часы. Сумка справа и пальто слева лежат на полу." width="1280" height="853" decoding="async" loading="lazy">
         <div class="word-bank">
           <span class="wb-chip">bed</span><span class="wb-chip">table</span><span class="wb-chip">chair</span>
           <span class="wb-chip">clock</span><span class="wb-chip">book</span><span class="wb-chip">bag</span>
