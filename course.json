@@ -215,6 +215,13 @@
               "title": "I have done и I did",
               "description": "Present perfect и past simple: время до сейчас или законченное время",
               "file": "lessons/urok-present-perfect-past.html"
+            },
+            {
+              "id": "itogovyi-test-perfect",
+              "unit": 7,
+              "title": "Итоговый тест · модуль 4",
+              "description": "Present perfect, just/already/yet, ever/never, for/since/ago, perfect или past",
+              "file": "lessons/itogovyi-test-perfect.html"
             }
           ]
         }
