@@ -415,6 +415,27 @@ const T=[
    O('She has been in Ireland for three days.'),
    O("I've lived here since I was a child.","I have lived here since I was a child.")
   ]},
+  {id:20,title:'Present perfect или past simple',emoji:'⚖️',rule:'С законченным временем (yesterday, last week, in 2002, ago) и в вопросах When…? / What time…? — past simple: I saw her yesterday. When did you buy it? Present perfect — время до сейчас, результат сейчас, опыт: I have lost my key (сейчас его нет). Have you ever been to Spain?',
+  items:[
+   C('I ___ Kate yesterday.','saw','have seen','see'),
+   C("I ___ my key. I can't find it.",'have lost','lost','lose'),
+   C('When ___ you buy your car?','did','have','has'),
+   C('___ you ever been to Spain?','Have','Did','Were'),
+   C('Shakespeare ___ many plays.','wrote','has written','writes'),
+   C('What time ___ Andy go out?','did','has','was'),
+   C('We ___ in Glasgow for six years, but now we live in Singapore.','lived','have lived','live'),
+   C('We ___ here for six years. (we live here now)','have lived','lived','live'),
+   C('Какое предложение правильное?','I saw Paula yesterday.','I have seen Paula yesterday.','I have saw Paula yesterday.'),
+   C("Sam ___ me yesterday.","didn't phone","hasn't phoned","doesn't phone"),
+   F('Ben ___ (go) home ten minutes ago.','went'),
+   F('Ben ___ (go) home. He isn\'t here now.','has gone',"'s gone"),
+   F('Where ___ you on Sunday afternoon?','were'),
+   F('When ___ you buy your computer?','did'),
+   F('Have you ever ___ (be) to Spain?','been'),
+   O('I saw Paula yesterday.'),
+   O('When did you buy your computer?'),
+   O("I've lost my key.","I have lost my key.")
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),

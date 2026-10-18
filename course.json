@@ -208,6 +208,13 @@
               "title": "for, since, ago",
               "description": "Сколько времени (for), с какого момента (since), как давно (ago)",
               "file": "lessons/urok-for-since-ago.html"
+            },
+            {
+              "id": "urok-present-perfect-past",
+              "unit": 6,
+              "title": "I have done и I did",
+              "description": "Present perfect и past simple: время до сейчас или законченное время",
+              "file": "lessons/urok-present-perfect-past.html"
             }
           ]
         }

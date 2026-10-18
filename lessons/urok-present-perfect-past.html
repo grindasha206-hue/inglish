@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 20 · I have done и I did</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Comfortaa:wght@500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --cream:#FDF4F1; --paper:#FFFDFB; --ink:#3A2E33; --ink-soft:#6B5A61;
+  --brick:#BE456F; --brick-dark:#8F2E52; --tab:#C4507A; --tab-dark:#9E3460;
+  --sage:#4F8F6D; --sage-bg:#E6F1EA; --coral:#D65B4A; --coral-bg:#FBE7E3;
+  --gold:#E8A0B4; --line:#F1D9DF; --shadow: 0 6px 18px rgba(150,80,100,0.10);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; background:radial-gradient(circle at 15% 8%, rgba(232,160,180,0.10), transparent 40%), var(--cream); color:var(--ink); font-family:'Nunito', sans-serif; line-height:1.55; padding-bottom:80px;}
+h1,h2,h3,.display{font-family:'Comfortaa',sans-serif;}
+
+.topbar{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:1px solid var(--line); padding:10px 18px; display:flex; align-items:center; gap:14px; box-shadow:0 2px 10px rgba(0,0,0,0.04);}
+.topbar .book-title{font-family:'Comfortaa',sans-serif; font-weight:700; font-size:15px; color:var(--brick-dark); white-space:nowrap;}
+.progress-steps{display:flex; gap:5px; flex:1; align-items:center;}
+.pstep{flex:1; height:8px; border-radius:6px; background:var(--line); position:relative; overflow:hidden;}
+.pstep i{display:block; height:100%; width:0%; border-radius:6px; background:linear-gradient(90deg, var(--tab), var(--brick)); transition:width .5s ease;}
+.score-pill{font-size:13px; font-weight:700; background:var(--sage-bg); color:var(--sage); padding:5px 12px; border-radius:20px; white-space:nowrap;}
+
+.page{max-width:900px; margin:26px auto; background:var(--paper); border-radius:4px; box-shadow:var(--shadow); border:1px solid var(--line); overflow:hidden;}
+
+.unit-banner{background:linear-gradient(135deg, var(--brick) 0%, var(--brick-dark) 100%); color:#fff; padding:26px 30px 22px 96px; position:relative;}
+.unit-tag{position:absolute; left:0; top:0; bottom:0; width:76px; background:var(--brick-dark); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Comfortaa',sans-serif; border-right:2px solid rgba(255,255,255,0.15);}
+.unit-tag .u{font-size:11px; letter-spacing:2px; opacity:.75;}
+.unit-tag .n{font-size:30px; font-weight:800;}
+.unit-banner h1{margin:0; font-size:27px; font-weight:800; letter-spacing:.3px;}
+.unit-banner p{margin:6px 0 0; opacity:.9; font-size:14.5px;}
+
+.section{display:flex; border-top:1px solid var(--line);}
+.section .tab{width:56px; flex-shrink:0; background:var(--tab); color:#fff; font-family:'Comfortaa',sans-serif; font-weight:800; font-size:20px; display:flex; align-items:flex-start; justify-content:center; padding-top:22px;}
+.section.alt .tab{background:var(--tab-dark);}
+.section .content{padding:24px 28px 30px; flex:1; min-width:0;}
+.section h2{margin:0 0 4px; font-size:22px; color:var(--brick-dark);}
+.eyebrow{font-size:11.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-soft); font-weight:700; margin-bottom:4px;}
+.section p.lead{color:var(--ink-soft); margin-top:4px; font-size:14.5px;}
+
+.dialog-wrap{display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; margin:18px 0 6px;}
+.dialog-figure{width:110px; text-align:center; flex-shrink:0;}
+.dialog-avatar{width:96px; height:120px; margin:0 auto;}
+.dialog-avatar svg{width:100%; height:100%;}
+.dialog-figure .name{font-family:'Comfortaa',sans-serif; font-weight:700; font-size:12.5px; letter-spacing:1px; color:var(--brick-dark); margin-top:4px;}
+.dialog-bubbles{display:flex; flex-direction:column; gap:8px; flex:1; min-width:260px; max-width:420px;}
+.d-bubble{background:#fff; border:1.5px solid var(--line); border-radius:16px; padding:8px 14px; font-size:13.5px; box-shadow:0 3px 8px rgba(0,0,0,0.05);}
+.d-bubble.q{border-color:var(--tab);}
+.d-bubble.a{align-self:flex-end; background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.d-bubble b{color:var(--brick-dark);}
+.d-bubble.a b{color:var(--sage);}
+
+.gram-tables{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:22px;}
+@media(max-width:620px){.gram-tables{grid-template-columns:1fr;}}
+.gram-box h3{font-size:13px; text-transform:uppercase; letter-spacing:1px; color:var(--ink-soft); margin:0 0 8px;}
+table.formtable{width:100%; border-collapse:collapse; font-size:13.5px; background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;}
+table.formtable td{padding:7px 10px; border-bottom:1px solid var(--line);}
+table.formtable tr:last-child td{border-bottom:none;}
+table.formtable td.pron{color:var(--ink-soft); width:34%;}
+table.formtable td.verb{font-weight:700; color:var(--brick-dark);}
+table.formtable td.short{color:var(--ink-soft); font-style:italic;}
+
+.chunk{background:linear-gradient(180deg, transparent 60%, rgba(196,80,122,0.35) 60%); font-weight:700; color:var(--brick-dark); padding:0 1px;}
+
+.mini-note{margin-top:16px; background:var(--sage-bg); border-left:3px solid var(--sage); padding:10px 14px; border-radius:6px; font-size:13.5px; color:#2f5741;}
+.mini-note b{color:var(--sage);}
+.mini-note i{color:var(--ink-soft); font-style:italic;}
+.mini-note.warn{background:var(--coral-bg); border-left-color:var(--coral); color:#7A2848;}
+.mini-note.warn b{color:var(--coral);}
+
+.vocab-table{margin-top:14px; display:flex; flex-direction:column; gap:8px;}
+.vocab-row{display:grid; grid-template-columns:auto 1fr auto auto; align-items:center; gap:12px; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:9px 14px;}
+@media(max-width:560px){.vocab-row{grid-template-columns:1fr; gap:4px;}}
+.vocab-word{font-weight:800; color:var(--brick-dark); font-size:14.5px; font-family:'Comfortaa',sans-serif;}
+.vocab-ipa{font-size:12.5px; color:var(--tab-dark); font-style:italic;}
+.vocab-ru{font-size:13.5px; color:var(--ink-soft);}
+.chunk-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px;}
+@media(max-width:600px){.chunk-grid{grid-template-columns:1fr;}}
+.chunk-row{display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--cream); border:1.5px dashed var(--gold); border-radius:10px; padding:9px 14px;}
+.chunk-en{font-weight:800; color:var(--brick-dark); font-size:14px; display:block;}
+.chunk-ipa{font-size:11.5px; color:var(--tab-dark); font-style:italic; display:block; margin-top:1px;}
+.chunk-ru{font-size:12.5px; color:var(--ink-soft); display:block; margin-top:1px; font-weight:400;}
+
+.game-tabs{display:flex; gap:8px; margin:18px 0 20px; flex-wrap:wrap;}
+.game-tab-btn{border:1.5px solid var(--line); background:#fff; color:var(--ink-soft); padding:8px 16px; border-radius:20px; font-family:'Nunito'; font-weight:700; font-size:13px; cursor:pointer; transition:.2s;}
+.game-tab-btn.active{background:var(--tab); color:#fff; border-color:var(--tab-dark);}
+.game-panel{display:none;}
+.game-panel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
+
+.fill-item{display:flex; align-items:flex-start; gap:10px; flex-wrap:wrap; padding:12px 4px; border-bottom:1px dashed var(--line);}
+.fill-item:last-child{border-bottom:none;}
+.fill-num{width:22px; height:22px; border-radius:50%; background:var(--cream); border:1px solid var(--line); font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; color:var(--ink-soft); flex-shrink:0; margin-top:3px;}
+.fill-body{flex:1; min-width:220px;}
+.fill-words{font-size:13px; color:var(--ink-soft); margin-bottom:6px; font-style:italic;}
+.blank-input{width:130px; padding:5px 8px; border:1.5px solid var(--line); border-radius:6px; font-family:'Nunito'; font-weight:700; font-size:14px; text-align:center; background:#FFFDFB; color:var(--brick-dark);}
+.blank-input:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.blank-input.correct{border-color:var(--sage); background:var(--sage-bg); color:#2f5741;}
+.blank-input.wrong{border-color:var(--coral); background:var(--coral-bg); color:var(--coral);}
+.fill-fb{font-size:16px; margin-top:6px;}
+
+.btn{border:none; cursor:pointer; font-family:'Nunito'; font-weight:800; padding:10px 20px; border-radius:24px; font-size:14px; letter-spacing:.2px; background:var(--brick); color:#fff; box-shadow:0 4px 10px rgba(190,69,111,0.25); transition:.15s;}
+.btn:hover{transform:translateY(-1px); box-shadow:0 6px 14px rgba(190,69,111,0.32);}
+.btn.secondary{background:transparent; color:var(--brick); border:1.5px solid var(--brick); box-shadow:none;}
+.btn.small{padding:6px 14px; font-size:12.5px;}
+.actions-row{display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; align-items:center;}
+.fb-line{font-size:13.5px; font-weight:700; color:var(--ink-soft);}
+
+.memo-wrap{display:flex; flex-direction:column; align-items:center; gap:14px;}
+.memo-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; max-width:520px; width:100%;}
+@media(max-width:500px){.memo-grid{grid-template-columns:repeat(3,1fr);}}
+.memo-card{aspect-ratio:1/1; border-radius:10px; cursor:pointer; position:relative; perspective:600px;}
+.memo-inner{width:100%; height:100%; position:relative; transform-style:preserve-3d; transition:transform .45s;}
+.memo-card.flipped .memo-inner, .memo-card.matched .memo-inner{transform:rotateY(180deg);}
+.memo-face{position:absolute; inset:0; border-radius:10px; display:flex; align-items:center; justify-content:center; backface-visibility:hidden; font-weight:800; text-align:center; padding:4px; font-size:12.5px;}
+.memo-face.back{background:linear-gradient(135deg, var(--tab), var(--tab-dark)); color:#fff; font-family:'Comfortaa',sans-serif; font-size:22px;}
+.memo-face.front{background:#fff; border:2px solid var(--line); color:var(--brick-dark); transform:rotateY(180deg);}
+.memo-card.matched .memo-face.front{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.memo-status{font-size:13.5px; color:var(--ink-soft); font-weight:700;}
+
+.quiz-q{margin-bottom:18px;}
+.quiz-q p{font-weight:700; margin:0 0 8px; font-size:14.5px;}
+.quiz-opts{display:flex; gap:8px; flex-wrap:wrap;}
+.quiz-opt{border:1.5px solid var(--line); background:#fff; padding:7px 15px; border-radius:20px; font-weight:700; font-size:13.5px; cursor:pointer; color:var(--ink);}
+.quiz-opt.sel-correct{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.quiz-opt.sel-wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+.quiz-opt.reveal-correct{border-color:var(--sage); box-shadow:inset 0 0 0 1px var(--sage);}
+
+.match-wrap{display:flex; gap:14px; max-width:520px; margin:0 auto;}
+.match-col{flex:1; display:flex; flex-direction:column; gap:8px;}
+.match-tile{background:#fff; border:1.5px solid var(--line); border-radius:8px; padding:9px 12px; font-size:13.5px; font-weight:700; cursor:pointer; text-align:center; color:var(--ink); transition:.15s;}
+.match-tile.selected{border-color:var(--tab); background:var(--cream); box-shadow:inset 0 0 0 1.5px var(--tab);}
+.match-tile.matched{background:var(--sage-bg); border-color:var(--sage); color:#2f5741; cursor:default;}
+.match-tile.wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+
+.read-text{background:#fff; border:1.5px solid var(--line); border-radius:14px; padding:18px 20px; margin:16px 0; font-size:14.5px;}
+.read-text p{margin:0 0 10px;}
+.read-text p:last-child{margin-bottom:0;}
+.tf-item{display:flex; align-items:center; justify-content:space-between; gap:10px; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:9px 14px; margin-bottom:8px;}
+.tf-text{font-size:13.5px; flex:1;}
+.tf-btns{display:flex; gap:6px; flex-shrink:0;}
+.tf-btn{border:1.5px solid var(--line); background:var(--cream); padding:5px 12px; border-radius:16px; font-weight:800; font-size:12.5px; cursor:pointer; color:var(--ink-soft);}
+.tf-btn.sel-correct{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.tf-btn.sel-wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+.tf-btn.reveal-correct{box-shadow:inset 0 0 0 1px var(--sage); border-color:var(--sage);}
+
+.tts-warn{display:none; font-size:12.5px; color:var(--coral); background:var(--coral-bg); padding:8px 12px; border-radius:6px; margin:8px 0 0;}
+.tts-warn.shown{display:block;}
+.voice-picker{display:flex; align-items:center; gap:8px; flex-wrap:wrap; background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:8px 12px; margin-top:10px; font-size:13px;}
+.voice-picker label{font-weight:700; color:var(--ink-soft);}
+.voice-picker select{border:1.5px solid var(--line); border-radius:6px; padding:4px 8px; font-family:'Nunito'; font-size:13px; background:#fff; color:var(--ink); max-width:220px;}
+.voice-hint{font-size:11.5px; color:var(--ink-soft); flex-basis:100%;}
+.sound-block{margin-top:22px; padding-top:16px; border-top:1px dashed var(--line);}
+.sound-block:first-of-type{border-top:none; margin-top:16px;}
+.sound-block h3{font-size:15.5px; margin:0 0 6px; color:var(--brick-dark); font-weight:700;}
+.ipa{font-family:'Nunito'; font-weight:500; font-size:12px; color:var(--ink-soft); font-style:italic;}
+.sound-note{font-size:13.5px; color:var(--ink-soft); margin:0 0 12px;}
+.sound-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+.sound-grid.three{grid-template-columns:repeat(3,1fr);}
+@media(max-width:600px){.sound-grid, .sound-grid.three{grid-template-columns:1fr;}}
+.sound-pair{background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px;}
+.sound-pair.wide{grid-column:1/-1;}
+.sp-text{font-size:14.5px; font-weight:600; flex:1;}
+.sp-text.big{font-size:19px; text-align:center; font-family:'Comfortaa',sans-serif; color:var(--brick-dark);}
+.sp-controls{display:flex; gap:6px; flex-shrink:0;}
+.play-btn{border:1.5px solid var(--line); background:var(--cream); cursor:pointer; border-radius:8px; padding:6px 10px; font-size:15px; line-height:1; transition:.15s;}
+.play-btn:hover{background:var(--tab); border-color:var(--tab-dark);}
+.play-btn.playing{background:var(--brick); border-color:var(--brick-dark);}
+b.stress{color:var(--brick-dark); text-decoration:underline; text-decoration-color:var(--gold); text-decoration-thickness:2px; text-underline-offset:3px;}
+
+.prompt-list{list-style:none; padding:0; margin:14px 0; display:grid; gap:8px;}
+.prompt-list li{background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:8px 12px; font-size:13.5px; display:flex; gap:8px; align-items:baseline;}
+.prompt-list li b{color:var(--brick-dark); font-family:'Comfortaa',sans-serif;}
+textarea.write-area{width:100%; min-height:140px; border:1.5px solid var(--line); border-radius:10px; padding:14px; font-family:'Nunito'; font-size:14.5px; color:var(--ink); background:#FFFDFB; resize:vertical;}
+textarea.write-area:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.word-count{font-size:12.5px; color:var(--ink-soft); margin-top:6px;}
+.cue-cards{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;}
+.cue-card{background:#fff; border:1.5px dashed var(--gold); border-radius:10px; padding:10px 14px; font-size:13px; width:160px; color:var(--ink-soft); font-style:italic;}
+.cue-card b{display:block; font-style:normal; color:var(--brick-dark); font-family:'Comfortaa',sans-serif; font-size:14px; margin-bottom:3px;}
+.reveal-box{margin-top:14px; border-left:3px solid var(--tab); background:var(--cream); padding:12px 16px; border-radius:6px; font-size:13.5px; display:none;}
+.reveal-box.shown{display:block;}
+
+.hw-list{display:flex; flex-direction:column; gap:10px; margin-top:16px;}
+.hw-item{display:flex; gap:10px; align-items:flex-start; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:11px 14px; font-size:13.5px; cursor:pointer; transition:.15s;}
+.hw-item:has(.hw-check:checked){background:var(--sage-bg); border-color:var(--sage);}
+.hw-check{margin-top:3px; width:16px; height:16px; accent-color:var(--sage); flex-shrink:0;}
+.hw-item b{color:var(--brick-dark); font-family:'Comfortaa',sans-serif;}
+.hw-item i{color:var(--ink-soft); font-style:italic;}
+
+@media print{
+  .topbar, .unit-banner, #presentation, #vocabulary, #practice, #reading, #sounds, #production, .badge-final, .footer-note, .no-print{ display:none !important; }
+  body{ background:#fff; padding:0; }
+  .page{ box-shadow:none; border:none; margin:0; max-width:100%; }
+  .section{ border-top:none; }
+  .section .tab{ display:none; }
+  .section .content{ padding:10px; }
+  .hw-item{ break-inside:avoid; }
+}
+
+.footer-note{text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:24px; padding:0 20px;}
+.badge-final{display:none; text-align:center; margin:26px auto 0; max-width:900px; background:linear-gradient(135deg, var(--sage), #3d7357); color:#fff; border-radius:14px; padding:22px; font-family:'Comfortaa',sans-serif; font-size:19px; font-weight:700; box-shadow:var(--shadow);}
+.badge-final.shown{display:block; animation:fadeIn .5s ease;}
+.badge-final span{display:block; font-family:'Nunito'; font-weight:500; font-size:13.5px; margin-top:6px; opacity:.9;}
+
+/* Generated textbook illustrations; contain each complete scene without cropping. */
+.dialog-figure.art-figure{width:148px}
+.lisa-figure.art-figure{width:164px}
+.dialog-avatar.art-avatar{width:144px;height:auto}
+.lisa-avatar.art-avatar{width:160px;height:auto}
+.art-avatar img.lesson-portrait{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--line);box-shadow:0 5px 16px rgba(150,80,100,.10)}
+.scene-box img.lesson-scene{display:block;width:100%;max-width:720px;height:auto;margin:0 auto;border-radius:10px}
+.pic-slot img.lesson-scene{display:block;width:100%;height:auto;max-height:none;object-fit:contain}
+@media(max-width:560px){
+ .dialog-wrap .art-figure{width:112px}
+ .dialog-avatar.art-avatar{width:108px}
+ .dialog-wrap .dialog-bubbles{min-width:0;flex-basis:100%;max-width:none;order:2}
+ .dialog-wrap .dialog-figure:last-child{order:1}
+ .dialog-wrap .dialog-figure:first-child{order:0}
+ .lisa-avatar.art-avatar{width:140px}
+ .scene-box{padding:10px}
+}
+
+</style>
+<link rel="stylesheet" href="../lesson-theme.css"></head>
+<body><div class="topbar">
+  <div class="book-title">Essential Grammar · Unit 20</div>
+  <div class="progress-steps">
+    <div class="pstep" id="step-p"><i id="bar-p"></i></div>
+    <div class="pstep" id="step-vocab"><i id="bar-vocab"></i></div>
+    <div class="pstep" id="step-pr"><i id="bar-pr"></i></div>
+    <div class="pstep" id="step-read"><i id="bar-read"></i></div>
+    <div class="pstep" id="step-sound"><i id="bar-sound"></i></div>
+    <div class="pstep" id="step-listen"><i id="bar-listen"></i></div>
+    <div class="pstep" id="step-prod"><i id="bar-prod"></i></div>
+    <div class="pstep" id="step-hw"><i id="bar-hw"></i></div>
+  </div>
+  <div class="score-pill">★ <span id="scoreDisplay">0</span>/20</div>
+</div>
+
+<div class="page"><div class="unit-banner">
+    <div class="unit-tag"><span class="u">UNIT</span><span class="n">20</span></div>
+    <h1>I have done и I did <span style="font-weight:400; font-size:18px; opacity:.85;">(present perfect и past)</span></h1>
+    <p>Законченное время или время до сейчас</p>
+  </div><div class="section" id="presentation">
+    <div class="tab">A</div>
+    <div class="content">
+      <div class="eyebrow">Presentation</div>
+      <h2>Законченное время → past</h2>
+      <div class="gram-box" style="margin:14px 0"><h3>A · past + finished time</h3>
+        <p>С законченным временем (<b>yesterday / last week</b> etc.) используем past (<b>arrived / saw / was</b> etc.):</p>
+        <div class="gram-tables">
+          <div class="gram-box"><table class="formtable"><tbody><tr><td class="pron" rowspan="5" style="vertical-align:middle">We <b>arrived</b></td><td class="verb">yesterday.</td></tr><tr><td class="verb">last week.</td></tr><tr><td class="verb">at 3 o'clock.</td></tr><tr><td class="verb">in 2002.</td></tr><tr><td class="verb">six months ago.</td></tr></tbody></table></div>
+          <div class="gram-box"><div style="position:relative;height:96px;margin:10px 0"><div style="position:absolute;left:30%;width:34%;top:2px;background:#FCE3C3;border-radius:6px;padding:4px;text-align:center;font-size:13px;line-height:1.35"><b>yesterday<br>last week<br>six months ago</b><br><i>finished time</i></div><div style="position:absolute;left:12%;right:10%;top:34px;border-top:2px dotted #B9A5AC;z-index:0"></div>
+  <div style="position:absolute;left:0;right:0;top:66px;height:2px;background:#3A2E33"></div>
+  <div style="position:absolute;right:8%;top:6px;width:2px;height:62px;background:#3A2E33"></div>
+  <div style="position:absolute;left:0;top:72px;font-style:italic;font-size:12px;color:#7A6A70">past</div><div style="position:absolute;right:6%;top:72px;font-style:italic;font-size:12px;color:#7A6A70">now</div></div></div>
+        </div>
+        <p><b>Не используем</b> present perfect (have arrived / have done / have been etc.) с законченным временем:</p>
+        <ul class="prompt-list"><li>I <b>saw</b> Olga <b>yesterday</b>. <i>(не I have seen)</i></li><li>Where <b>were</b> you <b>on Saturday evening</b>? <i>(не Where have you been)</i></li><li>We <b>didn't go</b> on holiday <b>last summer</b>. <i>(не We haven't gone)</i></li><li>'What <b>did</b> you <b>do</b> last night?' — 'I <b>stayed</b> at home.'</li><li>Pushkin <b>lived from 1799 to 1837</b>. He <b>was</b> a writer. He <b>wrote</b> many poems and stories.</li></ul>
+        <p>Для вопросов <b>When…?</b> и <b>What time…?</b> — тоже past:</p>
+        <ul class="prompt-list"><li><b>When did</b> you <b>buy</b> your phone? <i>(не When have you bought)</i></li><li><b>What time did</b> Max <b>leave</b>? <i>(не What time has Max left)</i></li></ul>
+      </div>
+      <h3>B · Compare (сравните)</h3>
+      <div class="gram-tables">
+        <div class="gram-box"><h3>present perfect</h3><div style="position:relative;height:96px;margin:10px 0"><div style="position:absolute;left:6%;right:8%;top:24px;height:30px;background:linear-gradient(90deg,#FCE3C3,#F3B37A);clip-path:polygon(0 0,94% 0,100% 50%,94% 100%,0 100%);display:flex;align-items:center;justify-content:center;font-style:italic;font-size:13px">time until now</div>
+  <div style="position:absolute;left:0;right:0;top:66px;height:2px;background:#3A2E33"></div>
+  <div style="position:absolute;right:8%;top:6px;width:2px;height:62px;background:#3A2E33"></div>
+  <div style="position:absolute;left:0;top:72px;font-style:italic;font-size:12px;color:#7A6A70">past</div><div style="position:absolute;right:6%;top:72px;font-style:italic;font-size:12px;color:#7A6A70">now</div></div><ul class="prompt-list"><li>I <b>have lost</b> my phone. (= I can't find it <b>now</b>)</li><li>Anna <b>has gone</b> home. (= she isn't here <b>now</b>)</li><li><b>Have</b> you <b>seen</b> Tom? (= where is he <b>now</b>?)</li><li><b>Have</b> you <b>ever been</b> to Italy? (= in your life, until now)</li><li>My aunt is a painter. She <b>has painted</b> many pictures.</li><li>Kate <b>hasn't called</b> me yet.</li><li>We<b>'ve lived</b> in Kazan for five years. (= we live there now)</li></ul></div>
+        <div class="gram-box"><h3>past</h3><div style="position:relative;height:96px;margin:10px 0"><div style="position:absolute;left:40%;width:30%;top:24px;height:30px;border:1.5px solid #E8879F;background:#FCE3C3;border-radius:6px;display:flex;align-items:center;justify-content:center;font-style:italic;font-size:13px">finished time</div><div style="position:absolute;left:72%;right:9%;top:39px;border-top:2px dotted #B9A5AC"></div>
+  <div style="position:absolute;left:0;right:0;top:66px;height:2px;background:#3A2E33"></div>
+  <div style="position:absolute;right:8%;top:6px;width:2px;height:62px;background:#3A2E33"></div>
+  <div style="position:absolute;left:0;top:72px;font-style:italic;font-size:12px;color:#7A6A70">past</div><div style="position:absolute;right:6%;top:72px;font-style:italic;font-size:12px;color:#7A6A70">now</div></div><ul class="prompt-list"><li>I <b>lost</b> my phone <b>last week</b>.</li><li>Anna <b>went</b> home <b>ten minutes ago</b>.</li><li><b>Did</b> you <b>see</b> Tom <b>on Friday</b>?</li><li><b>Did</b> you <b>go</b> to Italy <b>last year</b>?</li><li>Repin <b>painted</b> many pictures.</li><li>Kate <b>didn't call</b> me yesterday.</li><li>We <b>lived</b> in Omsk for five years, but now we live in Kazan.</li></ul></div>
+      </div>
+    </div>
+  </div><div class="section" id="vocabulary"><div class="tab">B</div><div class="content"><div class="eyebrow">Vocabulary</div><h2>Новые слова этого урока</h2><p class="lead">Нажмите на динамик, чтобы услышать слово. Все слова встретятся дальше в чтении и упражнениях.</p><div id="vocabTable" class="vocab-table"></div><h3>Соседи слов <span class="ipa">chunks / collocations</span></h3><p class="sound-note">Учите сочетаниями: так слова легче вспоминаются в речи.</p><div id="chunkGrid" class="chunk-grid"></div></div></div><div class="section" id="practice">
+    <div class="tab">C</div>
+    <div class="content">
+      <div class="eyebrow">Practice</div>
+      <h2>Тренируемся</h2>
+      <p class="lead">Выберите игру и заработайте звёзды ★. Ответы проверяются сразу.</p>
+      <div class="game-tabs">
+        <button class="game-tab-btn active" data-panel="panel-fill">✏️ have done / did</button>
+        <button class="game-tab-btn" data-panel="panel-memo">🃏 Мемо</button>
+        <button class="game-tab-btn" data-panel="panel-quiz">⚡ Квиз</button>
+        <button class="game-tab-btn" data-panel="panel-vocabmatch">📚 Лексика</button>
+      </div>
+      <div class="game-panel active" id="panel-fill">
+        <p class="lead" style="margin-top:0">Present perfect или past simple? Впишите глагол.</p>
+        <div id="fillList"></div>
+        <div class="actions-row">
+          <button class="btn" id="checkFillBtn">Проверить</button>
+          <button class="btn secondary small" id="resetFillBtn">Сбросить</button>
+          <span class="fb-line" id="fillFeedback"></span>
+        </div>
+      </div>
+      <div class="game-panel" id="panel-memo">
+        <p class="lead" style="margin-top:0">Найдите пары: английское слово и его русский перевод.</p>
+        <div class="memo-wrap">
+          <div class="memo-grid" id="memoGrid"></div>
+          <div class="memo-status" id="memoStatus">Найдено пар: 0 / 6</div>
+          <button class="btn secondary small" id="restartMemoBtn">Перемешать заново</button>
+        </div>
+      </div>
+      <div class="game-panel" id="panel-quiz">
+        <div id="quizList"></div>
+        <div class="actions-row"><span class="fb-line" id="quizFeedback"></span></div>
+      </div>
+      <div class="game-panel" id="panel-vocabmatch">
+        <p class="lead" style="margin-top:0">Нажмите на английское слово, затем на его перевод.</p>
+        <div class="match-wrap">
+          <div class="match-col" id="matchEnCol"></div>
+          <div class="match-col" id="matchRuCol"></div>
+        </div>
+        <div class="actions-row">
+          <span class="fb-line" id="matchStatus">Найдено пар: 0 / 10</span>
+          <button class="btn secondary small" id="restartMatchBtn">Перемешать заново</button>
+        </div>
+      </div>
+    </div>
+  </div><div class="section alt" id="reading">
+    <div class="tab">D</div>
+    <div class="content"><div class="actions-row"><button class="btn secondary small" id="playReadingBtn">🔊 Прослушать текст</button><button class="btn secondary stop-audio">Остановить</button></div>
+      <div class="eyebrow">Reading</div>
+      <h2>Grandpa Pavel</h2>
+      <p class="lead">Где present perfect (вся жизнь до сейчас), а где past simple (законченное время)?</p>
+      <div class="read-text"><p>My grandfather Pavel has had an interesting life. He worked in a <span class="chunk">factory</span> for thirty years, and then he became a taxi driver.</p><p>He has visited fifteen countries. He went to Cuba <span class="chunk">in 1985</span> and to India in 1999. Last year he flew to Japan — it was his first long flight.</p><p>He has written two books about his travels. He wrote the first one ten years ago, and he finished the second one last month.</p><p>Grandpa hasn't learned to use a <span class="chunk">computer</span> yet, so he writes everything <span class="chunk">by hand</span>. 'I've never needed a computer,' he says.</p></div>
+    <h3>1 · True / False</h3><div id="tfList"></div><div class="fb-line" id="tfFeedback"></div><h3>2 · Жизнь Павла</h3><p class="sound-note">Present perfect или past simple?</p><div id="tomFillList"></div><div class="actions-row"><button class="btn small" id="checkTomBtn">Проверить</button><span class="fb-line" id="tomFeedback"></span></div><h3>3 · Слова из текста</h3><div id="readFillList"></div><div class="actions-row"><button class="btn small" id="checkReadFillBtn">Проверить</button><span class="fb-line" id="readFillFeedback"></span></div>
+  </div></div><div class="section" id="sounds">
+    <div class="tab">E</div>
+    <div class="content"><p class="mini-note">Синтезированный голос помогает прочитать фразы, но не гарантирует точную интонацию. Повторяйте за ним и сравнивайте.</p>
+      <div class="eyebrow">Sounds &amp; Speech</div>
+      <h2>Have you…? / Did you…?</h2>
+      <p class="lead">Слушайте и повторяйте пары.</p>
+      <p class="tts-warn" id="ttsWarn"></p>
+      <div class="sound-block"><h3>1 · Вопросы</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">Have you seen Kate?</div><div class="sp-controls"><button class="play-btn" data-text="Have you seen Kate?" data-rate="1">🔊</button><button class="play-btn slow" data-text="Have you seen Kate?" data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">Did you see Kate on Saturday?</div><div class="sp-controls"><button class="play-btn" data-text="Did you see Kate on Saturday?" data-rate="1">🔊</button><button class="play-btn slow" data-text="Did you see Kate on Saturday?" data-rate="0.6">🐢</button></div></div></div></div>
+      <div class="sound-block"><h3>2 · Утверждения</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">I've lost my key.</div><div class="sp-controls"><button class="play-btn" data-text="I&#x27;ve lost my key." data-rate="1">🔊</button><button class="play-btn slow" data-text="I&#x27;ve lost my key." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">I lost my key last week.</div><div class="sp-controls"><button class="play-btn" data-text="I lost my key last week." data-rate="1">🔊</button><button class="play-btn slow" data-text="I lost my key last week." data-rate="0.6">🐢</button></div></div></div></div>
+      <div class="sound-block"><h3>3 · When did…?</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">When did you buy your computer?</div><div class="sp-controls"><button class="play-btn" data-text="When did you buy your computer?" data-rate="1">🔊</button><button class="play-btn slow" data-text="When did you buy your computer?" data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">What time did Andy go out?</div><div class="sp-controls"><button class="play-btn" data-text="What time did Andy go out?" data-rate="1">🔊</button><button class="play-btn slow" data-text="What time did Andy go out?" data-rate="0.6">🐢</button></div></div></div></div>
+      <div class="actions-row">
+        <button class="btn secondary small" id="playAllBtn">🔊 Прослушать всё подряд</button>
+      </div>
+    </div>
+  </div><div class="section alt" id="listening">
+    <div class="tab">F</div>
+    <div class="content">
+      <div class="eyebrow">Listening</div>
+      <h2>Слушаем вслепую</h2>
+      <p class="lead">Сэм ищет ключи. Послушайте 1–2 раза и ответьте на вопросы. Скрипт открывайте только для проверки.</p>
+      <div class="speed-picker">
+        <label>Скорость:</label>
+        <div class="speed-btns">
+          <button class="speed-btn" data-rate="0.6">🐢 Медленно</button>
+          <button class="speed-btn active" data-rate="0.95">🔊 Обычно</button>
+        </div>
+      </div>
+      <div class="actions-row">
+        <button class="btn secondary stop-audio">Остановить</button>
+        <button class="btn" id="playListeningBtn">▶️ Слушать диалог</button>
+      </div>
+      <h3 style="font-size:14.5px; margin:18px 0 8px; color:var(--brick-dark);">Вопросы по прослушанному</h3>
+      <div id="lsList"></div>
+      <div class="actions-row"><span class="fb-line" id="lsFeedback"></span></div>
+      <div class="actions-row">
+        <button class="btn secondary small" id="toggleScriptBtn" disabled="">📜 Скрипт — после ответов на все вопросы</button>
+      </div>
+      <div class="reveal-box" id="scriptBox">Hi, Lucy! Have you seen my keys?
+No, I haven&#x27;t. When did you last have them?
+I had them this morning. I opened the door at nine.
+Did you put them on the table?
+Yes, I think so… No, they aren&#x27;t there. I&#x27;ve looked everywhere!
+Oh! Look in your coat. You wore it this morning.
+Yes! Here they are. Thanks!</div>
+    </div>
+  </div><div class="section alt" id="production">
+    <div class="tab">G</div>
+    <div class="content">
+      <div class="eyebrow">Production</div>
+      <h2>Мой опыт и даты</h2>
+      <p class="lead">Напишите 6–8 предложений: сначала общий опыт (present perfect), потом подробности с датами (past simple).</p>
+      <ul class="prompt-list"><li><b>I've been to …</b> → <b>I went there in …</b></li><li><b>I've had … jobs</b> → <b>I worked … from … to …</b></li><li><b>I've never …</b></li><li><b>When did you …?</b></li></ul>
+      <textarea class="write-area" id="writeArea" placeholder="I've been to... I went there in..."></textarea>
+      <div class="word-count" id="wordCount">0 слов</div>
+      <div class="actions-row">
+        <button class="btn" id="finishBtn">Готово!</button>
+        <button class="btn secondary" id="sampleBtn">Показать пример</button>
+      </div>
+      <div class="reveal-box" id="sampleBox"><b>Пример:</b> I've been to the sea many times. Last summer I went to Sochi with my friends. We stayed there for ten days and swam every day. I've had three jobs in my life. I worked in a shop from 2016 to 2019. I've never been to Europe, but I want to go. When did you last go on holiday?</div>
+      <div class="cue-cards">
+        <div class="cue-card"><b>Карточка 1</b>«Have you ever…?» → если Yes, уточните: «When did you…? Where did you…?»</div>
+        <div class="cue-card"><b>Карточка 2</b>Расскажите о знаменитом человеке (past) и о живом (present perfect).</div>
+        <div class="cue-card"><b>Карточка 3</b>Что вы потеряли и нашли? «I've lost… / I lost… last week».</div>
+      </div>
+    </div>
+  </div><div class="section" id="homework">
+    <div class="tab">H</div>
+    <div class="content">
+      <div class="eyebrow">Homework</div>
+      <h2>Домашнее задание</h2>
+      <p class="lead">Отметьте галочкой то, что выполнили. Можно распечатать этот блок.</p>
+      <div class="hw-list">
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>1. Письменно.</b> Напишите 8 предложений: 4 — общий опыт (present perfect), 4 — с конкретным временем (past). Используйте минимум 4 новых слова из блока B.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>2. Ошибки.</b> Исправьте: «I have seen her yesterday», «When have you bought it?», «Shakespeare has written many plays».</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>3. Слушаем и повторяем.</b> Откройте блок <i>E · Sounds</i> и повторите пары по три раза.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>4. Интервью.</b> Спросите близкого человека «Have you ever…?» и уточните «When did you…?». Запишите 3 диалога.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>5. Повторение.</b> Вернитесь в блок <i>C · Practice</i> и пройдите квиз ещё раз без ошибок.</span></label>
+      </div>
+      <div class="actions-row">
+        <span class="fb-line" id="hwFeedback">Выполнено: 0 / 5</span>
+        <button class="btn secondary small no-print" id="printHwBtn">🖨️ Распечатать задание</button>
+      </div>
+    </div>
+  </div></div><div class="badge-final" id="finalBadge">Урок пройден!<span>Все обязательные задания выполнены.</span></div>
+
+<p class="footer-note">Based on Essential Grammar in Use, 4th Edition (Cambridge University Press, 2015), Unit 20 — original exercises created for this lesson.</p>
+<script src="../lesson-kit.js?v=20261018-games1"></script><script src="../lesson-template.js?v=20261018-games1"></script><script>window.lessonConfig={"vocabData": [{"word": "writer", "ipa": "/ˈraɪtə/", "ru": "писатель"}, {"word": "poem", "ipa": "/ˈpəʊɪm/", "ru": "стихотворение"}, {"word": "play", "ipa": "/pleɪ/", "ru": "пьеса"}, {"word": "computer", "ipa": "/kəmˈpjuːtə/", "ru": "компьютер"}, {"word": "factory", "ipa": "/ˈfæktri/", "ru": "завод, фабрика"}, {"word": "waitress", "ipa": "/ˈweɪtrəs/", "ru": "официантка"}, {"word": "Saturday", "ipa": "/ˈsætədeɪ/", "ru": "суббота"}, {"word": "painter", "ipa": "/ˈpeɪntə/", "ru": "художник"}, {"word": "switch off", "ipa": "/swɪtʃ ɒf/", "ru": "выключать"}, {"word": "finished", "ipa": "/ˈfɪnɪʃt/", "ru": "законченный"}, {"word": "novel", "ipa": "/ˈnɒvl/", "ru": "роман"}, {"word": "by hand", "ipa": "/baɪ hænd/", "ru": "от руки"}], "chunkData": [{"en": "finished time", "ipa": "", "ru": "законченный период"}, {"en": "last night", "ipa": "", "ru": "вчера вечером"}, {"en": "on Saturday", "ipa": "", "ru": "в субботу"}, {"en": "ten minutes ago", "ipa": "", "ru": "десять минут назад"}, {"en": "in your life", "ipa": "", "ru": "в жизни (до сих пор)"}, {"en": "write poems", "ipa": "", "ru": "писать стихи"}, {"en": "work in a factory", "ipa": "", "ru": "работать на заводе"}, {"en": "switch off the light", "ipa": "", "ru": "выключить свет"}], "fillData": [{"sentence": "I ___ (see) Paula yesterday.", "answers": ["saw"]}, {"sentence": "I ___ (lose) my key. I can't find it now.", "answers": ["have lost", "'ve lost"]}, {"sentence": "Where ___ you on Sunday afternoon?", "answers": ["were"]}, {"sentence": "We ___ (not/have) a holiday last year.", "answers": ["didn't have", "did not have"]}, {"sentence": "When ___ you buy your computer?", "answers": ["did"]}, {"sentence": "Ben ___ (go) home ten minutes ago.", "answers": ["went"]}, {"sentence": "Ben ___ (go) home. He isn't here now.", "answers": ["has gone", "'s gone"]}, {"sentence": "Have you ever ___ (be) to Spain?", "answers": ["been"]}, {"sentence": "Shakespeare ___ (write) many plays.", "answers": ["wrote"]}, {"sentence": "My friend is a writer. He ___ (write) many books.", "answers": ["has written", "'s written"]}, {"sentence": "Sam ___ (not/phone) me yesterday.", "answers": ["didn't phone", "did not phone"]}, {"sentence": "We ___ (live) in Glasgow for six years, but now we live in Singapore.", "answers": ["lived"]}], "memoPairs": [["writer", "писатель"], ["poem", "стихотворение"], ["factory", "завод, фабрика"], ["waitress", "официантка"], ["painter", "художник"], ["novel", "роман"]], "quizData": [{"q": "I ___ Kate yesterday.", "opts": ["saw", "have seen"], "correct": "saw"}, {"q": "I ___ my key. I can't find it.", "opts": ["have lost", "lost"], "correct": "have lost"}, {"q": "When ___ you buy your car?", "opts": ["did", "have"], "correct": "did"}, {"q": "___ you ever been to Spain?", "opts": ["Have", "Did"], "correct": "Have"}, {"q": "Shakespeare ___ many plays.", "opts": ["wrote", "has written"], "correct": "wrote"}, {"q": "What time ___ Andy go out?", "opts": ["did", "has"], "correct": "did"}, {"q": "We ___ in Glasgow for six years, but now we live in Singapore.", "opts": ["lived", "have lived"], "correct": "lived"}, {"q": "We ___ here for six years. (we live here now)", "opts": ["have lived", "lived"], "correct": "have lived"}], "matchWords": [{"en": "writer", "ru": "писатель"}, {"en": "poem", "ru": "стихотворение"}, {"en": "play", "ru": "пьеса"}, {"en": "computer", "ru": "компьютер"}, {"en": "factory", "ru": "завод, фабрика"}, {"en": "waitress", "ru": "официантка"}, {"en": "Saturday", "ru": "суббота"}, {"en": "painter", "ru": "художник"}, {"en": "switch off", "ru": "выключать"}, {"en": "finished", "ru": "законченный"}], "tfGroups": {"tfList": {"data": [{"text": "Pavel worked in a factory.", "correct": true}, {"text": "He has visited twenty countries.", "correct": false}, {"text": "He went to Cuba in 1985.", "correct": true}, {"text": "Last year he flew to Japan.", "correct": true}, {"text": "He has written three books.", "correct": false}, {"text": "He often uses a computer.", "correct": false}], "feedback": "tfFeedback"}, "lsList": {"data": [{"text": "Lucy has seen the keys.", "correct": false}, {"text": "Sam had the keys this morning.", "correct": true}, {"text": "He opened the door at ten.", "correct": false}, {"text": "The keys were on the table.", "correct": false}, {"text": "The keys were in his coat.", "correct": true}], "feedback": "lsFeedback"}}, "readFillData": [{"sentence": "He worked in a ___ for thirty years.", "answers": ["factory"]}, {"sentence": "Then he became a taxi ___.", "answers": ["driver"]}, {"sentence": "He went to Cuba in ___.", "answers": ["1985"]}, {"sentence": "He has written two ___ about his travels.", "answers": ["books"]}, {"sentence": "He hasn't learned to use a ___ yet.", "answers": ["computer"]}, {"sentence": "He writes everything by ___.", "answers": ["hand"]}], "tomData": [{"sentence": "Pavel ___ (work) in a factory for thirty years.", "answers": ["worked"]}, {"sentence": "He ___ (visit) fifteen countries.", "answers": ["has visited", "'s visited"]}, {"sentence": "He ___ (go) to India in 1999.", "answers": ["went"]}, {"sentence": "He ___ (write) two books.", "answers": ["has written", "'s written"]}, {"sentence": "He ___ (finish) the second one last month.", "answers": ["finished"]}, {"sentence": "'I ___ (never/need) a computer.'", "answers": ["have never needed", "'ve never needed"]}], "slug": "urok-present-perfect-past", "exam": false, "legacySignature": "", "legacyFields": [], "questionTask": false, "listeningLines": ["Hi, Lucy! Have you seen my keys?", "No, I haven't. When did you last have them?", "I had them this morning. I opened the door at nine.", "Did you put them on the table?", "Yes, I think so… No, they aren't there. I've looked everywhere!", "Oh! Look in your coat. You wore it this morning.", "Yes! Here they are. Thanks!"], "readingLines": ["My grandfather Pavel has had an interesting life. He worked in a factory for thirty years, and then he became a taxi driver.", "He has visited fifteen countries. He went to Cuba in 1985 and to India in 1999. Last year he flew to Japan — it was his first long flight.", "He has written two books about his travels. He wrote the first one ten years ago, and he finished the second one last month.", "Grandpa hasn't learned to use a computer yet, so he writes everything by hand. 'I've never needed a computer,' he says."]};
+LessonTemplate.mount(window.lessonConfig);</script></body></html>
