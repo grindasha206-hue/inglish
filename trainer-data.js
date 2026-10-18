@@ -394,6 +394,27 @@ const T=[
    O("I've known her for a long time.","I have known her for a long time."),
    O("It's been raining all day.","It has been raining all day.")
   ]},
+  {id:19,title:'for / since / ago',emoji:'📅',rule:'for + период (for three days, for an hour, for a long time). since + начало периода (since Monday, since 9 o\'clock, since I was a child). ago = before now, с past simple: She arrived three days ago. Сравни: When did she arrive? — three days ago. How long has she been here? — for three days.',
+  items:[
+   C('___ two hours','for','since','ago'),
+   C('___ 12.30','since','for','ago'),
+   C('___ Christmas','since','for','ago'),
+   C('___ a long time','for','since','ago'),
+   C('She started her job three weeks ___.','ago','for','since'),
+   C('When ___ she arrive?','did','has','was'),
+   C('How long ___ she been here?','has','did','is'),
+   C("I've lived here ___ I was ten.",'since','for','ago'),
+   C('Какое предложение правильное?','He has been in Canada for six months.','He has been in Canada since six months.','He is in Canada for six months.'),
+   C('I had dinner an hour ___.','ago','for','since'),
+   F('Richard has been in Canada ___ January.','since'),
+   F("We've been waiting ___ two hours.",'for'),
+   F('She arrived three days ___.','ago'),
+   F('When ___ Tom go out?','did'),
+   F("I've lived in London ___ a long time.",'for'),
+   O('She arrived in Ireland three days ago.'),
+   O('She has been in Ireland for three days.'),
+   O("I've lived here since I was a child.","I have lived here since I was a child.")
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),
