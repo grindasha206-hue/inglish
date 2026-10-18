@@ -1136,6 +1136,54 @@ const T=[
    O("I stayed at my sister's house."),
    O('Madrid is the capital of Spain.')
   ]},
+  {id:65,title:'a / an',emoji:'🅰️',rule:"a/an = один предмет или человек: a bank, a question. an — перед гласным звуком (a, e, i, o, u): an apple, an umbrella, an hour (h не читается). Но a university, a European (звук «ю»). another = an + other. a/an — что это за предмет и профессия: The sun is a star. I'm a dentist (не I'm dentist).",
+  items:[
+   C("I'm ___ dentist.",'a','an','—'),
+   C("He's ___ engineer.",'an','a','—'),
+   C('It takes ___ hour.','an','a','—'),
+   C('She goes to ___ university.','a','an','—'),
+   F('Can I have ___ cup of tea? (ещё одну)','another'),
+   F('Do you want ___ apple?','an'),
+   F('The sun is ___ star.','a'),
+   O("I'm a dentist."),
+   O('Can I have another cup of coffee?')
+  ]},
+  {id:66,title:'singular and plural',emoji:'🔢',rule:"Множественное число: + s (flowers). -s/-sh/-ch/-x → -es (buses, dishes); potato → potatoes. -y → -ies (babies), но -ay/-ey/-oy → -ys (days, boys). -f/-fe → -ves (knives). Без -s: men, women, children, feet, teeth, mice, sheep, fish, people. Всегда мн.: scissors, glasses, trousers, jeans. people и police — мн. число: people are, the police want.",
+  items:[
+   C('one tooth → all my ___','teeth','tooths','teeths'),
+   C('a box → two ___','boxes','boxs','boxies'),
+   C('A lot of people ___ English.','speak','speaks','is speaking'),
+   C('The police ___ to talk to you.','want','wants','is wanting'),
+   F('knife → ___','knives'),
+   F('baby → ___','babies'),
+   F('child → many ___','children'),
+   O('Where are the scissors?'),
+   O('A lot of people speak English.')
+  ]},
+  {id:67,title:'countable / uncountable 1',emoji:'🍾',rule:"Countable — можно посчитать: a car, two cars, many cars. В единственном числе нужен a/an: without a key. Uncountable — нельзя посчитать: water, rice, salt, money, music. Одна форма, без a/an: some money, much money. Можно: a bottle of water, a carton of milk, a bar of chocolate, a piece of cheese, a bowl of rice.",
+  items:[
+   C('I need ___ money.','some','a','many'),
+   C('There isn\'t ___ money.','much','many','a'),
+   C('There aren\'t ___ cars.','many','much','a'),
+   C('a ___ of chocolate','bar','carton','bowl'),
+   F('a ___ of milk','carton'),
+   F('I can\'t get in without ___ key.','a'),
+   F('a ___ of rice','bowl'),
+   O("I've got some money."),
+   O('a bottle of water')
+  ]},
+  {id:68,title:'countable / uncountable 2',emoji:'🍰',rule:"a/an + исчисляемое в ед. ч.: a car, an apple. some + исчисляемое во мн. ч.: some apples; some + неисчисляемое: some water. a cake / some cake. a paper = газета, some paper = бумага. Всегда неисчисляемые: advice, bread, furniture, hair, information, news, weather, work — без a/an и без -s. a job, но не a work.",
+  items:[
+   C('I need ___.','some advice','an advice','advices'),
+   C('They\'ve got nice ___.','furniture','furnitures','a furniture'),
+   C("It's ___ today.",'nice weather','a nice weather','nice weathers'),
+   C("I've got a new ___.",'job','work','works'),
+   F('Would you like ___ apple?','an'),
+   F('I need ___ water.','some'),
+   F("I've just had some good ___.",'news'),
+   O('I need some advice.'),
+   O('Would you like some cheese?')
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),

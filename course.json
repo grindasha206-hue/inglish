@@ -668,6 +668,40 @@
               "file": "lessons/itogovyi-test-pronouns.html"
             }
           ]
+        },
+        {
+          "id": "modul-16",
+          "title": "Модуль 16",
+          "lessons": [
+            {
+              "id": "urok-a-an",
+              "unit": 1,
+              "title": "a/an…",
+              "description": "Артикль a/an; another; профессии",
+              "file": "lessons/urok-a-an.html"
+            },
+            {
+              "id": "urok-singular-plural",
+              "unit": 2,
+              "title": "singular and plural",
+              "description": "Множественное число: -s, -es, -ies, -ves, men, feet",
+              "file": "lessons/urok-singular-plural.html"
+            },
+            {
+              "id": "urok-countable-1",
+              "unit": 3,
+              "title": "a bottle / some water",
+              "description": "Countable / uncountable; a bottle of…",
+              "file": "lessons/urok-countable-1.html"
+            },
+            {
+              "id": "urok-countable-2",
+              "unit": 4,
+              "title": "a cake / some cake",
+              "description": "a/an и some; uncountable: advice, news, furniture",
+              "file": "lessons/urok-countable-2.html"
+            }
+          ]
         }
       ]
     },
