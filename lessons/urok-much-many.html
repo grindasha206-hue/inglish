@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 83 · a lot, much, many</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Comfortaa:wght@500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --cream:#FDF4F1; --paper:#FFFDFB; --ink:#3A2E33; --ink-soft:#6B5A61;
+  --brick:#BE456F; --brick-dark:#8F2E52; --tab:#C4507A; --tab-dark:#9E3460;
+  --sage:#4F8F6D; --sage-bg:#E6F1EA; --coral:#D65B4A; --coral-bg:#FBE7E3;
+  --gold:#E8A0B4; --line:#F1D9DF; --shadow: 0 6px 18px rgba(150,80,100,0.10);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; background:radial-gradient(circle at 15% 8%, rgba(232,160,180,0.10), transparent 40%), var(--cream); color:var(--ink); font-family:'Nunito', sans-serif; line-height:1.55; padding-bottom:80px;}
+h1,h2,h3,.display{font-family:'Comfortaa',sans-serif;}
+
+.topbar{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:1px solid var(--line); padding:10px 18px; display:flex; align-items:center; gap:14px; box-shadow:0 2px 10px rgba(0,0,0,0.04);}
+.topbar .book-title{font-family:'Comfortaa',sans-serif; font-weight:700; font-size:15px; color:var(--brick-dark); white-space:nowrap;}
+.progress-steps{display:flex; gap:5px; flex:1; align-items:center;}
+.pstep{flex:1; height:8px; border-radius:6px; background:var(--line); position:relative; overflow:hidden;}
+.pstep i{display:block; height:100%; width:0%; border-radius:6px; background:linear-gradient(90deg, var(--tab), var(--brick)); transition:width .5s ease;}
+.score-pill{font-size:13px; font-weight:700; background:var(--sage-bg); color:var(--sage); padding:5px 12px; border-radius:20px; white-space:nowrap;}
+
+.page{max-width:900px; margin:26px auto; background:var(--paper); border-radius:4px; box-shadow:var(--shadow); border:1px solid var(--line); overflow:hidden;}
+
+.unit-banner{background:linear-gradient(135deg, var(--brick) 0%, var(--brick-dark) 100%); color:#fff; padding:26px 30px 22px 96px; position:relative;}
+.unit-tag{position:absolute; left:0; top:0; bottom:0; width:76px; background:var(--brick-dark); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Comfortaa',sans-serif; border-right:2px solid rgba(255,255,255,0.15);}
+.unit-tag .u{font-size:11px; letter-spacing:2px; opacity:.75;}
+.unit-tag .n{font-size:30px; font-weight:800;}
+.unit-banner h1{margin:0; font-size:27px; font-weight:800; letter-spacing:.3px;}
+.unit-banner p{margin:6px 0 0; opacity:.9; font-size:14.5px;}
+
+.section{display:flex; border-top:1px solid var(--line);}
+.section .tab{width:56px; flex-shrink:0; background:var(--tab); color:#fff; font-family:'Comfortaa',sans-serif; font-weight:800; font-size:20px; display:flex; align-items:flex-start; justify-content:center; padding-top:22px;}
+.section.alt .tab{background:var(--tab-dark);}
+.section .content{padding:24px 28px 30px; flex:1; min-width:0;}
+.section h2{margin:0 0 4px; font-size:22px; color:var(--brick-dark);}
+.eyebrow{font-size:11.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-soft); font-weight:700; margin-bottom:4px;}
+.section p.lead{color:var(--ink-soft); margin-top:4px; font-size:14.5px;}
+
+.dialog-wrap{display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; margin:18px 0 6px;}
+.dialog-figure{width:110px; text-align:center; flex-shrink:0;}
+.dialog-avatar{width:96px; height:120px; margin:0 auto;}
+.dialog-avatar svg{width:100%; height:100%;}
+.dialog-figure .name{font-family:'Comfortaa',sans-serif; font-weight:700; font-size:12.5px; letter-spacing:1px; color:var(--brick-dark); margin-top:4px;}
+.dialog-bubbles{display:flex; flex-direction:column; gap:8px; flex:1; min-width:260px; max-width:420px;}
+.d-bubble{background:#fff; border:1.5px solid var(--line); border-radius:16px; padding:8px 14px; font-size:13.5px; box-shadow:0 3px 8px rgba(0,0,0,0.05);}
+.d-bubble.q{border-color:var(--tab);}
+.d-bubble.a{align-self:flex-end; background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.d-bubble b{color:var(--brick-dark);}
+.d-bubble.a b{color:var(--sage);}
+
+.gram-tables{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:22px;}
+@media(max-width:620px){.gram-tables{grid-template-columns:1fr;}}
+.gram-box h3{font-size:13px; text-transform:uppercase; letter-spacing:1px; color:var(--ink-soft); margin:0 0 8px;}
+table.formtable{width:100%; border-collapse:collapse; font-size:13.5px; background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;}
+table.formtable td{padding:7px 10px; border-bottom:1px solid var(--line);}
+table.formtable tr:last-child td{border-bottom:none;}
+table.formtable td.pron{color:var(--ink-soft); width:34%;}
+table.formtable td.verb{font-weight:700; color:var(--brick-dark);}
+table.formtable td.short{color:var(--ink-soft); font-style:italic;}
+
+.chunk{background:linear-gradient(180deg, transparent 60%, rgba(196,80,122,0.35) 60%); font-weight:700; color:var(--brick-dark); padding:0 1px;}
+
+.mini-note{margin-top:16px; background:var(--sage-bg); border-left:3px solid var(--sage); padding:10px 14px; border-radius:6px; font-size:13.5px; color:#2f5741;}
+.mini-note b{color:var(--sage);}
+.mini-note i{color:var(--ink-soft); font-style:italic;}
+.mini-note.warn{background:var(--coral-bg); border-left-color:var(--coral); color:#7A2848;}
+.mini-note.warn b{color:var(--coral);}
+
+.vocab-table{margin-top:14px; display:flex; flex-direction:column; gap:8px;}
+.vocab-row{display:grid; grid-template-columns:auto 1fr auto auto; align-items:center; gap:12px; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:9px 14px;}
+@media(max-width:560px){.vocab-row{grid-template-columns:1fr; gap:4px;}}
+.vocab-word{font-weight:800; color:var(--brick-dark); font-size:14.5px; font-family:'Comfortaa',sans-serif;}
+.vocab-ipa{font-size:12.5px; color:var(--tab-dark); font-style:italic;}
+.vocab-ru{font-size:13.5px; color:var(--ink-soft);}
+.chunk-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px;}
+@media(max-width:600px){.chunk-grid{grid-template-columns:1fr;}}
+.chunk-row{display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--cream); border:1.5px dashed var(--gold); border-radius:10px; padding:9px 14px;}
+.chunk-en{font-weight:800; color:var(--brick-dark); font-size:14px; display:block;}
+.chunk-ipa{font-size:11.5px; color:var(--tab-dark); font-style:italic; display:block; margin-top:1px;}
+.chunk-ru{font-size:12.5px; color:var(--ink-soft); display:block; margin-top:1px; font-weight:400;}
+
+.game-tabs{display:flex; gap:8px; margin:18px 0 20px; flex-wrap:wrap;}
+.game-tab-btn{border:1.5px solid var(--line); background:#fff; color:var(--ink-soft); padding:8px 16px; border-radius:20px; font-family:'Nunito'; font-weight:700; font-size:13px; cursor:pointer; transition:.2s;}
+.game-tab-btn.active{background:var(--tab); color:#fff; border-color:var(--tab-dark);}
+.game-panel{display:none;}
+.game-panel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
+
+.fill-item{display:flex; align-items:flex-start; gap:10px; flex-wrap:wrap; padding:12px 4px; border-bottom:1px dashed var(--line);}
+.fill-item:last-child{border-bottom:none;}
+.fill-num{width:22px; height:22px; border-radius:50%; background:var(--cream); border:1px solid var(--line); font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; color:var(--ink-soft); flex-shrink:0; margin-top:3px;}
+.fill-body{flex:1; min-width:220px;}
+.fill-words{font-size:13px; color:var(--ink-soft); margin-bottom:6px; font-style:italic;}
+.blank-input{width:130px; padding:5px 8px; border:1.5px solid var(--line); border-radius:6px; font-family:'Nunito'; font-weight:700; font-size:14px; text-align:center; background:#FFFDFB; color:var(--brick-dark);}
+.blank-input:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.blank-input.correct{border-color:var(--sage); background:var(--sage-bg); color:#2f5741;}
+.blank-input.wrong{border-color:var(--coral); background:var(--coral-bg); color:var(--coral);}
+.fill-fb{font-size:16px; margin-top:6px;}
+
+.btn{border:none; cursor:pointer; font-family:'Nunito'; font-weight:800; padding:10px 20px; border-radius:24px; font-size:14px; letter-spacing:.2px; background:var(--brick); color:#fff; box-shadow:0 4px 10px rgba(190,69,111,0.25); transition:.15s;}
+.btn:hover{transform:translateY(-1px); box-shadow:0 6px 14px rgba(190,69,111,0.32);}
+.btn.secondary{background:transparent; color:var(--brick); border:1.5px solid var(--brick); box-shadow:none;}
+.btn.small{padding:6px 14px; font-size:12.5px;}
+.actions-row{display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; align-items:center;}
+.fb-line{font-size:13.5px; font-weight:700; color:var(--ink-soft);}
+
+.memo-wrap{display:flex; flex-direction:column; align-items:center; gap:14px;}
+.memo-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; max-width:520px; width:100%;}
+@media(max-width:500px){.memo-grid{grid-template-columns:repeat(3,1fr);}}
+.memo-card{aspect-ratio:1/1; border-radius:10px; cursor:pointer; position:relative; perspective:600px;}
+.memo-inner{width:100%; height:100%; position:relative; transform-style:preserve-3d; transition:transform .45s;}
+.memo-card.flipped .memo-inner, .memo-card.matched .memo-inner{transform:rotateY(180deg);}
+.memo-face{position:absolute; inset:0; border-radius:10px; display:flex; align-items:center; justify-content:center; backface-visibility:hidden; font-weight:800; text-align:center; padding:4px; font-size:12.5px;}
+.memo-face.back{background:linear-gradient(135deg, var(--tab), var(--tab-dark)); color:#fff; font-family:'Comfortaa',sans-serif; font-size:22px;}
+.memo-face.front{background:#fff; border:2px solid var(--line); color:var(--brick-dark); transform:rotateY(180deg);}
+.memo-card.matched .memo-face.front{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.memo-status{font-size:13.5px; color:var(--ink-soft); font-weight:700;}
+
+.quiz-q{margin-bottom:18px;}
+.quiz-q p{font-weight:700; margin:0 0 8px; font-size:14.5px;}
+.quiz-opts{display:flex; gap:8px; flex-wrap:wrap;}
+.quiz-opt{border:1.5px solid var(--line); background:#fff; padding:7px 15px; border-radius:20px; font-weight:700; font-size:13.5px; cursor:pointer; color:var(--ink);}
+.quiz-opt.sel-correct{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.quiz-opt.sel-wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+.quiz-opt.reveal-correct{border-color:var(--sage); box-shadow:inset 0 0 0 1px var(--sage);}
+
+.match-wrap{display:flex; gap:14px; max-width:520px; margin:0 auto;}
+.match-col{flex:1; display:flex; flex-direction:column; gap:8px;}
+.match-tile{background:#fff; border:1.5px solid var(--line); border-radius:8px; padding:9px 12px; font-size:13.5px; font-weight:700; cursor:pointer; text-align:center; color:var(--ink); transition:.15s;}
+.match-tile.selected{border-color:var(--tab); background:var(--cream); box-shadow:inset 0 0 0 1.5px var(--tab);}
+.match-tile.matched{background:var(--sage-bg); border-color:var(--sage); color:#2f5741; cursor:default;}
+.match-tile.wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+
+.read-text{background:#fff; border:1.5px solid var(--line); border-radius:14px; padding:18px 20px; margin:16px 0; font-size:14.5px;}
+.read-text p{margin:0 0 10px;}
+.read-text p:last-child{margin-bottom:0;}
+.tf-item{display:flex; align-items:center; justify-content:space-between; gap:10px; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:9px 14px; margin-bottom:8px;}
+.tf-text{font-size:13.5px; flex:1;}
+.tf-btns{display:flex; gap:6px; flex-shrink:0;}
+.tf-btn{border:1.5px solid var(--line); background:var(--cream); padding:5px 12px; border-radius:16px; font-weight:800; font-size:12.5px; cursor:pointer; color:var(--ink-soft);}
+.tf-btn.sel-correct{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.tf-btn.sel-wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+.tf-btn.reveal-correct{box-shadow:inset 0 0 0 1px var(--sage); border-color:var(--sage);}
+
+.tts-warn{display:none; font-size:12.5px; color:var(--coral); background:var(--coral-bg); padding:8px 12px; border-radius:6px; margin:8px 0 0;}
+.tts-warn.shown{display:block;}
+.voice-picker{display:flex; align-items:center; gap:8px; flex-wrap:wrap; background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:8px 12px; margin-top:10px; font-size:13px;}
+.voice-picker label{font-weight:700; color:var(--ink-soft);}
+.voice-picker select{border:1.5px solid var(--line); border-radius:6px; padding:4px 8px; font-family:'Nunito'; font-size:13px; background:#fff; color:var(--ink); max-width:220px;}
+.voice-hint{font-size:11.5px; color:var(--ink-soft); flex-basis:100%;}
+.sound-block{margin-top:22px; padding-top:16px; border-top:1px dashed var(--line);}
+.sound-block:first-of-type{border-top:none; margin-top:16px;}
+.sound-block h3{font-size:15.5px; margin:0 0 6px; color:var(--brick-dark); font-weight:700;}
+.ipa{font-family:'Nunito'; font-weight:500; font-size:12px; color:var(--ink-soft); font-style:italic;}
+.sound-note{font-size:13.5px; color:var(--ink-soft); margin:0 0 12px;}
+.sound-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+.sound-grid.three{grid-template-columns:repeat(3,1fr);}
+@media(max-width:600px){.sound-grid, .sound-grid.three{grid-template-columns:1fr;}}
+.sound-pair{background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px;}
+.sound-pair.wide{grid-column:1/-1;}
+.sp-text{font-size:14.5px; font-weight:600; flex:1;}
+.sp-text.big{font-size:19px; text-align:center; font-family:'Comfortaa',sans-serif; color:var(--brick-dark);}
+.sp-controls{display:flex; gap:6px; flex-shrink:0;}
+.play-btn{border:1.5px solid var(--line); background:var(--cream); cursor:pointer; border-radius:8px; padding:6px 10px; font-size:15px; line-height:1; transition:.15s;}
+.play-btn:hover{background:var(--tab); border-color:var(--tab-dark);}
+.play-btn.playing{background:var(--brick); border-color:var(--brick-dark);}
+b.stress{color:var(--brick-dark); text-decoration:underline; text-decoration-color:var(--gold); text-decoration-thickness:2px; text-underline-offset:3px;}
+
+.prompt-list{list-style:none; padding:0; margin:14px 0; display:grid; gap:8px;}
+.prompt-list li{background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:8px 12px; font-size:13.5px; display:flex; gap:8px; align-items:baseline;}
+.prompt-list li b{color:var(--brick-dark); font-family:'Comfortaa',sans-serif;}
+textarea.write-area{width:100%; min-height:140px; border:1.5px solid var(--line); border-radius:10px; padding:14px; font-family:'Nunito'; font-size:14.5px; color:var(--ink); background:#FFFDFB; resize:vertical;}
+textarea.write-area:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.word-count{font-size:12.5px; color:var(--ink-soft); margin-top:6px;}
+.cue-cards{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;}
+.cue-card{background:#fff; border:1.5px dashed var(--gold); border-radius:10px; padding:10px 14px; font-size:13px; width:160px; color:var(--ink-soft); font-style:italic;}
+.cue-card b{display:block; font-style:normal; color:var(--brick-dark); font-family:'Comfortaa',sans-serif; font-size:14px; margin-bottom:3px;}
+.reveal-box{margin-top:14px; border-left:3px solid var(--tab); background:var(--cream); padding:12px 16px; border-radius:6px; font-size:13.5px; display:none;}
+.reveal-box.shown{display:block;}
+
+.hw-list{display:flex; flex-direction:column; gap:10px; margin-top:16px;}
+.hw-item{display:flex; gap:10px; align-items:flex-start; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:11px 14px; font-size:13.5px; cursor:pointer; transition:.15s;}
+.hw-item:has(.hw-check:checked){background:var(--sage-bg); border-color:var(--sage);}
+.hw-check{margin-top:3px; width:16px; height:16px; accent-color:var(--sage); flex-shrink:0;}
+.hw-item b{color:var(--brick-dark); font-family:'Comfortaa',sans-serif;}
+.hw-item i{color:var(--ink-soft); font-style:italic;}
+
+@media print{
+  .topbar, .unit-banner, #presentation, #vocabulary, #practice, #reading, #sounds, #production, .badge-final, .footer-note, .no-print{ display:none !important; }
+  body{ background:#fff; padding:0; }
+  .page{ box-shadow:none; border:none; margin:0; max-width:100%; }
+  .section{ border-top:none; }
+  .section .tab{ display:none; }
+  .section .content{ padding:10px; }
+  .hw-item{ break-inside:avoid; }
+}
+
+.footer-note{text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:24px; padding:0 20px;}
+.badge-final{display:none; text-align:center; margin:26px auto 0; max-width:900px; background:linear-gradient(135deg, var(--sage), #3d7357); color:#fff; border-radius:14px; padding:22px; font-family:'Comfortaa',sans-serif; font-size:19px; font-weight:700; box-shadow:var(--shadow);}
+.badge-final.shown{display:block; animation:fadeIn .5s ease;}
+.badge-final span{display:block; font-family:'Nunito'; font-weight:500; font-size:13.5px; margin-top:6px; opacity:.9;}
+
+/* Generated textbook illustrations; contain each complete scene without cropping. */
+.dialog-figure.art-figure{width:148px}
+.lisa-figure.art-figure{width:164px}
+.dialog-avatar.art-avatar{width:144px;height:auto}
+.lisa-avatar.art-avatar{width:160px;height:auto}
+.art-avatar img.lesson-portrait{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--line);box-shadow:0 5px 16px rgba(150,80,100,.10)}
+.scene-box img.lesson-scene{display:block;width:100%;max-width:720px;height:auto;margin:0 auto;border-radius:10px}
+.pic-slot img.lesson-scene{display:block;width:100%;height:auto;max-height:none;object-fit:contain}
+@media(max-width:560px){
+ .dialog-wrap .art-figure{width:112px}
+ .dialog-avatar.art-avatar{width:108px}
+ .dialog-wrap .dialog-bubbles{min-width:0;flex-basis:100%;max-width:none;order:2}
+ .dialog-wrap .dialog-figure:last-child{order:1}
+ .dialog-wrap .dialog-figure:first-child{order:0}
+ .lisa-avatar.art-avatar{width:140px}
+ .scene-box{padding:10px}
+}
+
+</style>
+<link rel="stylesheet" href="../lesson-theme.css"></head>
+<body><div class="topbar">
+  <div class="book-title">Essential Grammar · Unit 83</div>
+  <div class="progress-steps">
+    <div class="pstep" id="step-p"><i id="bar-p"></i></div>
+    <div class="pstep" id="step-vocab"><i id="bar-vocab"></i></div>
+    <div class="pstep" id="step-pr"><i id="bar-pr"></i></div>
+    <div class="pstep" id="step-read"><i id="bar-read"></i></div>
+    <div class="pstep" id="step-sound"><i id="bar-sound"></i></div>
+    <div class="pstep" id="step-listen"><i id="bar-listen"></i></div>
+    <div class="pstep" id="step-prod"><i id="bar-prod"></i></div>
+    <div class="pstep" id="step-hw"><i id="bar-hw"></i></div>
+  </div>
+  <div class="score-pill">★ <span id="scoreDisplay">0</span>/20</div>
+</div>
+
+<div class="page"><div class="unit-banner">
+    <div class="unit-tag"><span class="u">UNIT</span><span class="n">83</span></div>
+    <h1>a lot · much · many</h1>
+    <p>much + неисчисл., many + исчисл., a lot of — с любыми</p>
+  </div><div class="section" id="presentation">
+    <div class="tab">A</div>
+    <div class="content">
+      <div class="eyebrow">Presentation</div>
+      <h2>a lot · much · many</h2>
+      <div class="gram-box" style="margin:14px 0"><h3>A · much, many, a lot of</h3><div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:10px 0"><div style="flex:0 1 140px;text-align:center"><figure class="pic-slot" style="margin:0;transform:none"><div class="pic-ph" style="display:flex;min-height:90px;height:90px;aspect-ratio:auto;overflow:hidden"><span>🖼️</span><div style="font-size:11px">Куча денег</div><div style="font-size:10px;opacity:.7">lessons/img/unit-83-pic-1.webp</div></div></figure><div style="margin-top:4px;font-size:14px">a lot of money</div></div><div style="flex:0 1 140px;text-align:center"><figure class="pic-slot" style="margin:0;transform:none"><div class="pic-ph" style="display:flex;min-height:90px;height:90px;aspect-ratio:auto;overflow:hidden"><span>🖼️</span><div style="font-size:11px">Немного денег</div><div style="font-size:10px;opacity:.7">lessons/img/unit-83-pic-2.webp</div></div></figure><div style="margin-top:4px;font-size:14px">not much money</div></div><div style="flex:0 1 140px;text-align:center"><figure class="pic-slot" style="margin:0;transform:none"><div class="pic-ph" style="display:flex;min-height:90px;height:90px;aspect-ratio:auto;overflow:hidden"><span>🖼️</span><div style="font-size:11px">Полки с книгами</div><div style="font-size:10px;opacity:.7">lessons/img/unit-83-pic-3.webp</div></div></figure><div style="margin-top:4px;font-size:14px">a lot of books</div></div><div style="flex:0 1 140px;text-align:center"><figure class="pic-slot" style="margin:0;transform:none"><div class="pic-ph" style="display:flex;min-height:90px;height:90px;aspect-ratio:auto;overflow:hidden"><span>🖼️</span><div style="font-size:11px">Несколько книг</div><div style="font-size:10px;opacity:.7">lessons/img/unit-83-pic-4.webp</div></div></figure><div style="margin-top:4px;font-size:14px">not many books</div></div></div><div style="display:flex;gap:12px;flex-wrap:wrap;margin:12px 0"><div style="flex:1 1 240px"><p><b>much</b> + <i>uncountable noun</i><br>(<b>much food / much money</b> etc.):</p><ul class="prompt-list"><li><span style="display:block">Did you buy <b>much food</b>?</span></li><li><span style="display:block">We don't have <b>much luggage</b>.</span></li><li><span style="display:block">How <b>much money</b> do you want?</span></li><li><span style="display:block">A: Do you have any <b>money</b>?<br>B: I have some, but <b>not much</b>.</span></li></ul></div><div style="flex:1 1 240px"><p><b>many</b> + <i>plural noun</i><br>(<b>many books / many people</b> etc.):</p><ul class="prompt-list"><li><span style="display:block">Did you buy <b>many books</b>?</span></li><li><span style="display:block">We don't know <b>many people</b>.</span></li><li><span style="display:block">How <b>many photos</b> did you take?</span></li><li><span style="display:block">A: Did you take any <b>photos</b>?<br>B: I took some, but <b>not many</b>.</span></li></ul></div></div><p><b>a lot of</b> + <i>both types of noun</i>:</p><div style="display:flex;gap:12px;flex-wrap:wrap;margin:12px 0"><div style="flex:1 1 240px"><ul class="prompt-list"><li><span style="display:block">We bought <b>a lot of food</b>.</span></li><li><span style="display:block">Paula doesn't have <b>a lot of</b> free time.</span></li></ul></div><div style="flex:1 1 240px"><ul class="prompt-list"><li><span style="display:block">We bought <b>a lot of books</b>.</span></li><li><span style="display:block">Did they ask <b>a lot of questions</b>?</span></li></ul></div></div><p>We say:</p><div style="display:flex;gap:12px;flex-wrap:wrap;margin:12px 0"><div style="flex:1 1 240px"><ul class="prompt-list"><li><span style="display:block">There <b>is</b> a lot of <b>food/money/water</b> …<br>(<i>singular verb</i>)</span></li></ul></div><div style="flex:1 1 240px"><ul class="prompt-list"><li><span style="display:block">There <b>are</b> a lot of <b>trees/shops/people</b> … (<i>plural verb</i>)</span></li><li><span style="display:block">A lot of <b>people speak</b> English. <i>(не speaks)</i></span></li></ul></div></div></div>
+      <div class="gram-box" style="margin:14px 0"><h3>B · much в вопросах и отрицаниях</h3><p><b>much</b> — в <i>вопросах</i> и <i>отрицаниях</i>:</p><ul class="prompt-list"><li><span style="display:block">Do you drink <b>much</b> coffee?</span></li><li><span style="display:block">I don't drink <b>much</b> coffee.</span></li></ul><p>Но в <i>утвердительных</i> предложениях <b>much</b> обычно не используем:</p><ul class="prompt-list"><li><span style="display:block">I drink <b>a lot of</b> coffee. <i>(не I drink much coffee)</i></span></li><li><span style="display:block">'Do you drink much coffee?' 'Yes, <b>a lot</b>.' <i>(не Yes, much)</i></span></li></ul><p><b>many</b> и <b>a lot of</b> — во всех типах предложений:</p><ul class="prompt-list"><li><span style="display:block">We have <b>many</b> friends / <b>a lot of</b> friends.</span></li><li><span style="display:block">We don't have <b>many</b> friends / <b>a lot of</b> friends.</span></li><li><span style="display:block">Do you have <b>many</b> friends / <b>a lot of</b> friends?</span></li></ul></div>
+      <div class="gram-box" style="margin:14px 0"><h3>C · much и a lot без существительного</h3><ul class="prompt-list"><li><span style="display:block">Amy spoke to me, but she didn't say <b>much</b>.</span></li><li><span style="display:block">'Do you watch TV <b>much</b>?' 'No, <b>not much</b>.' (= not often)</span></li><li><span style="display:block">We like films, so we go to the cinema <b>a lot</b>. <i>(не go to the cinema much)</i></span></li><li><span style="display:block">I don't like him very <b>much</b>.</span></li></ul></div>
+    </div>
+  </div><div class="section" id="vocabulary"><div class="tab">B</div><div class="content"><div class="eyebrow">Vocabulary</div><h2>Новые слова этого урока</h2><p class="lead">Нажмите на динамик, чтобы услышать слово. Все слова встретятся дальше в чтении и упражнениях.</p><div id="vocabTable" class="vocab-table"></div><h3>Соседи слов <span class="ipa">chunks / collocations</span></h3><p class="sound-note">Учите сочетаниями: так слова легче вспоминаются в речи.</p><div id="chunkGrid" class="chunk-grid"></div></div></div><div class="section" id="practice">
+    <div class="tab">C</div>
+    <div class="content">
+      <div class="eyebrow">Practice</div>
+      <h2>Тренируемся</h2>
+      <p class="lead">Выберите игру и заработайте звёзды ★. Ответы проверяются сразу.</p>
+      <div class="game-tabs">
+        <button class="game-tab-btn active" data-panel="panel-fill">✏️ much / many / a lot</button>
+        <button class="game-tab-btn" data-panel="panel-memo">🃏 Мемо</button>
+        <button class="game-tab-btn" data-panel="panel-quiz">⚡ Квиз</button>
+        <button class="game-tab-btn" data-panel="panel-vocabmatch">📚 Лексика</button>
+      </div>
+      <div class="game-panel active" id="panel-fill">
+        <p class="lead" style="margin-top:0">Впишите much, many или lot.</p>
+        <div id="fillList"></div>
+        <div class="actions-row">
+          <button class="btn" id="checkFillBtn">Проверить</button>
+          <button class="btn secondary small" id="resetFillBtn">Сбросить</button>
+          <span class="fb-line" id="fillFeedback"></span>
+        </div>
+      </div>
+      <div class="game-panel" id="panel-memo">
+        <p class="lead" style="margin-top:0">Найдите пары: английское слово и его русский перевод.</p>
+        <div class="memo-wrap">
+          <div class="memo-grid" id="memoGrid"></div>
+          <div class="memo-status" id="memoStatus">Найдено пар: 0 / 6</div>
+          <button class="btn secondary small" id="restartMemoBtn">Перемешать заново</button>
+        </div>
+      </div>
+      <div class="game-panel" id="panel-quiz">
+        <div id="quizList"></div>
+        <div class="actions-row"><span class="fb-line" id="quizFeedback"></span></div>
+      </div>
+      <div class="game-panel" id="panel-vocabmatch">
+        <p class="lead" style="margin-top:0">Нажмите на английское слово, затем на его перевод.</p>
+        <div class="match-wrap">
+          <div class="match-col" id="matchEnCol"></div>
+          <div class="match-col" id="matchRuCol"></div>
+        </div>
+        <div class="actions-row">
+          <span class="fb-line" id="matchStatus">Найдено пар: 0 / 10</span>
+          <button class="btn secondary small" id="restartMatchBtn">Перемешать заново</button>
+        </div>
+      </div>
+    </div>
+  </div><div class="section alt" id="reading">
+    <div class="tab">D</div>
+    <div class="content"><div class="actions-row"><button class="btn secondary small" id="playReadingBtn">🔊 Прослушать текст</button><button class="btn secondary stop-audio">Остановить</button></div>
+      <div class="eyebrow">Reading</div>
+      <h2>Books and films</h2>
+      <p class="lead">Найдите much, many, a lot of.</p>
+      <div class="read-text"><p>I love reading, so I have a lot of books. But I don't have much <span class="chunk">space</span> in my flat, so I can't buy many more.</p><p>How much time do I <span class="chunk">spend</span> reading? A lot! I read every evening. I don't watch TV much.</p><p>My sister doesn't read many books. She <span class="chunk">prefer</span>s films and goes to the cinema a lot. She doesn't have much free time — she has three children!</p><p>There are a lot of good <span class="chunk">bookshop</span>s in my town. How many books did I buy last month? Not many — only two.</p></div>
+    <h3>1 · True / False</h3><div id="tfList"></div><div class="fb-line" id="tfFeedback"></div><h3>2 · Книги</h3><p class="sound-note">Впишите слово.</p><div id="tomFillList"></div><div class="actions-row"><button class="btn small" id="checkTomBtn">Проверить</button><span class="fb-line" id="tomFeedback"></span></div><h3>3 · Слова из текста</h3><div id="readFillList"></div><div class="actions-row"><button class="btn small" id="checkReadFillBtn">Проверить</button><span class="fb-line" id="readFillFeedback"></span></div>
+  </div></div><div class="section" id="sounds">
+    <div class="tab">E</div>
+    <div class="content"><p class="mini-note">Синтезированный голос помогает прочитать фразы, но не гарантирует точную интонацию. Повторяйте за ним и сравнивайте.</p>
+      <div class="eyebrow">Sounds &amp; Speech</div>
+      <h2>much / many на слух</h2>
+      <p class="lead">Слушайте и повторяйте.</p>
+      <p class="tts-warn" id="ttsWarn"></p>
+      <div class="sound-block"><h3>1 · much / many</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">How much money do you want?</div><div class="sp-controls"><button class="play-btn" data-text="How much money do you want?" data-rate="1">🔊</button><button class="play-btn slow" data-text="How much money do you want?" data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">How many photos did you take?</div><div class="sp-controls"><button class="play-btn" data-text="How many photos did you take?" data-rate="1">🔊</button><button class="play-btn slow" data-text="How many photos did you take?" data-rate="0.6">🐢</button></div></div></div></div><div class="sound-block"><h3>2 · a lot of</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">We bought a lot of food.</div><div class="sp-controls"><button class="play-btn" data-text="We bought a lot of food." data-rate="1">🔊</button><button class="play-btn slow" data-text="We bought a lot of food." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">A lot of people speak English.</div><div class="sp-controls"><button class="play-btn" data-text="A lot of people speak English." data-rate="1">🔊</button><button class="play-btn slow" data-text="A lot of people speak English." data-rate="0.6">🐢</button></div></div></div></div><div class="sound-block"><h3>3 · not much / a lot</h3><div class="sound-grid three"><div class="sound-pair"><div class="sp-text">I don't drink much coffee.</div><div class="sp-controls"><button class="play-btn" data-text="I don&#x27;t drink much coffee." data-rate="1">🔊</button><button class="play-btn slow" data-text="I don&#x27;t drink much coffee." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">Do you watch TV much? — No, not much.</div><div class="sp-controls"><button class="play-btn" data-text="Do you watch TV much? — No, not much." data-rate="1">🔊</button><button class="play-btn slow" data-text="Do you watch TV much? — No, not much." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">We go to the cinema a lot.</div><div class="sp-controls"><button class="play-btn" data-text="We go to the cinema a lot." data-rate="1">🔊</button><button class="play-btn slow" data-text="We go to the cinema a lot." data-rate="0.6">🐢</button></div></div></div></div>
+      <div class="actions-row">
+        <button class="btn secondary small" id="playAllBtn">🔊 Прослушать всё подряд</button>
+      </div>
+    </div>
+  </div><div class="section alt" id="listening">
+    <div class="tab">F</div>
+    <div class="content">
+      <div class="eyebrow">Listening</div>
+      <h2>Слушаем вслепую</h2>
+      <p class="lead">Подготовка к вечеринке.</p>
+      <div class="speed-picker">
+        <label>Скорость:</label>
+        <div class="speed-btns">
+          <button class="speed-btn" data-rate="0.6">🐢 Медленно</button>
+          <button class="speed-btn active" data-rate="0.95">🔊 Обычно</button>
+        </div>
+      </div>
+      <div class="actions-row">
+        <button class="btn secondary stop-audio">Остановить</button>
+        <button class="btn" id="playListeningBtn">▶️ Слушать диалог</button>
+      </div>
+      <h3 style="font-size:14.5px; margin:18px 0 8px; color:var(--brick-dark);">Вопросы по прослушанному</h3>
+      <div id="lsList"></div>
+      <div class="actions-row"><span class="fb-line" id="lsFeedback"></span></div>
+      <div class="actions-row">
+        <button class="btn secondary small" id="toggleScriptBtn" disabled="">📜 Скрипт — после ответов на все вопросы</button>
+      </div>
+      <div class="reveal-box" id="scriptBox">Did you buy much food?
+Not much. Just some bread and cheese.
+How many people are coming tonight?
+A lot! About twenty.
+Do we have much time?
+Not much. Let&#x27;s go shopping again.</div>
+    </div>
+  </div><div class="section alt" id="production">
+    <div class="tab">G</div>
+    <div class="content">
+      <div class="eyebrow">Production</div>
+      <h2>Моя жизнь</h2>
+      <p class="lead">Напишите 6–8 предложений: чего у вас много и мало (a lot of, not much, not many), и вопросы How much / How many.</p>
+      <ul class="prompt-list"><li><b>I have a lot of …</b></li><li><b>I don't have much …</b></li><li><b>I don't have many …</b></li><li><b>How much / How many …?</b></li></ul>
+      <textarea class="write-area" id="writeArea" placeholder="I have a lot of friends..."></textarea>
+      <div class="word-count" id="wordCount">0 слов</div>
+      <div class="actions-row">
+        <button class="btn" id="finishBtn">Готово!</button>
+        <button class="btn secondary" id="sampleBtn">Показать пример</button>
+      </div>
+      <div class="reveal-box" id="sampleBox"><b>Пример:</b> I have a lot of friends, but I don't have much free time. I don't drink much coffee, but I drink a lot of tea. There aren't many cinemas in my town. I don't watch TV much. How many books do I read a year? A lot — about thirty!</div>
+      <div class="cue-cards">
+        <div class="cue-card"><b>Карточка 1</b>Спросите: How much coffee / How many books …?</div>
+        <div class="cue-card"><b>Карточка 2</b>much или many? Партнёр называет слово.</div>
+        <div class="cue-card"><b>Карточка 3</b>Do you … much? — Yes, a lot. / No, not much.</div>
+      </div>
+    </div>
+  </div><div class="section" id="homework">
+    <div class="tab">H</div>
+    <div class="content">
+      <div class="eyebrow">Homework</div>
+      <h2>Домашнее задание</h2>
+      <p class="lead">Отметьте галочкой то, что выполнили. Можно распечатать этот блок.</p>
+      <div class="hw-list">
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>1. Письменно.</b> Разделите 10 слов на much и many.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>2. a lot.</b> Напишите 4 утвердительных предложения с a lot of.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>3. Слушаем и повторяем.</b> Откройте блок <i>E · Sounds</i>.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>4. Слова.</b> Выучите 12 новых слов.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>5. Повторение.</b> Пройдите квиз ещё раз без ошибок.</span></label>
+      </div>
+      <div class="actions-row">
+        <span class="fb-line" id="hwFeedback">Выполнено: 0 / 5</span>
+        <button class="btn secondary small no-print" id="printHwBtn">🖨️ Распечатать задание</button>
+      </div>
+    </div>
+  </div></div><div class="badge-final" id="finalBadge">Урок пройден!<span>Все обязательные задания выполнены.</span></div>
+
+<p class="footer-note">Based on Essential Grammar in Use, 4th Edition (Cambridge University Press, 2015), Unit 83 — original exercises created for this lesson.</p>
+<script src="../lesson-kit.js?v=20261018-games1"></script><script src="../lesson-template.js?v=20261018-games1"></script><script>window.lessonConfig={"vocabData": [{"word": "much", "ipa": "/mʌtʃ/", "ru": "много (с неисчисл.)"}, {"word": "many", "ipa": "/ˈmeni/", "ru": "много (с исчисл.)"}, {"word": "a lot of", "ipa": "/ə lɒt əv/", "ru": "много"}, {"word": "luggage", "ipa": "/ˈlʌɡɪdʒ/", "ru": "багаж"}, {"word": "free time", "ipa": "/friː taɪm/", "ru": "свободное время"}, {"word": "photo", "ipa": "/ˈfəʊtəʊ/", "ru": "фото"}, {"word": "question", "ipa": "/ˈkwestʃən/", "ru": "вопрос"}, {"word": "tree", "ipa": "/triː/", "ru": "дерево"}, {"word": "space", "ipa": "/speɪs/", "ru": "место"}, {"word": "spend", "ipa": "/spend/", "ru": "проводить (время)"}, {"word": "bookshop", "ipa": "/ˈbʊkʃɒp/", "ru": "книжный магазин"}, {"word": "natural", "ipa": "/ˈnætʃrəl/", "ru": "естественный, природный"}], "chunkData": [{"en": "How much money?", "ipa": "", "ru": "Сколько денег?"}, {"en": "How many photos?", "ipa": "", "ru": "Сколько фото?"}, {"en": "not much", "ipa": "", "ru": "немного"}, {"en": "not many", "ipa": "", "ru": "немного (шт.)"}, {"en": "a lot of free time", "ipa": "", "ru": "много свободного времени"}, {"en": "I don't like him very much", "ipa": "", "ru": "он мне не очень нравится"}], "fillData": [{"sentence": "Did you buy ___ food? (much/many)", "answers": ["much"]}, {"sentence": "Did you buy ___ books?", "answers": ["many"]}, {"sentence": "We don't have ___ luggage.", "answers": ["much"]}, {"sentence": "We don't know ___ people.", "answers": ["many"]}, {"sentence": "How ___ money do you want?", "answers": ["much"]}, {"sentence": "How ___ photos did you take?", "answers": ["many"]}, {"sentence": "I have some, but not ___. (money)", "answers": ["much"]}, {"sentence": "We bought a ___ of food.", "answers": ["lot"]}, {"sentence": "A lot of people ___ English. (speak)", "answers": ["speak"]}, {"sentence": "I drink a lot ___ coffee.", "answers": ["of"]}, {"sentence": "Do you watch TV ___? — No, not much.", "answers": ["much"]}, {"sentence": "We go to the cinema a ___.", "answers": ["lot"]}], "memoPairs": [["luggage", "багаж"], ["free time", "свободное время"], ["tree", "дерево"], ["spend", "проводить (время)"], ["bookshop", "книжный магазин"], ["natural", "естественный, природный"]], "quizData": [{"q": "How ___ money?", "opts": ["much", "many"], "correct": "much"}, {"q": "How ___ people?", "opts": ["many", "much"], "correct": "many"}, {"q": "I drink ___ coffee.", "opts": ["a lot of", "much"], "correct": "a lot of"}, {"q": "We don't have ___ time.", "opts": ["much", "many"], "correct": "much"}, {"q": "There ___ a lot of people.", "opts": ["are", "is"], "correct": "are"}, {"q": "There ___ a lot of water.", "opts": ["is", "are"], "correct": "is"}, {"q": "Do you drink much coffee? — Yes, ___.", "opts": ["a lot", "much"], "correct": "a lot"}, {"q": "We go to the cinema ___.", "opts": ["a lot", "much"], "correct": "a lot"}], "matchWords": [{"en": "much", "ru": "много (с неисчисл.)"}, {"en": "many", "ru": "много (с исчисл.)"}, {"en": "a lot of", "ru": "много"}, {"en": "luggage", "ru": "багаж"}, {"en": "free time", "ru": "свободное время"}, {"en": "photo", "ru": "фото"}, {"en": "question", "ru": "вопрос"}, {"en": "tree", "ru": "дерево"}, {"en": "space", "ru": "место"}, {"en": "spend", "ru": "проводить (время)"}], "tfGroups": {"tfList": {"data": [{"text": "The writer has a lot of books.", "correct": true}, {"text": "The writer has a lot of space.", "correct": false}, {"text": "The writer doesn't watch TV much.", "correct": true}, {"text": "The sister reads a lot of books.", "correct": false}, {"text": "The sister has three children.", "correct": true}, {"text": "The writer bought a lot of books last month.", "correct": false}], "feedback": "tfFeedback"}, "lsList": {"data": [{"text": "They didn't buy much food.", "correct": true}, {"text": "Only a few people are coming.", "correct": false}, {"text": "About twenty people are coming.", "correct": true}, {"text": "They have a lot of time.", "correct": false}], "feedback": "lsFeedback"}}, "readFillData": [{"sentence": "I have a ___ of books.", "answers": ["lot"]}, {"sentence": "I don't have ___ space.", "answers": ["much"]}, {"sentence": "I can't buy ___ more.", "answers": ["many"]}, {"sentence": "How ___ time do I spend reading?", "answers": ["much"]}, {"sentence": "My sister doesn't read ___ books.", "answers": ["many"]}, {"sentence": "How ___ books did I buy?", "answers": ["many"]}], "tomData": [{"sentence": "I love ___.", "answers": ["reading"]}, {"sentence": "I read every ___.", "answers": ["evening"]}, {"sentence": "She prefers ___.", "answers": ["films"]}, {"sentence": "she has three ___!", "answers": ["children"]}, {"sentence": "a lot of good ___ in my town", "answers": ["bookshops"]}, {"sentence": "only ___.", "answers": ["two"]}], "slug": "urok-much-many", "exam": false, "legacySignature": "", "legacyFields": [], "questionTask": false, "listeningLines": ["Did you buy much food?", "Not much. Just some bread and cheese.", "How many people are coming tonight?", "A lot! About twenty.", "Do we have much time?", "Not much. Let's go shopping again."], "readingLines": ["I love reading, so I have a lot of books. But I don't have much space in my flat, so I can't buy many more.", "How much time do I spend reading? A lot! I read every evening. I don't watch TV much.", "My sister doesn't read many books. She prefers films and goes to the cinema a lot. She doesn't have much free time — she has three children!", "There are a lot of good bookshops in my town. How many books did I buy last month? Not many — only two."]};
+LessonTemplate.mount(window.lessonConfig);</script></body></html>

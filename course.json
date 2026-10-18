@@ -811,6 +811,27 @@
               "title": "both, either, neither",
               "description": "both, either, neither",
               "file": "lessons/urok-both-either-neither.html"
+            },
+            {
+              "id": "urok-much-many",
+              "unit": 10,
+              "title": "a lot, much, many",
+              "description": "much, many, a lot of",
+              "file": "lessons/urok-much-many.html"
+            },
+            {
+              "id": "urok-little-few",
+              "unit": 11,
+              "title": "(a) little, (a) few",
+              "description": "a little / a few; little / few",
+              "file": "lessons/urok-little-few.html"
+            },
+            {
+              "id": "itogovyi-test-quantifiers",
+              "unit": 12,
+              "title": "Итоговый тест · модуль 17",
+              "description": "this/that, one, some/any, no/none, every/all, most, both, much/many, few/little",
+              "file": "lessons/itogovyi-test-quantifiers.html"
             }
           ]
         }
