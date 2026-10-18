@@ -247,6 +247,27 @@ const T=[
    O('We swam in the sea last summer.'),
    O('He forgot her name.')
   ]},
+  {id:12,title:'Past simple — отрицание и вопросы',emoji:'❓',rule:'Отрицание: didn\'t + начальная форма (I didn\'t watch, she didn\'t go). Вопрос: Did + подлежащее + начальная форма (Did you see…? Where did they go?). Краткие ответы: Yes, I did. / No, she didn\'t.',
+  items:[
+   C("I didn't ___ TV yesterday.",'watch','watched','watching'),
+   C('Did they ___ to the cinema?','go','went','goes'),
+   C('She ___ come to the party.',"didn't","doesn't","wasn't"),
+   C('___ you see Joe yesterday?','Did','Do','Were'),
+   C('What ___ you do last night?','did','were','do'),
+   C("'Did your parents have a good holiday?' 'Yes, they ___.'",'did','had','were'),
+   C('How much ___ the taxi cost?','did','was','does'),
+   C("He ___ have time for lunch.","didn't","wasn't","doesn't"),
+   C('Какое предложение правильное?','Where did you go?','Where did you went?','Where you did go?'),
+   C("'Did it rain?' 'No, it ___.'","didn't","wasn't","doesn't"),
+   F('We went to the bank, but we ___ (not/go) to the post office.',"didn't go",'did not go'),
+   F('I played tennis, but I ___ (not/win).',"didn't win",'did not win'),
+   F('___ you enjoy the film?','Did'),
+   F('How did the accident ___ (happen)?','happen'),
+   F("'Did you sleep well?' 'Yes, I ___.'",'did'),
+   O('Did you have a nice time?'),
+   O("We didn't stay long at the party.",'We did not stay long at the party.'),
+   O('What time did you arrive?')
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),

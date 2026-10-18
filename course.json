@@ -139,6 +139,13 @@
               "title": "worked / got / went — past simple",
               "description": "Что произошло в прошлом: правильные и неправильные глаголы",
               "file": "lessons/urok-past-simple.html"
+            },
+            {
+              "id": "urok-past-simple-negative-questions",
+              "unit": 3,
+              "title": "I didn't… / Did you…?",
+              "description": "Past simple: отрицание, вопросы и краткие ответы",
+              "file": "lessons/urok-past-simple-negative-questions.html"
             }
           ]
         }
