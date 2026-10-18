@@ -170,120 +170,12 @@ h1,h2,h3,.display{font-family:'Comfortaa',sans-serif;}
   </div>
 </div></div></div><div class="section" id="reading"><div class="tab">D</div><div class="content"><div class="actions-row"><button class="btn secondary small" id="playReadingBtn">🔊 Прослушать текст</button><button class="btn secondary stop-audio">Остановить</button></div><div class="eyebrow">Reading</div><h2>A message from Lisbon</h2><div class="read-text"><p>Hi Sasha! I've just arrived in Lisbon. I came here three days ago for a conference, and I've already seen a lot.</p><p>I've visited two museums and I've tried the famous cakes. Yesterday I went to the beach, but the water was cold, so I didn't swim.</p><p>I've never been to Portugal before, and I love it! I haven't bought any presents yet — what do you want?</p><p>My colleague Max has been here since Monday. He has been to Lisbon five times. Write soon! Anna</p></div><h3>1 · True / False</h3><div id="tfList"></div><div class="fb-line" id="tfFeedback"></div><h3>2 · Ответьте или скажите о другом человеке</h3><div id="tomFillList"></div><div class="actions-row"><button class="btn small" id="checkTomBtn">Проверить</button><span class="fb-line" id="tomFeedback"></span></div><h3>3 · Слова из текста</h3><div id="readFillList"></div><div class="actions-row"><button class="btn small" id="checkReadFillBtn">Проверить</button><span class="fb-line" id="readFillFeedback"></span></div></div></div><div class="section" id="sounds">
     <div class="tab">E</div>
-    <div class="content"><p class="mini-note">Синтезированный голос помогает прочитать текст, но не гарантирует показанную интонацию. Для точной фонетики нужны проверенные записи.</p>
+    <div class="content"><p class="mini-note">Синтезированный голос помогает прочитать фразы, но не гарантирует точную интонацию. Повторяйте за ним и сравнивайте.</p>
       <div class="eyebrow">Sounds &amp; Speech</div>
-      <h2>Слышим и повторяем</h2>
+      <h2>Present perfect на слух</h2>
       <p class="lead">Слушайте и повторяйте. Обычная и медленная скорость помогают разобрать фразу.</p>
-      
       <p class="tts-warn" id="ttsWarn"></p>
-
-      <div class="sound-block">
-        <h3>1 · Слабые и сильные формы <span class="ipa">weak / strong forms</span></h3>
-        <p class="sound-note">В обычных утверждениях <b>am / is / are</b> произносятся быстро и невнятно — гласный сокращается до <span class="ipa">/ə/</span> (schwa), они «сливаются» с соседними словами. Но в кратких ответах (<i>Yes, I am.</i>) те же слова звучат <b>полно и под ударением</b>.</p>
-        <div class="sound-grid">
-          <div class="sound-pair">
-            <div class="sp-label weak">слабая форма</div>
-            <div class="sp-text">I<span class="link">'m</span> from Oryol.</div>
-            <div class="sp-controls">
-              <button class="play-btn" data-text="I'm from Oryol." data-rate="1">🔊</button>
-              <button class="play-btn slow" data-text="I'm from Oryol." data-rate="0.55">🐢</button>
-            </div>
-          </div>
-          <div class="sound-pair">
-            <div class="sp-label strong">сильная форма</div>
-            <div class="sp-text">Yes, I <b class="stress">am</b>.</div>
-            <div class="sp-controls">
-              <button class="play-btn" data-text="Yes, I am." data-rate="1">🔊</button>
-              <button class="play-btn slow" data-text="Yes, I am." data-rate="0.55">🐢</button>
-            </div>
-          </div>
-          <div class="sound-pair">
-            <div class="sp-label weak">слабая форма</div>
-            <div class="sp-text">She<span class="link">'s</span> a teacher.</div>
-            <div class="sp-controls">
-              <button class="play-btn" data-text="She's a teacher." data-rate="1">🔊</button>
-              <button class="play-btn slow" data-text="She's a teacher." data-rate="0.55">🐢</button>
-            </div>
-          </div>
-          <div class="sound-pair">
-            <div class="sp-label strong">сильная форма</div>
-            <div class="sp-text">Yes, she <b class="stress">is</b>.</div>
-            <div class="sp-controls">
-              <button class="play-btn" data-text="Yes, she is." data-rate="1">🔊</button>
-              <button class="play-btn slow" data-text="Yes, she is." data-rate="0.55">🐢</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="sound-block">
-        <h3>2 · Слияние слов <span class="ipa">linking</span></h3>
-        <p class="sound-note">В беглой речи конец одного слова «перетекает» в начало следующего — особенно когда согласный встречается с гласным, или после <b>r</b> перед гласной. Значок <span class="tie">‿</span> показывает место слияния.</p>
-        <div class="sound-grid">
-          <div class="sound-pair wide">
-            <div class="sp-text">Your keys<span class="tie">‿</span>are<span class="tie">‿</span>on the table.</div>
-            <div class="sp-controls">
-              <button class="play-btn" data-text="Your keys are on the table." data-rate="1">🔊</button>
-              <button class="play-btn slow" data-text="Your keys are on the table." data-rate="0.55">🐢</button>
-            </div>
-          </div>
-          <div class="sound-pair wide">
-            <div class="sp-text">He<span class="tie">‿</span>'s<span class="tie">‿</span>ill today.</div>
-            <div class="sp-controls">
-              <button class="play-btn" data-text="He's ill today." data-rate="1">🔊</button>
-              <button class="play-btn slow" data-text="He's ill today." data-rate="0.55">🐢</button>
-            </div>
-          </div>
-          <div class="sound-pair wide">
-            <div class="sp-text">That<span class="tie">‿</span>'s a good idea.</div>
-            <div class="sp-controls">
-              <button class="play-btn" data-text="That's a good idea." data-rate="1">🔊</button>
-              <button class="play-btn slow" data-text="That's a good idea." data-rate="0.55">🐢</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="sound-block">
-        <h3>3 · Ударение в предложении <span class="ipa">sentence stress</span></h3>
-        <p class="sound-note">Под ударением — «важные» слова (существительные, прилагательные, смысловые глаголы). Местоимения, артикли и <b>am/is/are</b> обычно безударны — прочитайте вслух только выделенные слова, и вы поймёте смысл фразы.</p>
-        <div class="sound-pair wide">
-          <div class="sp-text">My <b class="stress">brother</b> is <b class="stress">scared</b> of <b class="stress">spiders</b>.</div>
-          <div class="sp-controls">
-            <button class="play-btn" data-text="My brother is scared of spiders." data-rate="1">🔊</button>
-            <button class="play-btn slow" data-text="My brother is scared of spiders." data-rate="0.55">🐢</button>
-          </div>
-        </div>
-      <div class="sound-pair"><div class="sp-text">She is a teacher.</div><div class="sp-controls"><button class="play-btn" data-text="She is a teacher." data-rate="1">🔊</button><button class="play-btn slow" data-text="She is a teacher." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">My father is a doctor.</div><div class="sp-controls"><button class="play-btn" data-text="My father is a doctor." data-rate="1">🔊</button><button class="play-btn slow" data-text="My father is a doctor." data-rate="0.6">🐢</button></div></div></div>
-
-      <div class="sound-block">
-        <h3>4 · Звук <span class="ipa">/ð/</span> — that's · they're · there's</h3>
-        <p class="sound-note">Кончик языка слегка касается верхних зубов, голосовые связки работают (звук звонкий) — не путайте с русским «з» или «д». Отработаем три частых слова этого урока.</p>
-        <div class="sound-grid three">
-          <div class="sound-pair">
-            <div class="sp-text th">that's</div>
-            <div class="sp-controls">
-              <button class="play-btn" data-text="that's" data-rate="1">🔊</button>
-              <button class="play-btn slow" data-text="that's" data-rate="0.5">🐢</button>
-            </div>
-          </div>
-          <div class="sound-pair">
-            <div class="sp-text th">they're</div>
-            <div class="sp-controls">
-              <button class="play-btn" data-text="they're" data-rate="1">🔊</button>
-              <button class="play-btn slow" data-text="they're" data-rate="0.5">🐢</button>
-            </div>
-          </div>
-          <div class="sound-pair">
-            <div class="sp-text th">there's</div>
-            <div class="sp-controls">
-              <button class="play-btn" data-text="there's" data-rate="1">🔊</button>
-              <button class="play-btn slow" data-text="there's" data-rate="0.5">🐢</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <div class="sound-block"><h3>1 · 've и 's — короткие формы</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">I've lost my keys.</div><div class="sp-controls"><button class="play-btn" data-text="I&#x27;ve lost my keys." data-rate="1">🔊</button><button class="play-btn slow" data-text="I&#x27;ve lost my keys." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">She's gone out.</div><div class="sp-controls"><button class="play-btn" data-text="She&#x27;s gone out." data-rate="1">🔊</button><button class="play-btn slow" data-text="She&#x27;s gone out." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">We've finished.</div><div class="sp-controls"><button class="play-btn" data-text="We&#x27;ve finished." data-rate="1">🔊</button><button class="play-btn slow" data-text="We&#x27;ve finished." data-rate="0.6">🐢</button></div></div></div></div><div class="sound-block"><h3>2 · just, already, yet</h3><p class=sound-note>yet — в конце фразы, голос вниз.</p><div class="sound-grid"><div class="sound-pair"><div class="sp-text">They've just arrived.</div><div class="sp-controls"><button class="play-btn" data-text="They&#x27;ve just arrived." data-rate="1">🔊</button><button class="play-btn slow" data-text="They&#x27;ve just arrived." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">We've already met.</div><div class="sp-controls"><button class="play-btn" data-text="We&#x27;ve already met." data-rate="1">🔊</button><button class="play-btn slow" data-text="We&#x27;ve already met." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">I haven't finished yet.</div><div class="sp-controls"><button class="play-btn" data-text="I haven&#x27;t finished yet." data-rate="1">🔊</button><button class="play-btn slow" data-text="I haven&#x27;t finished yet." data-rate="0.6">🐢</button></div></div></div></div><div class="sound-block"><h3>3 · Have you ever…? и never</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">Have you ever been to Japan?</div><div class="sp-controls"><button class="play-btn" data-text="Have you ever been to Japan?" data-rate="1">🔊</button><button class="play-btn slow" data-text="Have you ever been to Japan?" data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">I've never ridden a horse.</div><div class="sp-controls"><button class="play-btn" data-text="I&#x27;ve never ridden a horse." data-rate="1">🔊</button><button class="play-btn slow" data-text="I&#x27;ve never ridden a horse." data-rate="0.6">🐢</button></div></div></div></div><div class="sound-block"><h3>4 · for /fə/, since /sɪns/, ago /əˈɡəʊ/</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">I've lived here for ten years.</div><div class="sp-controls"><button class="play-btn" data-text="I&#x27;ve lived here for ten years." data-rate="1">🔊</button><button class="play-btn slow" data-text="I&#x27;ve lived here for ten years." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">She's been here since Monday.</div><div class="sp-controls"><button class="play-btn" data-text="She&#x27;s been here since Monday." data-rate="1">🔊</button><button class="play-btn slow" data-text="She&#x27;s been here since Monday." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">She arrived three days ago.</div><div class="sp-controls"><button class="play-btn" data-text="She arrived three days ago." data-rate="1">🔊</button><button class="play-btn slow" data-text="She arrived three days ago." data-rate="0.6">🐢</button></div></div></div></div>
       <div class="actions-row">
         <button class="btn secondary small" id="playAllBtn">🔊 Прослушать всё подряд</button>
       </div>
