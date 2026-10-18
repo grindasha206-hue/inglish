@@ -140,7 +140,7 @@ function resumePendingSync(){
 const GROQ_VOICES = ["autumn", "diana", "hannah", "austin", "daniel", "troy"];
 const groqTts=TTS.engine({name:'Groq',enabled:()=>serverCapabilities.groq,voice:'groqVoice',defaultVoice:'hannah',model:'canopylabs/orpheus-v1-english',settings:{delivery:'professional-v1'},cache:'inglish-tts-v3',limit:170,punctuation:true,
  transport:(input,voice,signal)=>gatewayResponse('/tts',{provider:'groq',text:input,voice},signal)});
-const elevenTts=TTS.engine({name:'ElevenLabs',enabled:()=>serverCapabilities.eleven,voice:'elevenVoice',model:'eleven_multilingual_v2',settings:{stability:0.6,similarity_boost:0.75},cache:'inglish-tts-11labs-v2',limit:500,
+const elevenTts=TTS.engine({name:'ElevenLabs',enabled:()=>serverCapabilities.eleven,voice:'elevenVoice',model:'eleven_multilingual_v2',settings:{stability:0.6,similarity_boost:0.75},cache:'inglish-tts-11labs-v2',limit:500,sentenceChunks:true,
  transport:(text,voice,signal)=>gatewayResponse('/tts',{provider:'eleven',text,voice},signal)});
 function groqSpeak(text,rate){return groqTts.speak(text,rate);}
 function elevenSpeak(text,rate){return elevenTts.speak(text,rate);}
