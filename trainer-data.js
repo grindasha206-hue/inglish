@@ -331,6 +331,27 @@ const T=[
    O('Where has she gone?'),
    O("He hasn't finished his work.",'He has not finished his work.')
   ]},
+  {id:16,title:'just / already / yet',emoji:'⏱️',rule:'just = только что (I\'ve just had lunch). already = уже, раньше, чем ожидали (We\'ve already met). yet = до сих пор — в отрицаниях и вопросах, обычно в конце (I haven\'t finished yet. Have you finished yet?).',
+  items:[
+   C("I've ___ had breakfast. (a short time ago)",'just','yet','still'),
+   C('Have you seen the film ___?','yet','already','just'),
+   C("We've ___ met. (before you expected)",'already','yet','still'),
+   C("They haven't arrived ___.",'yet','just','already'),
+   C("'Is Lisa here?' 'No, I'm afraid she's just ___.'",'gone','went','go'),
+   C("She ___ worn her new dress yet.","hasn't","haven't","didn't"),
+   C('Какое предложение правильное?',"I haven't finished yet.","I haven't yet finished it yet.","I yet haven't finished."),
+   C('Has he ___ the letter yet?','read','reads','reading'),
+   C("'Have they arrived yet?' 'No, not ___.'",'yet','already','just'),
+   C("It's only 9 and Anna has ___ gone to bed.",'already','yet','still'),
+   F("Are you hungry? — No, I've ___ had dinner.",'just'),
+   F("The film hasn't started ___.",'yet'),
+   F('I ___ (not/tell) him yet.',"haven't told",'have not told'),
+   F("We've already ___ (meet).",'met'),
+   F('___ Nicola started her new job yet?','Has'),
+   O("They've just arrived.",'They have just arrived.'),
+   O("I haven't finished yet.",'I have not finished yet.'),
+   O('Have you paid the bill yet?')
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),

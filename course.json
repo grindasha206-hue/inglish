@@ -180,6 +180,13 @@
               "title": "I have done — present perfect 1",
               "description": "Действие в прошлом — результат сейчас",
               "file": "lessons/urok-present-perfect-1.html"
+            },
+            {
+              "id": "urok-present-perfect-2",
+              "unit": 2,
+              "title": "I've just / already / I haven't … yet",
+              "description": "Present perfect 2: just, already, yet",
+              "file": "lessons/urok-present-perfect-2.html"
             }
           ]
         }
