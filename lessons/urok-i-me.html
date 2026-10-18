@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 59 · I/me, he/him, they/them</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Comfortaa:wght@500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --cream:#FDF4F1; --paper:#FFFDFB; --ink:#3A2E33; --ink-soft:#6B5A61;
+  --brick:#BE456F; --brick-dark:#8F2E52; --tab:#C4507A; --tab-dark:#9E3460;
+  --sage:#4F8F6D; --sage-bg:#E6F1EA; --coral:#D65B4A; --coral-bg:#FBE7E3;
+  --gold:#E8A0B4; --line:#F1D9DF; --shadow: 0 6px 18px rgba(150,80,100,0.10);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; background:radial-gradient(circle at 15% 8%, rgba(232,160,180,0.10), transparent 40%), var(--cream); color:var(--ink); font-family:'Nunito', sans-serif; line-height:1.55; padding-bottom:80px;}
+h1,h2,h3,.display{font-family:'Comfortaa',sans-serif;}
+
+.topbar{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:1px solid var(--line); padding:10px 18px; display:flex; align-items:center; gap:14px; box-shadow:0 2px 10px rgba(0,0,0,0.04);}
+.topbar .book-title{font-family:'Comfortaa',sans-serif; font-weight:700; font-size:15px; color:var(--brick-dark); white-space:nowrap;}
+.progress-steps{display:flex; gap:5px; flex:1; align-items:center;}
+.pstep{flex:1; height:8px; border-radius:6px; background:var(--line); position:relative; overflow:hidden;}
+.pstep i{display:block; height:100%; width:0%; border-radius:6px; background:linear-gradient(90deg, var(--tab), var(--brick)); transition:width .5s ease;}
+.score-pill{font-size:13px; font-weight:700; background:var(--sage-bg); color:var(--sage); padding:5px 12px; border-radius:20px; white-space:nowrap;}
+
+.page{max-width:900px; margin:26px auto; background:var(--paper); border-radius:4px; box-shadow:var(--shadow); border:1px solid var(--line); overflow:hidden;}
+
+.unit-banner{background:linear-gradient(135deg, var(--brick) 0%, var(--brick-dark) 100%); color:#fff; padding:26px 30px 22px 96px; position:relative;}
+.unit-tag{position:absolute; left:0; top:0; bottom:0; width:76px; background:var(--brick-dark); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Comfortaa',sans-serif; border-right:2px solid rgba(255,255,255,0.15);}
+.unit-tag .u{font-size:11px; letter-spacing:2px; opacity:.75;}
+.unit-tag .n{font-size:30px; font-weight:800;}
+.unit-banner h1{margin:0; font-size:27px; font-weight:800; letter-spacing:.3px;}
+.unit-banner p{margin:6px 0 0; opacity:.9; font-size:14.5px;}
+
+.section{display:flex; border-top:1px solid var(--line);}
+.section .tab{width:56px; flex-shrink:0; background:var(--tab); color:#fff; font-family:'Comfortaa',sans-serif; font-weight:800; font-size:20px; display:flex; align-items:flex-start; justify-content:center; padding-top:22px;}
+.section.alt .tab{background:var(--tab-dark);}
+.section .content{padding:24px 28px 30px; flex:1; min-width:0;}
+.section h2{margin:0 0 4px; font-size:22px; color:var(--brick-dark);}
+.eyebrow{font-size:11.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-soft); font-weight:700; margin-bottom:4px;}
+.section p.lead{color:var(--ink-soft); margin-top:4px; font-size:14.5px;}
+
+.dialog-wrap{display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; margin:18px 0 6px;}
+.dialog-figure{width:110px; text-align:center; flex-shrink:0;}
+.dialog-avatar{width:96px; height:120px; margin:0 auto;}
+.dialog-avatar svg{width:100%; height:100%;}
+.dialog-figure .name{font-family:'Comfortaa',sans-serif; font-weight:700; font-size:12.5px; letter-spacing:1px; color:var(--brick-dark); margin-top:4px;}
+.dialog-bubbles{display:flex; flex-direction:column; gap:8px; flex:1; min-width:260px; max-width:420px;}
+.d-bubble{background:#fff; border:1.5px solid var(--line); border-radius:16px; padding:8px 14px; font-size:13.5px; box-shadow:0 3px 8px rgba(0,0,0,0.05);}
+.d-bubble.q{border-color:var(--tab);}
+.d-bubble.a{align-self:flex-end; background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.d-bubble b{color:var(--brick-dark);}
+.d-bubble.a b{color:var(--sage);}
+
+.gram-tables{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:22px;}
+@media(max-width:620px){.gram-tables{grid-template-columns:1fr;}}
+.gram-box h3{font-size:13px; text-transform:uppercase; letter-spacing:1px; color:var(--ink-soft); margin:0 0 8px;}
+table.formtable{width:100%; border-collapse:collapse; font-size:13.5px; background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;}
+table.formtable td{padding:7px 10px; border-bottom:1px solid var(--line);}
+table.formtable tr:last-child td{border-bottom:none;}
+table.formtable td.pron{color:var(--ink-soft); width:34%;}
+table.formtable td.verb{font-weight:700; color:var(--brick-dark);}
+table.formtable td.short{color:var(--ink-soft); font-style:italic;}
+
+.chunk{background:linear-gradient(180deg, transparent 60%, rgba(196,80,122,0.35) 60%); font-weight:700; color:var(--brick-dark); padding:0 1px;}
+
+.mini-note{margin-top:16px; background:var(--sage-bg); border-left:3px solid var(--sage); padding:10px 14px; border-radius:6px; font-size:13.5px; color:#2f5741;}
+.mini-note b{color:var(--sage);}
+.mini-note i{color:var(--ink-soft); font-style:italic;}
+.mini-note.warn{background:var(--coral-bg); border-left-color:var(--coral); color:#7A2848;}
+.mini-note.warn b{color:var(--coral);}
+
+.vocab-table{margin-top:14px; display:flex; flex-direction:column; gap:8px;}
+.vocab-row{display:grid; grid-template-columns:auto 1fr auto auto; align-items:center; gap:12px; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:9px 14px;}
+@media(max-width:560px){.vocab-row{grid-template-columns:1fr; gap:4px;}}
+.vocab-word{font-weight:800; color:var(--brick-dark); font-size:14.5px; font-family:'Comfortaa',sans-serif;}
+.vocab-ipa{font-size:12.5px; color:var(--tab-dark); font-style:italic;}
+.vocab-ru{font-size:13.5px; color:var(--ink-soft);}
+.chunk-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px;}
+@media(max-width:600px){.chunk-grid{grid-template-columns:1fr;}}
+.chunk-row{display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--cream); border:1.5px dashed var(--gold); border-radius:10px; padding:9px 14px;}
+.chunk-en{font-weight:800; color:var(--brick-dark); font-size:14px; display:block;}
+.chunk-ipa{font-size:11.5px; color:var(--tab-dark); font-style:italic; display:block; margin-top:1px;}
+.chunk-ru{font-size:12.5px; color:var(--ink-soft); display:block; margin-top:1px; font-weight:400;}
+
+.game-tabs{display:flex; gap:8px; margin:18px 0 20px; flex-wrap:wrap;}
+.game-tab-btn{border:1.5px solid var(--line); background:#fff; color:var(--ink-soft); padding:8px 16px; border-radius:20px; font-family:'Nunito'; font-weight:700; font-size:13px; cursor:pointer; transition:.2s;}
+.game-tab-btn.active{background:var(--tab); color:#fff; border-color:var(--tab-dark);}
+.game-panel{display:none;}
+.game-panel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
+
+.fill-item{display:flex; align-items:flex-start; gap:10px; flex-wrap:wrap; padding:12px 4px; border-bottom:1px dashed var(--line);}
+.fill-item:last-child{border-bottom:none;}
+.fill-num{width:22px; height:22px; border-radius:50%; background:var(--cream); border:1px solid var(--line); font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; color:var(--ink-soft); flex-shrink:0; margin-top:3px;}
+.fill-body{flex:1; min-width:220px;}
+.fill-words{font-size:13px; color:var(--ink-soft); margin-bottom:6px; font-style:italic;}
+.blank-input{width:130px; padding:5px 8px; border:1.5px solid var(--line); border-radius:6px; font-family:'Nunito'; font-weight:700; font-size:14px; text-align:center; background:#FFFDFB; color:var(--brick-dark);}
+.blank-input:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.blank-input.correct{border-color:var(--sage); background:var(--sage-bg); color:#2f5741;}
+.blank-input.wrong{border-color:var(--coral); background:var(--coral-bg); color:var(--coral);}
+.fill-fb{font-size:16px; margin-top:6px;}
+
+.btn{border:none; cursor:pointer; font-family:'Nunito'; font-weight:800; padding:10px 20px; border-radius:24px; font-size:14px; letter-spacing:.2px; background:var(--brick); color:#fff; box-shadow:0 4px 10px rgba(190,69,111,0.25); transition:.15s;}
+.btn:hover{transform:translateY(-1px); box-shadow:0 6px 14px rgba(190,69,111,0.32);}
+.btn.secondary{background:transparent; color:var(--brick); border:1.5px solid var(--brick); box-shadow:none;}
+.btn.small{padding:6px 14px; font-size:12.5px;}
+.actions-row{display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; align-items:center;}
+.fb-line{font-size:13.5px; font-weight:700; color:var(--ink-soft);}
+
+.memo-wrap{display:flex; flex-direction:column; align-items:center; gap:14px;}
+.memo-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; max-width:520px; width:100%;}
+@media(max-width:500px){.memo-grid{grid-template-columns:repeat(3,1fr);}}
+.memo-card{aspect-ratio:1/1; border-radius:10px; cursor:pointer; position:relative; perspective:600px;}
+.memo-inner{width:100%; height:100%; position:relative; transform-style:preserve-3d; transition:transform .45s;}
+.memo-card.flipped .memo-inner, .memo-card.matched .memo-inner{transform:rotateY(180deg);}
+.memo-face{position:absolute; inset:0; border-radius:10px; display:flex; align-items:center; justify-content:center; backface-visibility:hidden; font-weight:800; text-align:center; padding:4px; font-size:12.5px;}
+.memo-face.back{background:linear-gradient(135deg, var(--tab), var(--tab-dark)); color:#fff; font-family:'Comfortaa',sans-serif; font-size:22px;}
+.memo-face.front{background:#fff; border:2px solid var(--line); color:var(--brick-dark); transform:rotateY(180deg);}
+.memo-card.matched .memo-face.front{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.memo-status{font-size:13.5px; color:var(--ink-soft); font-weight:700;}
+
+.quiz-q{margin-bottom:18px;}
+.quiz-q p{font-weight:700; margin:0 0 8px; font-size:14.5px;}
+.quiz-opts{display:flex; gap:8px; flex-wrap:wrap;}
+.quiz-opt{border:1.5px solid var(--line); background:#fff; padding:7px 15px; border-radius:20px; font-weight:700; font-size:13.5px; cursor:pointer; color:var(--ink);}
+.quiz-opt.sel-correct{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.quiz-opt.sel-wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+.quiz-opt.reveal-correct{border-color:var(--sage); box-shadow:inset 0 0 0 1px var(--sage);}
+
+.match-wrap{display:flex; gap:14px; max-width:520px; margin:0 auto;}
+.match-col{flex:1; display:flex; flex-direction:column; gap:8px;}
+.match-tile{background:#fff; border:1.5px solid var(--line); border-radius:8px; padding:9px 12px; font-size:13.5px; font-weight:700; cursor:pointer; text-align:center; color:var(--ink); transition:.15s;}
+.match-tile.selected{border-color:var(--tab); background:var(--cream); box-shadow:inset 0 0 0 1.5px var(--tab);}
+.match-tile.matched{background:var(--sage-bg); border-color:var(--sage); color:#2f5741; cursor:default;}
+.match-tile.wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+
+.read-text{background:#fff; border:1.5px solid var(--line); border-radius:14px; padding:18px 20px; margin:16px 0; font-size:14.5px;}
+.read-text p{margin:0 0 10px;}
+.read-text p:last-child{margin-bottom:0;}
+.tf-item{display:flex; align-items:center; justify-content:space-between; gap:10px; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:9px 14px; margin-bottom:8px;}
+.tf-text{font-size:13.5px; flex:1;}
+.tf-btns{display:flex; gap:6px; flex-shrink:0;}
+.tf-btn{border:1.5px solid var(--line); background:var(--cream); padding:5px 12px; border-radius:16px; font-weight:800; font-size:12.5px; cursor:pointer; color:var(--ink-soft);}
+.tf-btn.sel-correct{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.tf-btn.sel-wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+.tf-btn.reveal-correct{box-shadow:inset 0 0 0 1px var(--sage); border-color:var(--sage);}
+
+.tts-warn{display:none; font-size:12.5px; color:var(--coral); background:var(--coral-bg); padding:8px 12px; border-radius:6px; margin:8px 0 0;}
+.tts-warn.shown{display:block;}
+.voice-picker{display:flex; align-items:center; gap:8px; flex-wrap:wrap; background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:8px 12px; margin-top:10px; font-size:13px;}
+.voice-picker label{font-weight:700; color:var(--ink-soft);}
+.voice-picker select{border:1.5px solid var(--line); border-radius:6px; padding:4px 8px; font-family:'Nunito'; font-size:13px; background:#fff; color:var(--ink); max-width:220px;}
+.voice-hint{font-size:11.5px; color:var(--ink-soft); flex-basis:100%;}
+.sound-block{margin-top:22px; padding-top:16px; border-top:1px dashed var(--line);}
+.sound-block:first-of-type{border-top:none; margin-top:16px;}
+.sound-block h3{font-size:15.5px; margin:0 0 6px; color:var(--brick-dark); font-weight:700;}
+.ipa{font-family:'Nunito'; font-weight:500; font-size:12px; color:var(--ink-soft); font-style:italic;}
+.sound-note{font-size:13.5px; color:var(--ink-soft); margin:0 0 12px;}
+.sound-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+.sound-grid.three{grid-template-columns:repeat(3,1fr);}
+@media(max-width:600px){.sound-grid, .sound-grid.three{grid-template-columns:1fr;}}
+.sound-pair{background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px;}
+.sound-pair.wide{grid-column:1/-1;}
+.sp-text{font-size:14.5px; font-weight:600; flex:1;}
+.sp-text.big{font-size:19px; text-align:center; font-family:'Comfortaa',sans-serif; color:var(--brick-dark);}
+.sp-controls{display:flex; gap:6px; flex-shrink:0;}
+.play-btn{border:1.5px solid var(--line); background:var(--cream); cursor:pointer; border-radius:8px; padding:6px 10px; font-size:15px; line-height:1; transition:.15s;}
+.play-btn:hover{background:var(--tab); border-color:var(--tab-dark);}
+.play-btn.playing{background:var(--brick); border-color:var(--brick-dark);}
+b.stress{color:var(--brick-dark); text-decoration:underline; text-decoration-color:var(--gold); text-decoration-thickness:2px; text-underline-offset:3px;}
+
+.prompt-list{list-style:none; padding:0; margin:14px 0; display:grid; gap:8px;}
+.prompt-list li{background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:8px 12px; font-size:13.5px; display:flex; gap:8px; align-items:baseline;}
+.prompt-list li b{color:var(--brick-dark); font-family:'Comfortaa',sans-serif;}
+textarea.write-area{width:100%; min-height:140px; border:1.5px solid var(--line); border-radius:10px; padding:14px; font-family:'Nunito'; font-size:14.5px; color:var(--ink); background:#FFFDFB; resize:vertical;}
+textarea.write-area:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.word-count{font-size:12.5px; color:var(--ink-soft); margin-top:6px;}
+.cue-cards{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;}
+.cue-card{background:#fff; border:1.5px dashed var(--gold); border-radius:10px; padding:10px 14px; font-size:13px; width:160px; color:var(--ink-soft); font-style:italic;}
+.cue-card b{display:block; font-style:normal; color:var(--brick-dark); font-family:'Comfortaa',sans-serif; font-size:14px; margin-bottom:3px;}
+.reveal-box{margin-top:14px; border-left:3px solid var(--tab); background:var(--cream); padding:12px 16px; border-radius:6px; font-size:13.5px; display:none;}
+.reveal-box.shown{display:block;}
+
+.hw-list{display:flex; flex-direction:column; gap:10px; margin-top:16px;}
+.hw-item{display:flex; gap:10px; align-items:flex-start; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:11px 14px; font-size:13.5px; cursor:pointer; transition:.15s;}
+.hw-item:has(.hw-check:checked){background:var(--sage-bg); border-color:var(--sage);}
+.hw-check{margin-top:3px; width:16px; height:16px; accent-color:var(--sage); flex-shrink:0;}
+.hw-item b{color:var(--brick-dark); font-family:'Comfortaa',sans-serif;}
+.hw-item i{color:var(--ink-soft); font-style:italic;}
+
+@media print{
+  .topbar, .unit-banner, #presentation, #vocabulary, #practice, #reading, #sounds, #production, .badge-final, .footer-note, .no-print{ display:none !important; }
+  body{ background:#fff; padding:0; }
+  .page{ box-shadow:none; border:none; margin:0; max-width:100%; }
+  .section{ border-top:none; }
+  .section .tab{ display:none; }
+  .section .content{ padding:10px; }
+  .hw-item{ break-inside:avoid; }
+}
+
+.footer-note{text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:24px; padding:0 20px;}
+.badge-final{display:none; text-align:center; margin:26px auto 0; max-width:900px; background:linear-gradient(135deg, var(--sage), #3d7357); color:#fff; border-radius:14px; padding:22px; font-family:'Comfortaa',sans-serif; font-size:19px; font-weight:700; box-shadow:var(--shadow);}
+.badge-final.shown{display:block; animation:fadeIn .5s ease;}
+.badge-final span{display:block; font-family:'Nunito'; font-weight:500; font-size:13.5px; margin-top:6px; opacity:.9;}
+
+/* Generated textbook illustrations; contain each complete scene without cropping. */
+.dialog-figure.art-figure{width:148px}
+.lisa-figure.art-figure{width:164px}
+.dialog-avatar.art-avatar{width:144px;height:auto}
+.lisa-avatar.art-avatar{width:160px;height:auto}
+.art-avatar img.lesson-portrait{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--line);box-shadow:0 5px 16px rgba(150,80,100,.10)}
+.scene-box img.lesson-scene{display:block;width:100%;max-width:720px;height:auto;margin:0 auto;border-radius:10px}
+.pic-slot img.lesson-scene{display:block;width:100%;height:auto;max-height:none;object-fit:contain}
+@media(max-width:560px){
+ .dialog-wrap .art-figure{width:112px}
+ .dialog-avatar.art-avatar{width:108px}
+ .dialog-wrap .dialog-bubbles{min-width:0;flex-basis:100%;max-width:none;order:2}
+ .dialog-wrap .dialog-figure:last-child{order:1}
+ .dialog-wrap .dialog-figure:first-child{order:0}
+ .lisa-avatar.art-avatar{width:140px}
+ .scene-box{padding:10px}
+}
+
+</style>
+<link rel="stylesheet" href="../lesson-theme.css"></head>
+<body><div class="topbar">
+  <div class="book-title">Essential Grammar · Unit 59</div>
+  <div class="progress-steps">
+    <div class="pstep" id="step-p"><i id="bar-p"></i></div>
+    <div class="pstep" id="step-vocab"><i id="bar-vocab"></i></div>
+    <div class="pstep" id="step-pr"><i id="bar-pr"></i></div>
+    <div class="pstep" id="step-read"><i id="bar-read"></i></div>
+    <div class="pstep" id="step-sound"><i id="bar-sound"></i></div>
+    <div class="pstep" id="step-listen"><i id="bar-listen"></i></div>
+    <div class="pstep" id="step-prod"><i id="bar-prod"></i></div>
+    <div class="pstep" id="step-hw"><i id="bar-hw"></i></div>
+  </div>
+  <div class="score-pill">★ <span id="scoreDisplay">0</span>/20</div>
+</div>
+
+<div class="page"><div class="unit-banner">
+    <div class="unit-tag"><span class="u">UNIT</span><span class="n">59</span></div>
+    <h1>I/me · he/him · they/them etc.</h1>
+    <p>Местоимения-подлежащие и местоимения-дополнения</p>
+  </div><div class="section" id="presentation">
+    <div class="tab">A</div>
+    <div class="content">
+      <div class="eyebrow">Presentation</div>
+      <h2>I/me · he/him · they/them etc.</h2>
+      <div class="gram-box" style="margin:14px 0"><h3>A · People</h3><figure class="pic-slot" style="margin:12px auto;max-width:10000px"><div class="pic-ph" style="display:flex;min-height:150px"><span>🖼️</span><div style="font-size:13px">Полоса из 6 картинок: Том указывает на себя, на нас, на тебя, на него, на неё, на них</div><div style="font-size:11px;opacity:.7">lessons/img/unit-59-pic-1.webp</div></div></figure><div style="overflow-x:auto"><table style="border-collapse:collapse;margin:10px 0;background:#FFFDFB;font-size:15px"><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none"><i>subject</i></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none;text-align:center"><b>I</b></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none;text-align:center"><b>we</b></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none;text-align:center"><b>you</b></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none;text-align:center"><b>he</b></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none;text-align:center"><b>she</b></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none;text-align:center"><b>they</b></td></tr><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none"><i>object</i></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none;text-align:center"><b>me</b></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none;text-align:center"><b>us</b></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none;text-align:center"><b>you</b></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none;text-align:center"><b>him</b></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none;text-align:center"><b>her</b></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none;text-align:center"><b>them</b></td></tr></table></div><div style="overflow-x:auto"><table style="border-collapse:collapse;margin:10px 0;background:#FFFDFB;font-size:15px"><tr><td rowspan="1" colspan="2" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none"><i>subject</i></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none"></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none"></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none"><i>object</i></td></tr><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;text-align:right;border-right:none"><b>I</b></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border-left:none"><b>I</b> know Tom.</td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none;width:16px"></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border-right:none">Tom knows <b>me</b>.</td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border-left:none"><b>me</b></td></tr><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;text-align:right;border-right:none"><b>we</b></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border-left:none"><b>We</b> know Tom.</td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none;width:16px"></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border-right:none">Tom knows <b>us</b>.</td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border-left:none"><b>us</b></td></tr><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;text-align:right;border-right:none"><b>you</b></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border-left:none"><b>You</b> know Tom.</td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none;width:16px"></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border-right:none">Tom knows <b>you</b>.</td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border-left:none"><b>you</b></td></tr><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;text-align:right;border-right:none"><b>he</b></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border-left:none"><b>He</b> knows Tom.</td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none;width:16px"></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border-right:none">Tom knows <b>him</b>.</td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border-left:none"><b>him</b></td></tr><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;text-align:right;border-right:none"><b>she</b></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border-left:none"><b>She</b> knows Tom.</td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none;width:16px"></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border-right:none">Tom knows <b>her</b>.</td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border-left:none"><b>her</b></td></tr><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;text-align:right;border-right:none"><b>they</b></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border-left:none"><b>They</b> know Tom.</td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none;width:16px"></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border-right:none">Tom knows <b>them</b>.</td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border-left:none"><b>them</b></td></tr></table></div></div>
+      <div class="gram-box" style="margin:14px 0"><h3>B · Things</h3><div class="dialog-wrap"><div class="dialog-figure art-figure"><div class="dialog-avatar art-avatar"><img class="lesson-portrait" src="img/lisa-v1.webp" data-lesson-image="img/lisa-v1.webp" alt="Лиза." width="480" height="600" decoding="async"></div><div class="name"></div></div><div class="dialog-bubbles"><div class="d-bubble q">It's nice. I like <b>it</b>.</div></div></div><div class="dialog-wrap"><div class="dialog-figure art-figure"><div class="dialog-avatar art-avatar"><img class="lesson-portrait" src="img/james-v1.webp" data-lesson-image="img/james-v1.webp" alt="Джеймс в терракотовом свитере." width="480" height="600" decoding="async"></div><div class="name"></div></div><div class="dialog-bubbles"><div class="d-bubble q">They're nice. I like <b>them</b>.</div></div></div><div style="overflow-x:auto"><table style="border-collapse:collapse;margin:10px 0;background:#FFFDFB;font-size:15px"><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none"><i>subject</i></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none"><b>it</b></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none"><b>they</b></td></tr><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none"><i>object</i></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none"><b>it</b></td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none"><b>them</b></td></tr></table></div><ul class="prompt-list"><li><span style="display:block">I don't want <b>this book</b>. You can have <b>it</b>.</span></li><li><span style="display:block">I don't want <b>these books</b>. You can have <b>them</b>.</span></li><li><span style="display:block">Kate never drinks <b>milk</b>. She doesn't like <b>it</b>.</span></li><li><span style="display:block">I never go to <b>parties</b>. I don't like <b>them</b>.</span></li></ul></div>
+      <div class="gram-box" style="margin:14px 0"><h3>C · me/her/them после предлога</h3><p><b>me/her/them</b> etc. (object) — после <i>предлога</i> (<b>for/to/with</b> etc.):</p><ul class="prompt-list"><li><span style="display:block">This letter isn't <b>for me</b>. It's <b>for you</b>.</span></li><li><span style="display:block">Who is that woman? Why are you looking <b>at her</b>?</span></li><li><span style="display:block">We're going to the cinema. Do you want to come <b>with us</b>?</span></li><li><span style="display:block">Sue and Kevin are going to the cinema. Do you want to go <b>with them</b>?</span></li><li><span style="display:block">'Where's the newspaper?' 'You're sitting <b>on it</b>.'</span></li></ul><p><b>give it/them to …</b> :</p><ul class="prompt-list"><li><span style="display:block">I want that book. Please give <b>it to me</b>.</span></li><li><span style="display:block">Robert needs these books. Can you give <b>them to him</b>, please?</span></li></ul></div>
+    </div>
+  </div><div class="section" id="vocabulary"><div class="tab">B</div><div class="content"><div class="eyebrow">Vocabulary</div><h2>Новые слова этого урока</h2><p class="lead">Нажмите на динамик, чтобы услышать слово. Все слова встретятся дальше в чтении и упражнениях.</p><div id="vocabTable" class="vocab-table"></div><h3>Соседи слов <span class="ipa">chunks / collocations</span></h3><p class="sound-note">Учите сочетаниями: так слова легче вспоминаются в речи.</p><div id="chunkGrid" class="chunk-grid"></div></div></div><div class="section" id="practice">
+    <div class="tab">C</div>
+    <div class="content">
+      <div class="eyebrow">Practice</div>
+      <h2>Тренируемся</h2>
+      <p class="lead">Выберите игру и заработайте звёзды ★. Ответы проверяются сразу.</p>
+      <div class="game-tabs">
+        <button class="game-tab-btn active" data-panel="panel-fill">✏️ me / him / them / it</button>
+        <button class="game-tab-btn" data-panel="panel-memo">🃏 Мемо</button>
+        <button class="game-tab-btn" data-panel="panel-quiz">⚡ Квиз</button>
+        <button class="game-tab-btn" data-panel="panel-vocabmatch">📚 Лексика</button>
+      </div>
+      <div class="game-panel active" id="panel-fill">
+        <p class="lead" style="margin-top:0">Впишите me, us, you, him, her, it или them.</p>
+        <div id="fillList"></div>
+        <div class="actions-row">
+          <button class="btn" id="checkFillBtn">Проверить</button>
+          <button class="btn secondary small" id="resetFillBtn">Сбросить</button>
+          <span class="fb-line" id="fillFeedback"></span>
+        </div>
+      </div>
+      <div class="game-panel" id="panel-memo">
+        <p class="lead" style="margin-top:0">Найдите пары: английское слово и его русский перевод.</p>
+        <div class="memo-wrap">
+          <div class="memo-grid" id="memoGrid"></div>
+          <div class="memo-status" id="memoStatus">Найдено пар: 0 / 6</div>
+          <button class="btn secondary small" id="restartMemoBtn">Перемешать заново</button>
+        </div>
+      </div>
+      <div class="game-panel" id="panel-quiz">
+        <div id="quizList"></div>
+        <div class="actions-row"><span class="fb-line" id="quizFeedback"></span></div>
+      </div>
+      <div class="game-panel" id="panel-vocabmatch">
+        <p class="lead" style="margin-top:0">Нажмите на английское слово, затем на его перевод.</p>
+        <div class="match-wrap">
+          <div class="match-col" id="matchEnCol"></div>
+          <div class="match-col" id="matchRuCol"></div>
+        </div>
+        <div class="actions-row">
+          <span class="fb-line" id="matchStatus">Найдено пар: 0 / 10</span>
+          <button class="btn secondary small" id="restartMatchBtn">Перемешать заново</button>
+        </div>
+      </div>
+    </div>
+  </div><div class="section alt" id="reading">
+    <div class="tab">D</div>
+    <div class="content"><div class="actions-row"><button class="btn secondary small" id="playReadingBtn">🔊 Прослушать текст</button><button class="btn secondary stop-audio">Остановить</button></div>
+      <div class="eyebrow">Reading</div>
+      <h2>My new neighbour</h2>
+      <p class="lead">Найдите все местоимения. Какие — подлежащие, какие — дополнения?</p>
+      <div class="read-text"><p>I've got a new <span class="chunk">neighbour</span>. Her name is Maria. I met her last week. She's very <span class="chunk">friendly</span>, and I like her a lot.</p><p>Maria has two children. I sometimes play with them in the <span class="chunk">garden</span>. They love my dog, and he loves them too!</p><p>Yesterday Maria gave me a cake. It was <span class="chunk">delicious</span> — I ate it all! Then I gave her some flowers from my garden. She put them on her table.</p><p>Tomorrow we're going to the market. Do you want to come with us? Maria wants to meet you!</p></div>
+    <h3>1 · True / False</h3><div id="tfList"></div><div class="fb-line" id="tfFeedback"></div><h3>2 · Соседка</h3><p class="sound-note">Впишите слово.</p><div id="tomFillList"></div><div class="actions-row"><button class="btn small" id="checkTomBtn">Проверить</button><span class="fb-line" id="tomFeedback"></span></div><h3>3 · Слова из текста</h3><div id="readFillList"></div><div class="actions-row"><button class="btn small" id="checkReadFillBtn">Проверить</button><span class="fb-line" id="readFillFeedback"></span></div>
+  </div></div><div class="section" id="sounds">
+    <div class="tab">E</div>
+    <div class="content"><p class="mini-note">Синтезированный голос помогает прочитать фразы, но не гарантирует точную интонацию. Повторяйте за ним и сравнивайте.</p>
+      <div class="eyebrow">Sounds &amp; Speech</div>
+      <h2>Местоимения на слух</h2>
+      <p class="lead">Слушайте и повторяйте.</p>
+      <p class="tts-warn" id="ttsWarn"></p>
+      <div class="sound-block"><h3>1 · me / us / him / her / them</h3><div class="sound-grid three"><div class="sound-pair"><div class="sp-text">Tom knows me.</div><div class="sp-controls"><button class="play-btn" data-text="Tom knows me." data-rate="1">🔊</button><button class="play-btn slow" data-text="Tom knows me." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">Tom knows him.</div><div class="sp-controls"><button class="play-btn" data-text="Tom knows him." data-rate="1">🔊</button><button class="play-btn slow" data-text="Tom knows him." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">Tom knows them.</div><div class="sp-controls"><button class="play-btn" data-text="Tom knows them." data-rate="1">🔊</button><button class="play-btn slow" data-text="Tom knows them." data-rate="0.6">🐢</button></div></div></div></div><div class="sound-block"><h3>2 · it / them</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">It's nice. I like it.</div><div class="sp-controls"><button class="play-btn" data-text="It&#x27;s nice. I like it." data-rate="1">🔊</button><button class="play-btn slow" data-text="It&#x27;s nice. I like it." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">They're nice. I like them.</div><div class="sp-controls"><button class="play-btn" data-text="They&#x27;re nice. I like them." data-rate="1">🔊</button><button class="play-btn slow" data-text="They&#x27;re nice. I like them." data-rate="0.6">🐢</button></div></div></div></div><div class="sound-block"><h3>3 · После предлога</h3><div class="sound-grid three"><div class="sound-pair"><div class="sp-text">This letter isn't for me.</div><div class="sp-controls"><button class="play-btn" data-text="This letter isn&#x27;t for me." data-rate="1">🔊</button><button class="play-btn slow" data-text="This letter isn&#x27;t for me." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">Do you want to come with us?</div><div class="sp-controls"><button class="play-btn" data-text="Do you want to come with us?" data-rate="1">🔊</button><button class="play-btn slow" data-text="Do you want to come with us?" data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">Please give it to me.</div><div class="sp-controls"><button class="play-btn" data-text="Please give it to me." data-rate="1">🔊</button><button class="play-btn slow" data-text="Please give it to me." data-rate="0.6">🐢</button></div></div></div></div>
+      <div class="actions-row">
+        <button class="btn secondary small" id="playAllBtn">🔊 Прослушать всё подряд</button>
+      </div>
+    </div>
+  </div><div class="section alt" id="listening">
+    <div class="tab">F</div>
+    <div class="content">
+      <div class="eyebrow">Listening</div>
+      <h2>Слушаем вслепую</h2>
+      <p class="lead">Соседи передают письмо.</p>
+      <div class="speed-picker">
+        <label>Скорость:</label>
+        <div class="speed-btns">
+          <button class="speed-btn" data-rate="0.6">🐢 Медленно</button>
+          <button class="speed-btn active" data-rate="0.95">🔊 Обычно</button>
+        </div>
+      </div>
+      <div class="actions-row">
+        <button class="btn secondary stop-audio">Остановить</button>
+        <button class="btn" id="playListeningBtn">▶️ Слушать диалог</button>
+      </div>
+      <h3 style="font-size:14.5px; margin:18px 0 8px; color:var(--brick-dark);">Вопросы по прослушанному</h3>
+      <div id="lsList"></div>
+      <div class="actions-row"><span class="fb-line" id="lsFeedback"></span></div>
+      <div class="actions-row">
+        <button class="btn secondary small" id="toggleScriptBtn" disabled="">📜 Скрипт — после ответов на все вопросы</button>
+      </div>
+      <div class="reveal-box" id="scriptBox">Is this letter for me?
+No, it isn&#x27;t for you. It&#x27;s for Tom. Can you give it to him?
+Sure. Where is he?
+He&#x27;s in the garden with the children. He&#x27;s playing with them.
+OK. Do you want to come with me?
+No, thanks. I&#x27;m busy.</div>
+    </div>
+  </div><div class="section alt" id="production">
+    <div class="tab">G</div>
+    <div class="content">
+      <div class="eyebrow">Production</div>
+      <h2>Мои друзья</h2>
+      <p class="lead">Напишите 6–8 предложений о друзьях или семье: I like him / her / them; I often call her; she gave me …; I went with them …</p>
+      <ul class="prompt-list"><li><b>I like him / her / them …</b></li><li><b>She gave me … / I gave her …</b></li><li><b>I went to … with them.</b></li><li><b>It's / They're … I like it / them.</b></li></ul>
+      <textarea class="write-area" id="writeArea" placeholder="My best friend is Olga. I like her..."></textarea>
+      <div class="word-count" id="wordCount">0 слов</div>
+      <div class="actions-row">
+        <button class="btn" id="finishBtn">Готово!</button>
+        <button class="btn secondary" id="sampleBtn">Показать пример</button>
+      </div>
+      <div class="reveal-box" id="sampleBox"><b>Пример:</b> My best friend is Olga. I've known her for ten years. I call her every week. She has two cats and I love them. Last week she gave me a book. It was great — I read it in two days. On Saturday I went to the cinema with her and her brother. I like him too.</div>
+      <div class="cue-cards">
+        <div class="cue-card"><b>Карточка 1</b>Покажите на предметы в комнате: I like it / I don't like them.</div>
+        <div class="cue-card"><b>Карточка 2</b>Расскажите партнёру о друге: I met him / her …</div>
+        <div class="cue-card"><b>Карточка 3</b>for me / with us / to them — по 2 предложения.</div>
+      </div>
+    </div>
+  </div><div class="section" id="homework">
+    <div class="tab">H</div>
+    <div class="content">
+      <div class="eyebrow">Homework</div>
+      <h2>Домашнее задание</h2>
+      <p class="lead">Отметьте галочкой то, что выполнили. Можно распечатать этот блок.</p>
+      <div class="hw-list">
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>1. Письменно.</b> Перепишите таблицу из блока A с другим именем вместо Tom.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>2. it / them.</b> Напишите 4 предложения о вещах, которые вам нравятся и не нравятся.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>3. Слушаем и повторяем.</b> Откройте блок <i>E · Sounds</i> и повторите фразы по три раза.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>4. Слова.</b> Выучите 12 новых слов из блока B.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>5. Повторение.</b> Вернитесь в блок <i>C · Practice</i> и пройдите квиз ещё раз без ошибок.</span></label>
+      </div>
+      <div class="actions-row">
+        <span class="fb-line" id="hwFeedback">Выполнено: 0 / 5</span>
+        <button class="btn secondary small no-print" id="printHwBtn">🖨️ Распечатать задание</button>
+      </div>
+    </div>
+  </div></div><div class="badge-final" id="finalBadge">Урок пройден!<span>Все обязательные задания выполнены.</span></div>
+
+<p class="footer-note">Based on Essential Grammar in Use, 4th Edition (Cambridge University Press, 2015), Unit 59 — original exercises created for this lesson.</p>
+<script src="../lesson-kit.js?v=20261018-games1"></script><script src="../lesson-template.js?v=20261018-games1"></script><script>window.lessonConfig={"vocabData": [{"word": "subject", "ipa": "/ˈsʌbdʒɪkt/", "ru": "подлежащее"}, {"word": "object", "ipa": "/ˈɒbdʒɪkt/", "ru": "дополнение"}, {"word": "neighbour", "ipa": "/ˈneɪbə/", "ru": "сосед"}, {"word": "milk", "ipa": "/mɪlk/", "ru": "молоко"}, {"word": "party", "ipa": "/ˈpɑːti/", "ru": "вечеринка"}, {"word": "letter", "ipa": "/ˈletə/", "ru": "письмо"}, {"word": "look at", "ipa": "/lʊk æt/", "ru": "смотреть на"}, {"word": "sit on", "ipa": "/sɪt ɒn/", "ru": "сидеть на"}, {"word": "give", "ipa": "/ɡɪv/", "ru": "давать"}, {"word": "need", "ipa": "/niːd/", "ru": "нуждаться"}, {"word": "delicious", "ipa": "/dɪˈlɪʃəs/", "ru": "очень вкусный"}, {"word": "friendly", "ipa": "/ˈfrendli/", "ru": "дружелюбный"}], "chunkData": [{"en": "Tom knows me", "ipa": "", "ru": "Том знает меня"}, {"en": "I like it", "ipa": "", "ru": "мне это нравится"}, {"en": "I like them", "ipa": "", "ru": "мне они нравятся"}, {"en": "for me", "ipa": "", "ru": "для меня"}, {"en": "come with us", "ipa": "", "ru": "пойти с нами"}, {"en": "look at her", "ipa": "", "ru": "смотреть на неё"}, {"en": "give it to me", "ipa": "", "ru": "дай это мне"}, {"en": "You're sitting on it", "ipa": "", "ru": "ты на нём сидишь"}], "fillData": [{"sentence": "I know Tom. Tom knows ___.", "answers": ["me"]}, {"sentence": "We know Tom. Tom knows ___.", "answers": ["us"]}, {"sentence": "He knows Tom. Tom knows ___.", "answers": ["him"]}, {"sentence": "She knows Tom. Tom knows ___.", "answers": ["her"]}, {"sentence": "They know Tom. Tom knows ___.", "answers": ["them"]}, {"sentence": "I don't want this book. You can have ___.", "answers": ["it"]}, {"sentence": "I don't want these books. You can have ___.", "answers": ["them"]}, {"sentence": "Kate never drinks milk. She doesn't like ___.", "answers": ["it"]}, {"sentence": "This letter isn't for ___. It's for you. (I)", "answers": ["me"]}, {"sentence": "Why are you looking at ___? (she)", "answers": ["her"]}, {"sentence": "Do you want to come with ___? (we)", "answers": ["us"]}, {"sentence": "Can you give them to ___? (he)", "answers": ["him"]}], "memoPairs": [["neighbour", "сосед"], ["letter", "письмо"], ["delicious", "очень вкусный"], ["milk", "молоко"], ["give", "давать"], ["friendly", "дружелюбный"]], "quizData": [{"q": "Tom knows ___.", "opts": ["me", "I"], "correct": "me"}, {"q": "___ know Tom.", "opts": ["We", "Us"], "correct": "We"}, {"q": "I like these shoes. I like ___.", "opts": ["them", "they"], "correct": "them"}, {"q": "Kate doesn't like milk. She doesn't like ___.", "opts": ["it", "them"], "correct": "it"}, {"q": "This letter is for ___.", "opts": ["you", "your"], "correct": "you"}, {"q": "Come with ___.", "opts": ["us", "we"], "correct": "us"}, {"q": "Why are you looking at ___?", "opts": ["her", "she"], "correct": "her"}, {"q": "Give it to ___.", "opts": ["him", "he"], "correct": "him"}], "matchWords": [{"en": "subject", "ru": "подлежащее"}, {"en": "object", "ru": "дополнение"}, {"en": "neighbour", "ru": "сосед"}, {"en": "milk", "ru": "молоко"}, {"en": "party", "ru": "вечеринка"}, {"en": "letter", "ru": "письмо"}, {"en": "look at", "ru": "смотреть на"}, {"en": "sit on", "ru": "сидеть на"}, {"en": "give", "ru": "давать"}, {"en": "need", "ru": "нуждаться"}], "tfGroups": {"tfList": {"data": [{"text": "The neighbour's name is Maria.", "correct": true}, {"text": "The writer doesn't like Maria.", "correct": false}, {"text": "Maria has two children.", "correct": true}, {"text": "The children don't like the dog.", "correct": false}, {"text": "Maria gave the writer a cake.", "correct": true}, {"text": "They are going to the cinema tomorrow.", "correct": false}], "feedback": "tfFeedback"}, "lsList": {"data": [{"text": "The letter is for Tom.", "correct": true}, {"text": "Tom is in the kitchen.", "correct": false}, {"text": "Tom is playing with the children.", "correct": true}, {"text": "The friend wants to go too.", "correct": false}], "feedback": "lsFeedback"}}, "readFillData": [{"sentence": "I met ___ last week. (she)", "answers": ["her"]}, {"sentence": "I like ___ a lot. (she)", "answers": ["her"]}, {"sentence": "I sometimes play with ___. (they)", "answers": ["them"]}, {"sentence": "He loves ___ too! (they)", "answers": ["them"]}, {"sentence": "Maria gave ___ a cake. (I)", "answers": ["me"]}, {"sentence": "Do you want to come with ___? (we)", "answers": ["us"]}], "tomData": [{"sentence": "I've got a new ___.", "answers": ["neighbour"]}, {"sentence": "She's very ___.", "answers": ["friendly"]}, {"sentence": "They love my ___.", "answers": ["dog"]}, {"sentence": "It was ___.", "answers": ["delicious"]}, {"sentence": "I ate ___ all! (cake)", "answers": ["it"]}, {"sentence": "Maria wants to meet ___! (you)", "answers": ["you"]}], "slug": "urok-i-me", "exam": false, "legacySignature": "", "legacyFields": [], "questionTask": false, "listeningLines": ["Is this letter for me?", "No, it isn't for you. It's for Tom. Can you give it to him?", "Sure. Where is he?", "He's in the garden with the children. He's playing with them.", "OK. Do you want to come with me?", "No, thanks. I'm busy."], "readingLines": ["I've got a new neighbour. Her name is Maria. I met her last week. She's very friendly, and I like her a lot.", "Maria has two children. I sometimes play with them in the garden. They love my dog, and he loves them too!", "Yesterday Maria gave me a cake. It was delicious — I ate it all! Then I gave her some flowers from my garden. She put them on her table.", "Tomorrow we're going to the market. Do you want to come with us? Maria wants to meet you!"]};
+LessonTemplate.mount(window.lessonConfig);</script></body></html>

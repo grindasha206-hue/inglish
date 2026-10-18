@@ -1064,6 +1064,42 @@ const T=[
    O("I've got a headache."),
    O("He's having a shower.")
   ]},
+  {id:59,title:'I/me, he/him, they/them',emoji:'👥',rule:"Подлежащее: I, we, you, he, she, it, they. Дополнение (после глагола): me, us, you, him, her, it, them — Tom knows me. После предлога тоже дополнение: for me, with us, at her. Вещи: it / them — I like it. I like them. give it to me.",
+  items:[
+   C('Tom knows ___.','me','I','my'),
+   C('I like these shoes. I like ___.','them','they','it'),
+   C('Come with ___.','us','we','our'),
+   C('Give it to ___.','him','he','his'),
+   F('She knows Tom. Tom knows ___.','her'),
+   F('This letter is for ___. (I)','me'),
+   F("Kate doesn't like milk. She doesn't like ___.",'it'),
+   O('Tom knows me.'),
+   O('Please give it to me.')
+  ]},
+  {id:60,title:'my/his/their',emoji:'👪',rule:"I → my, we → our, you → your, he → his, she → her, they → their, it → its. После них — существительное: my hands, her parents, their room. Amy's car = her car, Andy's bike = his bike. its (его/её — о предмете) ≠ it's (= it is).",
+  items:[
+   C('He likes ___ house.','his','him','he'),
+   C('They like ___ house.','their','them','they'),
+   C('Oxford is famous for ___ university.','its',"it's",'it'),
+   C("I like Oxford. ___ a nice place.","It's",'Its','It'),
+   F("Amy's car = ___ car",'her'),
+   F('We like ___ house.','our'),
+   F("Andy's bike = ___ bike",'his'),
+   O('She likes her house.'),
+   O('They like their house.')
+  ]},
+  {id:61,title:'Whose? mine / yours / hers',emoji:'🔑',rule:"my → mine, our → ours, your → yours, his → his, her → hers, their → theirs. С существительным — my book; без — It's mine. a friend of mine / his / yours (не a friend of me). Whose …? = чей: Whose phone is this? Whose is this? — It's mine.",
+  items:[
+   C('Is this book ___ or yours?','mine','my','me'),
+   C('Sarah gave me ___.','hers','her','she'),
+   C('a friend of ___','mine','me','my'),
+   C('___ phone is this?','Whose',"Who's",'Who'),
+   F("It's our money. It's ___.",'ours'),
+   F("It's their money. It's ___.",'theirs'),
+   F('Are they friends of ___? (you)','yours'),
+   O("Whose phone is this? It's mine."),
+   O('I went out to meet a friend of mine.')
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),

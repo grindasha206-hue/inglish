@@ -613,6 +613,33 @@
               "file": "lessons/itogovyi-test-go-get-do.html"
             }
           ]
+        },
+        {
+          "id": "modul-15",
+          "title": "Модуль 15",
+          "lessons": [
+            {
+              "id": "urok-i-me",
+              "unit": 1,
+              "title": "I/me, he/him, they/them",
+              "description": "Местоимения: подлежащее и дополнение",
+              "file": "lessons/urok-i-me.html"
+            },
+            {
+              "id": "urok-my-his-their",
+              "unit": 2,
+              "title": "my/his/their etc.",
+              "description": "Притяжательные местоимения; its и it's",
+              "file": "lessons/urok-my-his-their.html"
+            },
+            {
+              "id": "urok-whose-mine",
+              "unit": 3,
+              "title": "Whose is this? It's mine…",
+              "description": "mine, yours, hers…; a friend of mine; whose",
+              "file": "lessons/urok-whose-mine.html"
+            }
+          ]
         }
       ]
     },
