@@ -34,7 +34,7 @@
    const controller=new AbortController(),fetchTimer=setTimeout(()=>controller.abort(),20000);
    let source,runtime,kit,template,theme;
    try{
-    const responses=await Promise.all([fetch(path,{signal:controller.signal,cache:'no-cache'}),fetch('lesson-runtime.js',{signal:controller.signal}),fetch('lesson-kit.js?v=20261018-games1',{signal:controller.signal}),fetch('lesson-template.js?v=20261018-games1',{signal:controller.signal}),fetch('lesson-theme.css',{signal:controller.signal})]);
+    const responses=await Promise.all([fetch(path,{signal:controller.signal,cache:'no-cache'}),fetch('lesson-runtime.js',{signal:controller.signal}),fetch('lesson-kit.js?v=20261018-fulltext1',{signal:controller.signal}),fetch('lesson-template.js?v=20261018-games1',{signal:controller.signal}),fetch('lesson-theme.css',{signal:controller.signal})]);
     if(responses.some(r=>!r.ok))throw Error('Не удалось загрузить урок');
     [source,runtime,kit,template,theme]=await Promise.all(responses.map(r=>r.text()));
    }finally{clearTimeout(fetchTimer);}

@@ -15,6 +15,28 @@
     return out;
   }
   let active=null;
+  async function joinAudio(blobs){
+    const Context=root.OfflineAudioContext||root.webkitOfflineAudioContext;
+    if(!Context)throw new Error('Браузер не поддерживает подготовку полного аудио');
+    const context=new Context(1,1,44100),buffers=[];
+    for(const blob of blobs)buffers.push(await context.decodeAudioData(await blob.arrayBuffer()));
+    const channels=Math.min(2,Math.max(...buffers.map(b=>b.numberOfChannels))),rate=context.sampleRate;
+    const frames=buffers.reduce((n,b)=>n+b.length,0),bytes=frames*channels*2;
+    const wav=new ArrayBuffer(44+bytes),view=new DataView(wav);
+    const label=(offset,text)=>{for(let i=0;i<text.length;i++)view.setUint8(offset+i,text.charCodeAt(i));};
+    label(0,'RIFF');view.setUint32(4,36+bytes,true);label(8,'WAVE');label(12,'fmt ');
+    view.setUint32(16,16,true);view.setUint16(20,1,true);view.setUint16(22,channels,true);
+    view.setUint32(24,rate,true);view.setUint32(28,rate*channels*2,true);
+    view.setUint16(32,channels*2,true);view.setUint16(34,16,true);label(36,'data');view.setUint32(40,bytes,true);
+    let offset=44;
+    for(const buffer of buffers){
+      const data=Array.from({length:channels},(_,c)=>buffer.getChannelData(Math.min(c,buffer.numberOfChannels-1)));
+      for(let i=0;i<buffer.length;i++)for(let c=0;c<channels;c++){
+        const sample=Math.max(-1,Math.min(1,data[c][i]));view.setInt16(offset,Math.round(sample*(sample<0?32768:32767)),true);offset+=2;
+      }
+    }
+    return URL.createObjectURL(new Blob([wav],{type:'audio/wav'}));
+  }
   function stop(){root.speechSynthesis?.cancel();if(active){active.pause();active=null;}}
   function play(url,rate){
     stop();const audio=new Audio(url);active=audio;
@@ -22,7 +44,7 @@
     return new Promise((resolve,reject)=>{
       let timer;
       const done=err=>{clearTimeout(timer);audio.onended=audio.onpause=audio.onerror=null;if(active===audio)active=null;err?reject(err):resolve();};
-      audio.onended=()=>done();audio.onpause=()=>done(Object.assign(new Error('Воспроизведение остановлено'),{name:'AbortError'}));audio.onerror=()=>done(new Error('Не удалось воспроизвести аудио'));
+      audio.onended=()=>done();audio.onpause=()=>{if(!audio.ended)done(Object.assign(new Error('Воспроизведение остановлено'),{name:'AbortError'}));};audio.onerror=()=>done(new Error('Не удалось воспроизвести аудио'));
       timer=setTimeout(()=>{done(new Error('Превышено время воспроизведения'));audio.pause();},180000);
       Promise.resolve().then(()=>audio.play()).catch(done);
     });
@@ -79,13 +101,25 @@
       const input=String(text).trim();if(!input)return;
       if(input.length>20000)throw new Error('Слишком длинный текст для озвучки');
       const token=++root.TTS.generation;stop();last={text:input,rate,voice};
+      const audioParts=[];
       for(let part of chunks(input,config.limit,config.sentenceChunks||config.punctuation)){
         if(config.punctuation&&!/[.!?…]$/.test(part))part+='.';
         if(token!==root.TTS.generation)return false;
         const url=await urlFor(part,voice,key);
         if(token!==root.TTS.generation)return false;
-        try{await play(url,rate);}catch(error){if(error.name==='AbortError'||token!==root.TTS.generation)return false;throw error;}
+        const response=await fetch(url);
+        if(!response.ok)throw new Error('Не удалось подготовить аудио');
+        audioParts.push(await response.blob());
       }
+      // One full text command must produce one playback, with one completion event.
+      if(!audioParts.length)return true;
+      let combined=null;
+      try{
+        const url=combined=audioParts.length===1?URL.createObjectURL(audioParts[0]):await joinAudio(audioParts);
+        if(token!==root.TTS.generation)return false;
+        await play(url,rate);
+      }catch(error){if(error.name==='AbortError'||token!==root.TTS.generation)return false;throw error;}
+      finally{if(combined)URL.revokeObjectURL(combined);}
       return token===root.TTS.generation;
     }
     async function regenerate(){

@@ -42,13 +42,9 @@ function cancelSequence(){generation++;if(activeSequence){activeSequence.disable
   cancelSequence();const own= generation;activeSequence=button;
   if(button){button.disabled=true;button.setAttribute('aria-busy','true');}
   try{
-   for(const text of lines){
-    if(own!==generation)return false;
-    const played=await root.speak(text,rate,button);
-    if(played!==true||own!==generation)return false;
-    await wait(350);
-   }
-   return true;
+   const text=(Array.isArray(lines)?lines:[lines]).map(line=>String(line??'').trim()).filter(Boolean).join('\n\n');
+   if(!text||own!==generation)return false;
+   return (await root.speak(text,rate,button))===true&&own===generation;
   }finally{if(own===generation)cancelSequence();}
  }
 function buildFill(listId, data){
