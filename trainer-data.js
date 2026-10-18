@@ -436,6 +436,27 @@ const T=[
    O('When did you buy your computer?'),
    O("I've lost my key.","I have lost my key.")
   ]},
+  {id:21,title:'Passive 1: is done / was done',emoji:'🏭',rule:'Passive = am/is/are (present) или was/were (past) + past participle: The office is cleaned every day. The house was built in 1890. I was born in 1995 (не I am born). Кто сделал — by: It was invented by Bell.',
+  items:[
+   C('The office ___ cleaned every day.','is','was','are'),
+   C('The office ___ cleaned yesterday.','was','is','were'),
+   C('These houses were ___ 100 years ago.','built','build','building'),
+   C('I ___ born in 1993.','was','am','were'),
+   C('It was invented ___ Bell.','by','from','with'),
+   C('Butter is made ___ milk.','from','by','of the'),
+   C('___ anybody injured?','Was','Did','Were'),
+   C('Oranges ___ imported into Britain.','are','is','be'),
+   C('Какое предложение правильное?','I was born in Moscow.','I am born in Moscow.','I born in Moscow.'),
+   C('My bike ___ last night.','was stolen','is stolen','stole'),
+   F('The office ___ (clean) every day.','is cleaned'),
+   F('These houses ___ (build) 100 years ago.','were built'),
+   F('When ___ the telephone invented?','was'),
+   F('We ___ (not/invite) to the party.',"weren't invited",'were not invited'),
+   F('Where ___ you born?','were'),
+   O('The office is cleaned every day.'),
+   O('The house was built in 1890.'),
+   O('Where were you born?')
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),

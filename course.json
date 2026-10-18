@@ -224,6 +224,19 @@
               "file": "lessons/itogovyi-test-perfect.html"
             }
           ]
+        },
+        {
+          "id": "modul-5",
+          "title": "Модуль 5",
+          "lessons": [
+            {
+              "id": "urok-passive-1",
+              "unit": 1,
+              "title": "is done / was done — passive 1",
+              "description": "Страдательный залог в present и past simple",
+              "file": "lessons/urok-passive-1.html"
+            }
+          ]
         }
       ]
     },
