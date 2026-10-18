@@ -956,6 +956,18 @@ const T=[
    O('Do you know where Paula is?'),
    O("I don't know if anybody saw me.")
   ]},
+  {id:50,title:'She said that… He told me that…',emoji:'🗣️',rule:"Передаём чужие слова: am/is → was, are → were, have/has → had, can → could, will → would, do/does → did, look → looked и т.д. say (said) — без человека или say to me; tell (told) — с человеком: He told me. that можно опустить: He said (that) he was tired.",
+  items:[
+   C('He ___ that he was tired.','said','told','told to'),
+   C('He ___ me that he was tired.','told','said','say'),
+   C("'I can't swim.' → She said she ___ swim.","couldn't","can't","didn't can"),
+   C("'I'll phone you.' → He said he ___ phone me.",'would','will','did'),
+   F("'I'm tired.' → She said she ___ tired.",'was'),
+   F("'I have to go.' → He said he ___ to go.",'had'),
+   F("'I don't like it.' → She said she ___ like it.","didn't"),
+   O('He said that he was tired.'),
+   O('She told me that she couldn\'t find a job.')
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),

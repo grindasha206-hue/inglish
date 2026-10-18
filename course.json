@@ -511,6 +511,26 @@
               "file": "lessons/itogovyi-test-questions.html"
             }
           ]
+        },
+        {
+          "id": "modul-12",
+          "title": "Модуль 12",
+          "lessons": [
+            {
+              "id": "urok-she-said-that",
+              "unit": 1,
+              "title": "She said that… He told me that…",
+              "description": "Косвенная речь: said that / told me that",
+              "file": "lessons/urok-she-said-that.html"
+            },
+            {
+              "id": "itogovyi-test-reported",
+              "unit": 2,
+              "title": "Итоговый тест · модуль 12",
+              "description": "She said that… / He told me that…; say и tell",
+              "file": "lessons/itogovyi-test-reported.html"
+            }
+          ]
         }
       ]
     },

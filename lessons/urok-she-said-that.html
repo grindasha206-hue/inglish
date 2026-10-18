@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 50 · She said that… He told me that…</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Comfortaa:wght@500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --cream:#FDF4F1; --paper:#FFFDFB; --ink:#3A2E33; --ink-soft:#6B5A61;
+  --brick:#BE456F; --brick-dark:#8F2E52; --tab:#C4507A; --tab-dark:#9E3460;
+  --sage:#4F8F6D; --sage-bg:#E6F1EA; --coral:#D65B4A; --coral-bg:#FBE7E3;
+  --gold:#E8A0B4; --line:#F1D9DF; --shadow: 0 6px 18px rgba(150,80,100,0.10);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; background:radial-gradient(circle at 15% 8%, rgba(232,160,180,0.10), transparent 40%), var(--cream); color:var(--ink); font-family:'Nunito', sans-serif; line-height:1.55; padding-bottom:80px;}
+h1,h2,h3,.display{font-family:'Comfortaa',sans-serif;}
+
+.topbar{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:1px solid var(--line); padding:10px 18px; display:flex; align-items:center; gap:14px; box-shadow:0 2px 10px rgba(0,0,0,0.04);}
+.topbar .book-title{font-family:'Comfortaa',sans-serif; font-weight:700; font-size:15px; color:var(--brick-dark); white-space:nowrap;}
+.progress-steps{display:flex; gap:5px; flex:1; align-items:center;}
+.pstep{flex:1; height:8px; border-radius:6px; background:var(--line); position:relative; overflow:hidden;}
+.pstep i{display:block; height:100%; width:0%; border-radius:6px; background:linear-gradient(90deg, var(--tab), var(--brick)); transition:width .5s ease;}
+.score-pill{font-size:13px; font-weight:700; background:var(--sage-bg); color:var(--sage); padding:5px 12px; border-radius:20px; white-space:nowrap;}
+
+.page{max-width:900px; margin:26px auto; background:var(--paper); border-radius:4px; box-shadow:var(--shadow); border:1px solid var(--line); overflow:hidden;}
+
+.unit-banner{background:linear-gradient(135deg, var(--brick) 0%, var(--brick-dark) 100%); color:#fff; padding:26px 30px 22px 96px; position:relative;}
+.unit-tag{position:absolute; left:0; top:0; bottom:0; width:76px; background:var(--brick-dark); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Comfortaa',sans-serif; border-right:2px solid rgba(255,255,255,0.15);}
+.unit-tag .u{font-size:11px; letter-spacing:2px; opacity:.75;}
+.unit-tag .n{font-size:30px; font-weight:800;}
+.unit-banner h1{margin:0; font-size:27px; font-weight:800; letter-spacing:.3px;}
+.unit-banner p{margin:6px 0 0; opacity:.9; font-size:14.5px;}
+
+.section{display:flex; border-top:1px solid var(--line);}
+.section .tab{width:56px; flex-shrink:0; background:var(--tab); color:#fff; font-family:'Comfortaa',sans-serif; font-weight:800; font-size:20px; display:flex; align-items:flex-start; justify-content:center; padding-top:22px;}
+.section.alt .tab{background:var(--tab-dark);}
+.section .content{padding:24px 28px 30px; flex:1; min-width:0;}
+.section h2{margin:0 0 4px; font-size:22px; color:var(--brick-dark);}
+.eyebrow{font-size:11.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-soft); font-weight:700; margin-bottom:4px;}
+.section p.lead{color:var(--ink-soft); margin-top:4px; font-size:14.5px;}
+
+.dialog-wrap{display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; margin:18px 0 6px;}
+.dialog-figure{width:110px; text-align:center; flex-shrink:0;}
+.dialog-avatar{width:96px; height:120px; margin:0 auto;}
+.dialog-avatar svg{width:100%; height:100%;}
+.dialog-figure .name{font-family:'Comfortaa',sans-serif; font-weight:700; font-size:12.5px; letter-spacing:1px; color:var(--brick-dark); margin-top:4px;}
+.dialog-bubbles{display:flex; flex-direction:column; gap:8px; flex:1; min-width:260px; max-width:420px;}
+.d-bubble{background:#fff; border:1.5px solid var(--line); border-radius:16px; padding:8px 14px; font-size:13.5px; box-shadow:0 3px 8px rgba(0,0,0,0.05);}
+.d-bubble.q{border-color:var(--tab);}
+.d-bubble.a{align-self:flex-end; background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.d-bubble b{color:var(--brick-dark);}
+.d-bubble.a b{color:var(--sage);}
+
+.gram-tables{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:22px;}
+@media(max-width:620px){.gram-tables{grid-template-columns:1fr;}}
+.gram-box h3{font-size:13px; text-transform:uppercase; letter-spacing:1px; color:var(--ink-soft); margin:0 0 8px;}
+table.formtable{width:100%; border-collapse:collapse; font-size:13.5px; background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;}
+table.formtable td{padding:7px 10px; border-bottom:1px solid var(--line);}
+table.formtable tr:last-child td{border-bottom:none;}
+table.formtable td.pron{color:var(--ink-soft); width:34%;}
+table.formtable td.verb{font-weight:700; color:var(--brick-dark);}
+table.formtable td.short{color:var(--ink-soft); font-style:italic;}
+
+.chunk{background:linear-gradient(180deg, transparent 60%, rgba(196,80,122,0.35) 60%); font-weight:700; color:var(--brick-dark); padding:0 1px;}
+
+.mini-note{margin-top:16px; background:var(--sage-bg); border-left:3px solid var(--sage); padding:10px 14px; border-radius:6px; font-size:13.5px; color:#2f5741;}
+.mini-note b{color:var(--sage);}
+.mini-note i{color:var(--ink-soft); font-style:italic;}
+.mini-note.warn{background:var(--coral-bg); border-left-color:var(--coral); color:#7A2848;}
+.mini-note.warn b{color:var(--coral);}
+
+.vocab-table{margin-top:14px; display:flex; flex-direction:column; gap:8px;}
+.vocab-row{display:grid; grid-template-columns:auto 1fr auto auto; align-items:center; gap:12px; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:9px 14px;}
+@media(max-width:560px){.vocab-row{grid-template-columns:1fr; gap:4px;}}
+.vocab-word{font-weight:800; color:var(--brick-dark); font-size:14.5px; font-family:'Comfortaa',sans-serif;}
+.vocab-ipa{font-size:12.5px; color:var(--tab-dark); font-style:italic;}
+.vocab-ru{font-size:13.5px; color:var(--ink-soft);}
+.chunk-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px;}
+@media(max-width:600px){.chunk-grid{grid-template-columns:1fr;}}
+.chunk-row{display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--cream); border:1.5px dashed var(--gold); border-radius:10px; padding:9px 14px;}
+.chunk-en{font-weight:800; color:var(--brick-dark); font-size:14px; display:block;}
+.chunk-ipa{font-size:11.5px; color:var(--tab-dark); font-style:italic; display:block; margin-top:1px;}
+.chunk-ru{font-size:12.5px; color:var(--ink-soft); display:block; margin-top:1px; font-weight:400;}
+
+.game-tabs{display:flex; gap:8px; margin:18px 0 20px; flex-wrap:wrap;}
+.game-tab-btn{border:1.5px solid var(--line); background:#fff; color:var(--ink-soft); padding:8px 16px; border-radius:20px; font-family:'Nunito'; font-weight:700; font-size:13px; cursor:pointer; transition:.2s;}
+.game-tab-btn.active{background:var(--tab); color:#fff; border-color:var(--tab-dark);}
+.game-panel{display:none;}
+.game-panel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
+
+.fill-item{display:flex; align-items:flex-start; gap:10px; flex-wrap:wrap; padding:12px 4px; border-bottom:1px dashed var(--line);}
+.fill-item:last-child{border-bottom:none;}
+.fill-num{width:22px; height:22px; border-radius:50%; background:var(--cream); border:1px solid var(--line); font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; color:var(--ink-soft); flex-shrink:0; margin-top:3px;}
+.fill-body{flex:1; min-width:220px;}
+.fill-words{font-size:13px; color:var(--ink-soft); margin-bottom:6px; font-style:italic;}
+.blank-input{width:130px; padding:5px 8px; border:1.5px solid var(--line); border-radius:6px; font-family:'Nunito'; font-weight:700; font-size:14px; text-align:center; background:#FFFDFB; color:var(--brick-dark);}
+.blank-input:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.blank-input.correct{border-color:var(--sage); background:var(--sage-bg); color:#2f5741;}
+.blank-input.wrong{border-color:var(--coral); background:var(--coral-bg); color:var(--coral);}
+.fill-fb{font-size:16px; margin-top:6px;}
+
+.btn{border:none; cursor:pointer; font-family:'Nunito'; font-weight:800; padding:10px 20px; border-radius:24px; font-size:14px; letter-spacing:.2px; background:var(--brick); color:#fff; box-shadow:0 4px 10px rgba(190,69,111,0.25); transition:.15s;}
+.btn:hover{transform:translateY(-1px); box-shadow:0 6px 14px rgba(190,69,111,0.32);}
+.btn.secondary{background:transparent; color:var(--brick); border:1.5px solid var(--brick); box-shadow:none;}
+.btn.small{padding:6px 14px; font-size:12.5px;}
+.actions-row{display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; align-items:center;}
+.fb-line{font-size:13.5px; font-weight:700; color:var(--ink-soft);}
+
+.memo-wrap{display:flex; flex-direction:column; align-items:center; gap:14px;}
+.memo-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; max-width:520px; width:100%;}
+@media(max-width:500px){.memo-grid{grid-template-columns:repeat(3,1fr);}}
+.memo-card{aspect-ratio:1/1; border-radius:10px; cursor:pointer; position:relative; perspective:600px;}
+.memo-inner{width:100%; height:100%; position:relative; transform-style:preserve-3d; transition:transform .45s;}
+.memo-card.flipped .memo-inner, .memo-card.matched .memo-inner{transform:rotateY(180deg);}
+.memo-face{position:absolute; inset:0; border-radius:10px; display:flex; align-items:center; justify-content:center; backface-visibility:hidden; font-weight:800; text-align:center; padding:4px; font-size:12.5px;}
+.memo-face.back{background:linear-gradient(135deg, var(--tab), var(--tab-dark)); color:#fff; font-family:'Comfortaa',sans-serif; font-size:22px;}
+.memo-face.front{background:#fff; border:2px solid var(--line); color:var(--brick-dark); transform:rotateY(180deg);}
+.memo-card.matched .memo-face.front{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.memo-status{font-size:13.5px; color:var(--ink-soft); font-weight:700;}
+
+.quiz-q{margin-bottom:18px;}
+.quiz-q p{font-weight:700; margin:0 0 8px; font-size:14.5px;}
+.quiz-opts{display:flex; gap:8px; flex-wrap:wrap;}
+.quiz-opt{border:1.5px solid var(--line); background:#fff; padding:7px 15px; border-radius:20px; font-weight:700; font-size:13.5px; cursor:pointer; color:var(--ink);}
+.quiz-opt.sel-correct{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.quiz-opt.sel-wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+.quiz-opt.reveal-correct{border-color:var(--sage); box-shadow:inset 0 0 0 1px var(--sage);}
+
+.match-wrap{display:flex; gap:14px; max-width:520px; margin:0 auto;}
+.match-col{flex:1; display:flex; flex-direction:column; gap:8px;}
+.match-tile{background:#fff; border:1.5px solid var(--line); border-radius:8px; padding:9px 12px; font-size:13.5px; font-weight:700; cursor:pointer; text-align:center; color:var(--ink); transition:.15s;}
+.match-tile.selected{border-color:var(--tab); background:var(--cream); box-shadow:inset 0 0 0 1.5px var(--tab);}
+.match-tile.matched{background:var(--sage-bg); border-color:var(--sage); color:#2f5741; cursor:default;}
+.match-tile.wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+
+.read-text{background:#fff; border:1.5px solid var(--line); border-radius:14px; padding:18px 20px; margin:16px 0; font-size:14.5px;}
+.read-text p{margin:0 0 10px;}
+.read-text p:last-child{margin-bottom:0;}
+.tf-item{display:flex; align-items:center; justify-content:space-between; gap:10px; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:9px 14px; margin-bottom:8px;}
+.tf-text{font-size:13.5px; flex:1;}
+.tf-btns{display:flex; gap:6px; flex-shrink:0;}
+.tf-btn{border:1.5px solid var(--line); background:var(--cream); padding:5px 12px; border-radius:16px; font-weight:800; font-size:12.5px; cursor:pointer; color:var(--ink-soft);}
+.tf-btn.sel-correct{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.tf-btn.sel-wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+.tf-btn.reveal-correct{box-shadow:inset 0 0 0 1px var(--sage); border-color:var(--sage);}
+
+.tts-warn{display:none; font-size:12.5px; color:var(--coral); background:var(--coral-bg); padding:8px 12px; border-radius:6px; margin:8px 0 0;}
+.tts-warn.shown{display:block;}
+.voice-picker{display:flex; align-items:center; gap:8px; flex-wrap:wrap; background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:8px 12px; margin-top:10px; font-size:13px;}
+.voice-picker label{font-weight:700; color:var(--ink-soft);}
+.voice-picker select{border:1.5px solid var(--line); border-radius:6px; padding:4px 8px; font-family:'Nunito'; font-size:13px; background:#fff; color:var(--ink); max-width:220px;}
+.voice-hint{font-size:11.5px; color:var(--ink-soft); flex-basis:100%;}
+.sound-block{margin-top:22px; padding-top:16px; border-top:1px dashed var(--line);}
+.sound-block:first-of-type{border-top:none; margin-top:16px;}
+.sound-block h3{font-size:15.5px; margin:0 0 6px; color:var(--brick-dark); font-weight:700;}
+.ipa{font-family:'Nunito'; font-weight:500; font-size:12px; color:var(--ink-soft); font-style:italic;}
+.sound-note{font-size:13.5px; color:var(--ink-soft); margin:0 0 12px;}
+.sound-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+.sound-grid.three{grid-template-columns:repeat(3,1fr);}
+@media(max-width:600px){.sound-grid, .sound-grid.three{grid-template-columns:1fr;}}
+.sound-pair{background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px;}
+.sound-pair.wide{grid-column:1/-1;}
+.sp-text{font-size:14.5px; font-weight:600; flex:1;}
+.sp-text.big{font-size:19px; text-align:center; font-family:'Comfortaa',sans-serif; color:var(--brick-dark);}
+.sp-controls{display:flex; gap:6px; flex-shrink:0;}
+.play-btn{border:1.5px solid var(--line); background:var(--cream); cursor:pointer; border-radius:8px; padding:6px 10px; font-size:15px; line-height:1; transition:.15s;}
+.play-btn:hover{background:var(--tab); border-color:var(--tab-dark);}
+.play-btn.playing{background:var(--brick); border-color:var(--brick-dark);}
+b.stress{color:var(--brick-dark); text-decoration:underline; text-decoration-color:var(--gold); text-decoration-thickness:2px; text-underline-offset:3px;}
+
+.prompt-list{list-style:none; padding:0; margin:14px 0; display:grid; gap:8px;}
+.prompt-list li{background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:8px 12px; font-size:13.5px; display:flex; gap:8px; align-items:baseline;}
+.prompt-list li b{color:var(--brick-dark); font-family:'Comfortaa',sans-serif;}
+textarea.write-area{width:100%; min-height:140px; border:1.5px solid var(--line); border-radius:10px; padding:14px; font-family:'Nunito'; font-size:14.5px; color:var(--ink); background:#FFFDFB; resize:vertical;}
+textarea.write-area:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.word-count{font-size:12.5px; color:var(--ink-soft); margin-top:6px;}
+.cue-cards{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;}
+.cue-card{background:#fff; border:1.5px dashed var(--gold); border-radius:10px; padding:10px 14px; font-size:13px; width:160px; color:var(--ink-soft); font-style:italic;}
+.cue-card b{display:block; font-style:normal; color:var(--brick-dark); font-family:'Comfortaa',sans-serif; font-size:14px; margin-bottom:3px;}
+.reveal-box{margin-top:14px; border-left:3px solid var(--tab); background:var(--cream); padding:12px 16px; border-radius:6px; font-size:13.5px; display:none;}
+.reveal-box.shown{display:block;}
+
+.hw-list{display:flex; flex-direction:column; gap:10px; margin-top:16px;}
+.hw-item{display:flex; gap:10px; align-items:flex-start; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:11px 14px; font-size:13.5px; cursor:pointer; transition:.15s;}
+.hw-item:has(.hw-check:checked){background:var(--sage-bg); border-color:var(--sage);}
+.hw-check{margin-top:3px; width:16px; height:16px; accent-color:var(--sage); flex-shrink:0;}
+.hw-item b{color:var(--brick-dark); font-family:'Comfortaa',sans-serif;}
+.hw-item i{color:var(--ink-soft); font-style:italic;}
+
+@media print{
+  .topbar, .unit-banner, #presentation, #vocabulary, #practice, #reading, #sounds, #production, .badge-final, .footer-note, .no-print{ display:none !important; }
+  body{ background:#fff; padding:0; }
+  .page{ box-shadow:none; border:none; margin:0; max-width:100%; }
+  .section{ border-top:none; }
+  .section .tab{ display:none; }
+  .section .content{ padding:10px; }
+  .hw-item{ break-inside:avoid; }
+}
+
+.footer-note{text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:24px; padding:0 20px;}
+.badge-final{display:none; text-align:center; margin:26px auto 0; max-width:900px; background:linear-gradient(135deg, var(--sage), #3d7357); color:#fff; border-radius:14px; padding:22px; font-family:'Comfortaa',sans-serif; font-size:19px; font-weight:700; box-shadow:var(--shadow);}
+.badge-final.shown{display:block; animation:fadeIn .5s ease;}
+.badge-final span{display:block; font-family:'Nunito'; font-weight:500; font-size:13.5px; margin-top:6px; opacity:.9;}
+
+/* Generated textbook illustrations; contain each complete scene without cropping. */
+.dialog-figure.art-figure{width:148px}
+.lisa-figure.art-figure{width:164px}
+.dialog-avatar.art-avatar{width:144px;height:auto}
+.lisa-avatar.art-avatar{width:160px;height:auto}
+.art-avatar img.lesson-portrait{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--line);box-shadow:0 5px 16px rgba(150,80,100,.10)}
+.scene-box img.lesson-scene{display:block;width:100%;max-width:720px;height:auto;margin:0 auto;border-radius:10px}
+.pic-slot img.lesson-scene{display:block;width:100%;height:auto;max-height:none;object-fit:contain}
+@media(max-width:560px){
+ .dialog-wrap .art-figure{width:112px}
+ .dialog-avatar.art-avatar{width:108px}
+ .dialog-wrap .dialog-bubbles{min-width:0;flex-basis:100%;max-width:none;order:2}
+ .dialog-wrap .dialog-figure:last-child{order:1}
+ .dialog-wrap .dialog-figure:first-child{order:0}
+ .lisa-avatar.art-avatar{width:140px}
+ .scene-box{padding:10px}
+}
+
+</style>
+<link rel="stylesheet" href="../lesson-theme.css"></head>
+<body><div class="topbar">
+  <div class="book-title">Essential Grammar · Unit 50</div>
+  <div class="progress-steps">
+    <div class="pstep" id="step-p"><i id="bar-p"></i></div>
+    <div class="pstep" id="step-vocab"><i id="bar-vocab"></i></div>
+    <div class="pstep" id="step-pr"><i id="bar-pr"></i></div>
+    <div class="pstep" id="step-read"><i id="bar-read"></i></div>
+    <div class="pstep" id="step-sound"><i id="bar-sound"></i></div>
+    <div class="pstep" id="step-listen"><i id="bar-listen"></i></div>
+    <div class="pstep" id="step-prod"><i id="bar-prod"></i></div>
+    <div class="pstep" id="step-hw"><i id="bar-hw"></i></div>
+  </div>
+  <div class="score-pill">★ <span id="scoreDisplay">0</span>/20</div>
+</div>
+
+<div class="page"><div class="unit-banner">
+    <div class="unit-tag"><span class="u">UNIT</span><span class="n">50</span></div>
+    <h1>She said that … He told me that …</h1>
+    <p>Передаём чужие слова: am/is → was, can → could, will → would; say и tell</p>
+  </div><div class="section" id="presentation">
+    <div class="tab">A</div>
+    <div class="content">
+      <div class="eyebrow">Presentation</div>
+      <h2>She said that … He told me that …</h2>
+      <div class="gram-box" style="margin:14px 0"><h3>A · Что сказали друзья</h3><div style="display:flex;gap:12px;flex-wrap:wrap;margin:12px 0"><div style="flex:1 1 240px"><p>Last week you went to a party. A lot of your friends were there. Here are some things they said to you:</p></div><div style="flex:1 1 240px"><p>Today you meet Paul. You tell him about the party. You tell Paul what your friends said:</p></div></div><div style="border-top:1px solid #F1D9DF;padding:8px 0"><div class="dialog-wrap"><div class="dialog-figure art-figure"><div class="dialog-avatar art-avatar"><img class="lesson-portrait" src="img/lisa-v1.webp" data-lesson-image="img/lisa-v1.webp" alt="Лиза." width="480" height="600" decoding="async"></div><div class="name">CLARE</div></div><div class="dialog-bubbles"><div class="d-bubble q"><b>I'm</b> enjoying my new job.</div><div class="d-bubble q"><b>My father isn't</b> well.</div></div></div><div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center"><div style="flex:0 0 120px;text-align:center;font-weight:800;line-height:1.6">am<br>is → was</div><div style="flex:1 1 260px"><ul class="prompt-list"><li><span style="display:block">Clare said that <b>she was</b> enjoying her new job.</span></li><li><span style="display:block">She said that <b>her father wasn't</b> well.</span></li></ul></div></div></div><div style="border-top:1px solid #F1D9DF;padding:8px 0"><div class="dialog-wrap"><div class="dialog-figure art-figure"><div class="dialog-avatar art-avatar"><img class="lesson-portrait" src="img/mia-v1.webp" data-lesson-image="img/mia-v1.webp" alt="Миа." width="480" height="600" decoding="async"></div><div class="name">SARAH</div></div><div class="dialog-bubbles"><div class="d-bubble q"><b>We're</b> going to buy a house.</div></div><div class="dialog-figure art-figure"><div class="dialog-avatar art-avatar"><img class="lesson-portrait" src="img/tom-v1.webp" data-lesson-image="img/tom-v1.webp" alt="Том." width="480" height="600" decoding="async"></div><div class="name">BEN</div></div></div><div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center"><div style="flex:0 0 120px;text-align:center;font-weight:800;line-height:1.6">are → were</div><div style="flex:1 1 260px"><ul class="prompt-list"><li><span style="display:block">Sarah and Ben said that <b>they were</b> going to buy a house.</span></li></ul></div></div></div><div style="border-top:1px solid #F1D9DF;padding:8px 0"><div class="dialog-wrap"><div class="dialog-figure art-figure"><div class="dialog-avatar art-avatar"><img class="lesson-portrait" src="img/james-v1.webp" data-lesson-image="img/james-v1.webp" alt="Джеймс в терракотовом свитере." width="480" height="600" decoding="async"></div><div class="name">PETER</div></div><div class="dialog-bubbles"><div class="d-bubble q"><b>I have</b> to leave early.</div><div class="d-bubble q"><b>My sister has</b> gone to Australia.</div></div></div><div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center"><div style="flex:0 0 120px;text-align:center;font-weight:800;line-height:1.6">have<br>has → had</div><div style="flex:1 1 260px"><ul class="prompt-list"><li><span style="display:block">Peter said that <b>he had</b> to leave early.</span></li><li><span style="display:block">He said that <b>his sister had</b> gone to Australia.</span></li></ul></div></div></div><div style="border-top:1px solid #F1D9DF;padding:8px 0"><div class="dialog-wrap"><div class="dialog-figure art-figure"><div class="dialog-avatar art-avatar"><img class="lesson-portrait" src="img/anna-v1.webp" data-lesson-image="img/anna-v1.webp" alt="Анна в зелёной блузке с кремовым воротником." width="480" height="600" decoding="async"></div><div class="name">KATE</div></div><div class="dialog-bubbles"><div class="d-bubble q"><b>I can't</b> find a job.</div></div></div><div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center"><div style="flex:0 0 120px;text-align:center;font-weight:800;line-height:1.6">can → could</div><div style="flex:1 1 260px"><ul class="prompt-list"><li><span style="display:block">Kate said that <b>she couldn't</b> find a job.</span></li></ul></div></div></div><div style="border-top:1px solid #F1D9DF;padding:8px 0"><div class="dialog-wrap"><div class="dialog-figure art-figure"><div class="dialog-avatar art-avatar"><img class="lesson-portrait" src="img/david-v1.webp" data-lesson-image="img/david-v1.webp" alt="Дэвид." width="480" height="600" decoding="async"></div><div class="name">STEVE</div></div><div class="dialog-bubbles"><div class="d-bubble q"><b>I'll</b> phone you.</div></div></div><div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center"><div style="flex:0 0 120px;text-align:center;font-weight:800;line-height:1.6">will → would</div><div style="flex:1 1 260px"><ul class="prompt-list"><li><span style="display:block">Steve said that <b>he would</b> phone me.</span></li></ul></div></div></div><div style="border-top:1px solid #F1D9DF;padding:8px 0"><div class="dialog-wrap"><div class="dialog-figure art-figure"><div class="dialog-avatar art-avatar"><img class="lesson-portrait" src="img/interviewer-v1.webp" data-lesson-image="img/interviewer-v1.webp" alt="Женщина в деловом костюме." width="480" height="600" decoding="async"></div><div class="name">RACHEL</div></div><div class="dialog-bubbles"><div class="d-bubble q"><b>I don't</b> like my job.</div><div class="d-bubble q"><b>My son doesn't</b> like school.</div></div></div><div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center"><div style="flex:0 0 120px;text-align:center;font-weight:800;line-height:1.6">do<br>does → did</div><div style="flex:1 1 260px"><ul class="prompt-list"><li><span style="display:block">Rachel said that <b>she didn't</b> like her job.</span></li><li><span style="display:block">She said that <b>her son didn't</b> like school.</span></li></ul></div></div></div><div style="border-top:1px solid #F1D9DF;padding:8px 0"><div class="dialog-wrap"><div class="dialog-figure art-figure"><div class="dialog-avatar art-avatar"><img class="lesson-portrait" src="img/tom-v1.webp" data-lesson-image="img/tom-v1.webp" alt="Том." width="480" height="600" decoding="async"></div><div class="name">MIKE</div></div><div class="dialog-bubbles"><div class="d-bubble q">You <b>look</b> tired.</div><div class="d-bubble a">I <b>feel</b> fine.</div></div><div class="dialog-figure art-figure"><div class="dialog-avatar art-avatar"><img class="lesson-portrait" src="img/anna-v1.webp" data-lesson-image="img/anna-v1.webp" alt="Анна в зелёной блузке с кремовым воротником." width="480" height="600" decoding="async"></div><div class="name">YOU</div></div></div><div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center"><div style="flex:0 0 120px;text-align:center;font-weight:800;line-height:1.6">look → looked<br>feel → felt<br>etc. → etc.<br><span style='font-weight:400;font-size:13px'>(present) → (past)</span></div><div style="flex:1 1 260px"><ul class="prompt-list"><li><span style="display:block">Mike said that <b>I looked</b> tired.</span></li><li><span style="display:block">I said that <b>I felt</b> fine.</span></li></ul></div></div></div></div>
+      <div class="gram-box" style="margin:14px 0"><h3>B · say и tell</h3><div style="display:flex;gap:12px;flex-wrap:wrap;margin:12px 0"><div style="flex:1 1 240px"><p><b>say</b> (→ <b>said</b>)</p><ul class="prompt-list"><li><span style="display:block">He <b>said</b> that he was tired.<br><i>(не He said me)</i></span></li><li><span style="display:block">What did she <b>say to</b> you?<br><i>(не say you)</i></span></li></ul><p>Говорим <b>he said to me, I said to Ann</b> etc.<br><i>(не 'he said me', 'I said Ann')</i>.</p></div><div style="flex:1 1 240px"><p><b>tell</b> (→ <b>told</b>)</p><ul class="prompt-list"><li><span style="display:block">He <b>told me</b> that he was tired.<br><i>(не He told that)</i></span></li><li><span style="display:block">What did she <b>tell you</b>?<br><i>(не tell to you)</i></span></li></ul><p>Говорим <b>he told me, I told Ann</b> etc.<br><i>(не 'he told to me', 'I told to Ann')</i>.</p></div></div></div>
+      <div class="gram-box" style="margin:14px 0"><h3>C · that можно не говорить</h3><ul class="prompt-list"><li><span style="display:block">He said <b>that</b> he was tired. <i>or</i> He said he was tired. (без that)</span></li><li><span style="display:block">Kate told me <b>that</b> she couldn't find a job. <i>or</i> Kate told me she couldn't find a job.</span></li></ul></div>
+    </div>
+  </div><div class="section" id="vocabulary"><div class="tab">B</div><div class="content"><div class="eyebrow">Vocabulary</div><h2>Новые слова этого урока</h2><p class="lead">Нажмите на динамик, чтобы услышать слово. Все слова встретятся дальше в чтении и упражнениях.</p><div id="vocabTable" class="vocab-table"></div><h3>Соседи слов <span class="ipa">chunks / collocations</span></h3><p class="sound-note">Учите сочетаниями: так слова легче вспоминаются в речи.</p><div id="chunkGrid" class="chunk-grid"></div></div></div><div class="section" id="practice">
+    <div class="tab">C</div>
+    <div class="content">
+      <div class="eyebrow">Practice</div>
+      <h2>Тренируемся</h2>
+      <p class="lead">Выберите игру и заработайте звёзды ★. Ответы проверяются сразу.</p>
+      <div class="game-tabs">
+        <button class="game-tab-btn active" data-panel="panel-fill">✏️ was / had / could / would</button>
+        <button class="game-tab-btn" data-panel="panel-memo">🃏 Мемо</button>
+        <button class="game-tab-btn" data-panel="panel-quiz">⚡ Квиз</button>
+        <button class="game-tab-btn" data-panel="panel-vocabmatch">📚 Лексика</button>
+      </div>
+      <div class="game-panel active" id="panel-fill">
+        <p class="lead" style="margin-top:0">Впишите глагол в прошедшем времени или say / tell.</p>
+        <div id="fillList"></div>
+        <div class="actions-row">
+          <button class="btn" id="checkFillBtn">Проверить</button>
+          <button class="btn secondary small" id="resetFillBtn">Сбросить</button>
+          <span class="fb-line" id="fillFeedback"></span>
+        </div>
+      </div>
+      <div class="game-panel" id="panel-memo">
+        <p class="lead" style="margin-top:0">Найдите пары: английское слово и его русский перевод.</p>
+        <div class="memo-wrap">
+          <div class="memo-grid" id="memoGrid"></div>
+          <div class="memo-status" id="memoStatus">Найдено пар: 0 / 6</div>
+          <button class="btn secondary small" id="restartMemoBtn">Перемешать заново</button>
+        </div>
+      </div>
+      <div class="game-panel" id="panel-quiz">
+        <div id="quizList"></div>
+        <div class="actions-row"><span class="fb-line" id="quizFeedback"></span></div>
+      </div>
+      <div class="game-panel" id="panel-vocabmatch">
+        <p class="lead" style="margin-top:0">Нажмите на английское слово, затем на его перевод.</p>
+        <div class="match-wrap">
+          <div class="match-col" id="matchEnCol"></div>
+          <div class="match-col" id="matchRuCol"></div>
+        </div>
+        <div class="actions-row">
+          <span class="fb-line" id="matchStatus">Найдено пар: 0 / 10</span>
+          <button class="btn secondary small" id="restartMatchBtn">Перемешать заново</button>
+        </div>
+      </div>
+    </div>
+  </div><div class="section alt" id="reading">
+    <div class="tab">D</div>
+    <div class="content"><div class="actions-row"><button class="btn secondary small" id="playReadingBtn">🔊 Прослушать текст</button><button class="btn secondary stop-audio">Остановить</button></div>
+      <div class="eyebrow">Reading</div>
+      <h2>News from Olga</h2>
+      <p class="lead">Найдите все предложения с said и told. Какие слова Ольга сказала на самом деле?</p>
+      <div class="read-text"><p>Yesterday I met my old friend Olga in town. She told me a lot of <span class="chunk">news</span>. She said that she was living in Moscow now.</p><p>She said that she had a new job and that she was very happy there. She told me that her brother had got <span class="chunk">married</span> last month.</p><p>I asked about her <span class="chunk">parents</span>. Olga said that her mother wasn't well, but her father was fine. She said she couldn't visit them very often.</p><p>Before she left, Olga said that she would phone me next week. She told me I looked great! I said that I <span class="chunk">felt</span> great too.</p></div>
+    <h3>1 · True / False</h3><div id="tfList"></div><div class="fb-line" id="tfFeedback"></div><h3>2 · Новости</h3><p class="sound-note">Впишите слово.</p><div id="tomFillList"></div><div class="actions-row"><button class="btn small" id="checkTomBtn">Проверить</button><span class="fb-line" id="tomFeedback"></span></div><h3>3 · Слова из текста</h3><div id="readFillList"></div><div class="actions-row"><button class="btn small" id="checkReadFillBtn">Проверить</button><span class="fb-line" id="readFillFeedback"></span></div>
+  </div></div><div class="section" id="sounds">
+    <div class="tab">E</div>
+    <div class="content"><p class="mini-note">Синтезированный голос помогает прочитать фразы, но не гарантирует точную интонацию. Повторяйте за ним и сравнивайте.</p>
+      <div class="eyebrow">Sounds &amp; Speech</div>
+      <h2>Косвенная речь на слух</h2>
+      <p class="lead">Слушайте и повторяйте.</p>
+      <p class="tts-warn" id="ttsWarn"></p>
+      <div class="sound-block"><h3>1 · She said that …</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">Clare said that she was enjoying her new job.</div><div class="sp-controls"><button class="play-btn" data-text="Clare said that she was enjoying her new job." data-rate="1">🔊</button><button class="play-btn slow" data-text="Clare said that she was enjoying her new job." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">Peter said that he had to leave early.</div><div class="sp-controls"><button class="play-btn" data-text="Peter said that he had to leave early." data-rate="1">🔊</button><button class="play-btn slow" data-text="Peter said that he had to leave early." data-rate="0.6">🐢</button></div></div></div></div><div class="sound-block"><h3>2 · could / would / didn't</h3><div class="sound-grid three"><div class="sound-pair"><div class="sp-text">Kate said that she couldn't find a job.</div><div class="sp-controls"><button class="play-btn" data-text="Kate said that she couldn&#x27;t find a job." data-rate="1">🔊</button><button class="play-btn slow" data-text="Kate said that she couldn&#x27;t find a job." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">Steve said that he would phone me.</div><div class="sp-controls"><button class="play-btn" data-text="Steve said that he would phone me." data-rate="1">🔊</button><button class="play-btn slow" data-text="Steve said that he would phone me." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">Rachel said that she didn't like her job.</div><div class="sp-controls"><button class="play-btn" data-text="Rachel said that she didn&#x27;t like her job." data-rate="1">🔊</button><button class="play-btn slow" data-text="Rachel said that she didn&#x27;t like her job." data-rate="0.6">🐢</button></div></div></div></div><div class="sound-block"><h3>3 · say и tell</h3><div class="sound-grid three"><div class="sound-pair"><div class="sp-text">He said that he was tired.</div><div class="sp-controls"><button class="play-btn" data-text="He said that he was tired." data-rate="1">🔊</button><button class="play-btn slow" data-text="He said that he was tired." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">He told me that he was tired.</div><div class="sp-controls"><button class="play-btn" data-text="He told me that he was tired." data-rate="1">🔊</button><button class="play-btn slow" data-text="He told me that he was tired." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">What did she tell you?</div><div class="sp-controls"><button class="play-btn" data-text="What did she tell you?" data-rate="1">🔊</button><button class="play-btn slow" data-text="What did she tell you?" data-rate="0.6">🐢</button></div></div></div></div>
+      <div class="actions-row">
+        <button class="btn secondary small" id="playAllBtn">🔊 Прослушать всё подряд</button>
+      </div>
+    </div>
+  </div><div class="section alt" id="listening">
+    <div class="tab">F</div>
+    <div class="content">
+      <div class="eyebrow">Listening</div>
+      <h2>Слушаем вслепую</h2>
+      <p class="lead">Друзья обсуждают, что сказал Том.</p>
+      <div class="speed-picker">
+        <label>Скорость:</label>
+        <div class="speed-btns">
+          <button class="speed-btn" data-rate="0.6">🐢 Медленно</button>
+          <button class="speed-btn active" data-rate="0.95">🔊 Обычно</button>
+        </div>
+      </div>
+      <div class="actions-row">
+        <button class="btn secondary stop-audio">Остановить</button>
+        <button class="btn" id="playListeningBtn">▶️ Слушать диалог</button>
+      </div>
+      <h3 style="font-size:14.5px; margin:18px 0 8px; color:var(--brick-dark);">Вопросы по прослушанному</h3>
+      <div id="lsList"></div>
+      <div class="actions-row"><span class="fb-line" id="lsFeedback"></span></div>
+      <div class="actions-row">
+        <button class="btn secondary small" id="toggleScriptBtn" disabled="">📜 Скрипт — после ответов на все вопросы</button>
+      </div>
+      <div class="reveal-box" id="scriptBox">What did Tom say to you?
+He said that he was tired.
+Did he tell you about his new flat?
+Yes, he told me that it was very small.
+What else did he say?
+He said he would call you tomorrow.</div>
+    </div>
+  </div><div class="section alt" id="production">
+    <div class="tab">G</div>
+    <div class="content">
+      <div class="eyebrow">Production</div>
+      <h2>Что мне сказали</h2>
+      <p class="lead">Вспомните разговор с другом или коллегой. Напишите 6–8 предложений: что он(а) сказал(а). Используйте said that / told me that, was, had, could, would, didn't.</p>
+      <ul class="prompt-list"><li><b>… said that she was …</b></li><li><b>… told me that he had …</b></li><li><b>… said that they couldn't …</b></li><li><b>… said that she would …</b></li></ul>
+      <textarea class="write-area" id="writeArea" placeholder="My friend said that she was..."></textarea>
+      <div class="word-count" id="wordCount">0 слов</div>
+      <div class="actions-row">
+        <button class="btn" id="finishBtn">Готово!</button>
+        <button class="btn secondary" id="sampleBtn">Показать пример</button>
+      </div>
+      <div class="reveal-box" id="sampleBox"><b>Пример:</b> Yesterday I talked to my colleague Irina. She said that she was very tired. She told me that her son was ill and she couldn't sleep. She said that she had to leave early. She told me that she didn't like her new office. She said she would come to the party on Saturday. I said that I felt fine.</div>
+      <div class="cue-cards">
+        <div class="cue-card"><b>Карточка 1</b>Партнёр говорит 3 фразы о себе — перескажите их: He said that…</div>
+        <div class="cue-card"><b>Карточка 2</b>What did your friend tell you yesterday? — расскажите.</div>
+        <div class="cue-card"><b>Карточка 3</b>say или tell? — составьте по 2 предложения.</div>
+      </div>
+    </div>
+  </div><div class="section" id="homework">
+    <div class="tab">H</div>
+    <div class="content">
+      <div class="eyebrow">Homework</div>
+      <h2>Домашнее задание</h2>
+      <p class="lead">Отметьте галочкой то, что выполнили. Можно распечатать этот блок.</p>
+      <div class="hw-list">
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>1. Письменно.</b> Перескажите 8 прямых фраз в косвенной речи.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>2. say / tell.</b> Напишите 3 предложения с said to и 3 — с told me.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>3. Слушаем и повторяем.</b> Откройте блок <i>E · Sounds</i> и повторите фразы по три раза.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>4. Слова.</b> Выучите 12 новых слов из блока B.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>5. Повторение.</b> Вернитесь в блок <i>C · Practice</i> и пройдите квиз ещё раз без ошибок.</span></label>
+      </div>
+      <div class="actions-row">
+        <span class="fb-line" id="hwFeedback">Выполнено: 0 / 5</span>
+        <button class="btn secondary small no-print" id="printHwBtn">🖨️ Распечатать задание</button>
+      </div>
+    </div>
+  </div></div><div class="badge-final" id="finalBadge">Урок пройден!<span>Все обязательные задания выполнены.</span></div>
+
+<p class="footer-note">Based on Essential Grammar in Use, 4th Edition (Cambridge University Press, 2015), Unit 50 — original exercises created for this lesson.</p>
+<script src="../lesson-kit.js?v=20261018-games1"></script><script src="../lesson-template.js?v=20261018-games1"></script><script>window.lessonConfig={"vocabData": [{"word": "say", "ipa": "/seɪ/", "ru": "говорить, сказать"}, {"word": "said", "ipa": "/sed/", "ru": "сказал (прош. от say)"}, {"word": "tell", "ipa": "/tel/", "ru": "сказать (кому-то), рассказать"}, {"word": "told", "ipa": "/təʊld/", "ru": "сказал (прош. от tell)"}, {"word": "leave early", "ipa": "/liːv ˈɜːli/", "ru": "уйти рано"}, {"word": "find a job", "ipa": "/faɪnd ə dʒɒb/", "ru": "найти работу"}, {"word": "phone", "ipa": "/fəʊn/", "ru": "звонить"}, {"word": "feel fine", "ipa": "/fiːl faɪn/", "ru": "чувствовать себя хорошо"}, {"word": "look tired", "ipa": "/lʊk ˈtaɪəd/", "ru": "выглядеть уставшим"}, {"word": "news", "ipa": "/njuːz/", "ru": "новости"}, {"word": "well", "ipa": "/wel/", "ru": "здоров (о самочувствии)"}, {"word": "son", "ipa": "/sʌn/", "ru": "сын"}], "chunkData": [{"en": "She said that…", "ipa": "", "ru": "Она сказала, что…"}, {"en": "He told me that…", "ipa": "", "ru": "Он сказал мне, что…"}, {"en": "What did she say to you?", "ipa": "", "ru": "Что она тебе сказала?"}, {"en": "What did she tell you?", "ipa": "", "ru": "Что она тебе сказала?"}, {"en": "enjoy a new job", "ipa": "", "ru": "нравится новая работа"}, {"en": "isn't well", "ipa": "", "ru": "нездоров"}, {"en": "go to a party", "ipa": "", "ru": "пойти на вечеринку"}, {"en": "I feel fine", "ipa": "", "ru": "я чувствую себя хорошо"}], "fillData": [{"sentence": "'I'm enjoying my new job.' → Clare said that she ___ enjoying her new job.", "answers": ["was"]}, {"sentence": "'My father isn't well.' → She said that her father ___ well.", "answers": ["wasn't", "was not"]}, {"sentence": "'We're going to buy a house.' → They said that they ___ going to buy a house.", "answers": ["were"]}, {"sentence": "'I have to leave early.' → Peter said that he ___ to leave early.", "answers": ["had"]}, {"sentence": "'I can't find a job.' → Kate said that she ___ find a job.", "answers": ["couldn't", "could not"]}, {"sentence": "'I'll phone you.' → Steve said that he ___ phone me.", "answers": ["would"]}, {"sentence": "'I don't like my job.' → Rachel said that she ___ like her job.", "answers": ["didn't", "did not"]}, {"sentence": "'You look tired.' → Mike said that I ___ tired.", "answers": ["looked"]}, {"sentence": "'I feel fine.' → I said that I ___ fine.", "answers": ["felt"]}, {"sentence": "He ___ me that he was tired. (tell)", "answers": ["told"]}, {"sentence": "What did she ___ to you? (say)", "answers": ["say"]}, {"sentence": "What did she ___ you? (tell)", "answers": ["tell"]}], "memoPairs": [["say", "говорить, сказать"], ["tell", "сказать (кому-то), рассказать"], ["news", "новости"], ["son", "сын"], ["feel fine", "чувствовать себя хорошо"], ["leave early", "уйти рано"]], "quizData": [{"q": "He ___ that he was tired.", "opts": ["said", "told"], "correct": "said"}, {"q": "He ___ me that he was tired.", "opts": ["told", "said"], "correct": "told"}, {"q": "What did she ___ to you?", "opts": ["say", "tell"], "correct": "say"}, {"q": "What did she ___ you?", "opts": ["tell", "say"], "correct": "tell"}, {"q": "'I can't swim.' → She said she ___ swim.", "opts": ["couldn't", "can't not"], "correct": "couldn't"}, {"q": "'I'll call you.' → He said he ___ call me.", "opts": ["would", "will"], "correct": "would"}, {"q": "'I have a car.' → She said she ___ a car.", "opts": ["had", "has"], "correct": "had"}, {"q": "'We're tired.' → They said they ___ tired.", "opts": ["were", "are"], "correct": "were"}], "matchWords": [{"en": "say", "ru": "говорить, сказать"}, {"en": "said", "ru": "сказал (прош. от say)"}, {"en": "tell", "ru": "сказать (кому-то), рассказать"}, {"en": "told", "ru": "сказал (прош. от tell)"}, {"en": "leave early", "ru": "уйти рано"}, {"en": "find a job", "ru": "найти работу"}, {"en": "phone", "ru": "звонить"}, {"en": "feel fine", "ru": "чувствовать себя хорошо"}, {"en": "look tired", "ru": "выглядеть уставшим"}, {"en": "news", "ru": "новости"}], "tfGroups": {"tfList": {"data": [{"text": "Olga is living in Moscow now.", "correct": true}, {"text": "Olga hasn't got a job.", "correct": false}, {"text": "Her brother got married.", "correct": true}, {"text": "Her mother was fine.", "correct": false}, {"text": "Olga said she would phone next week.", "correct": true}, {"text": "Olga said the writer looked tired.", "correct": false}], "feedback": "tfFeedback"}, "lsList": {"data": [{"text": "Tom said he was tired.", "correct": true}, {"text": "Tom's flat is very big.", "correct": false}, {"text": "Tom will call tomorrow.", "correct": true}, {"text": "Tom didn't say anything about the flat.", "correct": false}], "feedback": "lsFeedback"}}, "readFillData": [{"sentence": "She ___ me a lot of news.", "answers": ["told"]}, {"sentence": "She said that she ___ living in Moscow now.", "answers": ["was"]}, {"sentence": "She said that she ___ a new job.", "answers": ["had"]}, {"sentence": "Olga said that her mother ___ well.", "answers": ["wasn't", "was not"]}, {"sentence": "She said she ___ visit them very often.", "answers": ["couldn't", "could not"]}, {"sentence": "Olga said that she ___ phone me next week.", "answers": ["would"]}], "tomData": [{"sentence": "Yesterday I met my old ___ Olga.", "answers": ["friend"]}, {"sentence": "Her brother had got ___ last month.", "answers": ["married"]}, {"sentence": "I asked about her ___.", "answers": ["parents"]}, {"sentence": "Her father was ___.", "answers": ["fine"]}, {"sentence": "She told me I ___ great!", "answers": ["looked"]}, {"sentence": "I said that I ___ great too.", "answers": ["felt"]}], "slug": "urok-she-said-that", "exam": false, "legacySignature": "", "legacyFields": [], "questionTask": false, "listeningLines": ["What did Tom say to you?", "He said that he was tired.", "Did he tell you about his new flat?", "Yes, he told me that it was very small.", "What else did he say?", "He said he would call you tomorrow."], "readingLines": ["Yesterday I met my old friend Olga in town. She told me a lot of news. She said that she was living in Moscow now.", "She said that she had a new job and that she was very happy there. She told me that her brother had got married last month.", "I asked about her parents. Olga said that her mother wasn't well, but her father was fine. She said she couldn't visit them very often.", "Before she left, Olga said that she would phone me next week. She told me I looked great! I said that I felt great too."]};
+LessonTemplate.mount(window.lessonConfig);</script></body></html>
