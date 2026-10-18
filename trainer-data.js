@@ -520,6 +520,27 @@ const T=[
    O('I have made some coffee.',"I've made some coffee."),
    O('Butter is made from milk.')
   ]},
+  {id:25,title:'What are you doing tomorrow?',emoji:'🗓️',rule:'Present continuous (am/is/are + -ing) — для планов и договорённостей: I\'m playing tennis tomorrow. Are you going out tonight? (не Do you go). Present simple — для расписаний: The train arrives at 7.30. What time does the film start?',
+  items:[
+   C("I ___ tennis tomorrow.","'m playing",'play','played'),
+   C('___ you going out tonight?','Are','Do','Did'),
+   C('The train ___ at 7.30.','arrives','is arriving','arrive'),
+   C('What time ___ the film finish?','does','is','do'),
+   C('Lisa ___ to the party next week.',"isn't coming","doesn't come","not come"),
+   C("I ___ at home this evening.","'m staying",'stay','stays'),
+   C('What time ___ you leaving?','are','do','does'),
+   C('The concert ___ at 7.30.','starts','is starting','start'),
+   C('Какое предложение правильное?',"I'm meeting Anna tomorrow.","I meet Anna tomorrow.","I'm meet Anna tomorrow."),
+   C('What ___ you doing tomorrow evening?','are','do','will'),
+   F('Sophie ___ (go) to the dentist on Friday.','is going',"'s going"),
+   F('We ___ (have) a party next weekend.','are having',"'re having"),
+   F('I ___ (not/work) next week.','am not working',"'m not working"),
+   F('The train ___ (leave) at 8.15.','leaves'),
+   F('___ you meeting your friends tonight?','Are'),
+   O("I'm playing tennis tomorrow.","I am playing tennis tomorrow."),
+   O('What are you doing tomorrow evening?'),
+   O('The train arrives at 7.30.')
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),

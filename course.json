@@ -271,6 +271,19 @@
               "file": "lessons/urok-regular-irregular.html"
             }
           ]
+        },
+        {
+          "id": "modul-7",
+          "title": "Модуль 7",
+          "lessons": [
+            {
+              "id": "urok-present-continuous-future",
+              "unit": 1,
+              "title": "What are you doing tomorrow?",
+              "description": "Present continuous для планов; present simple для расписаний",
+              "file": "lessons/urok-present-continuous-future.html"
+            }
+          ]
         }
       ]
     },
