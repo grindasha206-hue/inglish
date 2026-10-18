@@ -415,6 +415,33 @@
               "file": "lessons/itogovyi-test-there-it.html"
             }
           ]
+        },
+        {
+          "id": "modul-10",
+          "title": "Модуль 10",
+          "lessons": [
+            {
+              "id": "urok-i-am-i-dont",
+              "unit": 1,
+              "title": "I am, I don't etc.",
+              "description": "Краткие ответы: but he is, but she doesn't, Yes, I am",
+              "file": "lessons/urok-i-am-i-dont.html"
+            },
+            {
+              "id": "urok-have-you-are-you",
+              "unit": 2,
+              "title": "Have you? Are you? Don't you?",
+              "description": "Реакции-вопросы (Have you?) и question tags (isn't it?)",
+              "file": "lessons/urok-have-you-are-you.html"
+            },
+            {
+              "id": "urok-so-am-i-neither",
+              "unit": 3,
+              "title": "too/either · so am I / neither do I",
+              "description": "too/either; So am I / Neither do I",
+              "file": "lessons/urok-so-am-i-neither.html"
+            }
+          ]
         }
       ]
     },

@@ -835,6 +835,43 @@ const T=[
    O("It isn't far."),
    O("It's nice to see you again.")
   ]},
+  {id:40,title:"I am, I don't etc.",emoji:'🔁',rule:"Чтобы не повторять слова, оставляем только глагол: She isn't tired, but he is. He likes tea, but she doesn't. В конце полная форма (am/is/have), не 's/'ve: but he is (не but he's). Отрицательные краткие формы можно: but I haven't. Yes, I am. / No, I'm not. Present simple — do/does, past simple — did.",
+  items:[
+   C("She isn't tired, but he ___.",'is',"'s",'does'),
+   C("He likes tea, but she ___.","doesn't","isn't","don't"),
+   C("I haven't got a car, but my sister ___.",'has','is','does'),
+   C("Are you tired? — Yes, I ___.",'am',"'m",'do'),
+   C("I enjoyed the film, but Chris ___.","didn't","doesn't","wasn't"),
+   F("Kate wasn't hungry, but we ___.",'were'),
+   F("Ben can't help you, but I ___.",'can'),
+   F("I don't like hot weather, but Sue ___.",'does'),
+   O("She isn't tired, but he is."),
+   O("Yes, I am.")
+  ]},
+  {id:41,title:"Have you? / question tags",emoji:'❓',rule:"Реакция-вопрос показывает интерес или удивление: I've bought a car. — Have you? Bill can't drive. — Can't he? Present simple — do/does, past — did: I speak four languages. — Do you? Question tags: положительное предложение → отрицательный tag (It's nice, isn't it?), отрицательное → положительный (You haven't met her, have you?).",
+  items:[
+   C("'I've bought a new car.' 'Oh, ___?'",'have you','do you','are you'),
+   C("'Ben doesn't eat meat.' '___?'","Doesn't he","Isn't he","Does he"),
+   C("It's a beautiful day, ___?","isn't it","is it","doesn't it"),
+   C("You haven't met my mother, ___?",'have you',"haven't you",'do you'),
+   F("'I was ill last week.' '___ you?'",'Were'),
+   F("Kate lives in London, ___ she?","doesn't"),
+   F("You won't be late, ___ you?",'will'),
+   O("It's a beautiful day, isn't it?"),
+   O("You haven't met my mother, have you?")
+  ]},
+  {id:42,title:'too/either · so am I / neither do I',emoji:'🤝',rule:"too — после утверждения (I'm happy too), either — после отрицания (I'm not happy either). So + глагол + I = я тоже: So am I, So do I, So did I. Neither/Nor + глагол + I = я тоже нет: Neither have I, Neither can I. Порядок: So am I (не So I am), Neither have I (не Neither I have).",
+  items:[
+   C("A: I'm tired. B: ___","So am I.","So I am.","Neither am I."),
+   C("A: I haven't got a car. B: ___","Neither have I.","Neither I have.","So have I."),
+   C("A: I can't swim. B: I can't ___.",'either','too','neither'),
+   C("A: I like tea. B: So ___ I.",'do','am','like'),
+   F("A: I'm happy. B: I'm happy ___.",'too'),
+   F("A: I was late. B: So ___ Sam.",'was'),
+   F("A: I won't be here. B: Neither ___ I.",'will'),
+   O("So am I."),
+   O("Neither have I.")
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),
