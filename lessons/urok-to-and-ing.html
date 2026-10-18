@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 52 · to… (I want to do) and -ing (I enjoy doing)</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Comfortaa:wght@500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --cream:#FDF4F1; --paper:#FFFDFB; --ink:#3A2E33; --ink-soft:#6B5A61;
+  --brick:#BE456F; --brick-dark:#8F2E52; --tab:#C4507A; --tab-dark:#9E3460;
+  --sage:#4F8F6D; --sage-bg:#E6F1EA; --coral:#D65B4A; --coral-bg:#FBE7E3;
+  --gold:#E8A0B4; --line:#F1D9DF; --shadow: 0 6px 18px rgba(150,80,100,0.10);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; background:radial-gradient(circle at 15% 8%, rgba(232,160,180,0.10), transparent 40%), var(--cream); color:var(--ink); font-family:'Nunito', sans-serif; line-height:1.55; padding-bottom:80px;}
+h1,h2,h3,.display{font-family:'Comfortaa',sans-serif;}
+
+.topbar{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:1px solid var(--line); padding:10px 18px; display:flex; align-items:center; gap:14px; box-shadow:0 2px 10px rgba(0,0,0,0.04);}
+.topbar .book-title{font-family:'Comfortaa',sans-serif; font-weight:700; font-size:15px; color:var(--brick-dark); white-space:nowrap;}
+.progress-steps{display:flex; gap:5px; flex:1; align-items:center;}
+.pstep{flex:1; height:8px; border-radius:6px; background:var(--line); position:relative; overflow:hidden;}
+.pstep i{display:block; height:100%; width:0%; border-radius:6px; background:linear-gradient(90deg, var(--tab), var(--brick)); transition:width .5s ease;}
+.score-pill{font-size:13px; font-weight:700; background:var(--sage-bg); color:var(--sage); padding:5px 12px; border-radius:20px; white-space:nowrap;}
+
+.page{max-width:900px; margin:26px auto; background:var(--paper); border-radius:4px; box-shadow:var(--shadow); border:1px solid var(--line); overflow:hidden;}
+
+.unit-banner{background:linear-gradient(135deg, var(--brick) 0%, var(--brick-dark) 100%); color:#fff; padding:26px 30px 22px 96px; position:relative;}
+.unit-tag{position:absolute; left:0; top:0; bottom:0; width:76px; background:var(--brick-dark); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Comfortaa',sans-serif; border-right:2px solid rgba(255,255,255,0.15);}
+.unit-tag .u{font-size:11px; letter-spacing:2px; opacity:.75;}
+.unit-tag .n{font-size:30px; font-weight:800;}
+.unit-banner h1{margin:0; font-size:27px; font-weight:800; letter-spacing:.3px;}
+.unit-banner p{margin:6px 0 0; opacity:.9; font-size:14.5px;}
+
+.section{display:flex; border-top:1px solid var(--line);}
+.section .tab{width:56px; flex-shrink:0; background:var(--tab); color:#fff; font-family:'Comfortaa',sans-serif; font-weight:800; font-size:20px; display:flex; align-items:flex-start; justify-content:center; padding-top:22px;}
+.section.alt .tab{background:var(--tab-dark);}
+.section .content{padding:24px 28px 30px; flex:1; min-width:0;}
+.section h2{margin:0 0 4px; font-size:22px; color:var(--brick-dark);}
+.eyebrow{font-size:11.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-soft); font-weight:700; margin-bottom:4px;}
+.section p.lead{color:var(--ink-soft); margin-top:4px; font-size:14.5px;}
+
+.dialog-wrap{display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; margin:18px 0 6px;}
+.dialog-figure{width:110px; text-align:center; flex-shrink:0;}
+.dialog-avatar{width:96px; height:120px; margin:0 auto;}
+.dialog-avatar svg{width:100%; height:100%;}
+.dialog-figure .name{font-family:'Comfortaa',sans-serif; font-weight:700; font-size:12.5px; letter-spacing:1px; color:var(--brick-dark); margin-top:4px;}
+.dialog-bubbles{display:flex; flex-direction:column; gap:8px; flex:1; min-width:260px; max-width:420px;}
+.d-bubble{background:#fff; border:1.5px solid var(--line); border-radius:16px; padding:8px 14px; font-size:13.5px; box-shadow:0 3px 8px rgba(0,0,0,0.05);}
+.d-bubble.q{border-color:var(--tab);}
+.d-bubble.a{align-self:flex-end; background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.d-bubble b{color:var(--brick-dark);}
+.d-bubble.a b{color:var(--sage);}
+
+.gram-tables{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:22px;}
+@media(max-width:620px){.gram-tables{grid-template-columns:1fr;}}
+.gram-box h3{font-size:13px; text-transform:uppercase; letter-spacing:1px; color:var(--ink-soft); margin:0 0 8px;}
+table.formtable{width:100%; border-collapse:collapse; font-size:13.5px; background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;}
+table.formtable td{padding:7px 10px; border-bottom:1px solid var(--line);}
+table.formtable tr:last-child td{border-bottom:none;}
+table.formtable td.pron{color:var(--ink-soft); width:34%;}
+table.formtable td.verb{font-weight:700; color:var(--brick-dark);}
+table.formtable td.short{color:var(--ink-soft); font-style:italic;}
+
+.chunk{background:linear-gradient(180deg, transparent 60%, rgba(196,80,122,0.35) 60%); font-weight:700; color:var(--brick-dark); padding:0 1px;}
+
+.mini-note{margin-top:16px; background:var(--sage-bg); border-left:3px solid var(--sage); padding:10px 14px; border-radius:6px; font-size:13.5px; color:#2f5741;}
+.mini-note b{color:var(--sage);}
+.mini-note i{color:var(--ink-soft); font-style:italic;}
+.mini-note.warn{background:var(--coral-bg); border-left-color:var(--coral); color:#7A2848;}
+.mini-note.warn b{color:var(--coral);}
+
+.vocab-table{margin-top:14px; display:flex; flex-direction:column; gap:8px;}
+.vocab-row{display:grid; grid-template-columns:auto 1fr auto auto; align-items:center; gap:12px; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:9px 14px;}
+@media(max-width:560px){.vocab-row{grid-template-columns:1fr; gap:4px;}}
+.vocab-word{font-weight:800; color:var(--brick-dark); font-size:14.5px; font-family:'Comfortaa',sans-serif;}
+.vocab-ipa{font-size:12.5px; color:var(--tab-dark); font-style:italic;}
+.vocab-ru{font-size:13.5px; color:var(--ink-soft);}
+.chunk-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px;}
+@media(max-width:600px){.chunk-grid{grid-template-columns:1fr;}}
+.chunk-row{display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--cream); border:1.5px dashed var(--gold); border-radius:10px; padding:9px 14px;}
+.chunk-en{font-weight:800; color:var(--brick-dark); font-size:14px; display:block;}
+.chunk-ipa{font-size:11.5px; color:var(--tab-dark); font-style:italic; display:block; margin-top:1px;}
+.chunk-ru{font-size:12.5px; color:var(--ink-soft); display:block; margin-top:1px; font-weight:400;}
+
+.game-tabs{display:flex; gap:8px; margin:18px 0 20px; flex-wrap:wrap;}
+.game-tab-btn{border:1.5px solid var(--line); background:#fff; color:var(--ink-soft); padding:8px 16px; border-radius:20px; font-family:'Nunito'; font-weight:700; font-size:13px; cursor:pointer; transition:.2s;}
+.game-tab-btn.active{background:var(--tab); color:#fff; border-color:var(--tab-dark);}
+.game-panel{display:none;}
+.game-panel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
+
+.fill-item{display:flex; align-items:flex-start; gap:10px; flex-wrap:wrap; padding:12px 4px; border-bottom:1px dashed var(--line);}
+.fill-item:last-child{border-bottom:none;}
+.fill-num{width:22px; height:22px; border-radius:50%; background:var(--cream); border:1px solid var(--line); font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; color:var(--ink-soft); flex-shrink:0; margin-top:3px;}
+.fill-body{flex:1; min-width:220px;}
+.fill-words{font-size:13px; color:var(--ink-soft); margin-bottom:6px; font-style:italic;}
+.blank-input{width:130px; padding:5px 8px; border:1.5px solid var(--line); border-radius:6px; font-family:'Nunito'; font-weight:700; font-size:14px; text-align:center; background:#FFFDFB; color:var(--brick-dark);}
+.blank-input:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.blank-input.correct{border-color:var(--sage); background:var(--sage-bg); color:#2f5741;}
+.blank-input.wrong{border-color:var(--coral); background:var(--coral-bg); color:var(--coral);}
+.fill-fb{font-size:16px; margin-top:6px;}
+
+.btn{border:none; cursor:pointer; font-family:'Nunito'; font-weight:800; padding:10px 20px; border-radius:24px; font-size:14px; letter-spacing:.2px; background:var(--brick); color:#fff; box-shadow:0 4px 10px rgba(190,69,111,0.25); transition:.15s;}
+.btn:hover{transform:translateY(-1px); box-shadow:0 6px 14px rgba(190,69,111,0.32);}
+.btn.secondary{background:transparent; color:var(--brick); border:1.5px solid var(--brick); box-shadow:none;}
+.btn.small{padding:6px 14px; font-size:12.5px;}
+.actions-row{display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; align-items:center;}
+.fb-line{font-size:13.5px; font-weight:700; color:var(--ink-soft);}
+
+.memo-wrap{display:flex; flex-direction:column; align-items:center; gap:14px;}
+.memo-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; max-width:520px; width:100%;}
+@media(max-width:500px){.memo-grid{grid-template-columns:repeat(3,1fr);}}
+.memo-card{aspect-ratio:1/1; border-radius:10px; cursor:pointer; position:relative; perspective:600px;}
+.memo-inner{width:100%; height:100%; position:relative; transform-style:preserve-3d; transition:transform .45s;}
+.memo-card.flipped .memo-inner, .memo-card.matched .memo-inner{transform:rotateY(180deg);}
+.memo-face{position:absolute; inset:0; border-radius:10px; display:flex; align-items:center; justify-content:center; backface-visibility:hidden; font-weight:800; text-align:center; padding:4px; font-size:12.5px;}
+.memo-face.back{background:linear-gradient(135deg, var(--tab), var(--tab-dark)); color:#fff; font-family:'Comfortaa',sans-serif; font-size:22px;}
+.memo-face.front{background:#fff; border:2px solid var(--line); color:var(--brick-dark); transform:rotateY(180deg);}
+.memo-card.matched .memo-face.front{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.memo-status{font-size:13.5px; color:var(--ink-soft); font-weight:700;}
+
+.quiz-q{margin-bottom:18px;}
+.quiz-q p{font-weight:700; margin:0 0 8px; font-size:14.5px;}
+.quiz-opts{display:flex; gap:8px; flex-wrap:wrap;}
+.quiz-opt{border:1.5px solid var(--line); background:#fff; padding:7px 15px; border-radius:20px; font-weight:700; font-size:13.5px; cursor:pointer; color:var(--ink);}
+.quiz-opt.sel-correct{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.quiz-opt.sel-wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+.quiz-opt.reveal-correct{border-color:var(--sage); box-shadow:inset 0 0 0 1px var(--sage);}
+
+.match-wrap{display:flex; gap:14px; max-width:520px; margin:0 auto;}
+.match-col{flex:1; display:flex; flex-direction:column; gap:8px;}
+.match-tile{background:#fff; border:1.5px solid var(--line); border-radius:8px; padding:9px 12px; font-size:13.5px; font-weight:700; cursor:pointer; text-align:center; color:var(--ink); transition:.15s;}
+.match-tile.selected{border-color:var(--tab); background:var(--cream); box-shadow:inset 0 0 0 1.5px var(--tab);}
+.match-tile.matched{background:var(--sage-bg); border-color:var(--sage); color:#2f5741; cursor:default;}
+.match-tile.wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+
+.read-text{background:#fff; border:1.5px solid var(--line); border-radius:14px; padding:18px 20px; margin:16px 0; font-size:14.5px;}
+.read-text p{margin:0 0 10px;}
+.read-text p:last-child{margin-bottom:0;}
+.tf-item{display:flex; align-items:center; justify-content:space-between; gap:10px; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:9px 14px; margin-bottom:8px;}
+.tf-text{font-size:13.5px; flex:1;}
+.tf-btns{display:flex; gap:6px; flex-shrink:0;}
+.tf-btn{border:1.5px solid var(--line); background:var(--cream); padding:5px 12px; border-radius:16px; font-weight:800; font-size:12.5px; cursor:pointer; color:var(--ink-soft);}
+.tf-btn.sel-correct{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.tf-btn.sel-wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+.tf-btn.reveal-correct{box-shadow:inset 0 0 0 1px var(--sage); border-color:var(--sage);}
+
+.tts-warn{display:none; font-size:12.5px; color:var(--coral); background:var(--coral-bg); padding:8px 12px; border-radius:6px; margin:8px 0 0;}
+.tts-warn.shown{display:block;}
+.voice-picker{display:flex; align-items:center; gap:8px; flex-wrap:wrap; background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:8px 12px; margin-top:10px; font-size:13px;}
+.voice-picker label{font-weight:700; color:var(--ink-soft);}
+.voice-picker select{border:1.5px solid var(--line); border-radius:6px; padding:4px 8px; font-family:'Nunito'; font-size:13px; background:#fff; color:var(--ink); max-width:220px;}
+.voice-hint{font-size:11.5px; color:var(--ink-soft); flex-basis:100%;}
+.sound-block{margin-top:22px; padding-top:16px; border-top:1px dashed var(--line);}
+.sound-block:first-of-type{border-top:none; margin-top:16px;}
+.sound-block h3{font-size:15.5px; margin:0 0 6px; color:var(--brick-dark); font-weight:700;}
+.ipa{font-family:'Nunito'; font-weight:500; font-size:12px; color:var(--ink-soft); font-style:italic;}
+.sound-note{font-size:13.5px; color:var(--ink-soft); margin:0 0 12px;}
+.sound-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+.sound-grid.three{grid-template-columns:repeat(3,1fr);}
+@media(max-width:600px){.sound-grid, .sound-grid.three{grid-template-columns:1fr;}}
+.sound-pair{background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px;}
+.sound-pair.wide{grid-column:1/-1;}
+.sp-text{font-size:14.5px; font-weight:600; flex:1;}
+.sp-text.big{font-size:19px; text-align:center; font-family:'Comfortaa',sans-serif; color:var(--brick-dark);}
+.sp-controls{display:flex; gap:6px; flex-shrink:0;}
+.play-btn{border:1.5px solid var(--line); background:var(--cream); cursor:pointer; border-radius:8px; padding:6px 10px; font-size:15px; line-height:1; transition:.15s;}
+.play-btn:hover{background:var(--tab); border-color:var(--tab-dark);}
+.play-btn.playing{background:var(--brick); border-color:var(--brick-dark);}
+b.stress{color:var(--brick-dark); text-decoration:underline; text-decoration-color:var(--gold); text-decoration-thickness:2px; text-underline-offset:3px;}
+
+.prompt-list{list-style:none; padding:0; margin:14px 0; display:grid; gap:8px;}
+.prompt-list li{background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:8px 12px; font-size:13.5px; display:flex; gap:8px; align-items:baseline;}
+.prompt-list li b{color:var(--brick-dark); font-family:'Comfortaa',sans-serif;}
+textarea.write-area{width:100%; min-height:140px; border:1.5px solid var(--line); border-radius:10px; padding:14px; font-family:'Nunito'; font-size:14.5px; color:var(--ink); background:#FFFDFB; resize:vertical;}
+textarea.write-area:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.word-count{font-size:12.5px; color:var(--ink-soft); margin-top:6px;}
+.cue-cards{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;}
+.cue-card{background:#fff; border:1.5px dashed var(--gold); border-radius:10px; padding:10px 14px; font-size:13px; width:160px; color:var(--ink-soft); font-style:italic;}
+.cue-card b{display:block; font-style:normal; color:var(--brick-dark); font-family:'Comfortaa',sans-serif; font-size:14px; margin-bottom:3px;}
+.reveal-box{margin-top:14px; border-left:3px solid var(--tab); background:var(--cream); padding:12px 16px; border-radius:6px; font-size:13.5px; display:none;}
+.reveal-box.shown{display:block;}
+
+.hw-list{display:flex; flex-direction:column; gap:10px; margin-top:16px;}
+.hw-item{display:flex; gap:10px; align-items:flex-start; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:11px 14px; font-size:13.5px; cursor:pointer; transition:.15s;}
+.hw-item:has(.hw-check:checked){background:var(--sage-bg); border-color:var(--sage);}
+.hw-check{margin-top:3px; width:16px; height:16px; accent-color:var(--sage); flex-shrink:0;}
+.hw-item b{color:var(--brick-dark); font-family:'Comfortaa',sans-serif;}
+.hw-item i{color:var(--ink-soft); font-style:italic;}
+
+@media print{
+  .topbar, .unit-banner, #presentation, #vocabulary, #practice, #reading, #sounds, #production, .badge-final, .footer-note, .no-print{ display:none !important; }
+  body{ background:#fff; padding:0; }
+  .page{ box-shadow:none; border:none; margin:0; max-width:100%; }
+  .section{ border-top:none; }
+  .section .tab{ display:none; }
+  .section .content{ padding:10px; }
+  .hw-item{ break-inside:avoid; }
+}
+
+.footer-note{text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:24px; padding:0 20px;}
+.badge-final{display:none; text-align:center; margin:26px auto 0; max-width:900px; background:linear-gradient(135deg, var(--sage), #3d7357); color:#fff; border-radius:14px; padding:22px; font-family:'Comfortaa',sans-serif; font-size:19px; font-weight:700; box-shadow:var(--shadow);}
+.badge-final.shown{display:block; animation:fadeIn .5s ease;}
+.badge-final span{display:block; font-family:'Nunito'; font-weight:500; font-size:13.5px; margin-top:6px; opacity:.9;}
+
+/* Generated textbook illustrations; contain each complete scene without cropping. */
+.dialog-figure.art-figure{width:148px}
+.lisa-figure.art-figure{width:164px}
+.dialog-avatar.art-avatar{width:144px;height:auto}
+.lisa-avatar.art-avatar{width:160px;height:auto}
+.art-avatar img.lesson-portrait{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--line);box-shadow:0 5px 16px rgba(150,80,100,.10)}
+.scene-box img.lesson-scene{display:block;width:100%;max-width:720px;height:auto;margin:0 auto;border-radius:10px}
+.pic-slot img.lesson-scene{display:block;width:100%;height:auto;max-height:none;object-fit:contain}
+@media(max-width:560px){
+ .dialog-wrap .art-figure{width:112px}
+ .dialog-avatar.art-avatar{width:108px}
+ .dialog-wrap .dialog-bubbles{min-width:0;flex-basis:100%;max-width:none;order:2}
+ .dialog-wrap .dialog-figure:last-child{order:1}
+ .dialog-wrap .dialog-figure:first-child{order:0}
+ .lisa-avatar.art-avatar{width:140px}
+ .scene-box{padding:10px}
+}
+
+</style>
+<link rel="stylesheet" href="../lesson-theme.css"></head>
+<body><div class="topbar">
+  <div class="book-title">Essential Grammar · Unit 52</div>
+  <div class="progress-steps">
+    <div class="pstep" id="step-p"><i id="bar-p"></i></div>
+    <div class="pstep" id="step-vocab"><i id="bar-vocab"></i></div>
+    <div class="pstep" id="step-pr"><i id="bar-pr"></i></div>
+    <div class="pstep" id="step-read"><i id="bar-read"></i></div>
+    <div class="pstep" id="step-sound"><i id="bar-sound"></i></div>
+    <div class="pstep" id="step-listen"><i id="bar-listen"></i></div>
+    <div class="pstep" id="step-prod"><i id="bar-prod"></i></div>
+    <div class="pstep" id="step-hw"><i id="bar-hw"></i></div>
+  </div>
+  <div class="score-pill">★ <span id="scoreDisplay">0</span>/20</div>
+</div>
+
+<div class="page"><div class="unit-banner">
+    <div class="unit-tag"><span class="u">UNIT</span><span class="n">52</span></div>
+    <h1>to … (I want to do) and -ing (I enjoy doing)</h1>
+    <p>Глаголы + to … и глаголы + -ing</p>
+  </div><div class="section" id="presentation">
+    <div class="tab">A</div>
+    <div class="content">
+      <div class="eyebrow">Presentation</div>
+      <h2>to … (I want to do) and -ing (I enjoy doing)</h2>
+      <div class="gram-box" style="margin:14px 0"><h3>A · verbs + to … (I want to do)</h3><div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:10px 0"><div style="background:#F9D9C4;padding:8px 14px;font-weight:700;line-height:1.6;border-radius:6px"><table style="border-collapse:collapse"><tr><td style="padding:2px 10px">want</td><td style="padding:2px 10px">plan</td><td style="padding:2px 10px">decide</td><td style="padding:2px 10px">try</td></tr><tr><td style="padding:2px 10px">hope</td><td style="padding:2px 10px">expect</td><td style="padding:2px 10px">offer</td><td style="padding:2px 10px">forget</td></tr><tr><td style="padding:2px 10px">need</td><td style="padding:2px 10px">promise</td><td style="padding:2px 10px">refuse</td><td style="padding:2px 10px">learn</td></tr></table></div><div>+ <b>to …</b> (<b>to do / to work / to be</b> etc.)</div></div><ul class="prompt-list"><li><span style="display:block">What do you <b>want to do</b> this evening?</span></li><li><span style="display:block">It's not very late. We don't <b>need to go</b> home yet.</span></li><li><span style="display:block">Tina has <b>decided to sell</b> her car.</span></li><li><span style="display:block">You <b>forgot to switch</b> off the light when you went out.</span></li><li><span style="display:block">My brother is <b>learning to drive</b>.</span></li><li><span style="display:block">I <b>tried to read</b> my book, but I was too tired.</span></li></ul></div>
+      <div class="gram-box" style="margin:14px 0"><h3>B · verbs + -ing (I enjoy doing)</h3><div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:10px 0"><div style="background:#F9D9C4;padding:8px 14px;font-weight:700;line-height:1.6;border-radius:6px"><table style="border-collapse:collapse"><tr><td style="padding:2px 10px">enjoy</td><td style="padding:2px 10px">stop</td><td style="padding:2px 10px"></td></tr><tr><td style="padding:2px 10px">mind</td><td style="padding:2px 10px">finish</td><td style="padding:2px 10px">suggest</td></tr></table></div><div>+ <b>-ing</b> (<b>doing / working / being</b> etc.)</div></div><div class="dialog-wrap"><div class="dialog-figure art-figure"><div class="dialog-avatar art-avatar"><img class="lesson-portrait" src="img/james-v1.webp" data-lesson-image="img/james-v1.webp" alt="Джеймс в терракотовом свитере." width="480" height="600" decoding="async"></div><div class="name"></div></div><div class="dialog-bubbles"><div class="d-bubble q">I enjoy dancing.</div></div></div><ul class="prompt-list"><li><span style="display:block">I <b>enjoy dancing</b>. <i>(не enjoy to dance)</i></span></li><li><span style="display:block">I don't <b>mind getting</b> up early.</span></li><li><span style="display:block">Has it <b>stopped raining</b>?</span></li><li><span style="display:block">Sonia <b>suggested going</b> to the cinema.</span></li></ul></div>
+      <div class="gram-box" style="margin:14px 0"><h3>C · verbs + -ing или to …</h3><div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:10px 0"><div style="background:#F9D9C4;padding:8px 14px;font-weight:700;line-height:1.6;border-radius:6px"><table style="border-collapse:collapse"><tr><td style="padding:2px 10px">like</td><td style="padding:2px 10px">love</td><td style="padding:2px 10px">start</td><td style="padding:2px 10px"></td></tr><tr><td style="padding:2px 10px">prefer</td><td style="padding:2px 10px">hate</td><td style="padding:2px 10px">begin</td><td style="padding:2px 10px">continue</td></tr></table></div><div>+ <b>-ing</b> (<b>doing</b> etc.) <i>or</i> <b>to …</b> (<b>to do</b> etc.)</div></div><ul class="prompt-list"><li><span style="display:block">Do you <b>like getting</b> up early? <i>or</i> Do you <b>like to get</b> up early?</span></li><li><span style="display:block">I <b>prefer travelling</b> by car. <i>or</i> I <b>prefer to travel</b> by car.</span></li><li><span style="display:block">Anna <b>loves dancing</b>. <i>or</i> Anna <b>loves to dance</b>.</span></li><li><span style="display:block">I <b>hate being</b> late. <i>or</i> I <b>hate to be</b> late.</span></li><li><span style="display:block">It <b>started raining</b>. <i>or</i> It <b>started to rain</b>.</span></li></ul></div>
+      <div class="gram-box" style="margin:14px 0"><h3>D · would like to … etc.</h3><div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:10px 0"><div style="background:#F9D9C4;padding:8px 14px;font-weight:700;line-height:1.6;border-radius:6px"><table style="border-collapse:collapse"><tr><td style="padding:2px 10px">would like</td><td style="padding:2px 10px">would love</td></tr><tr><td style="padding:2px 10px">would prefer</td><td style="padding:2px 10px">would hate</td></tr></table></div><div>+ <b>to …</b> (<b>to do / to work / to be</b> etc.)</div></div><ul class="prompt-list"><li><span style="display:block">Amy <b>would like to meet</b> you.</span></li><li><span style="display:block">I'<b>d love to go</b> to Australia. (I'd = I <b>would</b>)</span></li><li><span style="display:block">'<b>Would</b> you <b>like to sit</b> down?' 'No, I'<b>d prefer to stand</b>, thank you.'</span></li><li><span style="display:block">I like this apartment. I <b>wouldn't like to move</b>.</span></li><li><span style="display:block">I live in a small village. I'<b>d hate to live</b> in a big city.</span></li></ul></div>
+    </div>
+  </div><div class="section" id="vocabulary"><div class="tab">B</div><div class="content"><div class="eyebrow">Vocabulary</div><h2>Новые слова этого урока</h2><p class="lead">Нажмите на динамик, чтобы услышать слово. Все слова встретятся дальше в чтении и упражнениях.</p><div id="vocabTable" class="vocab-table"></div><h3>Соседи слов <span class="ipa">chunks / collocations</span></h3><p class="sound-note">Учите сочетаниями: так слова легче вспоминаются в речи.</p><div id="chunkGrid" class="chunk-grid"></div></div></div><div class="section" id="practice">
+    <div class="tab">C</div>
+    <div class="content">
+      <div class="eyebrow">Practice</div>
+      <h2>Тренируемся</h2>
+      <p class="lead">Выберите игру и заработайте звёзды ★. Ответы проверяются сразу.</p>
+      <div class="game-tabs">
+        <button class="game-tab-btn active" data-panel="panel-fill">✏️ to do / doing</button>
+        <button class="game-tab-btn" data-panel="panel-memo">🃏 Мемо</button>
+        <button class="game-tab-btn" data-panel="panel-quiz">⚡ Квиз</button>
+        <button class="game-tab-btn" data-panel="panel-vocabmatch">📚 Лексика</button>
+      </div>
+      <div class="game-panel active" id="panel-fill">
+        <p class="lead" style="margin-top:0">Впишите to или глагол с -ing.</p>
+        <div id="fillList"></div>
+        <div class="actions-row">
+          <button class="btn" id="checkFillBtn">Проверить</button>
+          <button class="btn secondary small" id="resetFillBtn">Сбросить</button>
+          <span class="fb-line" id="fillFeedback"></span>
+        </div>
+      </div>
+      <div class="game-panel" id="panel-memo">
+        <p class="lead" style="margin-top:0">Найдите пары: английское слово и его русский перевод.</p>
+        <div class="memo-wrap">
+          <div class="memo-grid" id="memoGrid"></div>
+          <div class="memo-status" id="memoStatus">Найдено пар: 0 / 6</div>
+          <button class="btn secondary small" id="restartMemoBtn">Перемешать заново</button>
+        </div>
+      </div>
+      <div class="game-panel" id="panel-quiz">
+        <div id="quizList"></div>
+        <div class="actions-row"><span class="fb-line" id="quizFeedback"></span></div>
+      </div>
+      <div class="game-panel" id="panel-vocabmatch">
+        <p class="lead" style="margin-top:0">Нажмите на английское слово, затем на его перевод.</p>
+        <div class="match-wrap">
+          <div class="match-col" id="matchEnCol"></div>
+          <div class="match-col" id="matchRuCol"></div>
+        </div>
+        <div class="actions-row">
+          <span class="fb-line" id="matchStatus">Найдено пар: 0 / 10</span>
+          <button class="btn secondary small" id="restartMatchBtn">Перемешать заново</button>
+        </div>
+      </div>
+    </div>
+  </div><div class="section alt" id="reading">
+    <div class="tab">D</div>
+    <div class="content"><div class="actions-row"><button class="btn secondary small" id="playReadingBtn">🔊 Прослушать текст</button><button class="btn secondary stop-audio">Остановить</button></div>
+      <div class="eyebrow">Reading</div>
+      <h2>I love dancing</h2>
+      <p class="lead">Найдите глаголы + to … и глаголы + -ing.</p>
+      <div class="read-text"><p>I love dancing. I started dancing when I was six, and I've never stopped. Last year I decided to take <span class="chunk">salsa</span> classes.</p><p>My friend Kate doesn't enjoy dancing. She prefers reading. But last month she <span class="chunk">promise</span>d to come to a class with me. She tried to dance, but she wasn't very good!</p><p>Kate <span class="chunk">suggest</span>ed going to a café after the class. She didn't mind waiting for me. We finished eating at ten.</p><p>Next summer I'd love to go to Cuba. I'm learning to speak Spanish. I hope to dance salsa there! I'd hate to <span class="chunk">miss</span> it.</p></div>
+    <h3>1 · True / False</h3><div id="tfList"></div><div class="fb-line" id="tfFeedback"></div><h3>2 · Танцы</h3><p class="sound-note">Впишите слово.</p><div id="tomFillList"></div><div class="actions-row"><button class="btn small" id="checkTomBtn">Проверить</button><span class="fb-line" id="tomFeedback"></span></div><h3>3 · Слова из текста</h3><div id="readFillList"></div><div class="actions-row"><button class="btn small" id="checkReadFillBtn">Проверить</button><span class="fb-line" id="readFillFeedback"></span></div>
+  </div></div><div class="section" id="sounds">
+    <div class="tab">E</div>
+    <div class="content"><p class="mini-note">Синтезированный голос помогает прочитать фразы, но не гарантирует точную интонацию. Повторяйте за ним и сравнивайте.</p>
+      <div class="eyebrow">Sounds &amp; Speech</div>
+      <h2>to … и -ing на слух</h2>
+      <p class="lead">Слушайте и повторяйте.</p>
+      <p class="tts-warn" id="ttsWarn"></p>
+      <div class="sound-block"><h3>1 · verb + to …</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">What do you want to do this evening?</div><div class="sp-controls"><button class="play-btn" data-text="What do you want to do this evening?" data-rate="1">🔊</button><button class="play-btn slow" data-text="What do you want to do this evening?" data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">My brother is learning to drive.</div><div class="sp-controls"><button class="play-btn" data-text="My brother is learning to drive." data-rate="1">🔊</button><button class="play-btn slow" data-text="My brother is learning to drive." data-rate="0.6">🐢</button></div></div></div></div><div class="sound-block"><h3>2 · verb + -ing</h3><div class="sound-grid three"><div class="sound-pair"><div class="sp-text">I enjoy dancing.</div><div class="sp-controls"><button class="play-btn" data-text="I enjoy dancing." data-rate="1">🔊</button><button class="play-btn slow" data-text="I enjoy dancing." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">I don't mind getting up early.</div><div class="sp-controls"><button class="play-btn" data-text="I don&#x27;t mind getting up early." data-rate="1">🔊</button><button class="play-btn slow" data-text="I don&#x27;t mind getting up early." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">Has it stopped raining?</div><div class="sp-controls"><button class="play-btn" data-text="Has it stopped raining?" data-rate="1">🔊</button><button class="play-btn slow" data-text="Has it stopped raining?" data-rate="0.6">🐢</button></div></div></div></div><div class="sound-block"><h3>3 · would like to …</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">I'd love to go to Australia.</div><div class="sp-controls"><button class="play-btn" data-text="I&#x27;d love to go to Australia." data-rate="1">🔊</button><button class="play-btn slow" data-text="I&#x27;d love to go to Australia." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">I'd prefer to stand, thank you.</div><div class="sp-controls"><button class="play-btn" data-text="I&#x27;d prefer to stand, thank you." data-rate="1">🔊</button><button class="play-btn slow" data-text="I&#x27;d prefer to stand, thank you." data-rate="0.6">🐢</button></div></div></div></div>
+      <div class="actions-row">
+        <button class="btn secondary small" id="playAllBtn">🔊 Прослушать всё подряд</button>
+      </div>
+    </div>
+  </div><div class="section alt" id="listening">
+    <div class="tab">F</div>
+    <div class="content">
+      <div class="eyebrow">Listening</div>
+      <h2>Слушаем вслепую</h2>
+      <p class="lead">Друзья планируют вечер.</p>
+      <div class="speed-picker">
+        <label>Скорость:</label>
+        <div class="speed-btns">
+          <button class="speed-btn" data-rate="0.6">🐢 Медленно</button>
+          <button class="speed-btn active" data-rate="0.95">🔊 Обычно</button>
+        </div>
+      </div>
+      <div class="actions-row">
+        <button class="btn secondary stop-audio">Остановить</button>
+        <button class="btn" id="playListeningBtn">▶️ Слушать диалог</button>
+      </div>
+      <h3 style="font-size:14.5px; margin:18px 0 8px; color:var(--brick-dark);">Вопросы по прослушанному</h3>
+      <div id="lsList"></div>
+      <div class="actions-row"><span class="fb-line" id="lsFeedback"></span></div>
+      <div class="actions-row">
+        <button class="btn secondary small" id="toggleScriptBtn" disabled="">📜 Скрипт — после ответов на все вопросы</button>
+      </div>
+      <div class="reveal-box" id="scriptBox">What do you want to do tonight?
+I&#x27;d like to go to the cinema.
+OK. Do you mind waiting? I need to finish working.
+No problem. I enjoy reading in the café.
+Great. I hope to finish by seven.
+Don&#x27;t forget to bring the tickets!</div>
+    </div>
+  </div><div class="section alt" id="production">
+    <div class="tab">G</div>
+    <div class="content">
+      <div class="eyebrow">Production</div>
+      <h2>Что я люблю</h2>
+      <p class="lead">Напишите 8 предложений о себе: что вы enjoy / don't mind / hate doing, что want / hope / decided to do, что would love / would hate to do.</p>
+      <ul class="prompt-list"><li><b>I enjoy …-ing. I don't mind …-ing.</b></li><li><b>I want to … / I hope to …</b></li><li><b>Last year I decided to …</b></li><li><b>I'd love to … / I'd hate to …</b></li></ul>
+      <textarea class="write-area" id="writeArea" placeholder="I enjoy..., I want to..."></textarea>
+      <div class="word-count" id="wordCount">0 слов</div>
+      <div class="actions-row">
+        <button class="btn" id="finishBtn">Готово!</button>
+        <button class="btn secondary" id="sampleBtn">Показать пример</button>
+      </div>
+      <div class="reveal-box" id="sampleBox"><b>Пример:</b> I enjoy reading and cooking. I don't mind getting up early. I hate being late. Last year I decided to learn English. I hope to speak it well next year. I want to visit London. I'd love to go to China. I'd hate to live in a very cold place.</div>
+      <div class="cue-cards">
+        <div class="cue-card"><b>Карточка 1</b>Спросите партнёра: What do you enjoy doing? What would you love to do?</div>
+        <div class="cue-card"><b>Карточка 2</b>Найдите 3 глагола + to и 3 глагола + -ing в тексте.</div>
+        <div class="cue-card"><b>Карточка 3</b>I like …-ing / I like to … — 4 примера.</div>
+      </div>
+    </div>
+  </div><div class="section" id="homework">
+    <div class="tab">H</div>
+    <div class="content">
+      <div class="eyebrow">Homework</div>
+      <h2>Домашнее задание</h2>
+      <p class="lead">Отметьте галочкой то, что выполнили. Можно распечатать этот блок.</p>
+      <div class="hw-list">
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>1. Письменно.</b> Напишите 6 предложений с глаголами + to и 6 — с глаголами + -ing.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>2. Списки.</b> Выучите таблицы из блоков A–D.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>3. Слушаем и повторяем.</b> Откройте блок <i>E · Sounds</i> и повторите фразы по три раза.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>4. Слова.</b> Выучите 12 новых слов из блока B.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>5. Повторение.</b> Вернитесь в блок <i>C · Practice</i> и пройдите квиз ещё раз без ошибок.</span></label>
+      </div>
+      <div class="actions-row">
+        <span class="fb-line" id="hwFeedback">Выполнено: 0 / 5</span>
+        <button class="btn secondary small no-print" id="printHwBtn">🖨️ Распечатать задание</button>
+      </div>
+    </div>
+  </div></div><div class="badge-final" id="finalBadge">Урок пройден!<span>Все обязательные задания выполнены.</span></div>
+
+<p class="footer-note">Based on Essential Grammar in Use, 4th Edition (Cambridge University Press, 2015), Unit 52 — original exercises created for this lesson.</p>
+<script src="../lesson-kit.js?v=20261018-games1"></script><script src="../lesson-template.js?v=20261018-games1"></script><script>window.lessonConfig={"vocabData": [{"word": "decide", "ipa": "/dɪˈsaɪd/", "ru": "решать"}, {"word": "plan", "ipa": "/plæn/", "ru": "планировать"}, {"word": "hope", "ipa": "/həʊp/", "ru": "надеяться"}, {"word": "expect", "ipa": "/ɪkˈspekt/", "ru": "ожидать"}, {"word": "offer", "ipa": "/ˈɒfə/", "ru": "предлагать"}, {"word": "promise", "ipa": "/ˈprɒmɪs/", "ru": "обещать"}, {"word": "refuse", "ipa": "/rɪˈfjuːz/", "ru": "отказываться"}, {"word": "enjoy", "ipa": "/ɪnˈdʒɔɪ/", "ru": "получать удовольствие"}, {"word": "mind", "ipa": "/maɪnd/", "ru": "возражать"}, {"word": "suggest", "ipa": "/səˈdʒest/", "ru": "предлагать (идею)"}, {"word": "prefer", "ipa": "/prɪˈfɜː/", "ru": "предпочитать"}, {"word": "hate", "ipa": "/heɪt/", "ru": "ненавидеть"}], "chunkData": [{"en": "switch off the light", "ipa": "", "ru": "выключить свет"}, {"en": "I don't mind", "ipa": "", "ru": "я не против"}, {"en": "Has it stopped raining?", "ipa": "", "ru": "Дождь закончился?"}, {"en": "I'd love to…", "ipa": "", "ru": "я бы с удовольствием…"}, {"en": "I'd prefer to stand", "ipa": "", "ru": "я лучше постою"}, {"en": "I'd hate to…", "ipa": "", "ru": "мне бы очень не хотелось…"}, {"en": "learn to drive", "ipa": "", "ru": "учиться водить"}, {"en": "sit down", "ipa": "", "ru": "сесть"}], "fillData": [{"sentence": "What do you want ___ do this evening?", "answers": ["to"]}, {"sentence": "Tina has decided ___ sell her car.", "answers": ["to"]}, {"sentence": "You forgot ___ switch off the light.", "answers": ["to"]}, {"sentence": "My brother is learning ___ drive.", "answers": ["to"]}, {"sentence": "I enjoy ___. (dance)", "answers": ["dancing"]}, {"sentence": "I don't mind ___ up early. (get)", "answers": ["getting"]}, {"sentence": "Has it stopped ___? (rain)", "answers": ["raining"]}, {"sentence": "Sonia suggested ___ to the cinema. (go)", "answers": ["going"]}, {"sentence": "I hate ___ late. (be, -ing)", "answers": ["being"]}, {"sentence": "Amy would like ___ meet you.", "answers": ["to"]}, {"sentence": "I'd love ___ go to Australia.", "answers": ["to"]}, {"sentence": "I'd prefer ___ stand, thank you.", "answers": ["to"]}], "memoPairs": [["decide", "решать"], ["promise", "обещать"], ["refuse", "отказываться"], ["enjoy", "получать удовольствие"], ["mind", "возражать"], ["suggest", "предлагать (идею)"]], "quizData": [{"q": "I enjoy ___.", "opts": ["dancing", "to dance"], "correct": "dancing"}, {"q": "Tina decided ___ her car.", "opts": ["to sell", "selling"], "correct": "to sell"}, {"q": "I don't mind ___ up early.", "opts": ["getting", "to get"], "correct": "getting"}, {"q": "He promised ___ me.", "opts": ["to help", "helping"], "correct": "to help"}, {"q": "Has it stopped ___?", "opts": ["raining", "to rain"], "correct": "raining"}, {"q": "I'd love ___ to Australia.", "opts": ["to go", "going"], "correct": "to go"}, {"q": "She suggested ___ to the cinema.", "opts": ["going", "to go"], "correct": "going"}, {"q": "We need ___ home.", "opts": ["to go", "going"], "correct": "to go"}], "matchWords": [{"en": "decide", "ru": "решать"}, {"en": "plan", "ru": "планировать"}, {"en": "hope", "ru": "надеяться"}, {"en": "expect", "ru": "ожидать"}, {"en": "offer", "ru": "предлагать"}, {"en": "promise", "ru": "обещать"}, {"en": "refuse", "ru": "отказываться"}, {"en": "enjoy", "ru": "получать удовольствие"}, {"en": "mind", "ru": "возражать"}, {"en": "suggest", "ru": "предлагать (идею)"}], "tfGroups": {"tfList": {"data": [{"text": "The writer started dancing at six.", "correct": true}, {"text": "Kate enjoys dancing.", "correct": false}, {"text": "Kate promised to come to a class.", "correct": true}, {"text": "Kate danced very well.", "correct": false}, {"text": "Kate suggested going to a café.", "correct": true}, {"text": "The writer would hate to go to Cuba.", "correct": false}], "feedback": "tfFeedback"}, "lsList": {"data": [{"text": "The speaker would like to go to the cinema.", "correct": true}, {"text": "The friend doesn't need to work.", "correct": false}, {"text": "The speaker enjoys reading in the café.", "correct": true}, {"text": "The friend hopes to finish by eight.", "correct": false}], "feedback": "lsFeedback"}}, "readFillData": [{"sentence": "I love ___. (dance)", "answers": ["dancing"]}, {"sentence": "Last year I decided ___ take salsa classes.", "answers": ["to"]}, {"sentence": "She prefers ___. (read)", "answers": ["reading"]}, {"sentence": "She promised ___ come to a class.", "answers": ["to"]}, {"sentence": "Kate suggested ___ to a café. (go)", "answers": ["going"]}, {"sentence": "I'd love ___ go to Cuba.", "answers": ["to"]}], "tomData": [{"sentence": "I've never ___. (stop)", "answers": ["stopped"]}, {"sentence": "She ___ to dance, but she wasn't very good.", "answers": ["tried"]}, {"sentence": "She didn't mind ___ for me. (wait)", "answers": ["waiting"]}, {"sentence": "We finished ___ at ten. (eat)", "answers": ["eating"]}, {"sentence": "I'm learning to ___ Spanish.", "answers": ["speak"]}, {"sentence": "I'd hate to ___ it.", "answers": ["miss"]}], "slug": "urok-to-and-ing", "exam": false, "legacySignature": "", "legacyFields": [], "questionTask": false, "listeningLines": ["What do you want to do tonight?", "I'd like to go to the cinema.", "OK. Do you mind waiting? I need to finish working.", "No problem. I enjoy reading in the café.", "Great. I hope to finish by seven.", "Don't forget to bring the tickets!"], "readingLines": ["I love dancing. I started dancing when I was six, and I've never stopped. Last year I decided to take salsa classes.", "My friend Kate doesn't enjoy dancing. She prefers reading. But last month she promised to come to a class with me. She tried to dance, but she wasn't very good!", "Kate suggested going to a café after the class. She didn't mind waiting for me. We finished eating at ten.", "Next summer I'd love to go to Cuba. I'm learning to speak Spanish. I hope to dance salsa there! I'd hate to miss it."]};
+LessonTemplate.mount(window.lessonConfig);</script></body></html>

@@ -968,6 +968,42 @@ const T=[
    O('He said that he was tired.'),
    O('She told me that she couldn\'t find a job.')
   ]},
+  {id:51,title:'work / to work / working',emoji:'🔤',rule:"will/can/must/should/might/would + глагол без to: I must go. do/does/did + глагол: Do you work? I didn't sleep. going to / have to / want to / would like to / used to + to + глагол: I have to go. am/is/are/was/were + -ing: I'm working. It was raining.",
+  items:[
+   C('Anna will ___ here soon.','be','to be','being'),
+   C('I have ___ now.','to go','go','going'),
+   C("Tom isn't ___ today.",'working','work','to work'),
+   C('We didn\'t ___ well.','sleep','slept','to sleep'),
+   F('I must ___ now. (go)','go'),
+   F("I'm going ___ play tennis.",'to'),
+   F('It was ___, so we stayed home. (rain)','raining'),
+   O('I have to go now.'),
+   O("I'm working.")
+  ]},
+  {id:52,title:'want to do / enjoy doing',emoji:'🔀',rule:"+ to …: want, plan, decide, try, hope, expect, offer, forget, need, promise, refuse, learn (I want to go). + -ing: enjoy, stop, mind, finish, suggest (I enjoy dancing). Оба варианта: like, love, prefer, hate, start, begin, continue. would like / love / prefer / hate + to …",
+  items:[
+   C('I enjoy ___.','dancing','to dance','dance'),
+   C('Tina decided ___ her car.','to sell','selling','sell'),
+   C("I don't mind ___ up early.",'getting','to get','get'),
+   C("I'd love ___ to Australia.",'to go','going','go'),
+   F('Has it stopped ___? (rain)','raining'),
+   F('He promised ___ help me.','to'),
+   F('She suggested ___ to the cinema. (go)','going'),
+   O('I enjoy dancing.'),
+   O('I want to go home.')
+  ]},
+  {id:53,title:'I want you to… / make & let',emoji:'🙋',rule:"want / would like + somebody + to …: I want you to be happy (не that you are). Так же ask, tell, advise, expect, persuade, teach: She asked me to help. Отрицание: told me not to wait. После make и let — без to: He makes me laugh. Sue let me use her phone. Let's = Let us: Let's dance!",
+  items:[
+   C('I want ___ happy.','you to be','that you are','you be'),
+   C('He makes me ___.','laugh','to laugh','laughing'),
+   C('Paul told Sue ___ for him.','not to wait','to not wait',"don't wait"),
+   C('Sue let me ___ her phone.','use','to use','using'),
+   F('We persuaded Gary ___ come.','to'),
+   F('Jane told me ___ wait for her.','to'),
+   F('Come on! ___ dance.',"Let's"),
+   O('I want you to be happy.'),
+   O('He makes me laugh.')
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),
