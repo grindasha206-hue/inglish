@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 37 · there is / there are</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Comfortaa:wght@500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --cream:#FDF4F1; --paper:#FFFDFB; --ink:#3A2E33; --ink-soft:#6B5A61;
+  --brick:#BE456F; --brick-dark:#8F2E52; --tab:#C4507A; --tab-dark:#9E3460;
+  --sage:#4F8F6D; --sage-bg:#E6F1EA; --coral:#D65B4A; --coral-bg:#FBE7E3;
+  --gold:#E8A0B4; --line:#F1D9DF; --shadow: 0 6px 18px rgba(150,80,100,0.10);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; background:radial-gradient(circle at 15% 8%, rgba(232,160,180,0.10), transparent 40%), var(--cream); color:var(--ink); font-family:'Nunito', sans-serif; line-height:1.55; padding-bottom:80px;}
+h1,h2,h3,.display{font-family:'Comfortaa',sans-serif;}
+
+.topbar{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:1px solid var(--line); padding:10px 18px; display:flex; align-items:center; gap:14px; box-shadow:0 2px 10px rgba(0,0,0,0.04);}
+.topbar .book-title{font-family:'Comfortaa',sans-serif; font-weight:700; font-size:15px; color:var(--brick-dark); white-space:nowrap;}
+.progress-steps{display:flex; gap:5px; flex:1; align-items:center;}
+.pstep{flex:1; height:8px; border-radius:6px; background:var(--line); position:relative; overflow:hidden;}
+.pstep i{display:block; height:100%; width:0%; border-radius:6px; background:linear-gradient(90deg, var(--tab), var(--brick)); transition:width .5s ease;}
+.score-pill{font-size:13px; font-weight:700; background:var(--sage-bg); color:var(--sage); padding:5px 12px; border-radius:20px; white-space:nowrap;}
+
+.page{max-width:900px; margin:26px auto; background:var(--paper); border-radius:4px; box-shadow:var(--shadow); border:1px solid var(--line); overflow:hidden;}
+
+.unit-banner{background:linear-gradient(135deg, var(--brick) 0%, var(--brick-dark) 100%); color:#fff; padding:26px 30px 22px 96px; position:relative;}
+.unit-tag{position:absolute; left:0; top:0; bottom:0; width:76px; background:var(--brick-dark); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Comfortaa',sans-serif; border-right:2px solid rgba(255,255,255,0.15);}
+.unit-tag .u{font-size:11px; letter-spacing:2px; opacity:.75;}
+.unit-tag .n{font-size:30px; font-weight:800;}
+.unit-banner h1{margin:0; font-size:27px; font-weight:800; letter-spacing:.3px;}
+.unit-banner p{margin:6px 0 0; opacity:.9; font-size:14.5px;}
+
+.section{display:flex; border-top:1px solid var(--line);}
+.section .tab{width:56px; flex-shrink:0; background:var(--tab); color:#fff; font-family:'Comfortaa',sans-serif; font-weight:800; font-size:20px; display:flex; align-items:flex-start; justify-content:center; padding-top:22px;}
+.section.alt .tab{background:var(--tab-dark);}
+.section .content{padding:24px 28px 30px; flex:1; min-width:0;}
+.section h2{margin:0 0 4px; font-size:22px; color:var(--brick-dark);}
+.eyebrow{font-size:11.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-soft); font-weight:700; margin-bottom:4px;}
+.section p.lead{color:var(--ink-soft); margin-top:4px; font-size:14.5px;}
+
+.dialog-wrap{display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; margin:18px 0 6px;}
+.dialog-figure{width:110px; text-align:center; flex-shrink:0;}
+.dialog-avatar{width:96px; height:120px; margin:0 auto;}
+.dialog-avatar svg{width:100%; height:100%;}
+.dialog-figure .name{font-family:'Comfortaa',sans-serif; font-weight:700; font-size:12.5px; letter-spacing:1px; color:var(--brick-dark); margin-top:4px;}
+.dialog-bubbles{display:flex; flex-direction:column; gap:8px; flex:1; min-width:260px; max-width:420px;}
+.d-bubble{background:#fff; border:1.5px solid var(--line); border-radius:16px; padding:8px 14px; font-size:13.5px; box-shadow:0 3px 8px rgba(0,0,0,0.05);}
+.d-bubble.q{border-color:var(--tab);}
+.d-bubble.a{align-self:flex-end; background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.d-bubble b{color:var(--brick-dark);}
+.d-bubble.a b{color:var(--sage);}
+
+.gram-tables{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:22px;}
+@media(max-width:620px){.gram-tables{grid-template-columns:1fr;}}
+.gram-box h3{font-size:13px; text-transform:uppercase; letter-spacing:1px; color:var(--ink-soft); margin:0 0 8px;}
+table.formtable{width:100%; border-collapse:collapse; font-size:13.5px; background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;}
+table.formtable td{padding:7px 10px; border-bottom:1px solid var(--line);}
+table.formtable tr:last-child td{border-bottom:none;}
+table.formtable td.pron{color:var(--ink-soft); width:34%;}
+table.formtable td.verb{font-weight:700; color:var(--brick-dark);}
+table.formtable td.short{color:var(--ink-soft); font-style:italic;}
+
+.chunk{background:linear-gradient(180deg, transparent 60%, rgba(196,80,122,0.35) 60%); font-weight:700; color:var(--brick-dark); padding:0 1px;}
+
+.mini-note{margin-top:16px; background:var(--sage-bg); border-left:3px solid var(--sage); padding:10px 14px; border-radius:6px; font-size:13.5px; color:#2f5741;}
+.mini-note b{color:var(--sage);}
+.mini-note i{color:var(--ink-soft); font-style:italic;}
+.mini-note.warn{background:var(--coral-bg); border-left-color:var(--coral); color:#7A2848;}
+.mini-note.warn b{color:var(--coral);}
+
+.vocab-table{margin-top:14px; display:flex; flex-direction:column; gap:8px;}
+.vocab-row{display:grid; grid-template-columns:auto 1fr auto auto; align-items:center; gap:12px; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:9px 14px;}
+@media(max-width:560px){.vocab-row{grid-template-columns:1fr; gap:4px;}}
+.vocab-word{font-weight:800; color:var(--brick-dark); font-size:14.5px; font-family:'Comfortaa',sans-serif;}
+.vocab-ipa{font-size:12.5px; color:var(--tab-dark); font-style:italic;}
+.vocab-ru{font-size:13.5px; color:var(--ink-soft);}
+.chunk-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px;}
+@media(max-width:600px){.chunk-grid{grid-template-columns:1fr;}}
+.chunk-row{display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--cream); border:1.5px dashed var(--gold); border-radius:10px; padding:9px 14px;}
+.chunk-en{font-weight:800; color:var(--brick-dark); font-size:14px; display:block;}
+.chunk-ipa{font-size:11.5px; color:var(--tab-dark); font-style:italic; display:block; margin-top:1px;}
+.chunk-ru{font-size:12.5px; color:var(--ink-soft); display:block; margin-top:1px; font-weight:400;}
+
+.game-tabs{display:flex; gap:8px; margin:18px 0 20px; flex-wrap:wrap;}
+.game-tab-btn{border:1.5px solid var(--line); background:#fff; color:var(--ink-soft); padding:8px 16px; border-radius:20px; font-family:'Nunito'; font-weight:700; font-size:13px; cursor:pointer; transition:.2s;}
+.game-tab-btn.active{background:var(--tab); color:#fff; border-color:var(--tab-dark);}
+.game-panel{display:none;}
+.game-panel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
+
+.fill-item{display:flex; align-items:flex-start; gap:10px; flex-wrap:wrap; padding:12px 4px; border-bottom:1px dashed var(--line);}
+.fill-item:last-child{border-bottom:none;}
+.fill-num{width:22px; height:22px; border-radius:50%; background:var(--cream); border:1px solid var(--line); font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; color:var(--ink-soft); flex-shrink:0; margin-top:3px;}
+.fill-body{flex:1; min-width:220px;}
+.fill-words{font-size:13px; color:var(--ink-soft); margin-bottom:6px; font-style:italic;}
+.blank-input{width:130px; padding:5px 8px; border:1.5px solid var(--line); border-radius:6px; font-family:'Nunito'; font-weight:700; font-size:14px; text-align:center; background:#FFFDFB; color:var(--brick-dark);}
+.blank-input:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.blank-input.correct{border-color:var(--sage); background:var(--sage-bg); color:#2f5741;}
+.blank-input.wrong{border-color:var(--coral); background:var(--coral-bg); color:var(--coral);}
+.fill-fb{font-size:16px; margin-top:6px;}
+
+.btn{border:none; cursor:pointer; font-family:'Nunito'; font-weight:800; padding:10px 20px; border-radius:24px; font-size:14px; letter-spacing:.2px; background:var(--brick); color:#fff; box-shadow:0 4px 10px rgba(190,69,111,0.25); transition:.15s;}
+.btn:hover{transform:translateY(-1px); box-shadow:0 6px 14px rgba(190,69,111,0.32);}
+.btn.secondary{background:transparent; color:var(--brick); border:1.5px solid var(--brick); box-shadow:none;}
+.btn.small{padding:6px 14px; font-size:12.5px;}
+.actions-row{display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; align-items:center;}
+.fb-line{font-size:13.5px; font-weight:700; color:var(--ink-soft);}
+
+.memo-wrap{display:flex; flex-direction:column; align-items:center; gap:14px;}
+.memo-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; max-width:520px; width:100%;}
+@media(max-width:500px){.memo-grid{grid-template-columns:repeat(3,1fr);}}
+.memo-card{aspect-ratio:1/1; border-radius:10px; cursor:pointer; position:relative; perspective:600px;}
+.memo-inner{width:100%; height:100%; position:relative; transform-style:preserve-3d; transition:transform .45s;}
+.memo-card.flipped .memo-inner, .memo-card.matched .memo-inner{transform:rotateY(180deg);}
+.memo-face{position:absolute; inset:0; border-radius:10px; display:flex; align-items:center; justify-content:center; backface-visibility:hidden; font-weight:800; text-align:center; padding:4px; font-size:12.5px;}
+.memo-face.back{background:linear-gradient(135deg, var(--tab), var(--tab-dark)); color:#fff; font-family:'Comfortaa',sans-serif; font-size:22px;}
+.memo-face.front{background:#fff; border:2px solid var(--line); color:var(--brick-dark); transform:rotateY(180deg);}
+.memo-card.matched .memo-face.front{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.memo-status{font-size:13.5px; color:var(--ink-soft); font-weight:700;}
+
+.quiz-q{margin-bottom:18px;}
+.quiz-q p{font-weight:700; margin:0 0 8px; font-size:14.5px;}
+.quiz-opts{display:flex; gap:8px; flex-wrap:wrap;}
+.quiz-opt{border:1.5px solid var(--line); background:#fff; padding:7px 15px; border-radius:20px; font-weight:700; font-size:13.5px; cursor:pointer; color:var(--ink);}
+.quiz-opt.sel-correct{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.quiz-opt.sel-wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+.quiz-opt.reveal-correct{border-color:var(--sage); box-shadow:inset 0 0 0 1px var(--sage);}
+
+.match-wrap{display:flex; gap:14px; max-width:520px; margin:0 auto;}
+.match-col{flex:1; display:flex; flex-direction:column; gap:8px;}
+.match-tile{background:#fff; border:1.5px solid var(--line); border-radius:8px; padding:9px 12px; font-size:13.5px; font-weight:700; cursor:pointer; text-align:center; color:var(--ink); transition:.15s;}
+.match-tile.selected{border-color:var(--tab); background:var(--cream); box-shadow:inset 0 0 0 1.5px var(--tab);}
+.match-tile.matched{background:var(--sage-bg); border-color:var(--sage); color:#2f5741; cursor:default;}
+.match-tile.wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+
+.read-text{background:#fff; border:1.5px solid var(--line); border-radius:14px; padding:18px 20px; margin:16px 0; font-size:14.5px;}
+.read-text p{margin:0 0 10px;}
+.read-text p:last-child{margin-bottom:0;}
+.tf-item{display:flex; align-items:center; justify-content:space-between; gap:10px; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:9px 14px; margin-bottom:8px;}
+.tf-text{font-size:13.5px; flex:1;}
+.tf-btns{display:flex; gap:6px; flex-shrink:0;}
+.tf-btn{border:1.5px solid var(--line); background:var(--cream); padding:5px 12px; border-radius:16px; font-weight:800; font-size:12.5px; cursor:pointer; color:var(--ink-soft);}
+.tf-btn.sel-correct{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.tf-btn.sel-wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+.tf-btn.reveal-correct{box-shadow:inset 0 0 0 1px var(--sage); border-color:var(--sage);}
+
+.tts-warn{display:none; font-size:12.5px; color:var(--coral); background:var(--coral-bg); padding:8px 12px; border-radius:6px; margin:8px 0 0;}
+.tts-warn.shown{display:block;}
+.voice-picker{display:flex; align-items:center; gap:8px; flex-wrap:wrap; background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:8px 12px; margin-top:10px; font-size:13px;}
+.voice-picker label{font-weight:700; color:var(--ink-soft);}
+.voice-picker select{border:1.5px solid var(--line); border-radius:6px; padding:4px 8px; font-family:'Nunito'; font-size:13px; background:#fff; color:var(--ink); max-width:220px;}
+.voice-hint{font-size:11.5px; color:var(--ink-soft); flex-basis:100%;}
+.sound-block{margin-top:22px; padding-top:16px; border-top:1px dashed var(--line);}
+.sound-block:first-of-type{border-top:none; margin-top:16px;}
+.sound-block h3{font-size:15.5px; margin:0 0 6px; color:var(--brick-dark); font-weight:700;}
+.ipa{font-family:'Nunito'; font-weight:500; font-size:12px; color:var(--ink-soft); font-style:italic;}
+.sound-note{font-size:13.5px; color:var(--ink-soft); margin:0 0 12px;}
+.sound-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+.sound-grid.three{grid-template-columns:repeat(3,1fr);}
+@media(max-width:600px){.sound-grid, .sound-grid.three{grid-template-columns:1fr;}}
+.sound-pair{background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px;}
+.sound-pair.wide{grid-column:1/-1;}
+.sp-text{font-size:14.5px; font-weight:600; flex:1;}
+.sp-text.big{font-size:19px; text-align:center; font-family:'Comfortaa',sans-serif; color:var(--brick-dark);}
+.sp-controls{display:flex; gap:6px; flex-shrink:0;}
+.play-btn{border:1.5px solid var(--line); background:var(--cream); cursor:pointer; border-radius:8px; padding:6px 10px; font-size:15px; line-height:1; transition:.15s;}
+.play-btn:hover{background:var(--tab); border-color:var(--tab-dark);}
+.play-btn.playing{background:var(--brick); border-color:var(--brick-dark);}
+b.stress{color:var(--brick-dark); text-decoration:underline; text-decoration-color:var(--gold); text-decoration-thickness:2px; text-underline-offset:3px;}
+
+.prompt-list{list-style:none; padding:0; margin:14px 0; display:grid; gap:8px;}
+.prompt-list li{background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:8px 12px; font-size:13.5px; display:flex; gap:8px; align-items:baseline;}
+.prompt-list li b{color:var(--brick-dark); font-family:'Comfortaa',sans-serif;}
+textarea.write-area{width:100%; min-height:140px; border:1.5px solid var(--line); border-radius:10px; padding:14px; font-family:'Nunito'; font-size:14.5px; color:var(--ink); background:#FFFDFB; resize:vertical;}
+textarea.write-area:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.word-count{font-size:12.5px; color:var(--ink-soft); margin-top:6px;}
+.cue-cards{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;}
+.cue-card{background:#fff; border:1.5px dashed var(--gold); border-radius:10px; padding:10px 14px; font-size:13px; width:160px; color:var(--ink-soft); font-style:italic;}
+.cue-card b{display:block; font-style:normal; color:var(--brick-dark); font-family:'Comfortaa',sans-serif; font-size:14px; margin-bottom:3px;}
+.reveal-box{margin-top:14px; border-left:3px solid var(--tab); background:var(--cream); padding:12px 16px; border-radius:6px; font-size:13.5px; display:none;}
+.reveal-box.shown{display:block;}
+
+.hw-list{display:flex; flex-direction:column; gap:10px; margin-top:16px;}
+.hw-item{display:flex; gap:10px; align-items:flex-start; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:11px 14px; font-size:13.5px; cursor:pointer; transition:.15s;}
+.hw-item:has(.hw-check:checked){background:var(--sage-bg); border-color:var(--sage);}
+.hw-check{margin-top:3px; width:16px; height:16px; accent-color:var(--sage); flex-shrink:0;}
+.hw-item b{color:var(--brick-dark); font-family:'Comfortaa',sans-serif;}
+.hw-item i{color:var(--ink-soft); font-style:italic;}
+
+@media print{
+  .topbar, .unit-banner, #presentation, #vocabulary, #practice, #reading, #sounds, #production, .badge-final, .footer-note, .no-print{ display:none !important; }
+  body{ background:#fff; padding:0; }
+  .page{ box-shadow:none; border:none; margin:0; max-width:100%; }
+  .section{ border-top:none; }
+  .section .tab{ display:none; }
+  .section .content{ padding:10px; }
+  .hw-item{ break-inside:avoid; }
+}
+
+.footer-note{text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:24px; padding:0 20px;}
+.badge-final{display:none; text-align:center; margin:26px auto 0; max-width:900px; background:linear-gradient(135deg, var(--sage), #3d7357); color:#fff; border-radius:14px; padding:22px; font-family:'Comfortaa',sans-serif; font-size:19px; font-weight:700; box-shadow:var(--shadow);}
+.badge-final.shown{display:block; animation:fadeIn .5s ease;}
+.badge-final span{display:block; font-family:'Nunito'; font-weight:500; font-size:13.5px; margin-top:6px; opacity:.9;}
+
+/* Generated textbook illustrations; contain each complete scene without cropping. */
+.dialog-figure.art-figure{width:148px}
+.lisa-figure.art-figure{width:164px}
+.dialog-avatar.art-avatar{width:144px;height:auto}
+.lisa-avatar.art-avatar{width:160px;height:auto}
+.art-avatar img.lesson-portrait{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--line);box-shadow:0 5px 16px rgba(150,80,100,.10)}
+.scene-box img.lesson-scene{display:block;width:100%;max-width:720px;height:auto;margin:0 auto;border-radius:10px}
+.pic-slot img.lesson-scene{display:block;width:100%;height:auto;max-height:none;object-fit:contain}
+@media(max-width:560px){
+ .dialog-wrap .art-figure{width:112px}
+ .dialog-avatar.art-avatar{width:108px}
+ .dialog-wrap .dialog-bubbles{min-width:0;flex-basis:100%;max-width:none;order:2}
+ .dialog-wrap .dialog-figure:last-child{order:1}
+ .dialog-wrap .dialog-figure:first-child{order:0}
+ .lisa-avatar.art-avatar{width:140px}
+ .scene-box{padding:10px}
+}
+
+</style>
+<link rel="stylesheet" href="../lesson-theme.css"></head>
+<body><div class="topbar">
+  <div class="book-title">Essential Grammar · Unit 37</div>
+  <div class="progress-steps">
+    <div class="pstep" id="step-p"><i id="bar-p"></i></div>
+    <div class="pstep" id="step-vocab"><i id="bar-vocab"></i></div>
+    <div class="pstep" id="step-pr"><i id="bar-pr"></i></div>
+    <div class="pstep" id="step-read"><i id="bar-read"></i></div>
+    <div class="pstep" id="step-sound"><i id="bar-sound"></i></div>
+    <div class="pstep" id="step-listen"><i id="bar-listen"></i></div>
+    <div class="pstep" id="step-prod"><i id="bar-prod"></i></div>
+    <div class="pstep" id="step-hw"><i id="bar-hw"></i></div>
+  </div>
+  <div class="score-pill">★ <span id="scoreDisplay">0</span>/20</div>
+</div>
+
+<div class="page"><div class="unit-banner">
+    <div class="unit-tag"><span class="u">UNIT</span><span class="n">37</span></div>
+    <h1>there is · there are</h1>
+    <p>Что где находится и что есть</p>
+  </div><div class="section" id="presentation">
+    <div class="tab">A</div>
+    <div class="content">
+      <div class="eyebrow">Presentation</div>
+      <h2>there is / there are</h2>
+      <div class="gram-box" style="margin:14px 0"><h3>A · there is / there are</h3><div style="display:flex;gap:10px;flex-wrap:wrap;margin:12px 0"><div style="flex:1 1 200px"><figure class="pic-slot" style="margin:12px auto;max-width:10000px"><div class="pic-ph" style="display:flex;min-height:150px"><span>🖼️</span><div style="font-size:13px">Дом, на крыше рабочий</div><div style="font-size:11px;opacity:.7">lessons/img/unit-37-pic-1.webp</div></div></figure><p style="text-align:center;margin:4px 0"><b>There's</b> a man on the roof.</p></div><div style="flex:1 1 200px"><figure class="pic-slot" style="margin:12px auto;max-width:10000px"><div class="pic-ph" style="display:flex;min-height:150px"><span>🖼️</span><div style="font-size:13px">Вокзал, табло TRAINS: 8.30, 9.15, 10.30…</div><div style="font-size:11px;opacity:.7">lessons/img/unit-37-pic-2.webp</div></div></figure><p style="text-align:center;margin:4px 0"><b>There's</b> a train at 10.30.</p></div><div style="flex:1 1 200px"><figure class="pic-slot" style="margin:12px auto;max-width:10000px"><div class="pic-ph" style="display:flex;min-height:150px"><span>🖼️</span><div style="font-size:13px">Список дней недели SUNDAY … SATURDAY } 7</div><div style="font-size:11px;opacity:.7">lessons/img/unit-37-pic-3.webp</div></div></figure><p style="text-align:center;margin:4px 0"><b>There are</b> seven days in a week.</p></div></div><p style="font-style:italic;color:#6B5A61;margin:12px 0 4px">singular</p><div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start"><div style="flex:0 0 240px"><div style="border:1.5px solid #E8879F;border-radius:8px;padding:8px 12px;background:#FFFDFB;display:inline-block;line-height:1.9"><b>there is …</b> &nbsp;(there's)<br><b>is there … ?</b><br><b>there is not …</b> &nbsp;(there isn't <i>или</i> there's not)</div></div><div style="flex:1 1 300px"><ul class="prompt-list"><li><b>There's</b> a big tree in the garden.</li><li><b>There's</b> nothing on TV tonight.</li><li><span style="display:block">A: Do you have any money?<br>B: Yes, <b>there's</b> some in my bag.</span></li><li><span style="display:block">A: Excuse me, <b>is there</b> a bank near here?<br>B: Yes, <b>there is</b>. / No, <b>there isn't</b>.</span></li><li>We can't go skiing. <b>There isn't</b> any snow.</li></ul></div></div><p style="font-style:italic;color:#6B5A61;margin:12px 0 4px">plural</p><div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start"><div style="flex:0 0 240px"><div style="border:1.5px solid #E8879F;border-radius:8px;padding:8px 12px;background:#FFFDFB;display:inline-block;line-height:1.9"><b>there are …</b><br><b>are there … ?</b><br><b>there are not …</b> &nbsp;(there aren't)</div></div><div style="flex:1 1 300px"><ul class="prompt-list"><li><b>There are</b> some big trees in the garden.</li><li><b>There are</b> a lot of cars on this road.</li><li><span style="display:block">A: <b>Are there</b> any cafés near here?<br>B: Yes, <b>there are</b>. / No, <b>there aren't</b>.</span></li><li>This café is very quiet. <b>There aren't</b> many people here.</li><li>How many players <b>are there</b> in a volleyball team?</li><li><b>There are</b> 6 players in a volleyball team.</li></ul></div></div></div>
+      <div class="gram-box" style="margin:14px 0"><h3>B · there is и it is</h3><div style="display:flex;gap:12px;flex-wrap:wrap;margin:12px 0"><div style="flex:1 1 240px"><figure class="pic-slot" style="margin:12px auto;max-width:10000px"><div class="pic-ph" style="display:flex;min-height:150px"><span>🖼️</span><div style="font-size:13px">Книга лежит на столе</div><div style="font-size:11px;opacity:.7">lessons/img/unit-37-pic-4.webp</div></div></figure><h3 style='font-size:15px'>there is</h3><p><b>There's</b> a book on the table.<br><i>(не It's a book on the table.)</i></p></div><div style="flex:1 1 240px"><figure class="pic-slot" style="margin:12px auto;max-width:10000px"><div class="pic-ph" style="display:flex;min-height:150px"><span>🖼️</span><div style="font-size:13px">Молодой человек читает книгу</div><div style="font-size:11px;opacity:.7">lessons/img/unit-37-pic-5.webp</div></div></figure><h3 style='font-size:15px'>it is</h3><p>I like <b>this book</b>. <b>It's</b> interesting.<br>(It = this book)</p></div></div><h3 style='font-size:15px'>Compare</h3><ul class="prompt-list"><li>'What's <b>that noise</b>?' — '<b>It's</b> a plane.' (It = that noise)</li><li><b>There's</b> a bus at 8.15. <b>It's</b> a fast bus. (It = the 8.15 bus)</li><li><b>There's</b> a lot of sugar in this tea. I don't like <b>this tea</b>. <b>It's</b> too sweet. (It = this tea)</li></ul></div>
+    </div>
+  </div><div class="section" id="vocabulary"><div class="tab">B</div><div class="content"><div class="eyebrow">Vocabulary</div><h2>Новые слова этого урока</h2><p class="lead">Нажмите на динамик, чтобы услышать слово. Все слова встретятся дальше в чтении и упражнениях.</p><div id="vocabTable" class="vocab-table"></div><h3>Соседи слов <span class="ipa">chunks / collocations</span></h3><p class="sound-note">Учите сочетаниями: так слова легче вспоминаются в речи.</p><div id="chunkGrid" class="chunk-grid"></div></div></div><div class="section" id="practice">
+    <div class="tab">C</div>
+    <div class="content">
+      <div class="eyebrow">Practice</div>
+      <h2>Тренируемся</h2>
+      <p class="lead">Выберите игру и заработайте звёзды ★. Ответы проверяются сразу.</p>
+      <div class="game-tabs">
+        <button class="game-tab-btn active" data-panel="panel-fill">✏️ there is / are</button>
+        <button class="game-tab-btn" data-panel="panel-memo">🃏 Мемо</button>
+        <button class="game-tab-btn" data-panel="panel-quiz">⚡ Квиз</button>
+        <button class="game-tab-btn" data-panel="panel-vocabmatch">📚 Лексика</button>
+      </div>
+      <div class="game-panel active" id="panel-fill">
+        <p class="lead" style="margin-top:0">Впишите there's, is, are, isn't, aren't или It's.</p>
+        <div id="fillList"></div>
+        <div class="actions-row">
+          <button class="btn" id="checkFillBtn">Проверить</button>
+          <button class="btn secondary small" id="resetFillBtn">Сбросить</button>
+          <span class="fb-line" id="fillFeedback"></span>
+        </div>
+      </div>
+      <div class="game-panel" id="panel-memo">
+        <p class="lead" style="margin-top:0">Найдите пары: английское слово и его русский перевод.</p>
+        <div class="memo-wrap">
+          <div class="memo-grid" id="memoGrid"></div>
+          <div class="memo-status" id="memoStatus">Найдено пар: 0 / 6</div>
+          <button class="btn secondary small" id="restartMemoBtn">Перемешать заново</button>
+        </div>
+      </div>
+      <div class="game-panel" id="panel-quiz">
+        <div id="quizList"></div>
+        <div class="actions-row"><span class="fb-line" id="quizFeedback"></span></div>
+      </div>
+      <div class="game-panel" id="panel-vocabmatch">
+        <p class="lead" style="margin-top:0">Нажмите на английское слово, затем на его перевод.</p>
+        <div class="match-wrap">
+          <div class="match-col" id="matchEnCol"></div>
+          <div class="match-col" id="matchRuCol"></div>
+        </div>
+        <div class="actions-row">
+          <span class="fb-line" id="matchStatus">Найдено пар: 0 / 10</span>
+          <button class="btn secondary small" id="restartMatchBtn">Перемешать заново</button>
+        </div>
+      </div>
+    </div>
+  </div><div class="section alt" id="reading">
+    <div class="tab">D</div>
+    <div class="content"><div class="actions-row"><button class="btn secondary small" id="playReadingBtn">🔊 Прослушать текст</button><button class="btn secondary stop-audio">Остановить</button></div>
+      <div class="eyebrow">Reading</div>
+      <h2>Green Village</h2>
+      <p class="lead">Что есть в деревне, а чего нет? Найдите there is / there are.</p>
+      <div class="read-text"><p>Welcome to Green Village! It's a small place, but there are a lot of things to do here.</p><p>In the centre there's a beautiful old <span class="chunk">castle</span>. There are <span class="chunk">guided tours</span> every day, and there's a café in the castle garden.</p><p>There's a <span class="chunk">swimming pool</span> near the school, but there isn't a cinema. If you want to see a film, there's a bus to the city every hour.</p><p>Is there a hotel? Yes, there is — there's one small hotel with <span class="chunk">fifteen rooms</span>. There aren't many tourists in winter, so it's very quiet.</p></div>
+    <h3>1 · True / False</h3><div id="tfList"></div><div class="fb-line" id="tfFeedback"></div><h3>2 · Деревня</h3><p class="sound-note">Впишите is / are / isn't / aren't / It's.</p><div id="tomFillList"></div><div class="actions-row"><button class="btn small" id="checkTomBtn">Проверить</button><span class="fb-line" id="tomFeedback"></span></div><h3>3 · Слова из текста</h3><div id="readFillList"></div><div class="actions-row"><button class="btn small" id="checkReadFillBtn">Проверить</button><span class="fb-line" id="readFillFeedback"></span></div>
+  </div></div><div class="section" id="sounds">
+    <div class="tab">E</div>
+    <div class="content"><p class="mini-note">Синтезированный голос помогает прочитать фразы, но не гарантирует точную интонацию. Повторяйте за ним и сравнивайте.</p>
+      <div class="eyebrow">Sounds &amp; Speech</div>
+      <h2>there is / there are на слух</h2>
+      <p class="lead">Слушайте и повторяйте.</p>
+      <p class="tts-warn" id="ttsWarn"></p>
+      <div class="sound-block"><h3>1 · there's /ðeəz/</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">There's a man on the roof.</div><div class="sp-controls"><button class="play-btn" data-text="There&#x27;s a man on the roof." data-rate="1">🔊</button><button class="play-btn slow" data-text="There&#x27;s a man on the roof." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">There's a train at ten thirty.</div><div class="sp-controls"><button class="play-btn" data-text="There&#x27;s a train at ten thirty." data-rate="1">🔊</button><button class="play-btn slow" data-text="There&#x27;s a train at ten thirty." data-rate="0.6">🐢</button></div></div></div></div><div class="sound-block"><h3>2 · there are /ðeər ə/ — слитно</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">There are seven days in a week.</div><div class="sp-controls"><button class="play-btn" data-text="There are seven days in a week." data-rate="1">🔊</button><button class="play-btn slow" data-text="There are seven days in a week." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">There are some big trees in the garden.</div><div class="sp-controls"><button class="play-btn" data-text="There are some big trees in the garden." data-rate="1">🔊</button><button class="play-btn slow" data-text="There are some big trees in the garden." data-rate="0.6">🐢</button></div></div></div></div><div class="sound-block"><h3>3 · Вопросы и ответы</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">Is there a hotel near here? — Yes, there is.</div><div class="sp-controls"><button class="play-btn" data-text="Is there a hotel near here? — Yes, there is." data-rate="1">🔊</button><button class="play-btn slow" data-text="Is there a hotel near here? — Yes, there is." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">Are there any restaurants? — No, there aren't.</div><div class="sp-controls"><button class="play-btn" data-text="Are there any restaurants? — No, there aren&#x27;t." data-rate="1">🔊</button><button class="play-btn slow" data-text="Are there any restaurants? — No, there aren&#x27;t." data-rate="0.6">🐢</button></div></div></div></div>
+      <div class="actions-row">
+        <button class="btn secondary small" id="playAllBtn">🔊 Прослушать всё подряд</button>
+      </div>
+    </div>
+  </div><div class="section alt" id="listening">
+    <div class="tab">F</div>
+    <div class="content">
+      <div class="eyebrow">Listening</div>
+      <h2>Слушаем вслепую</h2>
+      <p class="lead">Турист спрашивает, что есть рядом.</p>
+      <div class="speed-picker">
+        <label>Скорость:</label>
+        <div class="speed-btns">
+          <button class="speed-btn" data-rate="0.6">🐢 Медленно</button>
+          <button class="speed-btn active" data-rate="0.95">🔊 Обычно</button>
+        </div>
+      </div>
+      <div class="actions-row">
+        <button class="btn secondary stop-audio">Остановить</button>
+        <button class="btn" id="playListeningBtn">▶️ Слушать диалог</button>
+      </div>
+      <h3 style="font-size:14.5px; margin:18px 0 8px; color:var(--brick-dark);">Вопросы по прослушанному</h3>
+      <div id="lsList"></div>
+      <div class="actions-row"><span class="fb-line" id="lsFeedback"></span></div>
+      <div class="actions-row">
+        <button class="btn secondary small" id="toggleScriptBtn" disabled="">📜 Скрипт — после ответов на все вопросы</button>
+      </div>
+      <div class="reveal-box" id="scriptBox">Excuse me, is there a supermarket near here?
+Yes, there is. It&#x27;s on Green Street, next to the bank.
+Thank you. And are there any good cafés?
+There are two cafés on the square. There&#x27;s a nice one with a garden.
+Is there a bus to the station?
+Yes, there&#x27;s a bus every fifteen minutes.</div>
+    </div>
+  </div><div class="section alt" id="production">
+    <div class="tab">G</div>
+    <div class="content">
+      <div class="eyebrow">Production</div>
+      <h2>Мой район</h2>
+      <p class="lead">Напишите 6–8 предложений о своём районе или городе: что там есть и чего нет (there is / there are / there isn't / there aren't).</p>
+      <ul class="prompt-list"><li><b>There's a … near my house.</b></li><li><b>There are a lot of …</b></li><li><b>There isn't a … / There aren't any …</b></li><li><b>Is there a …? Are there any …?</b></li></ul>
+      <textarea class="write-area" id="writeArea" placeholder="In my area there&#x27;s..."></textarea>
+      <div class="word-count" id="wordCount">0 слов</div>
+      <div class="actions-row">
+        <button class="btn" id="finishBtn">Готово!</button>
+        <button class="btn secondary" id="sampleBtn">Показать пример</button>
+      </div>
+      <div class="reveal-box" id="sampleBox"><b>Пример:</b> I live in a quiet area. There's a park near my house, and there are a lot of trees. There's a small supermarket on my street, but there isn't a big shopping centre. There are two cafés and a bakery. There aren't any cinemas, so I go to the city centre to see films. Is there a cinema near you?</div>
+      <div class="cue-cards">
+        <div class="cue-card"><b>Карточка 1</b>Спросите партнёра о его районе: «Is there…? Are there any…?»</div>
+        <div class="cue-card"><b>Карточка 2</b>Опишите свою комнату: «There's a … There are …»</div>
+        <div class="cue-card"><b>Карточка 3</b>There is или it is? Придумайте 3 пары.</div>
+      </div>
+    </div>
+  </div><div class="section" id="homework">
+    <div class="tab">H</div>
+    <div class="content">
+      <div class="eyebrow">Homework</div>
+      <h2>Домашнее задание</h2>
+      <p class="lead">Отметьте галочкой то, что выполнили. Можно распечатать этот блок.</p>
+      <div class="hw-list">
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>1. Письменно.</b> Напишите 8 предложений о своём районе. Используйте минимум 4 новых слова из блока B.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>2. Вопросы.</b> Напишите 5 вопросов «Is there…? / Are there any…?» и ответьте.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>3. Слушаем и повторяем.</b> Откройте блок <i>E · Sounds</i> и повторите фразы по три раза.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>4. Комната.</b> Опишите свою комнату в 5 предложениях с there is / there are.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>5. Повторение.</b> Вернитесь в блок <i>C · Practice</i> и пройдите квиз ещё раз без ошибок.</span></label>
+      </div>
+      <div class="actions-row">
+        <span class="fb-line" id="hwFeedback">Выполнено: 0 / 5</span>
+        <button class="btn secondary small no-print" id="printHwBtn">🖨️ Распечатать задание</button>
+      </div>
+    </div>
+  </div></div><div class="badge-final" id="finalBadge">Урок пройден!<span>Все обязательные задания выполнены.</span></div>
+
+<p class="footer-note">Based on Essential Grammar in Use, 4th Edition (Cambridge University Press, 2015), Unit 37 — original exercises created for this lesson.</p>
+<script src="../lesson-kit.js?v=20261018-games1"></script><script src="../lesson-template.js?v=20261018-games1"></script><script>window.lessonConfig={"vocabData": [{"word": "singular", "ipa": "/ˈsɪŋɡjələ/", "ru": "единственное число"}, {"word": "plural", "ipa": "/ˈplʊərəl/", "ru": "множественное число"}, {"word": "salty", "ipa": "/ˈsɔːlti/", "ru": "солёный"}, {"word": "castle", "ipa": "/ˈkɑːsl/", "ru": "замок"}, {"word": "building", "ipa": "/ˈbɪldɪŋ/", "ru": "здание"}, {"word": "nowhere", "ipa": "/ˈnəʊweə/", "ru": "нигде, никуда"}, {"word": "planet", "ipa": "/ˈplænɪt/", "ru": "планета"}, {"word": "alphabet", "ipa": "/ˈælfəbet/", "ru": "алфавит"}, {"word": "noise", "ipa": "/nɔɪz/", "ru": "шум"}, {"word": "square", "ipa": "/skweə/", "ru": "площадь"}, {"word": "roof", "ipa": "/ruːf/", "ru": "крыша"}, {"word": "rugby", "ipa": "/ˈrʌɡbi/", "ru": "регби"}], "chunkData": [{"en": "near here", "ipa": "", "ru": "поблизости"}, {"en": "a lot of", "ipa": "", "ru": "много"}, {"en": "guided tour", "ipa": "", "ru": "экскурсия"}, {"en": "every hour", "ipa": "", "ru": "каждый час"}, {"en": "in a week", "ipa": "", "ru": "в неделе"}, {"en": "the solar system", "ipa": "", "ru": "Солнечная система"}, {"en": "on the square", "ipa": "", "ru": "на площади"}, {"en": "next to", "ipa": "", "ru": "рядом с"}], "fillData": [{"sentence": "___ a man on the roof.", "answers": ["There's", "There is"]}, {"sentence": "There ___ seven days in a week.", "answers": ["are"]}, {"sentence": "___ there a hotel near here?", "answers": ["Is"]}, {"sentence": "Is there a bank near here? — Yes, there ___.", "answers": ["is"]}, {"sentence": "We can't go skiing. There ___ any snow.", "answers": ["isn't", "is not"]}, {"sentence": "___ there any restaurants near here?", "answers": ["Are"]}, {"sentence": "This restaurant is very quiet. There ___ many people here.", "answers": ["aren't", "are not"]}, {"sentence": "How many players ___ there in a football team?", "answers": ["are"]}, {"sentence": "There's a book on the table. I like this book. ___ interesting.", "answers": ["It's", "It is"]}, {"sentence": "What's that noise? — ___ a train.", "answers": ["It's", "It is"]}, {"sentence": "There's a train at 10.30. ___ a fast train.", "answers": ["It's", "It is"]}, {"sentence": "___ a lot of salt in this soup.", "answers": ["There's", "There is"]}], "memoPairs": [["castle", "замок"], ["building", "здание"], ["planet", "планета"], ["alphabet", "алфавит"], ["noise", "шум"], ["square", "площадь"]], "quizData": [{"q": "___ a book on the table.", "opts": ["There's", "It's"], "correct": "There's"}, {"q": "I like this book. ___ interesting.", "opts": ["It's", "There's"], "correct": "It's"}, {"q": "There ___ seven days in a week.", "opts": ["are", "is"], "correct": "are"}, {"q": "___ there a bank near here?", "opts": ["Is", "Are"], "correct": "Is"}, {"q": "___ there any shops?", "opts": ["Are", "Is"], "correct": "Are"}, {"q": "Is there a café? — No, there ___.", "opts": ["isn't", "aren't"], "correct": "isn't"}, {"q": "There ___ any snow.", "opts": ["isn't", "aren't"], "correct": "isn't"}, {"q": "How many players ___ there?", "opts": ["are", "is"], "correct": "are"}], "matchWords": [{"en": "singular", "ru": "единственное число"}, {"en": "plural", "ru": "множественное число"}, {"en": "salty", "ru": "солёный"}, {"en": "castle", "ru": "замок"}, {"en": "building", "ru": "здание"}, {"en": "nowhere", "ru": "нигде, никуда"}, {"en": "planet", "ru": "планета"}, {"en": "alphabet", "ru": "алфавит"}, {"en": "noise", "ru": "шум"}, {"en": "square", "ru": "площадь"}], "tfGroups": {"tfList": {"data": [{"text": "There's an old castle in the centre.", "correct": true}, {"text": "There are tours once a week.", "correct": false}, {"text": "There's a café in the castle garden.", "correct": true}, {"text": "There's a cinema in the village.", "correct": false}, {"text": "There's a bus to the city every hour.", "correct": true}, {"text": "There are a lot of tourists in winter.", "correct": false}], "feedback": "tfFeedback"}, "lsList": {"data": [{"text": "There's a supermarket near here.", "correct": true}, {"text": "It's next to the school.", "correct": false}, {"text": "There are two cafés on the square.", "correct": true}, {"text": "There isn't a bus to the station.", "correct": false}, {"text": "There's a bus every fifteen minutes.", "correct": true}], "feedback": "lsFeedback"}}, "readFillData": [{"sentence": "In the centre there's a beautiful old ___.", "answers": ["castle"]}, {"sentence": "There are guided ___ every day.", "answers": ["tours"]}, {"sentence": "There's a swimming ___ near the school.", "answers": ["pool"]}, {"sentence": "There isn't a ___.", "answers": ["cinema"]}, {"sentence": "There's one small hotel with fifteen ___.", "answers": ["rooms"]}, {"sentence": "There aren't many ___ in winter.", "answers": ["tourists"]}], "tomData": [{"sentence": "There ___ a lot of things to do.", "answers": ["are"]}, {"sentence": "There ___ a café in the garden.", "answers": ["is", "'s"]}, {"sentence": "There ___ a cinema.", "answers": ["isn't", "is not"]}, {"sentence": "___ there a hotel? — Yes, there is.", "answers": ["Is"]}, {"sentence": "There ___ many tourists in winter.", "answers": ["aren't", "are not"]}, {"sentence": "___ very quiet. (it)", "answers": ["It's", "It is"]}], "slug": "urok-there-is-are", "exam": false, "legacySignature": "", "legacyFields": [], "questionTask": false, "listeningLines": ["Excuse me, is there a supermarket near here?", "Yes, there is. It's on Green Street, next to the bank.", "Thank you. And are there any good cafés?", "There are two cafés on the square. There's a nice one with a garden.", "Is there a bus to the station?", "Yes, there's a bus every fifteen minutes."], "readingLines": ["Welcome to Green Village! It's a small place, but there are a lot of things to do here.", "In the centre there's a beautiful old castle. There are guided tours every day, and there's a café in the castle garden.", "There's a swimming pool near the school, but there isn't a cinema. If you want to see a film, there's a bus to the city every hour.", "Is there a hotel? Yes, there is — there's one small hotel with fifteen rooms. There aren't many tourists in winter, so it's very quiet."]};
+LessonTemplate.mount(window.lessonConfig);</script></body></html>

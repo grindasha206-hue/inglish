@@ -381,6 +381,26 @@
               "file": "lessons/itogovyi-test-modals.html"
             }
           ]
+        },
+        {
+          "id": "modul-9",
+          "title": "Модуль 9",
+          "lessons": [
+            {
+              "id": "urok-there-is-are",
+              "unit": 1,
+              "title": "there is / there are",
+              "description": "Что где находится и что есть; there is или it is",
+              "file": "lessons/urok-there-is-are.html"
+            },
+            {
+              "id": "urok-there-was-will-be",
+              "unit": 2,
+              "title": "there was / there has been / there will be",
+              "description": "there + be в прошедшем, present perfect и будущем",
+              "file": "lessons/urok-there-was-will-be.html"
+            }
+          ]
         }
       ]
     },
