@@ -187,6 +187,13 @@
               "title": "I've just / already / I haven't … yet",
               "description": "Present perfect 2: just, already, yet",
               "file": "lessons/urok-present-perfect-2.html"
+            },
+            {
+              "id": "urok-present-perfect-3",
+              "unit": 3,
+              "title": "Have you ever…? — present perfect 3",
+              "description": "Опыт за всю жизнь: ever, never, gone и been",
+              "file": "lessons/urok-present-perfect-3.html"
             }
           ]
         }

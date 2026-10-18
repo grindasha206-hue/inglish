@@ -352,6 +352,27 @@ const T=[
    O("I haven't finished yet.",'I have not finished yet.'),
    O('Have you paid the bill yet?')
   ]},
+  {id:17,title:'Have you ever…?',emoji:'🌍',rule:'Present perfect для опыта за всю жизнь (от прошлого до сейчас): Have you ever been to Japan? — No, I\'ve never been there. once = один раз, twice = два раза. gone и been: He has gone to Spain (он сейчас там). He has been to Spain (съездил и вернулся).',
+  items:[
+   C('Have you ___ played golf?','ever','never','yet'),
+   C("I've ___ seen him before.",'never','ever','yet'),
+   C('Ben is in Spain now. He has ___ to Spain.','gone','been','went'),
+   C('Ben is back from Spain. He has ___ to Spain.','been','gone','went'),
+   C('once = ?','one time','two times','never'),
+   C('How many times ___ Brazil won the World Cup?','has','have','did'),
+   C("'Have you been to France?' 'No, I ___.'","haven't","didn't","don't"),
+   C('ride → past participle','ridden','rode','rided'),
+   C('Какое предложение правильное?',"I've never been to Japan.","I've ever been to Japan.","I never have been to Japan."),
+   C('Hello, Susan! Where have you ___?','been','gone','go'),
+   F('Have you ___ been to Japan?','ever'),
+   F("I've read this book ___. (two times)",'twice'),
+   F("My sister has never ___ (travel) by plane.",'travelled','traveled'),
+   F("She ___ (have) many different jobs.",'has had',"'s had"),
+   F("I can't find Susan. Where has she ___?",'gone'),
+   O('Have you ever been to Japan?'),
+   O("I've never ridden a horse.",'I have never ridden a horse.'),
+   O('He has been to Spain twice.')
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),
