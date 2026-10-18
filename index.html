@@ -186,6 +186,7 @@ window.startupTimer=setTimeout(function(){
 <script src="backend-config.js"></script>
 <script src="gateway.js?v=20261013-simple1"></script>
 <script src="site.js"></script>
+<script src="lesson-cover.js?v=20261018-cover1"></script>
 <script src="lesson-schema.js"></script>
 <script src="progress.js"></script>
 <script src="homework-core.js"></script>
@@ -362,9 +363,9 @@ function renderHome(view){
           <div class="soft-hero-actions"><a class="btn" href="player.html?lesson=${next.id}">${started ? 'Продолжить →' : 'Начать урок →'}</a></div>
         </div>
       </div>
-      <div class="soft-polaroid" aria-hidden="true">
-        <div class="soft-photo"><img src="lessons/img/${esc(next.id)}.jpg" alt="" onerror="this.remove()"></div>
-        <div class="soft-caption">картинка урока</div>
+      <div class="soft-polaroid">
+        <div class="soft-photo" style="background:#F8ECEB"><img id="nextLessonCover" src="lessons/img/anna-v1.webp" alt="Анна — персонаж курса английского" style="object-fit:contain"></div>
+        <div class="soft-caption">${esc(next.title)}</div>
       </div>
     </div>`;
   } else {
@@ -436,6 +437,7 @@ function renderHome(view){
     ${homeModule}
     <div class="soft-ribbon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${HEART}" fill="none" stroke="#8F2E52" stroke-width="1.8" stroke-linejoin="round"/></svg>Practice makes perfect!</div>
     <div class="footer-tools"><span>Прогресс хранится в аккаунте и синхронизируется.</span><a href="#/settings">Настройки, резервная копия прогресса →</a></div>`;
+  if(next)LessonCover.mount(view.querySelector('#nextLessonCover'),next);
 }
 
 /* ================= уровень ================= */
