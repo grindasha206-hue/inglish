@@ -282,6 +282,27 @@
               "title": "What are you doing tomorrow?",
               "description": "Present continuous для планов; present simple для расписаний",
               "file": "lessons/urok-present-continuous-future.html"
+            },
+            {
+              "id": "urok-going-to",
+              "unit": 2,
+              "title": "I'm going to…",
+              "description": "Намерения и то, что точно случится",
+              "file": "lessons/urok-going-to.html"
+            },
+            {
+              "id": "urok-will-shall-1",
+              "unit": 3,
+              "title": "will / shall 1",
+              "description": "Будущее с will: предсказания, I think … will",
+              "file": "lessons/urok-will-shall-1.html"
+            },
+            {
+              "id": "urok-will-shall-2",
+              "unit": 4,
+              "title": "will / shall 2",
+              "description": "I'll — предложения и решения; Shall I…? Shall we…?",
+              "file": "lessons/urok-will-shall-2.html"
             }
           ]
         }
