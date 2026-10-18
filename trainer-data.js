@@ -920,6 +920,42 @@ const T=[
    O('Who is she talking to?'),
    O("What's your new house like?")
   ]},
+  {id:47,title:'What? Which? How?',emoji:'🎯',rule:"What + noun: What colour / size / time / kind…? Which — выбор из небольшого числа вариантов: Which train — the 9.50 or the 10.30? Which без noun — о вещах, Who — о людях: Who is taller — Joe or Gary? What — общий вопрос: What's the capital…? How + прилагательное: How tall / old / far / often / long / much…?",
+  items:[
+   C('___ colour are his eyes?','What','Which','How'),
+   C('___ is taller — Joe or Gary?','Who','Which','What'),
+   C('How ___ do you use your car? — Every day.','often','much','long'),
+   C("___ is bigger — Canada or Australia?",'Which','Who','How'),
+   F('What ___ is this shirt? — Medium.','size'),
+   F('How ___ is your mother? — 45.','old'),
+   F('How ___ was the meal? — £30.','much'),
+   O('What colour is your car?'),
+   O('Which train did you catch?')
+  ]},
+  {id:48,title:'How long does it take…?',emoji:'⏱️',rule:"How long does it take (from … to …)? — It takes an hour. Время на дело: It takes a long time to learn a language. It doesn't take long to cook. Прошлое: How long did it take? It took … Будущее: will take. С человеком: It took me three days to read it. It takes Tom 20 minutes to get to work.",
+  items:[
+   C('How long does it ___?','take','takes','took'),
+   C('It ___ me three days to read it.','took','taked','takes me'),
+   C("It doesn't take ___.",'long','long time','a long'),
+   C('It took ___ an hour.','us','we','our'),
+   F('It ___ two hours by train. (present)','takes'),
+   F('How long ___ it take to get here? (past)','did'),
+   F('It takes a long time ___ learn a language.','to'),
+   O('How long does it take?'),
+   O('It took me three days to read it.')
+  ]},
+  {id:49,title:"Do you know where…?",emoji:'🧭',rule:"В косвенном вопросе порядок как в утверждении: Where is Paula? → Do you know where Paula is? Без do/does/did: Where does he live? → Do you know where he lives? Вопросы да/нет — с if или whether: Is Jack at home? → Do you know if Jack is at home?",
+  items:[
+   C('Do you know where ___?','Paula is','is Paula','does Paula'),
+   C('Do you know where ___?','he lives','does he live','he live'),
+   C("I don't know why ___ home.",'she went','did she go','she go'),
+   C('Do you know ___ they have got a car?','if','that','what'),
+   F('Can you tell me what time it ___?','is'),
+   F("I don't know what Jane ___. (want)",'wants'),
+   F('Can Ben swim? → I don\'t know if Ben ___ swim.','can'),
+   O('Do you know where Paula is?'),
+   O("I don't know if anybody saw me.")
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),

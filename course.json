@@ -481,6 +481,27 @@
               "title": "Questions 3: Who is she talking to? What is it like?",
               "description": "Предлог в конце вопроса; What's it like?",
               "file": "lessons/urok-questions-3.html"
+            },
+            {
+              "id": "urok-what-which-how",
+              "unit": 4,
+              "title": "Questions 4: What…? Which…? How…?",
+              "description": "What + noun, which или what, How + прилагательное",
+              "file": "lessons/urok-what-which-how.html"
+            },
+            {
+              "id": "urok-how-long-does-it-take",
+              "unit": 5,
+              "title": "How long does it take…?",
+              "description": "It takes / took / will take … to …",
+              "file": "lessons/urok-how-long-does-it-take.html"
+            },
+            {
+              "id": "urok-do-you-know-where",
+              "unit": 6,
+              "title": "Do you know where…?",
+              "description": "Косвенные вопросы; if/whether",
+              "file": "lessons/urok-do-you-know-where.html"
             }
           ]
         }
