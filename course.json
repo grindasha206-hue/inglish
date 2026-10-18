@@ -728,6 +728,20 @@
               "title": "I like music, I hate exams",
               "description": "Без the для общих понятий; flowers / the flowers",
               "file": "lessons/urok-i-like-music.html"
+            },
+            {
+              "id": "urok-the-places",
+              "unit": 9,
+              "title": "the… (names of places)",
+              "description": "the с названиями мест",
+              "file": "lessons/urok-the-places.html"
+            },
+            {
+              "id": "itogovyi-test-articles",
+              "unit": 10,
+              "title": "Итоговый тест · модуль 16",
+              "description": "a/an, plural, countable/uncountable, the",
+              "file": "lessons/itogovyi-test-articles.html"
             }
           ]
         }

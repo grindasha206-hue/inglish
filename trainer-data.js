@@ -1232,6 +1232,18 @@ const T=[
    O('I like music.'),
    O('The flowers are beautiful.')
   ]},
+  {id:73,title:'the … (names of places)',emoji:'🗺️',rule:"Без the: страны, города, континенты, острова (France, Cairo, South America), улицы и площади (Newton Street, Times Square), аэропорты, вокзалы, многие здания (Kennedy Airport, Victoria Station, Cambridge University). С the: republic/states/kingdom (the USA, the UK), мн. число (the Netherlands, the Alps), океаны, моря, реки, каналы (the Atlantic, the Nile), отели, музеи, театры (the Regent Hotel), … of … (the Tower of London), the north/south.",
+  items:[
+   C('___ France is a large country.','—','The','A'),
+   C('___ United States','the','—','a'),
+   C('He lives in ___ Newton Street.','—','the','a'),
+   C('___ Science Museum','the','—','a'),
+   F('___ Alps are beautiful.','The'),
+   F('We swam in ___ Black Sea.','the'),
+   F("I've been to ___ north of Italy.",'the'),
+   O('Cairo is the capital of Egypt.'),
+   O('I visited the Tower of London.')
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),
