@@ -502,6 +502,13 @@
               "title": "Do you know where…?",
               "description": "Косвенные вопросы; if/whether",
               "file": "lessons/urok-do-you-know-where.html"
+            },
+            {
+              "id": "itogovyi-test-questions",
+              "unit": 7,
+              "title": "Итоговый тест · модуль 11",
+              "description": "Вопросы: порядок слов, who/what, предлоги, what/which/how, take, косвенные вопросы",
+              "file": "lessons/itogovyi-test-questions.html"
             }
           ]
         }
