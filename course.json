@@ -769,6 +769,27 @@
               "title": "some and any",
               "description": "some и any; something, anybody",
               "file": "lessons/urok-some-any.html"
+            },
+            {
+              "id": "urok-no-none",
+              "unit": 4,
+              "title": "not + any, no, none",
+              "description": "not any = no; none; no-one",
+              "file": "lessons/urok-no-none.html"
+            },
+            {
+              "id": "urok-nobody-nothing",
+              "unit": 5,
+              "title": "not + anybody, nobody, nothing",
+              "description": "nobody, nothing; not anybody, not anything",
+              "file": "lessons/urok-nobody-nothing.html"
+            },
+            {
+              "id": "urok-somebody-nowhere",
+              "unit": 6,
+              "title": "somebody/anything/nowhere",
+              "description": "some-/any-/no- + body/thing/where",
+              "file": "lessons/urok-somebody-nowhere.html"
             }
           ]
         }

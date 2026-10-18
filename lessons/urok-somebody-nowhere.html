@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 79 · somebody/anything/nowhere</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Comfortaa:wght@500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --cream:#FDF4F1; --paper:#FFFDFB; --ink:#3A2E33; --ink-soft:#6B5A61;
+  --brick:#BE456F; --brick-dark:#8F2E52; --tab:#C4507A; --tab-dark:#9E3460;
+  --sage:#4F8F6D; --sage-bg:#E6F1EA; --coral:#D65B4A; --coral-bg:#FBE7E3;
+  --gold:#E8A0B4; --line:#F1D9DF; --shadow: 0 6px 18px rgba(150,80,100,0.10);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; background:radial-gradient(circle at 15% 8%, rgba(232,160,180,0.10), transparent 40%), var(--cream); color:var(--ink); font-family:'Nunito', sans-serif; line-height:1.55; padding-bottom:80px;}
+h1,h2,h3,.display{font-family:'Comfortaa',sans-serif;}
+
+.topbar{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:1px solid var(--line); padding:10px 18px; display:flex; align-items:center; gap:14px; box-shadow:0 2px 10px rgba(0,0,0,0.04);}
+.topbar .book-title{font-family:'Comfortaa',sans-serif; font-weight:700; font-size:15px; color:var(--brick-dark); white-space:nowrap;}
+.progress-steps{display:flex; gap:5px; flex:1; align-items:center;}
+.pstep{flex:1; height:8px; border-radius:6px; background:var(--line); position:relative; overflow:hidden;}
+.pstep i{display:block; height:100%; width:0%; border-radius:6px; background:linear-gradient(90deg, var(--tab), var(--brick)); transition:width .5s ease;}
+.score-pill{font-size:13px; font-weight:700; background:var(--sage-bg); color:var(--sage); padding:5px 12px; border-radius:20px; white-space:nowrap;}
+
+.page{max-width:900px; margin:26px auto; background:var(--paper); border-radius:4px; box-shadow:var(--shadow); border:1px solid var(--line); overflow:hidden;}
+
+.unit-banner{background:linear-gradient(135deg, var(--brick) 0%, var(--brick-dark) 100%); color:#fff; padding:26px 30px 22px 96px; position:relative;}
+.unit-tag{position:absolute; left:0; top:0; bottom:0; width:76px; background:var(--brick-dark); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Comfortaa',sans-serif; border-right:2px solid rgba(255,255,255,0.15);}
+.unit-tag .u{font-size:11px; letter-spacing:2px; opacity:.75;}
+.unit-tag .n{font-size:30px; font-weight:800;}
+.unit-banner h1{margin:0; font-size:27px; font-weight:800; letter-spacing:.3px;}
+.unit-banner p{margin:6px 0 0; opacity:.9; font-size:14.5px;}
+
+.section{display:flex; border-top:1px solid var(--line);}
+.section .tab{width:56px; flex-shrink:0; background:var(--tab); color:#fff; font-family:'Comfortaa',sans-serif; font-weight:800; font-size:20px; display:flex; align-items:flex-start; justify-content:center; padding-top:22px;}
+.section.alt .tab{background:var(--tab-dark);}
+.section .content{padding:24px 28px 30px; flex:1; min-width:0;}
+.section h2{margin:0 0 4px; font-size:22px; color:var(--brick-dark);}
+.eyebrow{font-size:11.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-soft); font-weight:700; margin-bottom:4px;}
+.section p.lead{color:var(--ink-soft); margin-top:4px; font-size:14.5px;}
+
+.dialog-wrap{display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; margin:18px 0 6px;}
+.dialog-figure{width:110px; text-align:center; flex-shrink:0;}
+.dialog-avatar{width:96px; height:120px; margin:0 auto;}
+.dialog-avatar svg{width:100%; height:100%;}
+.dialog-figure .name{font-family:'Comfortaa',sans-serif; font-weight:700; font-size:12.5px; letter-spacing:1px; color:var(--brick-dark); margin-top:4px;}
+.dialog-bubbles{display:flex; flex-direction:column; gap:8px; flex:1; min-width:260px; max-width:420px;}
+.d-bubble{background:#fff; border:1.5px solid var(--line); border-radius:16px; padding:8px 14px; font-size:13.5px; box-shadow:0 3px 8px rgba(0,0,0,0.05);}
+.d-bubble.q{border-color:var(--tab);}
+.d-bubble.a{align-self:flex-end; background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.d-bubble b{color:var(--brick-dark);}
+.d-bubble.a b{color:var(--sage);}
+
+.gram-tables{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:22px;}
+@media(max-width:620px){.gram-tables{grid-template-columns:1fr;}}
+.gram-box h3{font-size:13px; text-transform:uppercase; letter-spacing:1px; color:var(--ink-soft); margin:0 0 8px;}
+table.formtable{width:100%; border-collapse:collapse; font-size:13.5px; background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;}
+table.formtable td{padding:7px 10px; border-bottom:1px solid var(--line);}
+table.formtable tr:last-child td{border-bottom:none;}
+table.formtable td.pron{color:var(--ink-soft); width:34%;}
+table.formtable td.verb{font-weight:700; color:var(--brick-dark);}
+table.formtable td.short{color:var(--ink-soft); font-style:italic;}
+
+.chunk{background:linear-gradient(180deg, transparent 60%, rgba(196,80,122,0.35) 60%); font-weight:700; color:var(--brick-dark); padding:0 1px;}
+
+.mini-note{margin-top:16px; background:var(--sage-bg); border-left:3px solid var(--sage); padding:10px 14px; border-radius:6px; font-size:13.5px; color:#2f5741;}
+.mini-note b{color:var(--sage);}
+.mini-note i{color:var(--ink-soft); font-style:italic;}
+.mini-note.warn{background:var(--coral-bg); border-left-color:var(--coral); color:#7A2848;}
+.mini-note.warn b{color:var(--coral);}
+
+.vocab-table{margin-top:14px; display:flex; flex-direction:column; gap:8px;}
+.vocab-row{display:grid; grid-template-columns:auto 1fr auto auto; align-items:center; gap:12px; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:9px 14px;}
+@media(max-width:560px){.vocab-row{grid-template-columns:1fr; gap:4px;}}
+.vocab-word{font-weight:800; color:var(--brick-dark); font-size:14.5px; font-family:'Comfortaa',sans-serif;}
+.vocab-ipa{font-size:12.5px; color:var(--tab-dark); font-style:italic;}
+.vocab-ru{font-size:13.5px; color:var(--ink-soft);}
+.chunk-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px;}
+@media(max-width:600px){.chunk-grid{grid-template-columns:1fr;}}
+.chunk-row{display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--cream); border:1.5px dashed var(--gold); border-radius:10px; padding:9px 14px;}
+.chunk-en{font-weight:800; color:var(--brick-dark); font-size:14px; display:block;}
+.chunk-ipa{font-size:11.5px; color:var(--tab-dark); font-style:italic; display:block; margin-top:1px;}
+.chunk-ru{font-size:12.5px; color:var(--ink-soft); display:block; margin-top:1px; font-weight:400;}
+
+.game-tabs{display:flex; gap:8px; margin:18px 0 20px; flex-wrap:wrap;}
+.game-tab-btn{border:1.5px solid var(--line); background:#fff; color:var(--ink-soft); padding:8px 16px; border-radius:20px; font-family:'Nunito'; font-weight:700; font-size:13px; cursor:pointer; transition:.2s;}
+.game-tab-btn.active{background:var(--tab); color:#fff; border-color:var(--tab-dark);}
+.game-panel{display:none;}
+.game-panel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
+
+.fill-item{display:flex; align-items:flex-start; gap:10px; flex-wrap:wrap; padding:12px 4px; border-bottom:1px dashed var(--line);}
+.fill-item:last-child{border-bottom:none;}
+.fill-num{width:22px; height:22px; border-radius:50%; background:var(--cream); border:1px solid var(--line); font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; color:var(--ink-soft); flex-shrink:0; margin-top:3px;}
+.fill-body{flex:1; min-width:220px;}
+.fill-words{font-size:13px; color:var(--ink-soft); margin-bottom:6px; font-style:italic;}
+.blank-input{width:130px; padding:5px 8px; border:1.5px solid var(--line); border-radius:6px; font-family:'Nunito'; font-weight:700; font-size:14px; text-align:center; background:#FFFDFB; color:var(--brick-dark);}
+.blank-input:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.blank-input.correct{border-color:var(--sage); background:var(--sage-bg); color:#2f5741;}
+.blank-input.wrong{border-color:var(--coral); background:var(--coral-bg); color:var(--coral);}
+.fill-fb{font-size:16px; margin-top:6px;}
+
+.btn{border:none; cursor:pointer; font-family:'Nunito'; font-weight:800; padding:10px 20px; border-radius:24px; font-size:14px; letter-spacing:.2px; background:var(--brick); color:#fff; box-shadow:0 4px 10px rgba(190,69,111,0.25); transition:.15s;}
+.btn:hover{transform:translateY(-1px); box-shadow:0 6px 14px rgba(190,69,111,0.32);}
+.btn.secondary{background:transparent; color:var(--brick); border:1.5px solid var(--brick); box-shadow:none;}
+.btn.small{padding:6px 14px; font-size:12.5px;}
+.actions-row{display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; align-items:center;}
+.fb-line{font-size:13.5px; font-weight:700; color:var(--ink-soft);}
+
+.memo-wrap{display:flex; flex-direction:column; align-items:center; gap:14px;}
+.memo-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; max-width:520px; width:100%;}
+@media(max-width:500px){.memo-grid{grid-template-columns:repeat(3,1fr);}}
+.memo-card{aspect-ratio:1/1; border-radius:10px; cursor:pointer; position:relative; perspective:600px;}
+.memo-inner{width:100%; height:100%; position:relative; transform-style:preserve-3d; transition:transform .45s;}
+.memo-card.flipped .memo-inner, .memo-card.matched .memo-inner{transform:rotateY(180deg);}
+.memo-face{position:absolute; inset:0; border-radius:10px; display:flex; align-items:center; justify-content:center; backface-visibility:hidden; font-weight:800; text-align:center; padding:4px; font-size:12.5px;}
+.memo-face.back{background:linear-gradient(135deg, var(--tab), var(--tab-dark)); color:#fff; font-family:'Comfortaa',sans-serif; font-size:22px;}
+.memo-face.front{background:#fff; border:2px solid var(--line); color:var(--brick-dark); transform:rotateY(180deg);}
+.memo-card.matched .memo-face.front{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.memo-status{font-size:13.5px; color:var(--ink-soft); font-weight:700;}
+
+.quiz-q{margin-bottom:18px;}
+.quiz-q p{font-weight:700; margin:0 0 8px; font-size:14.5px;}
+.quiz-opts{display:flex; gap:8px; flex-wrap:wrap;}
+.quiz-opt{border:1.5px solid var(--line); background:#fff; padding:7px 15px; border-radius:20px; font-weight:700; font-size:13.5px; cursor:pointer; color:var(--ink);}
+.quiz-opt.sel-correct{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.quiz-opt.sel-wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+.quiz-opt.reveal-correct{border-color:var(--sage); box-shadow:inset 0 0 0 1px var(--sage);}
+
+.match-wrap{display:flex; gap:14px; max-width:520px; margin:0 auto;}
+.match-col{flex:1; display:flex; flex-direction:column; gap:8px;}
+.match-tile{background:#fff; border:1.5px solid var(--line); border-radius:8px; padding:9px 12px; font-size:13.5px; font-weight:700; cursor:pointer; text-align:center; color:var(--ink); transition:.15s;}
+.match-tile.selected{border-color:var(--tab); background:var(--cream); box-shadow:inset 0 0 0 1.5px var(--tab);}
+.match-tile.matched{background:var(--sage-bg); border-color:var(--sage); color:#2f5741; cursor:default;}
+.match-tile.wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+
+.read-text{background:#fff; border:1.5px solid var(--line); border-radius:14px; padding:18px 20px; margin:16px 0; font-size:14.5px;}
+.read-text p{margin:0 0 10px;}
+.read-text p:last-child{margin-bottom:0;}
+.tf-item{display:flex; align-items:center; justify-content:space-between; gap:10px; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:9px 14px; margin-bottom:8px;}
+.tf-text{font-size:13.5px; flex:1;}
+.tf-btns{display:flex; gap:6px; flex-shrink:0;}
+.tf-btn{border:1.5px solid var(--line); background:var(--cream); padding:5px 12px; border-radius:16px; font-weight:800; font-size:12.5px; cursor:pointer; color:var(--ink-soft);}
+.tf-btn.sel-correct{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.tf-btn.sel-wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+.tf-btn.reveal-correct{box-shadow:inset 0 0 0 1px var(--sage); border-color:var(--sage);}
+
+.tts-warn{display:none; font-size:12.5px; color:var(--coral); background:var(--coral-bg); padding:8px 12px; border-radius:6px; margin:8px 0 0;}
+.tts-warn.shown{display:block;}
+.voice-picker{display:flex; align-items:center; gap:8px; flex-wrap:wrap; background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:8px 12px; margin-top:10px; font-size:13px;}
+.voice-picker label{font-weight:700; color:var(--ink-soft);}
+.voice-picker select{border:1.5px solid var(--line); border-radius:6px; padding:4px 8px; font-family:'Nunito'; font-size:13px; background:#fff; color:var(--ink); max-width:220px;}
+.voice-hint{font-size:11.5px; color:var(--ink-soft); flex-basis:100%;}
+.sound-block{margin-top:22px; padding-top:16px; border-top:1px dashed var(--line);}
+.sound-block:first-of-type{border-top:none; margin-top:16px;}
+.sound-block h3{font-size:15.5px; margin:0 0 6px; color:var(--brick-dark); font-weight:700;}
+.ipa{font-family:'Nunito'; font-weight:500; font-size:12px; color:var(--ink-soft); font-style:italic;}
+.sound-note{font-size:13.5px; color:var(--ink-soft); margin:0 0 12px;}
+.sound-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+.sound-grid.three{grid-template-columns:repeat(3,1fr);}
+@media(max-width:600px){.sound-grid, .sound-grid.three{grid-template-columns:1fr;}}
+.sound-pair{background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px;}
+.sound-pair.wide{grid-column:1/-1;}
+.sp-text{font-size:14.5px; font-weight:600; flex:1;}
+.sp-text.big{font-size:19px; text-align:center; font-family:'Comfortaa',sans-serif; color:var(--brick-dark);}
+.sp-controls{display:flex; gap:6px; flex-shrink:0;}
+.play-btn{border:1.5px solid var(--line); background:var(--cream); cursor:pointer; border-radius:8px; padding:6px 10px; font-size:15px; line-height:1; transition:.15s;}
+.play-btn:hover{background:var(--tab); border-color:var(--tab-dark);}
+.play-btn.playing{background:var(--brick); border-color:var(--brick-dark);}
+b.stress{color:var(--brick-dark); text-decoration:underline; text-decoration-color:var(--gold); text-decoration-thickness:2px; text-underline-offset:3px;}
+
+.prompt-list{list-style:none; padding:0; margin:14px 0; display:grid; gap:8px;}
+.prompt-list li{background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:8px 12px; font-size:13.5px; display:flex; gap:8px; align-items:baseline;}
+.prompt-list li b{color:var(--brick-dark); font-family:'Comfortaa',sans-serif;}
+textarea.write-area{width:100%; min-height:140px; border:1.5px solid var(--line); border-radius:10px; padding:14px; font-family:'Nunito'; font-size:14.5px; color:var(--ink); background:#FFFDFB; resize:vertical;}
+textarea.write-area:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.word-count{font-size:12.5px; color:var(--ink-soft); margin-top:6px;}
+.cue-cards{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;}
+.cue-card{background:#fff; border:1.5px dashed var(--gold); border-radius:10px; padding:10px 14px; font-size:13px; width:160px; color:var(--ink-soft); font-style:italic;}
+.cue-card b{display:block; font-style:normal; color:var(--brick-dark); font-family:'Comfortaa',sans-serif; font-size:14px; margin-bottom:3px;}
+.reveal-box{margin-top:14px; border-left:3px solid var(--tab); background:var(--cream); padding:12px 16px; border-radius:6px; font-size:13.5px; display:none;}
+.reveal-box.shown{display:block;}
+
+.hw-list{display:flex; flex-direction:column; gap:10px; margin-top:16px;}
+.hw-item{display:flex; gap:10px; align-items:flex-start; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:11px 14px; font-size:13.5px; cursor:pointer; transition:.15s;}
+.hw-item:has(.hw-check:checked){background:var(--sage-bg); border-color:var(--sage);}
+.hw-check{margin-top:3px; width:16px; height:16px; accent-color:var(--sage); flex-shrink:0;}
+.hw-item b{color:var(--brick-dark); font-family:'Comfortaa',sans-serif;}
+.hw-item i{color:var(--ink-soft); font-style:italic;}
+
+@media print{
+  .topbar, .unit-banner, #presentation, #vocabulary, #practice, #reading, #sounds, #production, .badge-final, .footer-note, .no-print{ display:none !important; }
+  body{ background:#fff; padding:0; }
+  .page{ box-shadow:none; border:none; margin:0; max-width:100%; }
+  .section{ border-top:none; }
+  .section .tab{ display:none; }
+  .section .content{ padding:10px; }
+  .hw-item{ break-inside:avoid; }
+}
+
+.footer-note{text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:24px; padding:0 20px;}
+.badge-final{display:none; text-align:center; margin:26px auto 0; max-width:900px; background:linear-gradient(135deg, var(--sage), #3d7357); color:#fff; border-radius:14px; padding:22px; font-family:'Comfortaa',sans-serif; font-size:19px; font-weight:700; box-shadow:var(--shadow);}
+.badge-final.shown{display:block; animation:fadeIn .5s ease;}
+.badge-final span{display:block; font-family:'Nunito'; font-weight:500; font-size:13.5px; margin-top:6px; opacity:.9;}
+
+/* Generated textbook illustrations; contain each complete scene without cropping. */
+.dialog-figure.art-figure{width:148px}
+.lisa-figure.art-figure{width:164px}
+.dialog-avatar.art-avatar{width:144px;height:auto}
+.lisa-avatar.art-avatar{width:160px;height:auto}
+.art-avatar img.lesson-portrait{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--line);box-shadow:0 5px 16px rgba(150,80,100,.10)}
+.scene-box img.lesson-scene{display:block;width:100%;max-width:720px;height:auto;margin:0 auto;border-radius:10px}
+.pic-slot img.lesson-scene{display:block;width:100%;height:auto;max-height:none;object-fit:contain}
+@media(max-width:560px){
+ .dialog-wrap .art-figure{width:112px}
+ .dialog-avatar.art-avatar{width:108px}
+ .dialog-wrap .dialog-bubbles{min-width:0;flex-basis:100%;max-width:none;order:2}
+ .dialog-wrap .dialog-figure:last-child{order:1}
+ .dialog-wrap .dialog-figure:first-child{order:0}
+ .lisa-avatar.art-avatar{width:140px}
+ .scene-box{padding:10px}
+}
+
+</style>
+<link rel="stylesheet" href="../lesson-theme.css"></head>
+<body><div class="topbar">
+  <div class="book-title">Essential Grammar · Unit 79</div>
+  <div class="progress-steps">
+    <div class="pstep" id="step-p"><i id="bar-p"></i></div>
+    <div class="pstep" id="step-vocab"><i id="bar-vocab"></i></div>
+    <div class="pstep" id="step-pr"><i id="bar-pr"></i></div>
+    <div class="pstep" id="step-read"><i id="bar-read"></i></div>
+    <div class="pstep" id="step-sound"><i id="bar-sound"></i></div>
+    <div class="pstep" id="step-listen"><i id="bar-listen"></i></div>
+    <div class="pstep" id="step-prod"><i id="bar-prod"></i></div>
+    <div class="pstep" id="step-hw"><i id="bar-hw"></i></div>
+  </div>
+  <div class="score-pill">★ <span id="scoreDisplay">0</span>/20</div>
+</div>
+
+<div class="page"><div class="unit-banner">
+    <div class="unit-tag"><span class="u">UNIT</span><span class="n">79</span></div>
+    <h1>somebody/anything/nowhere etc.</h1>
+    <p>some- / any- / no- + body, one, thing, where</p>
+  </div><div class="section" id="presentation">
+    <div class="tab">A</div>
+    <div class="content">
+      <div class="eyebrow">Presentation</div>
+      <h2>somebody/anything/nowhere etc.</h2>
+      <div class="gram-box" style="margin:14px 0"><h3>A · somebody / something / somewhere</h3><div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:10px 0"><div style="flex:0 1 220px;text-align:center"><figure class="pic-slot" style="margin:0;transform:none"><div class="pic-ph" style="display:flex;min-height:100px;height:100px;aspect-ratio:auto;overflow:hidden"><span>🖼️</span><div style="font-size:11px">Разбитое окно</div><div style="font-size:10px;opacity:.7">lessons/img/unit-79-pic-1.webp</div></div></figure><div style="margin-top:4px;font-size:14px"><b>Somebody</b> (or <b>Someone</b>) has broken the window.<br><span style='background:#F9D9C4'>somebody/someone = a person, but we don't know who</span></div></div><div style="flex:0 1 220px;text-align:center"><figure class="pic-slot" style="margin:0;transform:none"><div class="pic-ph" style="display:flex;min-height:100px;height:100px;aspect-ratio:auto;overflow:hidden"><span>🖼️</span><div style="font-size:11px">Девочка с чем-то во рту</div><div style="font-size:10px;opacity:.7">lessons/img/unit-79-pic-2.webp</div></div></figure><div style="margin-top:4px;font-size:14px">She has got <b>something</b> in her mouth.<br><span style='background:#F9D9C4'>something = a thing, but we don't know what</span></div></div><div style="flex:0 1 220px;text-align:center"><figure class="pic-slot" style="margin:0;transform:none"><div class="pic-ph" style="display:flex;min-height:100px;height:100px;aspect-ratio:auto;overflow:hidden"><span>🖼️</span><div style="font-size:11px">Точка рядом с LONDON и вопросы</div><div style="font-size:10px;opacity:.7">lessons/img/unit-79-pic-3.webp</div></div></figure><div style="margin-top:4px;font-size:14px">Tom lives <b>somewhere</b> near London.<br><span style='background:#F9D9C4'>somewhere = in/to a place, but we don't know where</span></div></div></div></div>
+      <div class="gram-box" style="margin:14px 0"><h3>B · people / things / places</h3><p><i>people</i> (<b>-body</b> or <b>-one</b>)</p><div style="overflow-x:auto"><table style="border-collapse:collapse;margin:10px 0;background:#FFFDFB;font-size:15px"><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;font-weight:800;background:#FFF4EE;line-height:2">somebody <i>or</i> someone<br>anybody <i>or</i> anyone<br>nobody <i>or</i> no-one</td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none"><ul class="prompt-list"><li><span style="display:block">There is <b>somebody</b> (<i>or</i> <b>someone</b>) at the door.</span></li><li><span style="display:block">Is there <b>anybody</b> (<i>or</i> <b>anyone</b>) at the door?</span></li><li><span style="display:block">There isn't <b>anybody</b> (<i>or</i> <b>anyone</b>) at the door.</span></li><li><span style="display:block">There is <b>nobody</b> (<i>or</i> <b>no-one</b>) at the door.</span></li></ul></td></tr></table></div><div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:10px 0"><div style="background:#F9D9C4;padding:8px 14px;font-weight:700;line-height:1.6;border-radius:6px"><b>-body</b> и <b>-one</b> — одно и то же: somebody = someone, nobody = no-one etc.</div><div></div></div><p><i>things</i> (<b>-thing</b>)</p><div style="overflow-x:auto"><table style="border-collapse:collapse;margin:10px 0;background:#FFFDFB;font-size:15px"><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;font-weight:800;background:#FFF4EE;line-height:2">something<br>anything<br>nothing</td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none"><ul class="prompt-list"><li><span style="display:block">Lucy said <b>something</b>, but I didn't understand what she said.</span></li><li><span style="display:block">Are you doing <b>anything</b> at the weekend?</span></li><li><span style="display:block">I was angry, but I didn't say <b>anything</b>.</span></li><li><span style="display:block">'What did you say?' '<b>Nothing</b>.'</span></li></ul></td></tr></table></div><p><i>places</i> (<b>-where</b>)</p><div style="overflow-x:auto"><table style="border-collapse:collapse;margin:10px 0;background:#FFFDFB;font-size:15px"><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;font-weight:800;background:#FFF4EE;line-height:2">somewhere<br>anywhere<br>nowhere</td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none"><ul class="prompt-list"><li><span style="display:block">Ruth's parents live <b>somewhere</b> in the south of England.</span></li><li><span style="display:block">Did you go <b>anywhere</b> interesting for your holidays?</span></li><li><span style="display:block">I'm staying here. I'm not going <b>anywhere</b>.</span></li><li><span style="display:block">I don't like this town. There is <b>nowhere</b> to go.</span></li></ul></td></tr></table></div></div>
+      <div class="gram-box" style="margin:14px 0"><h3>C · something/anybody etc. + adjective</h3><ul class="prompt-list"><li><span style="display:block">Did you meet <b>anybody interesting</b> at the party?</span></li><li><span style="display:block">We always go to the same place. Let's go <b>somewhere different</b>.</span></li><li><span style="display:block">'What's that letter?' 'It's <b>nothing important</b>.'</span></li></ul></div>
+      <div class="gram-box" style="margin:14px 0"><h3>D · something/anybody etc. + to …</h3><ul class="prompt-list"><li><span style="display:block">I'm hungry. I want <b>something to eat</b>. (= something that I can eat)</span></li><li><span style="display:block">Tony doesn't have <b>anybody to talk to</b>. (= anybody that he can talk to)</span></li><li><span style="display:block">There is <b>nowhere to go</b> in this town. (= nowhere where people can go)</span></li></ul></div>
+    </div>
+  </div><div class="section" id="vocabulary"><div class="tab">B</div><div class="content"><div class="eyebrow">Vocabulary</div><h2>Новые слова этого урока</h2><p class="lead">Нажмите на динамик, чтобы услышать слово. Все слова встретятся дальше в чтении и упражнениях.</p><div id="vocabTable" class="vocab-table"></div><h3>Соседи слов <span class="ipa">chunks / collocations</span></h3><p class="sound-note">Учите сочетаниями: так слова легче вспоминаются в речи.</p><div id="chunkGrid" class="chunk-grid"></div></div></div><div class="section" id="practice">
+    <div class="tab">C</div>
+    <div class="content">
+      <div class="eyebrow">Practice</div>
+      <h2>Тренируемся</h2>
+      <p class="lead">Выберите игру и заработайте звёзды ★. Ответы проверяются сразу.</p>
+      <div class="game-tabs">
+        <button class="game-tab-btn active" data-panel="panel-fill">✏️ somebody / anywhere / nothing</button>
+        <button class="game-tab-btn" data-panel="panel-memo">🃏 Мемо</button>
+        <button class="game-tab-btn" data-panel="panel-quiz">⚡ Квиз</button>
+        <button class="game-tab-btn" data-panel="panel-vocabmatch">📚 Лексика</button>
+      </div>
+      <div class="game-panel active" id="panel-fill">
+        <p class="lead" style="margin-top:0">Впишите слово с some-, any- или no-.</p>
+        <div id="fillList"></div>
+        <div class="actions-row">
+          <button class="btn" id="checkFillBtn">Проверить</button>
+          <button class="btn secondary small" id="resetFillBtn">Сбросить</button>
+          <span class="fb-line" id="fillFeedback"></span>
+        </div>
+      </div>
+      <div class="game-panel" id="panel-memo">
+        <p class="lead" style="margin-top:0">Найдите пары: английское слово и его русский перевод.</p>
+        <div class="memo-wrap">
+          <div class="memo-grid" id="memoGrid"></div>
+          <div class="memo-status" id="memoStatus">Найдено пар: 0 / 6</div>
+          <button class="btn secondary small" id="restartMemoBtn">Перемешать заново</button>
+        </div>
+      </div>
+      <div class="game-panel" id="panel-quiz">
+        <div id="quizList"></div>
+        <div class="actions-row"><span class="fb-line" id="quizFeedback"></span></div>
+      </div>
+      <div class="game-panel" id="panel-vocabmatch">
+        <p class="lead" style="margin-top:0">Нажмите на английское слово, затем на его перевод.</p>
+        <div class="match-wrap">
+          <div class="match-col" id="matchEnCol"></div>
+          <div class="match-col" id="matchRuCol"></div>
+        </div>
+        <div class="actions-row">
+          <span class="fb-line" id="matchStatus">Найдено пар: 0 / 10</span>
+          <button class="btn secondary small" id="restartMatchBtn">Перемешать заново</button>
+        </div>
+      </div>
+    </div>
+  </div><div class="section alt" id="reading">
+    <div class="tab">D</div>
+    <div class="content"><div class="actions-row"><button class="btn secondary small" id="playReadingBtn">🔊 Прослушать текст</button><button class="btn secondary stop-audio">Остановить</button></div>
+      <div class="eyebrow">Reading</div>
+      <h2>A boring Sunday</h2>
+      <p class="lead">Найдите все слова с some-, any-, no-.</p>
+      <div class="read-text"><p>I'm <span class="chunk">bored</span>. It's Sunday and there's nothing to do. My friends are somewhere in the country, and I'm at home.</p><p>I looked in the <span class="chunk">cupboard</span> for something to eat, but there wasn't anything good. I want to go somewhere different, but where?</p><p>Then somebody called. It was my <span class="chunk">cousin</span>. 'Are you doing anything today? Let's go somewhere interesting!'</p><p>We went to a new <span class="chunk">museum</span>. We didn't see anybody we knew, but we met somebody nice there. Now I have something interesting to tell you!</p></div>
+    <h3>1 · True / False</h3><div id="tfList"></div><div class="fb-line" id="tfFeedback"></div><h3>2 · Скучное воскресенье</h3><p class="sound-note">Впишите слово.</p><div id="tomFillList"></div><div class="actions-row"><button class="btn small" id="checkTomBtn">Проверить</button><span class="fb-line" id="tomFeedback"></span></div><h3>3 · Слова из текста</h3><div id="readFillList"></div><div class="actions-row"><button class="btn small" id="checkReadFillBtn">Проверить</button><span class="fb-line" id="readFillFeedback"></span></div>
+  </div></div><div class="section" id="sounds">
+    <div class="tab">E</div>
+    <div class="content"><p class="mini-note">Синтезированный голос помогает прочитать фразы, но не гарантирует точную интонацию. Повторяйте за ним и сравнивайте.</p>
+      <div class="eyebrow">Sounds &amp; Speech</div>
+      <h2>somebody / nowhere на слух</h2>
+      <p class="lead">Слушайте и повторяйте.</p>
+      <p class="tts-warn" id="ttsWarn"></p>
+      <div class="sound-block"><h3>1 · some- / any- / no-</h3><div class="sound-grid three"><div class="sound-pair"><div class="sp-text">There is somebody at the door.</div><div class="sp-controls"><button class="play-btn" data-text="There is somebody at the door." data-rate="1">🔊</button><button class="play-btn slow" data-text="There is somebody at the door." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">Is there anybody at the door?</div><div class="sp-controls"><button class="play-btn" data-text="Is there anybody at the door?" data-rate="1">🔊</button><button class="play-btn slow" data-text="Is there anybody at the door?" data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">There is nobody at the door.</div><div class="sp-controls"><button class="play-btn" data-text="There is nobody at the door." data-rate="1">🔊</button><button class="play-btn slow" data-text="There is nobody at the door." data-rate="0.6">🐢</button></div></div></div></div><div class="sound-block"><h3>2 · -thing / -where</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">Are you doing anything at the weekend?</div><div class="sp-controls"><button class="play-btn" data-text="Are you doing anything at the weekend?" data-rate="1">🔊</button><button class="play-btn slow" data-text="Are you doing anything at the weekend?" data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">There is nowhere to go.</div><div class="sp-controls"><button class="play-btn" data-text="There is nowhere to go." data-rate="1">🔊</button><button class="play-btn slow" data-text="There is nowhere to go." data-rate="0.6">🐢</button></div></div></div></div><div class="sound-block"><h3>3 · + adjective / + to</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">Let's go somewhere different.</div><div class="sp-controls"><button class="play-btn" data-text="Let&#x27;s go somewhere different." data-rate="1">🔊</button><button class="play-btn slow" data-text="Let&#x27;s go somewhere different." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">I want something to eat.</div><div class="sp-controls"><button class="play-btn" data-text="I want something to eat." data-rate="1">🔊</button><button class="play-btn slow" data-text="I want something to eat." data-rate="0.6">🐢</button></div></div></div></div>
+      <div class="actions-row">
+        <button class="btn secondary small" id="playAllBtn">🔊 Прослушать всё подряд</button>
+      </div>
+    </div>
+  </div><div class="section alt" id="listening">
+    <div class="tab">F</div>
+    <div class="content">
+      <div class="eyebrow">Listening</div>
+      <h2>Слушаем вслепую</h2>
+      <p class="lead">Гость ищет хозяев дома.</p>
+      <div class="speed-picker">
+        <label>Скорость:</label>
+        <div class="speed-btns">
+          <button class="speed-btn" data-rate="0.6">🐢 Медленно</button>
+          <button class="speed-btn active" data-rate="0.95">🔊 Обычно</button>
+        </div>
+      </div>
+      <div class="actions-row">
+        <button class="btn secondary stop-audio">Остановить</button>
+        <button class="btn" id="playListeningBtn">▶️ Слушать диалог</button>
+      </div>
+      <h3 style="font-size:14.5px; margin:18px 0 8px; color:var(--brick-dark);">Вопросы по прослушанному</h3>
+      <div id="lsList"></div>
+      <div class="actions-row"><span class="fb-line" id="lsFeedback"></span></div>
+      <div class="actions-row">
+        <button class="btn secondary small" id="toggleScriptBtn" disabled="">📜 Скрипт — после ответов на все вопросы</button>
+      </div>
+      <div class="reveal-box" id="scriptBox">Is there anybody at home?
+No, there&#x27;s nobody here. Everyone is out.
+Did they go anywhere interesting?
+Somewhere in the city. They didn&#x27;t say where.
+Is there anything to eat?
+Yes, there&#x27;s something in the fridge.</div>
+    </div>
+  </div><div class="section alt" id="production">
+    <div class="tab">G</div>
+    <div class="content">
+      <div class="eyebrow">Production</div>
+      <h2>Мои выходные</h2>
+      <p class="lead">Напишите 6–8 предложений о выходных: куда вы ходили (somewhere / nowhere), с кем встречались (somebody / nobody), что делали (something / nothing), и something + to / + adjective.</p>
+      <ul class="prompt-list"><li><b>I went somewhere … / I didn't go anywhere.</b></li><li><b>I met somebody … / I didn't see anybody.</b></li><li><b>I did something … / There was nothing to …</b></li><li><b>I want something to …</b></li></ul>
+      <textarea class="write-area" id="writeArea" placeholder="Last weekend I went somewhere new..."></textarea>
+      <div class="word-count" id="wordCount">0 слов</div>
+      <div class="actions-row">
+        <button class="btn" id="finishBtn">Готово!</button>
+        <button class="btn secondary" id="sampleBtn">Показать пример</button>
+      </div>
+      <div class="reveal-box" id="sampleBox"><b>Пример:</b> Last weekend I went somewhere new — a small town near Oryol. I didn't know anybody there, but I met somebody interesting in a café. We talked about something important. On Sunday I didn't go anywhere. There was nothing to do, so I read a book. Now I want something sweet to eat.</div>
+      <div class="cue-cards">
+        <div class="cue-card"><b>Карточка 1</b>Спросите: Did you go anywhere / meet anybody / do anything interesting?</div>
+        <div class="cue-card"><b>Карточка 2</b>somebody или anybody? — выберите и объясните.</div>
+        <div class="cue-card"><b>Карточка 3</b>something to eat / nowhere to go — придумайте свои.</div>
+      </div>
+    </div>
+  </div><div class="section" id="homework">
+    <div class="tab">H</div>
+    <div class="content">
+      <div class="eyebrow">Homework</div>
+      <h2>Домашнее задание</h2>
+      <p class="lead">Отметьте галочкой то, что выполнили. Можно распечатать этот блок.</p>
+      <div class="hw-list">
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>1. Письменно.</b> Заполните таблицу some-/any-/no- × body/thing/where.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>2. + adjective / + to.</b> Напишите по 3 примера.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>3. Слушаем и повторяем.</b> Откройте блок <i>E · Sounds</i>.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>4. Слова.</b> Выучите 12 новых слов.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>5. Повторение.</b> Пройдите квиз ещё раз без ошибок.</span></label>
+      </div>
+      <div class="actions-row">
+        <span class="fb-line" id="hwFeedback">Выполнено: 0 / 5</span>
+        <button class="btn secondary small no-print" id="printHwBtn">🖨️ Распечатать задание</button>
+      </div>
+    </div>
+  </div></div><div class="badge-final" id="finalBadge">Урок пройден!<span>Все обязательные задания выполнены.</span></div>
+
+<p class="footer-note">Based on Essential Grammar in Use, 4th Edition (Cambridge University Press, 2015), Unit 79 — original exercises created for this lesson.</p>
+<script src="../lesson-kit.js?v=20261018-games1"></script><script src="../lesson-template.js?v=20261018-games1"></script><script>window.lessonConfig={"vocabData": [{"word": "somewhere", "ipa": "/ˈsʌmweə/", "ru": "где-то, куда-то"}, {"word": "anywhere", "ipa": "/ˈeniweə/", "ru": "где-нибудь; нигде"}, {"word": "nowhere", "ipa": "/ˈnəʊweə/", "ru": "нигде, никуда"}, {"word": "mouth", "ipa": "/maʊθ/", "ru": "рот"}, {"word": "break", "ipa": "/breɪk/", "ru": "разбивать"}, {"word": "understand", "ipa": "/ˌʌndəˈstænd/", "ru": "понимать"}, {"word": "angry", "ipa": "/ˈæŋɡri/", "ru": "сердитый"}, {"word": "different", "ipa": "/ˈdɪfrənt/", "ru": "другой, разный"}, {"word": "important", "ipa": "/ɪmˈpɔːtnt/", "ru": "важный"}, {"word": "bored", "ipa": "/bɔːd/", "ru": "скучающий"}, {"word": "cupboard", "ipa": "/ˈkʌbəd/", "ru": "шкаф"}, {"word": "recommend", "ipa": "/ˌrekəˈmend/", "ru": "рекомендовать"}], "chunkData": [{"en": "somewhere near London", "ipa": "", "ru": "где-то рядом с Лондоном"}, {"en": "anything at the weekend", "ipa": "", "ru": "что-нибудь на выходных"}, {"en": "nowhere to go", "ipa": "", "ru": "некуда пойти"}, {"en": "somebody interesting", "ipa": "", "ru": "кто-то интересный"}, {"en": "nothing important", "ipa": "", "ru": "ничего важного"}, {"en": "something to eat", "ipa": "", "ru": "что-нибудь поесть"}], "fillData": [{"sentence": "___ has broken the window. (кто-то)", "answers": ["Somebody", "Someone"]}, {"sentence": "She has got ___ in her mouth.", "answers": ["something"]}, {"sentence": "Tom lives ___ near London.", "answers": ["somewhere"]}, {"sentence": "Is there ___ at the door?", "answers": ["anybody", "anyone"]}, {"sentence": "There is ___ at the door. (никого)", "answers": ["nobody", "no-one"]}, {"sentence": "Are you doing ___ at the weekend?", "answers": ["anything"]}, {"sentence": "Did you go ___ interesting?", "answers": ["anywhere"]}, {"sentence": "I'm not going ___.", "answers": ["anywhere"]}, {"sentence": "There is ___ to go in this town.", "answers": ["nowhere"]}, {"sentence": "Let's go ___ different.", "answers": ["somewhere"]}, {"sentence": "It's ___ important.", "answers": ["nothing"]}, {"sentence": "I want ___ to eat.", "answers": ["something"]}], "memoPairs": [["somewhere", "где-то, куда-то"], ["nowhere", "нигде, никуда"], ["mouth", "рот"], ["bored", "скучающий"], ["cupboard", "шкаф"], ["important", "важный"]], "quizData": [{"q": "Did you go ___ for your holidays?", "opts": ["anywhere", "somewhere"], "correct": "anywhere"}, {"q": "There is ___ to go here.", "opts": ["nowhere", "anywhere"], "correct": "nowhere"}, {"q": "Ruth lives ___ in England.", "opts": ["somewhere", "anywhere"], "correct": "somewhere"}, {"q": "I'm not going ___.", "opts": ["anywhere", "nowhere"], "correct": "anywhere"}, {"q": "Did you meet ___ interesting?", "opts": ["anybody", "nobody"], "correct": "anybody"}, {"q": "I want ___ to drink.", "opts": ["something", "anything"], "correct": "something"}, {"q": "It's ___ important.", "opts": ["nothing", "anything"], "correct": "nothing"}, {"q": "Let's go ___ different.", "opts": ["somewhere", "anywhere"], "correct": "somewhere"}], "matchWords": [{"en": "somewhere", "ru": "где-то, куда-то"}, {"en": "anywhere", "ru": "где-нибудь; нигде"}, {"en": "nowhere", "ru": "нигде, никуда"}, {"en": "mouth", "ru": "рот"}, {"en": "break", "ru": "разбивать"}, {"en": "understand", "ru": "понимать"}, {"en": "angry", "ru": "сердитый"}, {"en": "different", "ru": "другой, разный"}, {"en": "important", "ru": "важный"}, {"en": "bored", "ru": "скучающий"}], "tfGroups": {"tfList": {"data": [{"text": "The writer was bored.", "correct": true}, {"text": "The friends were at home.", "correct": false}, {"text": "There wasn't anything good to eat.", "correct": true}, {"text": "Nobody called.", "correct": false}, {"text": "They went to a museum.", "correct": true}, {"text": "They saw a lot of people they knew.", "correct": false}], "feedback": "tfFeedback"}, "lsList": {"data": [{"text": "There's nobody at home.", "correct": true}, {"text": "They know exactly where the family went.", "correct": false}, {"text": "There's something in the fridge.", "correct": true}, {"text": "There's nothing to eat.", "correct": false}], "feedback": "lsFeedback"}}, "readFillData": [{"sentence": "there's ___ to do.", "answers": ["nothing"]}, {"sentence": "My friends are ___ in the country.", "answers": ["somewhere"]}, {"sentence": "I looked for ___ to eat.", "answers": ["something"]}, {"sentence": "I want to go ___ different.", "answers": ["somewhere"]}, {"sentence": "Then ___ called.", "answers": ["somebody", "someone"]}, {"sentence": "Are you doing ___ today?", "answers": ["anything"]}], "tomData": [{"sentence": "I'm ___.", "answers": ["bored"]}, {"sentence": "I looked in the ___.", "answers": ["cupboard"]}, {"sentence": "It was my ___.", "answers": ["cousin"]}, {"sentence": "We went to a new ___.", "answers": ["museum"]}, {"sentence": "we met somebody ___ there.", "answers": ["nice"]}, {"sentence": "I have something interesting to ___ you!", "answers": ["tell"]}], "slug": "urok-somebody-nowhere", "exam": false, "legacySignature": "", "legacyFields": [], "questionTask": false, "listeningLines": ["Is there anybody at home?", "No, there's nobody here. Everyone is out.", "Did they go anywhere interesting?", "Somewhere in the city. They didn't say where.", "Is there anything to eat?", "Yes, there's something in the fridge."], "readingLines": ["I'm bored. It's Sunday and there's nothing to do. My friends are somewhere in the country, and I'm at home.", "I looked in the cupboard for something to eat, but there wasn't anything good. I want to go somewhere different, but where?", "Then somebody called. It was my cousin. 'Are you doing anything today? Let's go somewhere interesting!'", "We went to a new museum. We didn't see anybody we knew, but we met somebody nice there. Now I have something interesting to tell you!"]};
+LessonTemplate.mount(window.lessonConfig);</script></body></html>
