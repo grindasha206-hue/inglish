@@ -86,7 +86,14 @@ h1,h2,h3,.display{font-family:'Comfortaa',sans-serif;}
 
 .footer-note{text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:24px; padding:0 20px;}
 </style>
-<link rel="stylesheet" href="../lesson-theme.css"></head>
+<link rel="stylesheet" href="../lesson-theme.css"><style id="exam-input-fix">
+.q-body .q-input.wide{display:block;width:100%;box-sizing:border-box;text-align:left!important;font-weight:600!important;font-size:16px!important;color:var(--brick-dark);padding:10px 14px!important;margin-top:6px;border:1.5px solid #F1D9DF!important;border-radius:12px!important;background:#FFFDFB!important}
+.q-body .q-input.wide::placeholder{font-weight:400;font-style:italic;color:#B9A5AC;opacity:1}
+.q-body .q-input.wide:focus{outline:none;border-color:#D9648A!important;box-shadow:0 0 0 3px rgba(217,100,138,.15)}
+.q-body .q-input.wide.correct{border-color:var(--sage)!important;background:var(--sage-bg)!important}
+.q-body .q-input.wide.wrong{border-color:var(--coral)!important;background:var(--coral-bg)!important}
+.q-sentence{font-size:16px;line-height:1.7}
+</style></head>
 <body><div class="topbar">
   <div class="book-title">Итоговый тест · Units 1–4</div>
   <div class="progress-steps">
@@ -385,7 +392,7 @@ section2.forEach((item, idx)=>{
   } else {
     row.innerHTML = `<div class="q-num">${idx+1}</div><div class="q-body">
       <div class="q-sentence">${item.sentence}</div>
-      <input type="text" class="q-input wide" data-sec="2" data-item="${idx}" placeholder="Yes, I am. / No, he isn't.">
+      <input type="text" class="q-input wide" data-sec="2" data-item="${idx}" placeholder="Краткий ответ…">
       <div class="q-fb" id="fb-2-${idx}"></div></div>`;
   }
   list2.appendChild(row);
