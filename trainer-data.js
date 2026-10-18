@@ -205,6 +205,27 @@ const T=[
    O("The hotel was comfortable, but it wasn't expensive.",'The hotel was comfortable, but it was not expensive.'),
    O('Were they at the party?')
   ]},
+  {id:11,title:'Past simple',emoji:'⏪',rule:'Past simple — законченное действие в прошлом (yesterday, last week, ago). Правильные глаголы + ed: worked, stayed, studied, stopped. Неправильные запоминаем: go → went, get → got, have → had, buy → bought, see → saw. Форма одна для всех лиц, без -s.',
+  items:[
+   C('Yesterday I ___ to work by car.','went','goed','go'),
+   C('She ___ in a bank from 2005 to 2011.','worked','works','workeds'),
+   C('We ___ a lot of work yesterday.','did','done','do'),
+   C('He ___ into the room and sat down.','came','comed','come'),
+   C('It ___ all morning yesterday.','rained','rains','raining'),
+   C('I ___ a letter last week.','wrote','writed','write'),
+   C('The party ___ at midnight.','finished','finish','finishs'),
+   C('This morning I ___ up at nine.','got','get','getted'),
+   C('Какое предложение правильное?','She studied English.','She studyed English.','She studied English tomorrow.'),
+   C('The bus ___ near my house.','stopped','stoped','stops'),
+   F('Tom ___ (buy) a new jacket last week.','bought'),
+   F('Anna ___ (lose) her keys yesterday.','lost'),
+   F('We ___ (enjoy) the party.','enjoyed'),
+   F('They ___ (fly) to Madrid last summer.','flew'),
+   F('I ___ (see) Kate at the airport.','saw'),
+   O('I went to the cinema yesterday.'),
+   O('The film started at seven and finished at ten.'),
+   O('She bought a ticket for the next flight.')
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),

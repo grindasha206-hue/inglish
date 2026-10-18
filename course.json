@@ -132,6 +132,13 @@
               "title": "was / were",
               "description": "Прошедшее время глагола to be: где и каким кто-то был",
               "file": "lessons/urok-was-were.html"
+            },
+            {
+              "id": "urok-past-simple",
+              "unit": 2,
+              "title": "worked / got / went — past simple",
+              "description": "Что произошло в прошлом: правильные и неправильные глаголы",
+              "file": "lessons/urok-past-simple.html"
             }
           ]
         }
