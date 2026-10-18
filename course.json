@@ -160,6 +160,13 @@
               "title": "I was doing и I did",
               "description": "Past continuous и past simple: что было в процессе и что случилось",
               "file": "lessons/urok-past-continuous-simple.html"
+            },
+            {
+              "id": "itogovyi-test-past",
+              "unit": 6,
+              "title": "Итоговый тест · модуль 3",
+              "description": "was/were, past simple, past continuous — всё вместе",
+              "file": "lessons/itogovyi-test-past.html"
             }
           ]
         }
