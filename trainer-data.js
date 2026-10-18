@@ -499,6 +499,27 @@ const T=[
    O('Butter is made from milk.'),
    O('What time did they go out?')
   ]},
+  {id:24,title:'Regular / irregular verbs',emoji:'🔤',rule:'Правильные: past simple = past participle = -ed (cleaned, studied). Неправильные: не на -ed. Иногда V2 = V3 (made, found, bought, cut), иногда разные (broke/broken, knew/known, began/begun, went/gone). V2 — past simple; V3 — после have/has (present perfect) и be (passive).',
+  items:[
+   C('break → past participle','broken','broke','breaked'),
+   C('know → past simple','knew','known','knowed'),
+   C('begin → past participle','begun','began','beginned'),
+   C('buy → past participle','bought','buyed','brought'),
+   C('Somebody has ___ the window.','broken','broke','break'),
+   C('I ___ her at school.','knew','known','know'),
+   C('cut → past simple','cut','cutted','cuted'),
+   C('study → past simple','studied','studyed','studed'),
+   C('Какое предложение правильное?','This window was broken last night.','This window was broke last night.','This window broken last night.'),
+   C('The film has already ___.','begun','began','begin'),
+   F('Chris ___ (study) engineering.','studied'),
+   F('I ___ (make) a cake yesterday.','made'),
+   F('Somebody has ___ (break) this window.','broken'),
+   F("I've ___ (know) her for years.",'known'),
+   F('They have ___ (go) home.','gone'),
+   O('Somebody broke this window last night.'),
+   O('I have made some coffee.',"I've made some coffee."),
+   O('Butter is made from milk.')
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),

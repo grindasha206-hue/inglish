@@ -262,6 +262,13 @@
               "title": "be / have / do в настоящем и прошедшем",
               "description": "Вспомогательные глаголы: повторяем все пройденные времена",
               "file": "lessons/urok-be-have-do.html"
+            },
+            {
+              "id": "urok-regular-irregular",
+              "unit": 2,
+              "title": "Regular and irregular verbs",
+              "description": "Правильные и неправильные глаголы: past simple и past participle",
+              "file": "lessons/urok-regular-irregular.html"
             }
           ]
         }
