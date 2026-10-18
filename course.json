@@ -700,6 +700,34 @@
               "title": "a cake / some cake",
               "description": "a/an и some; uncountable: advice, news, furniture",
               "file": "lessons/urok-countable-2.html"
+            },
+            {
+              "id": "urok-a-and-the",
+              "unit": 5,
+              "title": "a/an and the",
+              "description": "a/an и the",
+              "file": "lessons/urok-a-and-the.html"
+            },
+            {
+              "id": "urok-the",
+              "unit": 6,
+              "title": "the…",
+              "description": "Когда нужен the и когда нет",
+              "file": "lessons/urok-the.html"
+            },
+            {
+              "id": "urok-go-to-work",
+              "unit": 7,
+              "title": "go to work, go home, go to the cinema",
+              "description": "Без the: work, school, bed, home; с the: the cinema, the bank",
+              "file": "lessons/urok-go-to-work.html"
+            },
+            {
+              "id": "urok-i-like-music",
+              "unit": 8,
+              "title": "I like music, I hate exams",
+              "description": "Без the для общих понятий; flowers / the flowers",
+              "file": "lessons/urok-i-like-music.html"
             }
           ]
         }

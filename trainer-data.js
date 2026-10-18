@@ -1184,6 +1184,54 @@ const T=[
    O('I need some advice.'),
    O('Would you like some cheese?')
   ]},
+  {id:69,title:'a/an and the',emoji:'🪟',rule:"a/an — один из многих, впервые: I've got a car. Is there a hotel near here? the — понятно, какой именно, или он один: the car (= my car), the capital of France, the youngest student. a jacket … the jacket. the в комнате, доме, городе: the door, the kitchen, the centre, the manager.",
+  items:[
+   C('Paris is ___ interesting city.','an','the','a'),
+   C('Paris is ___ capital of France.','the','a','an'),
+   C('Is there ___ bank near here?','a','the','an'),
+   C('Close ___ door, please.','the','a','an'),
+   F('I bought a shirt. ___ shirt was expensive.','The'),
+   F('Can I ask ___ question?','a'),
+   F('Turn off ___ light.','the'),
+   O('Can you open the window?'),
+   O('I bought a jacket and a shirt.')
+  ]},
+  {id:70,title:'the …',emoji:'🌞',rule:"the — когда понятно какой: the name of this street, the best player, the nearest bank, the same. Также the sun / moon / world / sky / sea / country, the police / army, the top / end / middle / left, play the piano, the radio, the internet. Без the: TV (но turn off the TV), breakfast / lunch / dinner, next / last week.",
+  items:[
+   C('We live in ___ same street.','the','a','—'),
+   C('I watch ___ TV a lot.','—','the','a'),
+   C("I'm not working ___ next week.",'—','the','a'),
+   C('He plays ___ guitar.','the','a','—'),
+   F('Where is ___ nearest bank?','the'),
+   F('I listen to ___ radio.','the'),
+   F('___ sky is blue.','The'),
+   O('We live in the same street.'),
+   O('I watch TV a lot.')
+  ]},
+  {id:71,title:'go to work / go home / go to the cinema',emoji:'🏫',rule:"Без the: go to work / be at work, go to school / be at school, university, college, hospital, prison, church, go to bed / be in bed. go home (без to), be at home. С the: the cinema, the theatre, the bank, the post office, the station, the airport, the city centre, the doctor, the dentist.",
+  items:[
+   C("I'm going to ___ now.",'work','the work','a work'),
+   C("I'm going ___.",'home','to home','to the home'),
+   C('I go to ___ cinema a lot.','the','—','a'),
+   C('He\'s in ___ hospital.','—','the','a'),
+   F("I'm tired. I'm going to ___.",'bed'),
+   F('I have to go to ___ dentist.','the'),
+   F('Are you staying at ___?','home'),
+   O("I'm going home."),
+   O('I go to the cinema a lot.')
+  ]},
+  {id:72,title:'I like music / I hate exams',emoji:'🎵',rule:"Без the — общие понятия: I like music. Life is not possible without water. I hate exams. Без the — игры и спорт (football, skiing), языки и школьные предметы (English, history, physics). С the — конкретное: The flowers in this garden are beautiful. The weather today… The fish (we ate) was excellent.",
+  items:[
+   C('I like ___ music.','—','the','a'),
+   C('___ music in this café is terrible.','The','—','A'),
+   C('Do you think ___ English is difficult?','—','the','an'),
+   C('___ flowers in this garden are beautiful.','The','—','A'),
+   F('___ is not possible without water.','Life'),
+   F('My favourite sport is ___. (футбол)','football'),
+   F('___ weather today is terrible.','The'),
+   O('I like music.'),
+   O('The flowers are beautiful.')
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),
