@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Итоговый тест · Present</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Comfortaa:wght@500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --cream:#FDF4F1; --paper:#FFFDFB; --ink:#3A2E33; --ink-soft:#6B5A61;
+  --brick:#BE456F; --brick-dark:#8F2E52; --tab:#C4507A; --tab-dark:#9E3460;
+  --sage:#4F8F6D; --sage-bg:#E6F1EA; --coral:#D65B4A; --coral-bg:#FBE7E3;
+  --gold:#E8A0B4; --line:#F1D9DF; --shadow: 0 6px 18px rgba(150,80,100,0.10);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; background:radial-gradient(circle at 15% 8%, rgba(232,160,180,0.10), transparent 40%), var(--cream); color:var(--ink); font-family:'Nunito', sans-serif; line-height:1.55; padding-bottom:80px;}
+h1,h2,h3,.display{font-family:'Comfortaa',sans-serif;}
+
+.topbar{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:1px solid var(--line); padding:10px 18px; display:flex; align-items:center; gap:14px; box-shadow:0 2px 10px rgba(0,0,0,0.04);}
+.topbar .book-title{font-family:'Comfortaa',sans-serif; font-weight:700; font-size:15px; color:var(--brick-dark); white-space:nowrap;}
+.topbar-progress{flex:1; height:8px; border-radius:6px; background:var(--line); position:relative; overflow:hidden;}
+.topbar-progress i{display:block; height:100%; width:0%; border-radius:6px; background:linear-gradient(90deg, var(--tab), var(--brick)); transition:width .4s ease;}
+.score-pill{font-size:13px; font-weight:700; background:var(--sage-bg); color:var(--sage); padding:5px 12px; border-radius:20px; white-space:nowrap;}
+
+.page{max-width:900px; margin:26px auto; background:var(--paper); border-radius:4px; box-shadow:var(--shadow); border:1px solid var(--line); overflow:hidden;}
+
+.unit-banner{background:linear-gradient(135deg, var(--brick) 0%, var(--brick-dark) 100%); color:#fff; padding:26px 30px 22px 96px; position:relative;}
+.unit-tag{position:absolute; left:0; top:0; bottom:0; width:76px; background:var(--brick-dark); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Comfortaa',sans-serif; border-right:2px solid rgba(255,255,255,0.15); text-align:center;}
+.unit-tag .u{font-size:10px; letter-spacing:1.5px; opacity:.75; padding:0 4px;}
+.unit-tag .n{font-size:26px; font-weight:800;}
+.unit-banner h1{margin:0; font-size:25px; font-weight:800; letter-spacing:.3px;}
+.unit-banner p{margin:6px 0 0; opacity:.9; font-size:14px;}
+
+.section{display:flex; border-top:1px solid var(--line);}
+.section .tab{width:56px; flex-shrink:0; background:var(--tab); color:#fff; font-family:'Comfortaa',sans-serif; font-weight:800; font-size:22px; display:flex; align-items:flex-start; justify-content:center; padding-top:22px;}
+.section.alt .tab{background:var(--tab-dark);}
+.section .content{padding:24px 28px 30px; flex:1; min-width:0;}
+.section h2{margin:0 0 4px; font-size:20px; color:var(--brick-dark);}
+.eyebrow{font-size:11.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-soft); font-weight:700; margin-bottom:4px;}
+.section p.lead{color:var(--ink-soft); margin-top:4px; font-size:14px;}
+
+.q-item{display:flex; align-items:flex-start; gap:10px; flex-wrap:wrap; padding:12px 4px; border-bottom:1px dashed var(--line);}
+.q-item:last-child{border-bottom:none;}
+.q-num{width:24px; height:24px; border-radius:50%; background:var(--cream); border:1px solid var(--line); font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; color:var(--ink-soft); flex-shrink:0; margin-top:2px;}
+.q-body{flex:1; min-width:220px;}
+.q-sentence{font-size:14.5px; margin-bottom:6px;}
+.q-hint{font-size:12px; color:var(--ink-soft); font-style:italic;}
+.q-input{width:150px; padding:6px 9px; border:1.5px solid var(--line); border-radius:6px; font-family:'Nunito'; font-weight:700; font-size:14px; text-align:center; background:#FFFDFB; color:var(--brick-dark);}
+.q-input.wide{width:100%;}
+.q-input:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.q-input.correct{border-color:var(--sage); background:var(--sage-bg); color:#2f5741;}
+.q-input.wrong{border-color:var(--coral); background:var(--coral-bg); color:var(--coral);}
+.q-fb{font-size:12.5px; color:var(--ink-soft); margin-top:5px;}
+.q-fb.wrong-fb{color:var(--coral);}
+
+.mc-opts{display:flex; gap:8px; flex-wrap:wrap; margin-top:4px;}
+.mc-opt{border:1.5px solid var(--line); background:#fff; padding:6px 14px; border-radius:18px; font-weight:700; font-size:13px; cursor:pointer; color:var(--ink);}
+.mc-opt.picked{border-color:var(--tab); background:var(--cream);}
+.mc-opt.correct{border-color:var(--sage); background:var(--sage-bg); color:#2f5741;}
+.mc-opt.incorrect{border-color:var(--coral); background:var(--coral-bg); color:var(--coral);}
+
+.btn{border:none; cursor:pointer; font-family:'Nunito'; font-weight:800; padding:12px 26px; border-radius:24px; font-size:15px; letter-spacing:.2px; background:var(--brick); color:#fff; box-shadow:0 4px 10px rgba(190,69,111,0.25); transition:.15s;}
+.btn:hover{transform:translateY(-1px); box-shadow:0 6px 14px rgba(190,69,111,0.32);}
+.btn.secondary{background:transparent; color:var(--brick); border:1.5px solid var(--brick); box-shadow:none;}
+.btn.small{padding:7px 16px; font-size:13px;}
+
+.submit-wrap{text-align:center; padding:30px 20px;}
+.submit-wrap p{color:var(--ink-soft); font-size:13.5px; margin-bottom:16px;}
+
+.results-card{display:none; margin:26px auto 0; max-width:900px; background:var(--paper); border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow); overflow:hidden;}
+.results-card.shown{display:block; animation:fadeIn .5s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+.results-hero{background:linear-gradient(135deg, var(--brick), var(--brick-dark)); color:#fff; padding:26px 28px; text-align:center;}
+.results-hero .big-score{font-family:'Comfortaa',sans-serif; font-size:44px; font-weight:800;}
+.results-hero .grade{font-size:15px; font-weight:700; margin-top:4px; opacity:.95;}
+.results-body{padding:22px 28px;}
+.results-body h3{font-size:13px; text-transform:uppercase; letter-spacing:1px; color:var(--ink-soft); margin:0 0 12px;}
+.rbar-row{display:flex; align-items:center; gap:10px; margin-bottom:10px; font-size:13.5px;}
+.rbar-label{width:180px; flex-shrink:0; color:var(--ink-soft); font-weight:600;}
+.rbar-track{flex:1; height:10px; background:var(--line); border-radius:6px; overflow:hidden;}
+.rbar-fill{height:100%; border-radius:6px; background:linear-gradient(90deg, var(--tab), var(--sage));}
+.rbar-val{width:44px; text-align:right; font-weight:700; color:var(--brick-dark); flex-shrink:0;}
+.results-advice{margin-top:18px; background:var(--sage-bg); border-left:3px solid var(--sage); padding:12px 16px; border-radius:6px; font-size:13.5px; color:#2f5741;}
+.results-advice b{color:var(--sage);}
+
+.footer-note{text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:24px; padding:0 20px;}
+</style>
+<link rel="stylesheet" href="../lesson-theme.css"></head>
+<body><div class="topbar">
+  <div class="book-title">Итоговый тест · Present</div>
+  <div class="progress-steps">
+    <div class="pstep" id="step-p"><i id="bar-p"></i></div>
+    <div class="pstep" id="step-vocab"><i id="bar-vocab"></i></div>
+    <div class="pstep" id="step-pr"><i id="bar-pr"></i></div>
+    <div class="pstep" id="step-read"><i id="bar-read"></i></div>
+    <div class="pstep" id="step-sound"><i id="bar-sound"></i></div>
+    <div class="pstep" id="step-listen"><i id="bar-listen"></i></div>
+    <div class="pstep" id="step-prod"><i id="bar-prod"></i></div>
+    <div class="pstep" id="step-hw"><i id="bar-hw"></i></div>
+  </div>
+  <div class="score-pill">★ <span id="scoreDisplay">0</span>/20</div>
+</div>
+
+
+
+<div class="page"><div class="unit-banner">
+    <div class="unit-tag"><span class="u">CHECK<br>POINT</span><span class="n">P</span></div>
+    <h1>Итоговый тест: Present</h1>
+    <p>Presentation → Vocabulary → Practice → Reading → Sounds → Listening → Production → Homework</p>
+  </div><div class="section" id="presentation"><div class="tab">A</div><div class="content"><div class="eyebrow">Presentation</div><h2>Перед контрольной работой</h2><p class="lead">Сначала выполните 24 контрольных задания в C без подсказок. Остальные разделы — дополнительное повторение.</p><div class="cue-cards"><div class="cue-card">I work in a bank. I'm not working today.</div><div class="cue-card">I've got a car. = I have a car.</div></div></div></div><div class="section" id="vocabulary"><div class="tab">B</div><div class="content"><div class="eyebrow">Vocabulary</div><h2>Слова и сочетания</h2><p class="lead">Словарь для дополнительного повторения после контрольной.</p><div id="vocabTable" class="vocab-table"></div><h3>Соседи слов · chunks</h3><div id="chunkGrid" class="chunk-grid"></div></div></div><div class="section" id="practice"><div class="tab">C</div><div class="content"><div class="eyebrow">Practice</div><h2>Контрольная: 24 задания</h2><p class="lead">Заполнено: <span id="answeredCount">0</span>/24. Этот результат считается отдельно от дополнительного повторения.</p><div class="topbar-progress"><i id="topProgress"></i></div><div class="exam-block" id="s1">
+    <div class="tab">1</div>
+    <div class="content">
+      <div class="eyebrow">Present simple</div>
+      <h2>I do / I don't</h2>
+      <p class="lead">Впишите глагол в present simple (are, works, don't like…).</p>
+      <div id="list1"></div>
+    </div>
+  </div><div class="exam-block" id="s2">
+    <div class="tab">2</div>
+    <div class="content">
+      <div class="eyebrow">Present simple</div>
+      <h2>Do you…? — вопросы</h2>
+      <p class="lead">Составьте вопрос из слов или впишите краткий ответ.</p>
+      <div id="list2"></div>
+    </div>
+  </div><div class="exam-block" id="s3">
+    <div class="tab">3</div>
+    <div class="content">
+      <div class="eyebrow">Сейчас или обычно</div>
+      <h2>I am doing / I do</h2>
+      <p class="lead">Выберите сами: present continuous или present simple.</p>
+      <div id="list3"></div>
+    </div>
+  </div><div class="exam-block" id="s4">
+    <div class="tab">4</div>
+    <div class="content">
+      <div class="eyebrow">Continuous и simple</div>
+      <h2>Вопросы</h2>
+      <p class="lead">Составьте вопрос из слов в правильном порядке.</p>
+      <div id="list4"></div>
+    </div>
+  </div><div class="exam-block" id="s5">
+    <div class="tab">5</div>
+    <div class="content">
+      <div class="eyebrow">have / have got</div>
+      <h2>I have / I've got</h2>
+      <p class="lead">Выберите правильный вариант.</p>
+      <div id="list5"></div>
+    </div>
+  </div><div class="submit-wrap">
+    <p>Ответьте на все вопросы, затем нажмите кнопку — результат покажет, что уже хорошо усвоено, а что стоит повторить.</p>
+    <button class="btn" id="submitTestBtn">Проверить тест и увидеть результат</button>
+  </div><div class="results-card" id="resultsCard">
+  <div class="results-hero">
+    <div class="big-score" id="bigScore">0 / 24</div>
+    <div class="grade" id="gradeText"></div>
+  </div>
+  <div class="results-body">
+    <h3>Результат по темам</h3>
+    <div id="sectionBars"></div>
+    <div class="results-advice" id="advice"></div>
+  </div>
+</div></div></div><div class="section" id="reading"><div class="tab">D</div><div class="content"><div class="actions-row"><button class="btn secondary small" id="playReadingBtn">🔊 Прослушать текст</button><button class="btn secondary stop-audio">Остановить</button></div><div class="eyebrow">Reading</div><h2>Kate's Sunday</h2><div class="read-text"><p>Hi! My name is Kate. I'm a nurse and I work in a hospital. I usually start work at seven, but today is Sunday, so I'm not working.</p><p>I've got a small flat and a cat. My cat sleeps all day. Right now she is sleeping on the sofa.</p><p>My brother doesn't have a job at the moment. He is looking for work. Today he is helping me in the kitchen. We are cooking lunch together.</p></div><h3>1 · True / False</h3><div id="tfList"></div><div class="fb-line" id="tfFeedback"></div><h3>2 · Ответьте или скажите о другом человеке</h3><div id="tomFillList"></div><div class="actions-row"><button class="btn small" id="checkTomBtn">Проверить</button><span class="fb-line" id="tomFeedback"></span></div><h3>3 · Слова из текста</h3><div id="readFillList"></div><div class="actions-row"><button class="btn small" id="checkReadFillBtn">Проверить</button><span class="fb-line" id="readFillFeedback"></span></div></div></div><div class="section" id="sounds">
+    <div class="tab">E</div>
+    <div class="content"><p class="mini-note">Синтезированный голос помогает прочитать текст, но не гарантирует показанную интонацию. Для точной фонетики нужны проверенные записи.</p>
+      <div class="eyebrow">Sounds &amp; Speech</div>
+      <h2>Слышим и повторяем</h2>
+      <p class="lead">Слушайте и повторяйте. Обычная и медленная скорость помогают разобрать фразу.</p>
+      
+      <p class="tts-warn" id="ttsWarn"></p>
+
+      <div class="sound-block">
+        <h3>1 · Слабые и сильные формы <span class="ipa">weak / strong forms</span></h3>
+        <p class="sound-note">В обычных утверждениях <b>am / is / are</b> произносятся быстро и невнятно — гласный сокращается до <span class="ipa">/ə/</span> (schwa), они «сливаются» с соседними словами. Но в кратких ответах (<i>Yes, I am.</i>) те же слова звучат <b>полно и под ударением</b>.</p>
+        <div class="sound-grid">
+          <div class="sound-pair">
+            <div class="sp-label weak">слабая форма</div>
+            <div class="sp-text">I<span class="link">'m</span> from Oryol.</div>
+            <div class="sp-controls">
+              <button class="play-btn" data-text="I'm from Oryol." data-rate="1">🔊</button>
+              <button class="play-btn slow" data-text="I'm from Oryol." data-rate="0.55">🐢</button>
+            </div>
+          </div>
+          <div class="sound-pair">
+            <div class="sp-label strong">сильная форма</div>
+            <div class="sp-text">Yes, I <b class="stress">am</b>.</div>
+            <div class="sp-controls">
+              <button class="play-btn" data-text="Yes, I am." data-rate="1">🔊</button>
+              <button class="play-btn slow" data-text="Yes, I am." data-rate="0.55">🐢</button>
+            </div>
+          </div>
+          <div class="sound-pair">
+            <div class="sp-label weak">слабая форма</div>
+            <div class="sp-text">She<span class="link">'s</span> a teacher.</div>
+            <div class="sp-controls">
+              <button class="play-btn" data-text="She's a teacher." data-rate="1">🔊</button>
+              <button class="play-btn slow" data-text="She's a teacher." data-rate="0.55">🐢</button>
+            </div>
+          </div>
+          <div class="sound-pair">
+            <div class="sp-label strong">сильная форма</div>
+            <div class="sp-text">Yes, she <b class="stress">is</b>.</div>
+            <div class="sp-controls">
+              <button class="play-btn" data-text="Yes, she is." data-rate="1">🔊</button>
+              <button class="play-btn slow" data-text="Yes, she is." data-rate="0.55">🐢</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sound-block">
+        <h3>2 · Слияние слов <span class="ipa">linking</span></h3>
+        <p class="sound-note">В беглой речи конец одного слова «перетекает» в начало следующего — особенно когда согласный встречается с гласным, или после <b>r</b> перед гласной. Значок <span class="tie">‿</span> показывает место слияния.</p>
+        <div class="sound-grid">
+          <div class="sound-pair wide">
+            <div class="sp-text">Your keys<span class="tie">‿</span>are<span class="tie">‿</span>on the table.</div>
+            <div class="sp-controls">
+              <button class="play-btn" data-text="Your keys are on the table." data-rate="1">🔊</button>
+              <button class="play-btn slow" data-text="Your keys are on the table." data-rate="0.55">🐢</button>
+            </div>
+          </div>
+          <div class="sound-pair wide">
+            <div class="sp-text">He<span class="tie">‿</span>'s<span class="tie">‿</span>ill today.</div>
+            <div class="sp-controls">
+              <button class="play-btn" data-text="He's ill today." data-rate="1">🔊</button>
+              <button class="play-btn slow" data-text="He's ill today." data-rate="0.55">🐢</button>
+            </div>
+          </div>
+          <div class="sound-pair wide">
+            <div class="sp-text">That<span class="tie">‿</span>'s a good idea.</div>
+            <div class="sp-controls">
+              <button class="play-btn" data-text="That's a good idea." data-rate="1">🔊</button>
+              <button class="play-btn slow" data-text="That's a good idea." data-rate="0.55">🐢</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sound-block">
+        <h3>3 · Ударение в предложении <span class="ipa">sentence stress</span></h3>
+        <p class="sound-note">Под ударением — «важные» слова (существительные, прилагательные, смысловые глаголы). Местоимения, артикли и <b>am/is/are</b> обычно безударны — прочитайте вслух только выделенные слова, и вы поймёте смысл фразы.</p>
+        <div class="sound-pair wide">
+          <div class="sp-text">My <b class="stress">brother</b> is <b class="stress">scared</b> of <b class="stress">spiders</b>.</div>
+          <div class="sp-controls">
+            <button class="play-btn" data-text="My brother is scared of spiders." data-rate="1">🔊</button>
+            <button class="play-btn slow" data-text="My brother is scared of spiders." data-rate="0.55">🐢</button>
+          </div>
+        </div>
+      <div class="sound-pair"><div class="sp-text">She is a teacher.</div><div class="sp-controls"><button class="play-btn" data-text="She is a teacher." data-rate="1">🔊</button><button class="play-btn slow" data-text="She is a teacher." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">My father is a doctor.</div><div class="sp-controls"><button class="play-btn" data-text="My father is a doctor." data-rate="1">🔊</button><button class="play-btn slow" data-text="My father is a doctor." data-rate="0.6">🐢</button></div></div></div>
+
+      <div class="sound-block">
+        <h3>4 · Звук <span class="ipa">/ð/</span> — that's · they're · there's</h3>
+        <p class="sound-note">Кончик языка слегка касается верхних зубов, голосовые связки работают (звук звонкий) — не путайте с русским «з» или «д». Отработаем три частых слова этого урока.</p>
+        <div class="sound-grid three">
+          <div class="sound-pair">
+            <div class="sp-text th">that's</div>
+            <div class="sp-controls">
+              <button class="play-btn" data-text="that's" data-rate="1">🔊</button>
+              <button class="play-btn slow" data-text="that's" data-rate="0.5">🐢</button>
+            </div>
+          </div>
+          <div class="sound-pair">
+            <div class="sp-text th">they're</div>
+            <div class="sp-controls">
+              <button class="play-btn" data-text="they're" data-rate="1">🔊</button>
+              <button class="play-btn slow" data-text="they're" data-rate="0.5">🐢</button>
+            </div>
+          </div>
+          <div class="sound-pair">
+            <div class="sp-text th">there's</div>
+            <div class="sp-controls">
+              <button class="play-btn" data-text="there's" data-rate="1">🔊</button>
+              <button class="play-btn slow" data-text="there's" data-rate="0.5">🐢</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions-row">
+        <button class="btn secondary small" id="playAllBtn">🔊 Прослушать всё подряд</button>
+      </div>
+    </div>
+  </div><div class="section alt" id="listening">
+    <div class="tab">F</div>
+    <div class="content">
+      <div class="eyebrow">Listening</div>
+      <h2>Слушаем вслепую</h2>
+      <p class="lead">Этого диалога вы ещё не видели. Выберите скорость, послушайте 1–2 раза и ответьте на вопросы. Скрипт открывайте только для проверки.</p>
+      <div class="speed-picker">
+        <label>Скорость:</label>
+        <div class="speed-btns">
+          <button class="speed-btn" data-rate="0.6">🐢 Медленно</button>
+          <button class="speed-btn active" data-rate="0.95">🔊 Обычно</button>
+        </div>
+      </div>
+      <div class="actions-row">
+        <button class="btn secondary stop-audio">Остановить</button>
+        <button class="btn" id="playListeningBtn">▶️ Слушать диалог</button>
+      </div>
+
+      <h3 style="font-size:14.5px; margin:18px 0 8px; color:var(--brick-dark);">Вопросы по прослушанному</h3>
+      <div id="lsList"></div>
+      <div class="actions-row"><span class="fb-line" id="lsFeedback"></span></div>
+      <div class="actions-row">
+        <button class="btn secondary small" id="toggleScriptBtn" disabled="">📜 Скрипт — после ответов на все вопросы</button>
+      </div>
+      <div class="reveal-box" id="scriptBox">Hi, Jack! What are you doing?
+I'm waiting for the bus. I go to work by bus every day.
+Have you got a car?
+No, I haven't. But my wife has got one.
+Does she drive to work?
+No, she doesn't. She works at home.</div>
+    </div>
+  </div><div class="section" id="production"><div class="tab">G</div><div class="content"><div class="eyebrow">Production</div><h2>Свои предложения</h2><p class="lead">Напишите 6–8 предложений о себе: что вы делаете обычно, что делаете сейчас и что у вас есть. Минимум 25 слов.</p><textarea id="writeArea" class="write-area"></textarea><div id="wordCount" class="word-count"></div><div class="actions-row"><button class="btn" id="finishBtn">Готово</button><button class="btn secondary" id="sampleBtn">Образец</button></div><div class="reveal-box" id="sampleBox">I'm a support coordinator. I usually start work at nine. I don't work on Sundays. Today is Sunday, so I'm studying English at home. I've got a laptop and a lot of books. My friend is cooking dinner now. She doesn't like fish.</div></div></div><div class="section" id="homework"><div class="tab">H</div><div class="content"><div class="eyebrow">Homework</div><h2>Разбор ошибок</h2><div class="hw-list"><label class="hw-item"><input class="hw-check" type="checkbox"><span>1. Перепишите пять исправленных ответов.</span></label><label class="hw-item"><input class="hw-check" type="checkbox"><span>2. Объясните порядок слов в трёх вопросах.</span></label><label class="hw-item"><input class="hw-check" type="checkbox"><span>3. Повторите фразы из Sounds три раза.</span></label><label class="hw-item"><input class="hw-check" type="checkbox"><span>4. Перескажите текст про Нину.</span></label><label class="hw-item"><input class="hw-check" type="checkbox"><span>5. Повторите контрольную через два дня.</span></label></div><div id="hwFeedback"></div><button class="btn secondary" id="printHwBtn">Печать</button></div></div></div><div class="badge-final" id="finalBadge">Урок пройден!<span>Все обязательные задания выполнены.</span></div>
+
+
+
+<p class="footer-note">Итоговая проверка по всем урокам present: Units 1–9 (Essential Grammar in Use, 4th Edition). Задания составлены отдельно для этой серии уроков.</p>
+
+
+
+
+<script src="../lesson-kit.js?v=20261018-games1"></script><script src="../lesson-template.js?v=20261018-games1"></script><script>window.lessonConfig={"section1": [{"sentence": "My parents ___ teachers.", "answers": ["are"]}, {"sentence": "Tom ___ (work) in a bank.", "answers": ["works"]}, {"sentence": "I ___ (not/like) coffee.", "answers": ["don't like", "do not like"]}, {"sentence": "Anna ___ (not/eat) meat.", "answers": ["doesn't eat", "does not eat"]}, {"sentence": "My brother ___ (watch) TV every evening.", "answers": ["watches"]}], "section2": [{"type": "order", "words": "(you / do / where / live)", "answers": ["where do you live"]}, {"type": "order", "words": "(your sister / does / speak / English)", "answers": ["does your sister speak english"]}, {"type": "short", "sentence": "Do you play tennis? (No)", "answers": ["no i dont", "no, i don't", "no i do not"]}, {"type": "short", "sentence": "Does Ben drive? (Yes)", "answers": ["yes he does", "yes, he does"]}], "section3": [{"sentence": "Shh! The baby ___ (sleep).", "answers": ["is sleeping", "'s sleeping"]}, {"sentence": "We usually ___ (have) lunch at one.", "answers": ["have"]}, {"sentence": "Look! It ___ (rain).", "answers": ["is raining", "'s raining"]}, {"sentence": "I ___ (not/understand) this word.", "answers": ["don't understand", "do not understand"]}, {"sentence": "Mia ___ (wear) a red coat today.", "answers": ["is wearing", "'s wearing"]}], "section4": [{"words": "(are / what / doing / you)", "answers": ["what are you doing"]}, {"words": "(she / does / what / do)", "answers": ["what does she do"]}, {"words": "(is / why / laughing / Tom)", "answers": ["why is tom laughing"]}, {"words": "(often / how / you / do / swim)", "answers": ["how often do you swim"]}], "section5": [{"word": "She ___ got two brothers.", "opts": ["has", "have", "is"], "correct": "has"}, {"word": "___ you got a pen?", "opts": ["Have", "Do", "Are"], "correct": "Have"}, {"word": "He ___ have a car.", "opts": ["doesn't", "hasn't", "isn't"], "correct": "doesn't"}, {"word": "I ___ got much free time.", "opts": ["haven't", "don't", "am not"], "correct": "haven't"}, {"word": "'Do they have a garden?' — 'No, they ___.'", "opts": ["don't", "haven't", "aren't"], "correct": "don't"}, {"word": "I ___ breakfast at eight.", "opts": ["have", "have got", "am have"], "correct": "have"}], "slug": "itogovyi-test-present", "exam": true, "legacySignature": "", "legacyFields": [{"oldIndex": 0, "id": "", "tag": "INPUT", "type": "text", "list": "list1", "item": "0", "sec": "1", "text": "My parents  teachers."}, {"oldIndex": 1, "id": "", "tag": "INPUT", "type": "text", "list": "list1", "item": "1", "sec": "1", "text": "Tom  (work) in a bank."}, {"oldIndex": 2, "id": "", "tag": "INPUT", "type": "text", "list": "list1", "item": "2", "sec": "1", "text": "I  (not/like) coffee."}, {"oldIndex": 3, "id": "", "tag": "INPUT", "type": "text", "list": "list1", "item": "3", "sec": "1", "text": "Anna  (not/eat) meat."}, {"oldIndex": 4, "id": "", "tag": "INPUT", "type": "text", "list": "list1", "item": "4", "sec": "1", "text": "My brother  (watch) TV every evening."}, {"oldIndex": 5, "id": "", "tag": "INPUT", "type": "text", "list": "list2", "item": "0", "sec": "2", "text": "(you / do / where / live)"}, {"oldIndex": 6, "id": "", "tag": "INPUT", "type": "text", "list": "list2", "item": "1", "sec": "2", "text": "(your sister / does / speak / English)"}, {"oldIndex": 7, "id": "", "tag": "INPUT", "type": "text", "list": "list2", "item": "2", "sec": "2", "text": "Do you play tennis? (No)"}, {"oldIndex": 8, "id": "", "tag": "INPUT", "type": "text", "list": "list2", "item": "3", "sec": "2", "text": "Does Ben drive? (Yes)"}, {"oldIndex": 9, "id": "", "tag": "INPUT", "type": "text", "list": "list3", "item": "0", "sec": "3", "text": "Shh! The baby  (sleep)."}, {"oldIndex": 10, "id": "", "tag": "INPUT", "type": "text", "list": "list3", "item": "1", "sec": "3", "text": "We usually  (have) lunch at one."}, {"oldIndex": 11, "id": "", "tag": "INPUT", "type": "text", "list": "list3", "item": "2", "sec": "3", "text": "Look! It  (rain)."}, {"oldIndex": 12, "id": "", "tag": "INPUT", "type": "text", "list": "list3", "item": "3", "sec": "3", "text": "I  (not/understand) this word."}, {"oldIndex": 13, "id": "", "tag": "INPUT", "type": "text", "list": "list3", "item": "4", "sec": "3", "text": "Mia  (wear) a red coat today."}, {"oldIndex": 14, "id": "", "tag": "INPUT", "type": "text", "list": "list4", "item": "0", "sec": "4", "text": "(are / what / doing / you)"}, {"oldIndex": 15, "id": "", "tag": "INPUT", "type": "text", "list": "list4", "item": "1", "sec": "4", "text": "(she / does / what / do)"}, {"oldIndex": 16, "id": "", "tag": "INPUT", "type": "text", "list": "list4", "item": "2", "sec": "4", "text": "(is / why / laughing / Tom)"}, {"oldIndex": 17, "id": "", "tag": "INPUT", "type": "text", "list": "list4", "item": "3", "sec": "4", "text": "(often / how / you / do / swim)"}], "questionTask": false, "vocabData": [{"word": "work", "ipa": "/wɜːk/", "ru": "работать"}, {"word": "live", "ipa": "/lɪv/", "ru": "жить"}, {"word": "usually", "ipa": "/ˈjuːʒuəli/", "ru": "обычно"}, {"word": "at the moment", "ipa": "/æt ðə ˈməʊmənt/", "ru": "в данный момент"}, {"word": "understand", "ipa": "/ˌʌndəˈstænd/", "ru": "понимать"}, {"word": "prefer", "ipa": "/prɪˈfɜː/", "ru": "предпочитать"}, {"word": "headache", "ipa": "/ˈhedeɪk/", "ru": "головная боль"}, {"word": "free time", "ipa": "/friː taɪm/", "ru": "свободное время"}, {"word": "busy", "ipa": "/ˈbɪzi/", "ru": "занятой"}, {"word": "garden", "ipa": "/ˈɡɑːdn/", "ru": "сад"}, {"word": "nurse", "ipa": "/nɜːs/", "ru": "медсестра"}, {"word": "look for", "ipa": "/lʊk fɔː/", "ru": "искать"}], "chunkData": [{"en": "every day", "ipa": "", "ru": "каждый день"}, {"en": "right now", "ipa": "", "ru": "прямо сейчас"}, {"en": "have lunch", "ipa": "", "ru": "обедать"}, {"en": "go to work by bus", "ipa": "", "ru": "ездить на работу на автобусе"}, {"en": "have got a headache", "ipa": "", "ru": "болит голова"}, {"en": "look for work", "ipa": "", "ru": "искать работу"}], "tfGroups": {"tfList": {"data": [{"text": "Kate is a doctor.", "correct": false}, {"text": "She is working today.", "correct": false}, {"text": "She has got a cat.", "correct": true}, {"text": "Her brother is helping her.", "correct": true}], "feedback": "tfFeedback"}, "lsList": {"data": [{"text": "Jack is waiting for the bus.", "correct": true}, {"text": "Jack has got a car.", "correct": false}, {"text": "Jack's wife drives to work.", "correct": false}, {"text": "His wife works at home.", "correct": true}], "feedback": "lsFeedback"}}, "tfData": [{"text": "Kate is a doctor.", "correct": false}, {"text": "She is working today.", "correct": false}, {"text": "She has got a cat.", "correct": true}, {"text": "Her brother is helping her.", "correct": true}], "readFillData": [{"sentence": "Kate works in a ___.", "answers": ["hospital"]}, {"sentence": "Her cat ___ all day.", "answers": ["sleeps"]}, {"sentence": "Her brother is ___ for work.", "answers": ["looking"]}], "tomData": [{"sentence": "Kate ___ (have got) a cat.", "answers": ["'s got", "has got"]}, {"sentence": "Her brother ___ (not/have) a job.", "answers": ["doesn't have", "does not have"]}, {"sentence": "Now Kate and her brother ___ (cook) lunch.", "answers": ["are cooking", "'re cooking"]}], "listeningLines": ["Hi, Jack! What are you doing?", "I'm waiting for the bus. I go to work by bus every day.", "Have you got a car?", "No, I haven't. But my wife has got one.", "Does she drive to work?", "No, she doesn't. She works at home."], "readingLines": ["Hi! My name is Kate. I'm a nurse and I work in a hospital. I usually start work at seven, but today is Sunday, so I'm not working.", "I've got a small flat and a cat. My cat sleeps all day. Right now she is sleeping on the sofa.", "My brother doesn't have a job at the moment. He is looking for work. Today he is helping me in the kitchen. We are cooking lunch together."]};
+
+/* ---------------- DATA ---------------- */
+const section1 = [{"sentence": "My parents ___ teachers.", "answers": ["are"]}, {"sentence": "Tom ___ (work) in a bank.", "answers": ["works"]}, {"sentence": "I ___ (not/like) coffee.", "answers": ["don't like", "do not like"]}, {"sentence": "Anna ___ (not/eat) meat.", "answers": ["doesn't eat", "does not eat"]}, {"sentence": "My brother ___ (watch) TV every evening.", "answers": ["watches"]}];
+const section2 = [{"type": "order", "words": "(you / do / where / live)", "answers": ["where do you live"]}, {"type": "order", "words": "(your sister / does / speak / English)", "answers": ["does your sister speak english"]}, {"type": "short", "sentence": "Do you play tennis? (No)", "answers": ["no i dont", "no, i don't", "no i do not"]}, {"type": "short", "sentence": "Does Ben drive? (Yes)", "answers": ["yes he does", "yes, he does"]}];
+const section3 = [{"sentence": "Shh! The baby ___ (sleep).", "answers": ["is sleeping", "'s sleeping"]}, {"sentence": "We usually ___ (have) lunch at one.", "answers": ["have"]}, {"sentence": "Look! It ___ (rain).", "answers": ["is raining", "'s raining"]}, {"sentence": "I ___ (not/understand) this word.", "answers": ["don't understand", "do not understand"]}, {"sentence": "Mia ___ (wear) a red coat today.", "answers": ["is wearing", "'s wearing"]}];
+const section4 = [{"words": "(are / what / doing / you)", "answers": ["what are you doing"]}, {"words": "(she / does / what / do)", "answers": ["what does she do"]}, {"words": "(is / why / laughing / Tom)", "answers": ["why is tom laughing"]}, {"words": "(often / how / you / do / swim)", "answers": ["how often do you swim"]}];
+const section5 = [{"word": "She ___ got two brothers.", "opts": ["has", "have", "is"], "correct": "has"}, {"word": "___ you got a pen?", "opts": ["Have", "Do", "Are"], "correct": "Have"}, {"word": "He ___ have a car.", "opts": ["doesn't", "hasn't", "isn't"], "correct": "doesn't"}, {"word": "I ___ got much free time.", "opts": ["haven't", "don't", "am not"], "correct": "haven't"}, {"word": "'Do they have a garden?' — 'No, they ___.'", "opts": ["don't", "haven't", "aren't"], "correct": "don't"}, {"word": "I ___ breakfast at eight.", "opts": ["have", "have got", "am have"], "correct": "have"}];
+
+function normalize(s){ return s.trim().toLowerCase().replace(/[’‘´`]/g,"'").replace(/[?.!,;:]/g,'').replace(/'/g,'').replace(/\s+/g,' '); }
+
+/* ---------------- RENDER SECTION 1 ---------------- */
+const list1 = document.getElementById('list1');
+section1.forEach((item, idx)=>{
+  const row = document.createElement('div');
+  row.className = 'q-item';
+  row.innerHTML = `<div class="q-num">${idx+1}</div><div class="q-body">
+    <div class="q-sentence">${item.sentence.replace('___', `<input type="text" class="q-input" data-sec="1" data-item="${idx}">`)}</div>
+    <div class="q-fb" id="fb-1-${idx}"></div></div>`;
+  list1.appendChild(row);
+});
+
+/* ---------------- RENDER SECTION 2 ---------------- */
+const list2 = document.getElementById('list2');
+section2.forEach((item, idx)=>{
+  const row = document.createElement('div');
+  row.className = 'q-item';
+  if(item.type === 'order'){
+    row.innerHTML = `<div class="q-num">${idx+1}</div><div class="q-body">
+      <div class="q-hint">${item.words}</div>
+      <input type="text" class="q-input wide" data-sec="2" data-item="${idx}" placeholder="Напишите вопрос целиком…">
+      <div class="q-fb" id="fb-2-${idx}"></div></div>`;
+  } else {
+    row.innerHTML = `<div class="q-num">${idx+1}</div><div class="q-body">
+      <div class="q-sentence">${item.sentence}</div>
+      <input type="text" class="q-input wide" data-sec="2" data-item="${idx}" placeholder="Yes, I do. / No, he doesn't.">
+      <div class="q-fb" id="fb-2-${idx}"></div></div>`;
+  }
+  list2.appendChild(row);
+});
+
+/* ---------------- RENDER SECTION 3 ---------------- */
+const list3 = document.getElementById('list3');
+section3.forEach((item, idx)=>{
+  const row = document.createElement('div');
+  row.className = 'q-item';
+  row.innerHTML = `<div class="q-num">${idx+1}</div><div class="q-body">
+    <div class="q-sentence">${item.sentence.replace('___', `<input type="text" class="q-input" data-sec="3" data-item="${idx}">`)}</div>
+    <div class="q-fb" id="fb-3-${idx}"></div></div>`;
+  list3.appendChild(row);
+});
+
+/* ---------------- RENDER SECTION 4 ---------------- */
+const list4 = document.getElementById('list4');
+section4.forEach((item, idx)=>{
+  const row = document.createElement('div');
+  row.className = 'q-item';
+  row.innerHTML = `<div class="q-num">${idx+1}</div><div class="q-body">
+    <div class="q-hint">${item.words}</div>
+    <input type="text" class="q-input wide" data-sec="4" data-item="${idx}" placeholder="Напишите вопрос целиком…">
+    <div class="q-fb" id="fb-4-${idx}"></div></div>`;
+  list4.appendChild(row);
+});
+
+/* ---------------- RENDER SECTION 5 ---------------- */
+const list5 = document.getElementById('list5');
+section5.forEach((item, idx)=>{
+  const row = document.createElement('div');
+  row.className = 'q-item';
+  row.innerHTML = `<div class="q-num">${idx+1}</div><div class="q-body">
+    <div class="q-sentence"><b>${item.word}</b></div>
+    <div class="mc-opts" data-sec="5" data-item="${idx}">
+      ${item.opts.map(o=>`<button type="button" class="mc-opt" data-val="${o}">${o}</button>`).join('')}
+    </div></div>`;
+  list5.appendChild(row);
+});
+document.querySelectorAll('#list5 .mc-opts').forEach(group=>{
+  group.querySelectorAll('.mc-opt').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      group.querySelectorAll('.mc-opt').forEach(b=>b.classList.remove('picked'));
+      btn.classList.add('picked');
+      updateAnsweredCount();
+    });
+  });
+});
+
+/* ---------------- ANSWERED COUNTER ---------------- */
+function updateAnsweredCount(){
+  let count = 0;
+  document.querySelectorAll('.q-input').forEach(i=>{ if(i.value.trim() !== '') count++; });
+  document.querySelectorAll('#list5 .mc-opts').forEach(g=>{ if(g.querySelector('.mc-opt.picked')) count++; });
+  document.getElementById('answeredCount').textContent = count;
+  document.getElementById('topProgress').style.width = Math.round((count/24)*100)+'%';
+}
+document.querySelectorAll('.q-input').forEach(i=>i.addEventListener('input', updateAnsweredCount));
+
+/* ---------------- SUBMIT & GRADE ---------------- */
+document.getElementById('submitTestBtn').addEventListener('click', ()=>{
+  if (Number(document.getElementById('answeredCount').textContent)<24) { alert('Сначала ответь на все 24 вопроса.'); return; }
+  let scores = { s1:0, s2:0, s3:0, s4:0, s5:0 };
+  let totals = { s1:section1.length, s2:section2.length, s3:section3.length, s4:section4.length, s5:section5.length };
+
+  section1.forEach((item, idx)=>{
+    const input = document.querySelector(`.q-input[data-sec="1"][data-item="${idx}"]`);
+    const ok = item.answers.some(a=>normalize(a)===normalize(input.value));
+    input.classList.remove('correct','wrong'); input.classList.add(ok?'correct':'wrong');
+    document.getElementById(`fb-1-${idx}`).textContent = ok ? '' : `верно: "${item.answers[0]}"`;
+    document.getElementById(`fb-1-${idx}`).className = ok ? 'q-fb' : 'q-fb wrong-fb';
+    if(ok) scores.s1++;
+  });
+
+  section2.forEach((item, idx)=>{
+    const input = document.querySelector(`.q-input[data-sec="2"][data-item="${idx}"]`);
+    const ok = item.answers.some(a=>normalize(a)===normalize(input.value));
+    input.classList.remove('correct','wrong'); input.classList.add(ok?'correct':'wrong');
+    document.getElementById(`fb-2-${idx}`).textContent = ok ? '' : `верно: "${item.answers[0]}"`;
+    document.getElementById(`fb-2-${idx}`).className = ok ? 'q-fb' : 'q-fb wrong-fb';
+    if(ok) scores.s2++;
+  });
+
+  section3.forEach((item, idx)=>{
+    const input = document.querySelector(`.q-input[data-sec="3"][data-item="${idx}"]`);
+    const ok = item.answers.some(a=>normalize(a)===normalize(input.value));
+    input.classList.remove('correct','wrong'); input.classList.add(ok?'correct':'wrong');
+    document.getElementById(`fb-3-${idx}`).textContent = ok ? '' : `верно: "${item.answers[0]}"`;
+    document.getElementById(`fb-3-${idx}`).className = ok ? 'q-fb' : 'q-fb wrong-fb';
+    if(ok) scores.s3++;
+  });
+
+  section4.forEach((item, idx)=>{
+    const input = document.querySelector(`.q-input[data-sec="4"][data-item="${idx}"]`);
+    const ok = item.answers.some(a=>normalize(a)===normalize(input.value));
+    input.classList.remove('correct','wrong'); input.classList.add(ok?'correct':'wrong');
+    document.getElementById(`fb-4-${idx}`).textContent = ok ? '' : `верно: "${item.answers[0]}"`;
+    document.getElementById(`fb-4-${idx}`).className = ok ? 'q-fb' : 'q-fb wrong-fb';
+    if(ok) scores.s4++;
+  });
+
+  section5.forEach((item, idx)=>{
+    const group = document.querySelector(`.mc-opts[data-sec="5"][data-item="${idx}"]`);
+    const picked = group.querySelector('.mc-opt.picked');
+    group.querySelectorAll('.mc-opt').forEach(b=>{
+      b.classList.remove('correct','incorrect');
+      if(b.dataset.val === item.correct) b.classList.add('correct');
+      if(picked && b === picked && b.dataset.val !== item.correct) b.classList.add('incorrect');
+    });
+    if(picked && picked.dataset.val === item.correct) scores.s5++;
+  });
+
+  const total = scores.s1+scores.s2+scores.s3+scores.s4+scores.s5;
+  const totalMax = totals.s1+totals.s2+totals.s3+totals.s4+totals.s5;
+  const pct = Math.round((total/totalMax)*100);
+
+  document.getElementById('bigScore').textContent = `${total} / ${totalMax}`;
+  let gradeMsg = '';
+  if(pct >= 90) gradeMsg = '🌟 Отлично! Материал усвоен уверенно.';
+  else if(pct >= 75) gradeMsg = '👍 Хорошо! Есть пара мест для повторения.';
+  else if(pct >= 50) gradeMsg = '📘 Неплохо, но стоит повторить некоторые темы.';
+  else gradeMsg = '🔁 Лучше вернуться к урокам и пройти их ещё раз.';
+  document.getElementById('gradeText').textContent = `${pct}% · ${gradeMsg}`;
+
+  const sectionLabels = [
+    { key:'s1', label:'Present simple' },
+    { key:'s2', label:'Present simple · вопросы' },
+    { key:'s3', label:'Сейчас или обычно' },
+    { key:'s4', label:'Вопросы continuous/simple' },
+    { key:'s5', label:'have / have got' },
+  ];
+  const barsEl = document.getElementById('sectionBars');
+  barsEl.innerHTML = '';
+  let weakest = null, weakestPct = 101;
+  sectionLabels.forEach(s=>{
+    const p = Math.round((scores[s.key]/totals[s.key])*100);
+    if(p < weakestPct){ weakestPct = p; weakest = s.label; }
+    const row = document.createElement('div');
+    row.className = 'rbar-row';
+    row.innerHTML = `<div class="rbar-label">${s.label}</div><div class="rbar-track"><div class="rbar-fill" style="width:${p}%"></div></div><div class="rbar-val">${scores[s.key]}/${totals[s.key]}</div>`;
+    barsEl.appendChild(row);
+  });
+  document.getElementById('advice').innerHTML = `<b>Совет:</b> сейчас слабее всего тема «${weakest}» (${weakestPct}%) — стоит вернуться к соответствующему уроку и пройти блок Practice ещё раз.`;
+
+  document.getElementById('resultsCard').classList.add('shown');
+  document.getElementById('resultsCard').scrollIntoView({behavior:'smooth', block:'start'});
+  updateAnsweredCount();
+});
+
+window.lessonResult=()=>{
+  const [score,maxScore]=document.getElementById('bigScore').textContent.split('/').map(Number);
+  return {score,maxScore,completed:document.getElementById('resultsCard').classList.contains('shown')};
+};
+updateAnsweredCount();
+
+LessonTemplate.mount(window.lessonConfig);</script></body></html>

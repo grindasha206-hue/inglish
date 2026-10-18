@@ -112,6 +112,13 @@
               "title": "I have / I've got",
               "description": "Два способа сказать «у меня есть»: have и have got",
               "file": "lessons/urok-have-got.html"
+            },
+            {
+              "id": "itogovyi-test-present",
+              "unit": 6,
+              "title": "Итоговый тест · Present",
+              "description": "to be, present simple, present continuous, have got — всё вместе",
+              "file": "lessons/itogovyi-test-present.html"
             }
           ]
         }
