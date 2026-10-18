@@ -884,6 +884,42 @@ const T=[
    O("I couldn't sleep last night."),
    O("Don't wait for me.")
   ]},
+  {id:44,title:'Questions 1: is it…? do they…?',emoji:'❔',rule:"В вопросе первый глагол (is/are/have/will/can…) стоит перед подлежащим: Is that seat free? Where has David gone? Present simple — do/does + глагол (Does Chris work?), past — did + глагол (What did you have?). do может быть основным глаголом: What do you do? Why + отрицание: Why isn't he here?",
+  items:[
+   C('Where ___?','has David gone','has gone David','David has gone'),
+   C('___ Chris work hard?','Does','Is','Do'),
+   C('What ___ for dinner?','did you have','did you had','you had'),
+   C('Why ___ here?',"isn't he","he isn't","doesn't he"),
+   F('___ that seat free?','Is'),
+   F('When ___ they be here?','will'),
+   F('How did you ___ that?','do'),
+   O('Where has David gone?'),
+   O("Why didn't you phone me?")
+  ]},
+  {id:45,title:'Questions 2: Who saw? Who did you see?',emoji:'🕵️',rule:"Если who/what — подлежащее, do/does/did не нужен: Who saw Paul? Who lives here? What happened? Если who/what — дополнение, нужен вспомогательный глагол: Who did Silvia see? What did Paul say? who — о людях, what — о вещах.",
+  items:[
+   C('Who ___ in this house?','lives','does live','live'),
+   C('What ___?','happened','did happen','happen'),
+   C('Who ___ yesterday?','did you meet','you met','met you'),
+   C('___ is your favourite song?','What','Who','Which person'),
+   F('Silvia saw Paul. Who ___ Silvia see?','did'),
+   F('Jane won a car. Who ___ a car?','won'),
+   F('What did Paul ___?','say'),
+   O('Who saw Paul?'),
+   O('Who did Silvia see?')
+  ]},
+  {id:46,title:"Questions 3: Who … to? What's it like?",emoji:'💬',rule:"В вопросах с Who/What/Where/Which предлог обычно в конце: Who is she talking to? Where are you from? What was he afraid of? What's it like? = расскажи, какое оно. like здесь — предлог, не глагол: What are they like? What was the weather like?",
+  items:[
+   C('Who is she talking ___?','to','at','—'),
+   C('What was he afraid ___?','of','from','about'),
+   C("What's your new house ___?",'like','likes','liking'),
+   C('What ___ they like?','are','do','does'),
+   F('Where are you ___?','from'),
+   F('What do you want to talk ___?','about'),
+   F('What ___ the weather like yesterday?','was'),
+   O('Who is she talking to?'),
+   O("What's your new house like?")
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),

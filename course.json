@@ -456,6 +456,33 @@
               "file": "lessons/itogovyi-test-short-answers.html"
             }
           ]
+        },
+        {
+          "id": "modul-11",
+          "title": "Модуль 11",
+          "lessons": [
+            {
+              "id": "urok-questions-1",
+              "unit": 1,
+              "title": "Questions 1: is it…? do they…?",
+              "description": "Порядок слов в вопросах; do/does/did; Why isn't…?",
+              "file": "lessons/urok-questions-1.html"
+            },
+            {
+              "id": "urok-questions-2",
+              "unit": 2,
+              "title": "Questions 2: Who saw you? Who did you see?",
+              "description": "who/what как подлежащее или дополнение",
+              "file": "lessons/urok-questions-2.html"
+            },
+            {
+              "id": "urok-questions-3",
+              "unit": 3,
+              "title": "Questions 3: Who is she talking to? What is it like?",
+              "description": "Предлог в конце вопроса; What's it like?",
+              "file": "lessons/urok-questions-3.html"
+            }
+          ]
         }
       ]
     },
