@@ -337,6 +337,20 @@
               "title": "must / mustn't / don't need to",
               "description": "Нужно, нельзя, не нужно; had to для прошлого",
               "file": "lessons/urok-must-mustnt.html"
+            },
+            {
+              "id": "urok-should",
+              "unit": 4,
+              "title": "should",
+              "description": "Советы: should, shouldn't, I think … should, ought to",
+              "file": "lessons/urok-should.html"
+            },
+            {
+              "id": "urok-have-to",
+              "unit": 5,
+              "title": "I have to…",
+              "description": "Необходимость: have to, had to, don't have to; must или have to",
+              "file": "lessons/urok-have-to.html"
             }
           ]
         }
