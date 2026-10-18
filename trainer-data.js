@@ -1004,6 +1004,18 @@ const T=[
    O('I want you to be happy.'),
    O('He makes me laugh.')
   ]},
+  {id:54,title:'I went to the shop to…',emoji:'🛒',rule:"to + глагол отвечает на вопрос «зачем?»: She went to the shop to get a newspaper. money / time to do: I haven't got time to watch TV. for + существительное: for a newspaper, for a holiday (не for get). wait for somebody; wait to do; wait for somebody to do: Wait for the lights to change.",
+  items:[
+   C('I went to the shop ___ a newspaper.','to get','for get','for to get'),
+   C('They went to Brazil ___ a holiday.','for','to','for to'),
+   C('Are you waiting ___ the bus?','for','to','—'),
+   C('Wait for the lights ___.','to change','change','for change'),
+   F('We need money ___ buy food.','to'),
+   F("I'm waiting ___ go.",'to'),
+   F('I went to the bank ___ some money.','for'),
+   O('She went to the shop to get a newspaper.'),
+   O('Please wait for me.')
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),

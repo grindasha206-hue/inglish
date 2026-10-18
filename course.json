@@ -556,6 +556,20 @@
               "title": "I want you to… I told you to…",
               "description": "want/ask/tell + somebody + to; make и let",
               "file": "lessons/urok-i-want-you-to.html"
+            },
+            {
+              "id": "urok-to-get",
+              "unit": 4,
+              "title": "I went to the shop to…",
+              "description": "to … (зачем), to и for, wait for",
+              "file": "lessons/urok-to-get.html"
+            },
+            {
+              "id": "itogovyi-test-verbs",
+              "unit": 5,
+              "title": "Итоговый тест · модуль 13",
+              "description": "work/working, to…/-ing, I want you to…, to/for",
+              "file": "lessons/itogovyi-test-verbs.html"
             }
           ]
         }
