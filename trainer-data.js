@@ -373,6 +373,27 @@ const T=[
    O("I've never ridden a horse.",'I have never ridden a horse.'),
    O('He has been to Spain twice.')
   ]},
+  {id:18,title:'How long…? since / for',emoji:'⏳',rule:'How long have you…? — present perfect: I\'ve known her for ten years. since + момент (since Monday, since 2010), for + период (for three days, for a long time). Не «I know her for…», не «How long are you married?». Для действий: I\'ve been learning English for two years.',
+  items:[
+   C("I've lived here ___ 2010.",'since','for','from'),
+   C("I've lived here ___ ten years.",'for','since','during'),
+   C('How long ___ you been married?','have','are','did'),
+   C('I ___ her for a long time.','have known','know','am knowing'),
+   C('They ___ married for five years.','have been','are','were being'),
+   C('How long have you been ___ German?','learning','learn','learned'),
+   C("She is in Ireland now. She ___ there since Monday.",'has been','is','was'),
+   C("It's been raining ___ day.",'all','since','for'),
+   C('Какое предложение правильное?',"I've had my car since April.","I have my car since April.","I've had my car for April."),
+   C("He's been watching TV ___ five o'clock.",'since','for','at'),
+   F('She has been in Ireland ___ three days.','for'),
+   F("I've had this phone ___ May.",'since'),
+   F('How long have you ___ (know) her?','known'),
+   F('He has lived there all his ___.','life'),
+   F('How long ___ she lived in London?','has'),
+   O('How long have you been married?'),
+   O("I've known her for a long time.","I have known her for a long time."),
+   O("It's been raining all day.","It has been raining all day.")
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),

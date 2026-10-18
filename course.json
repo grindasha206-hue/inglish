@@ -194,6 +194,13 @@
               "title": "Have you ever…? — present perfect 3",
               "description": "Опыт за всю жизнь: ever, never, gone и been",
               "file": "lessons/urok-present-perfect-3.html"
+            },
+            {
+              "id": "urok-present-perfect-4",
+              "unit": 4,
+              "title": "How long have you…? — present perfect 4",
+              "description": "Как долго: since и for, have been + -ing",
+              "file": "lessons/urok-present-perfect-4.html"
             }
           ]
         }
