@@ -880,6 +880,27 @@
               "title": "the oldest, the most expensive",
               "description": "Превосходная степень",
               "file": "lessons/urok-the-oldest.html"
+            },
+            {
+              "id": "urok-enough",
+              "unit": 7,
+              "title": "enough",
+              "description": "enough + noun; adjective + enough",
+              "file": "lessons/urok-enough.html"
+            },
+            {
+              "id": "urok-too",
+              "unit": 8,
+              "title": "too",
+              "description": "too; too much / too many; too … to",
+              "file": "lessons/urok-too.html"
+            },
+            {
+              "id": "itogovyi-test-adjectives",
+              "unit": 9,
+              "title": "Итоговый тест · модуль 18",
+              "description": "adjectives, adverbs, comparatives, superlatives, enough, too",
+              "file": "lessons/itogovyi-test-adjectives.html"
             }
           ]
         }
