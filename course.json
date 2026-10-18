@@ -105,6 +105,13 @@
               "title": "I am doing / I do — сейчас или обычно",
               "description": "Present continuous и present simple: что происходит сейчас и что бывает обычно",
               "file": "lessons/urok-present-continuous-simple.html"
+            },
+            {
+              "id": "urok-have-got",
+              "unit": 5,
+              "title": "I have / I've got",
+              "description": "Два способа сказать «у меня есть»: have и have got",
+              "file": "lessons/urok-have-got.html"
             }
           ]
         }
