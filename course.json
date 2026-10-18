@@ -440,6 +440,20 @@
               "title": "too/either · so am I / neither do I",
               "description": "too/either; So am I / Neither do I",
               "file": "lessons/urok-so-am-i-neither.html"
+            },
+            {
+              "id": "urok-negatives",
+              "unit": 4,
+              "title": "isn't, haven't, don't etc.",
+              "description": "Отрицания: not (n't), don't/doesn't/didn't, Don't…",
+              "file": "lessons/urok-negatives.html"
+            },
+            {
+              "id": "itogovyi-test-short-answers",
+              "unit": 5,
+              "title": "Итоговый тест · модуль 10",
+              "description": "I am/I don't, Have you?, so am I/neither, отрицания",
+              "file": "lessons/itogovyi-test-short-answers.html"
             }
           ]
         }

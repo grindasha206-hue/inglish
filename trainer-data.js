@@ -872,6 +872,18 @@ const T=[
    O("So am I."),
    O("Neither have I.")
   ]},
+  {id:43,title:"Negatives: isn't, haven't, don't",emoji:'🚫',rule:"Отрицание — not (n't) после am/is/are, was/were, have/has, will (won't), can (can't), could, must, should, would. Present simple: don't/doesn't + глагол (Lisa doesn't play). Past simple: didn't + глагол (We didn't play). Приказ: Don't look! do может быть основным глаголом: Sue doesn't do much.",
+  items:[
+   C('George ___ drive.',"can't","doesn't can","not can"),
+   C('Lisa ___ the guitar.',"doesn't play","doesn't plays","don't play"),
+   C('Emily ___ dinner with us.',"didn't have","didn't had","hasn't"),
+   C('___ wait for me!',"Don't","Not","Doesn't"),
+   F('The shops ___ open. (were)',"weren't"),
+   F('We ___ be here tomorrow. (will)',"won't"),
+   F('They ___ work hard yesterday.',"didn't"),
+   O("I couldn't sleep last night."),
+   O("Don't wait for me.")
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),
