@@ -72,6 +72,7 @@ function initializeAccountStorage(){
 let syncState={kind:'saved',message:'Данные в этом браузере'};
 const syncJobs=new Map();
 function setSyncStatus(kind,message){
+  if(window.answerConflictUid && window.answerConflictUid!==cloudUserId())window.answerConflictMessage='';
   if (kind==='conflict') window.answerConflictMessage=message;
   if (kind==='saved' && window.answerConflictMessage) { kind='conflict'; message=window.answerConflictMessage; }
   syncState={kind,message};
@@ -81,7 +82,19 @@ function setSyncStatus(kind,message){
     el.style.cssText='font:12px Manrope,sans-serif;padding:4px 14px;background:#fffaf0;color:#5c554c;flex-shrink:0';
     document.body.appendChild(el);
   }
-  if (el) { const button=el.querySelector('button'); el.textContent=message; if (button) el.appendChild(button); }
+  if (el) {
+    el.hidden=false; el.textContent=message;
+    if(kind==='conflict'){
+      const uid=cloudUserId();
+      const download=document.createElement('button');download.id='downloadConflict';download.textContent='Скачать копию ответов';
+      download.onclick=()=>downloadJSON(Object.keys(localStorage).filter(k=>k.startsWith(accountKey('conflict.',uid))).map(k=>JSON.parse(localStorage.getItem(k))),'english-conflicting-answers.json');
+      const close=document.createElement('button');close.textContent='Закрыть';close.setAttribute('aria-label','Закрыть предупреждение о копии ответов');
+      close.onclick=()=>{window.answerConflictMessage='';syncState={kind:syncJobs.size?'pending':'saved',message:syncJobs.size?'Есть изменения для отправки в облако…':'Сохранено'};el.replaceChildren();el.hidden=true;};
+      const hint=document.createElement('span');hint.textContent=' Копия также входит в резервную копию в настройках. ';
+      for(const button of [download,close])button.style.cssText='font:inherit;margin:4px 0 4px 8px;padding:6px 12px;border:1px solid #E3C3CC;border-radius:16px;background:#FFFDFB;color:#8F2E52;cursor:pointer';
+      el.append(hint,download,close);
+    }
+  }
 }
 function queueSync(id,task){
   syncJobs.set(id,task); setSyncStatus('pending','Есть изменения для отправки в облако…'); flushSync();
@@ -228,12 +241,15 @@ function localLessonEnvelope(id,uid=cloudUserId()){
   catch(e){ throw new Error('Не удалось прочитать ответы урока. Старая копия не удалена.'); }
 }
 function keepConflict(id,env,paths,uid){
+  // Preserve each distinct version once; opening it again must not nag again.
+  const prefix=accountKey('conflict.'+id+'.',uid);
+  for(const savedKey of Object.keys(localStorage).filter(k=>k.startsWith(prefix))){
+    try{const saved=JSON.parse(localStorage.getItem(savedKey));if(SyncCore.equal(saved.data,env.data)&&SyncCore.equal(saved.paths,paths))return;}catch{}
+  }
   const key=accountKey('conflict.'+id+'.'+crypto.randomUUID(),uid);
   localStorage.setItem(key,JSON.stringify({savedAt:new Date().toISOString(),lessonId:id,paths,data:env.data}));
-  setSyncStatus('conflict','Ответы на двух устройствах различаются. Локальная копия сохранена отдельно.');
-  let button=document.getElementById('downloadConflict');
-  if (!button) { button=document.createElement('button'); button.id='downloadConflict'; button.textContent='Скачать копию ответов'; document.getElementById('syncStatus')?.appendChild(button); }
-  button.onclick=()=>downloadJSON(Object.keys(localStorage).filter(k=>k.startsWith(accountKey('conflict.',uid))).map(k=>JSON.parse(localStorage.getItem(k))),'english-conflicting-answers.json');
+  window.answerConflictUid=uid;
+  setSyncStatus('conflict','Найдены разные версии ответов. Запасная копия сохранена на этом устройстве.');
 }
 function queueLessonSync(id,env,uid=cloudUserId()){
   queueSync(uid+':lesson:'+id,async()=>{
