@@ -399,6 +399,20 @@
               "title": "there was / there has been / there will be",
               "description": "there + be в прошедшем, present perfect и будущем",
               "file": "lessons/urok-there-was-will-be.html"
+            },
+            {
+              "id": "urok-it",
+              "unit": 3,
+              "title": "It…",
+              "description": "It для времени, дня, расстояния и погоды; It's nice to…",
+              "file": "lessons/urok-it.html"
+            },
+            {
+              "id": "itogovyi-test-there-it",
+              "unit": 4,
+              "title": "Итоговый тест · модуль 9",
+              "description": "there is/are, there was/has been/will be, it",
+              "file": "lessons/itogovyi-test-there-it.html"
             }
           ]
         }

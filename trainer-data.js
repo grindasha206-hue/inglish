@@ -814,6 +814,27 @@ const T=[
    O("There's been an accident.","There has been an accident."),
    O('There will be rain tomorrow.')
   ]},
+  {id:39,title:'It… (time, weather, distance)',emoji:'🌦️',rule:"It — для времени, дня, расстояния и погоды: It's half past ten. It's Thursday. It's 3 km to the centre. It's raining. far — в вопросах и отрицаниях (Is it far? It isn't far), a long way — в утверждениях. It's easy / nice / impossible to… Не пропускайте it: It's raining again (не Is raining).",
+  items:[
+   C('What time is ___?','it','there','this'),
+   C('___ raining.',"It's",'Is',"There's"),
+   C("It's a long ___.",'way','far','distance'),
+   C('Is it ___?','far','a long way','long'),
+   C('___ snows a lot in winter.','It','There','This'),
+   C('___ is a lot of snow in winter.','There','It','This'),
+   C("It's impossible ___ understand her.",'to','for','of'),
+   C('Is ___ true that you\'re leaving?','it','—','there'),
+   C('Какое предложение правильное?',"It's raining again.","Is raining again.","There is raining again."),
+   C('How far is it ___ here to the station?','from','of','at'),
+   F('What day is it? — ___ Thursday.',"It's",'It is'),
+   F('We can walk home. It isn\'t ___.','far'),
+   F('___ was very windy yesterday.','It'),
+   F("It's nice ___ see you again.",'to'),
+   F("It's a long ___ from here.",'way'),
+   O("It's half past ten."),
+   O("It isn't far."),
+   O("It's nice to see you again.")
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),

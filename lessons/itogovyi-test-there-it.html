@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Итоговый тест · there / it</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Comfortaa:wght@500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --cream:#FDF4F1; --paper:#FFFDFB; --ink:#3A2E33; --ink-soft:#6B5A61;
+  --brick:#BE456F; --brick-dark:#8F2E52; --tab:#C4507A; --tab-dark:#9E3460;
+  --sage:#4F8F6D; --sage-bg:#E6F1EA; --coral:#D65B4A; --coral-bg:#FBE7E3;
+  --gold:#E8A0B4; --line:#F1D9DF; --shadow: 0 6px 18px rgba(150,80,100,0.10);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; background:radial-gradient(circle at 15% 8%, rgba(232,160,180,0.10), transparent 40%), var(--cream); color:var(--ink); font-family:'Nunito', sans-serif; line-height:1.55; padding-bottom:80px;}
+h1,h2,h3,.display{font-family:'Comfortaa',sans-serif;}
+
+.topbar{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:1px solid var(--line); padding:10px 18px; display:flex; align-items:center; gap:14px; box-shadow:0 2px 10px rgba(0,0,0,0.04);}
+.topbar .book-title{font-family:'Comfortaa',sans-serif; font-weight:700; font-size:15px; color:var(--brick-dark); white-space:nowrap;}
+.topbar-progress{flex:1; height:8px; border-radius:6px; background:var(--line); position:relative; overflow:hidden;}
+.topbar-progress i{display:block; height:100%; width:0%; border-radius:6px; background:linear-gradient(90deg, var(--tab), var(--brick)); transition:width .4s ease;}
+.score-pill{font-size:13px; font-weight:700; background:var(--sage-bg); color:var(--sage); padding:5px 12px; border-radius:20px; white-space:nowrap;}
+
+.page{max-width:900px; margin:26px auto; background:var(--paper); border-radius:4px; box-shadow:var(--shadow); border:1px solid var(--line); overflow:hidden;}
+
+.unit-banner{background:linear-gradient(135deg, var(--brick) 0%, var(--brick-dark) 100%); color:#fff; padding:26px 30px 22px 96px; position:relative;}
+.unit-tag{position:absolute; left:0; top:0; bottom:0; width:76px; background:var(--brick-dark); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Comfortaa',sans-serif; border-right:2px solid rgba(255,255,255,0.15); text-align:center;}
+.unit-tag .u{font-size:10px; letter-spacing:1.5px; opacity:.75; padding:0 4px;}
+.unit-tag .n{font-size:26px; font-weight:800;}
+.unit-banner h1{margin:0; font-size:25px; font-weight:800; letter-spacing:.3px;}
+.unit-banner p{margin:6px 0 0; opacity:.9; font-size:14px;}
+
+.section{display:flex; border-top:1px solid var(--line);}
+.section .tab{width:56px; flex-shrink:0; background:var(--tab); color:#fff; font-family:'Comfortaa',sans-serif; font-weight:800; font-size:22px; display:flex; align-items:flex-start; justify-content:center; padding-top:22px;}
+.section.alt .tab{background:var(--tab-dark);}
+.section .content{padding:24px 28px 30px; flex:1; min-width:0;}
+.section h2{margin:0 0 4px; font-size:20px; color:var(--brick-dark);}
+.eyebrow{font-size:11.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-soft); font-weight:700; margin-bottom:4px;}
+.section p.lead{color:var(--ink-soft); margin-top:4px; font-size:14px;}
+
+.q-item{display:flex; align-items:flex-start; gap:10px; flex-wrap:wrap; padding:12px 4px; border-bottom:1px dashed var(--line);}
+.q-item:last-child{border-bottom:none;}
+.q-num{width:24px; height:24px; border-radius:50%; background:var(--cream); border:1px solid var(--line); font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; color:var(--ink-soft); flex-shrink:0; margin-top:2px;}
+.q-body{flex:1; min-width:220px;}
+.q-sentence{font-size:14.5px; margin-bottom:6px;}
+.q-hint{font-size:12px; color:var(--ink-soft); font-style:italic;}
+.q-input{width:150px; padding:6px 9px; border:1.5px solid var(--line); border-radius:6px; font-family:'Nunito'; font-weight:700; font-size:14px; text-align:center; background:#FFFDFB; color:var(--brick-dark);}
+.q-input.wide{width:100%;}
+.q-input:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.q-input.correct{border-color:var(--sage); background:var(--sage-bg); color:#2f5741;}
+.q-input.wrong{border-color:var(--coral); background:var(--coral-bg); color:var(--coral);}
+.q-fb{font-size:12.5px; color:var(--ink-soft); margin-top:5px;}
+.q-fb.wrong-fb{color:var(--coral);}
+
+.mc-opts{display:flex; gap:8px; flex-wrap:wrap; margin-top:4px;}
+.mc-opt{border:1.5px solid var(--line); background:#fff; padding:6px 14px; border-radius:18px; font-weight:700; font-size:13px; cursor:pointer; color:var(--ink);}
+.mc-opt.picked{border-color:var(--tab); background:var(--cream);}
+.mc-opt.correct{border-color:var(--sage); background:var(--sage-bg); color:#2f5741;}
+.mc-opt.incorrect{border-color:var(--coral); background:var(--coral-bg); color:var(--coral);}
+
+.btn{border:none; cursor:pointer; font-family:'Nunito'; font-weight:800; padding:12px 26px; border-radius:24px; font-size:15px; letter-spacing:.2px; background:var(--brick); color:#fff; box-shadow:0 4px 10px rgba(190,69,111,0.25); transition:.15s;}
+.btn:hover{transform:translateY(-1px); box-shadow:0 6px 14px rgba(190,69,111,0.32);}
+.btn.secondary{background:transparent; color:var(--brick); border:1.5px solid var(--brick); box-shadow:none;}
+.btn.small{padding:7px 16px; font-size:13px;}
+
+.submit-wrap{text-align:center; padding:30px 20px;}
+.submit-wrap p{color:var(--ink-soft); font-size:13.5px; margin-bottom:16px;}
+
+.results-card{display:none; margin:26px auto 0; max-width:900px; background:var(--paper); border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow); overflow:hidden;}
+.results-card.shown{display:block; animation:fadeIn .5s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+.results-hero{background:linear-gradient(135deg, var(--brick), var(--brick-dark)); color:#fff; padding:26px 28px; text-align:center;}
+.results-hero .big-score{font-family:'Comfortaa',sans-serif; font-size:44px; font-weight:800;}
+.results-hero .grade{font-size:15px; font-weight:700; margin-top:4px; opacity:.95;}
+.results-body{padding:22px 28px;}
+.results-body h3{font-size:13px; text-transform:uppercase; letter-spacing:1px; color:var(--ink-soft); margin:0 0 12px;}
+.rbar-row{display:flex; align-items:center; gap:10px; margin-bottom:10px; font-size:13.5px;}
+.rbar-label{width:180px; flex-shrink:0; color:var(--ink-soft); font-weight:600;}
+.rbar-track{flex:1; height:10px; background:var(--line); border-radius:6px; overflow:hidden;}
+.rbar-fill{height:100%; border-radius:6px; background:linear-gradient(90deg, var(--tab), var(--sage));}
+.rbar-val{width:44px; text-align:right; font-weight:700; color:var(--brick-dark); flex-shrink:0;}
+.results-advice{margin-top:18px; background:var(--sage-bg); border-left:3px solid var(--sage); padding:12px 16px; border-radius:6px; font-size:13.5px; color:#2f5741;}
+.results-advice b{color:var(--sage);}
+
+.footer-note{text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:24px; padding:0 20px;}
+</style>
+<link rel="stylesheet" href="../lesson-theme.css"><style id="exam-input-fix">
+.q-body .q-input.wide{display:block;width:100%;box-sizing:border-box;text-align:left!important;font-weight:600!important;font-size:16px!important;color:var(--brick-dark);padding:10px 14px!important;margin-top:6px;border:1.5px solid #F1D9DF!important;border-radius:12px!important;background:#FFFDFB!important}
+.q-body .q-input.wide::placeholder{font-weight:400;font-style:italic;color:#B9A5AC;opacity:1}
+.q-body .q-input.wide:focus{outline:none;border-color:#D9648A!important;box-shadow:0 0 0 3px rgba(217,100,138,.15)}
+.q-body .q-input.wide.correct{border-color:var(--sage)!important;background:var(--sage-bg)!important}
+.q-body .q-input.wide.wrong{border-color:var(--coral)!important;background:var(--coral-bg)!important}
+.q-sentence{font-size:16px;line-height:1.7}
+</style></head>
+<body><div class="topbar">
+  <div class="book-title">Итоговый тест · there / it</div>
+  <div class="progress-steps">
+    <div class="pstep" id="step-p"><i id="bar-p"></i></div>
+    <div class="pstep" id="step-vocab"><i id="bar-vocab"></i></div>
+    <div class="pstep" id="step-pr"><i id="bar-pr"></i></div>
+    <div class="pstep" id="step-read"><i id="bar-read"></i></div>
+    <div class="pstep" id="step-sound"><i id="bar-sound"></i></div>
+    <div class="pstep" id="step-listen"><i id="bar-listen"></i></div>
+    <div class="pstep" id="step-prod"><i id="bar-prod"></i></div>
+    <div class="pstep" id="step-hw"><i id="bar-hw"></i></div>
+  </div>
+  <div class="score-pill">★ <span id="scoreDisplay">0</span>/20</div>
+</div>
+
+
+
+<div class="page"><div class="unit-banner">
+    <div class="unit-tag"><span class="u">CHECK<br>POINT</span><span class="n">M9</span></div>
+    <h1>Итоговый тест: модуль 9 (there / it)</h1>
+    <p>Presentation → Vocabulary → Practice → Reading → Sounds → Listening → Production → Homework</p>
+  </div><div class="section" id="presentation"><div class="tab">A</div><div class="content"><div class="eyebrow">Presentation</div><h2>Перед контрольной работой</h2><p class="lead">Сначала выполните 24 контрольных задания в C без подсказок. Остальные разделы — дополнительное повторение.</p><div class="cue-cards"><div class="cue-card">There's a park near my house.</div><div class="cue-card">It's sunny. It isn't far.</div></div></div></div><div class="section" id="vocabulary"><div class="tab">B</div><div class="content"><div class="eyebrow">Vocabulary</div><h2>Слова и сочетания</h2><p class="lead">Словарь для дополнительного повторения после контрольной.</p><div id="vocabTable" class="vocab-table"></div><h3>Соседи слов · chunks</h3><div id="chunkGrid" class="chunk-grid"></div></div></div><div class="section" id="practice"><div class="tab">C</div><div class="content"><div class="eyebrow">Practice</div><h2>Контрольная: 24 задания</h2><p class="lead">Заполнено: <span id="answeredCount">0</span>/24. Этот результат считается отдельно от дополнительного повторения.</p><div class="topbar-progress"><i id="topProgress"></i></div><div class="exam-block" id="s1">
+    <div class="tab">1</div>
+    <div class="content">
+      <div class="eyebrow">Unit 37</div>
+      <h2>there is / there are</h2>
+      <p class="lead">Впишите there's, is, are, isn't, aren't.</p>
+      <div id="list1"></div>
+    </div>
+  </div><div class="exam-block" id="s2">
+    <div class="tab">2</div>
+    <div class="content">
+      <div class="eyebrow">Units 37–39</div>
+      <h2>Вопросы и краткие ответы</h2>
+      <p class="lead">Составьте вопрос из слов или впишите краткий ответ.</p>
+      <div id="list2"></div>
+    </div>
+  </div><div class="exam-block" id="s3">
+    <div class="tab">3</div>
+    <div class="content">
+      <div class="eyebrow">Unit 38</div>
+      <h2>there was / has been / will be</h2>
+      <p class="lead">Впишите was, were, been или will.</p>
+      <div id="list3"></div>
+    </div>
+  </div><div class="exam-block" id="s4">
+    <div class="tab">4</div>
+    <div class="content">
+      <div class="eyebrow">Unit 39</div>
+      <h2>It …</h2>
+      <p class="lead">Впишите одно слово.</p>
+      <div id="list4"></div>
+    </div>
+  </div><div class="exam-block" id="s5">
+    <div class="tab">5</div>
+    <div class="content">
+      <div class="eyebrow">Units 37–39</div>
+      <h2>there или it?</h2>
+      <p class="lead">Выберите правильный вариант.</p>
+      <div id="list5"></div>
+    </div>
+  </div><div class="submit-wrap">
+    <p>Ответьте на все вопросы, затем нажмите кнопку — результат покажет, что уже хорошо усвоено, а что стоит повторить.</p>
+    <button class="btn" id="submitTestBtn">Проверить тест и увидеть результат</button>
+  </div><div class="results-card" id="resultsCard">
+  <div class="results-hero">
+    <div class="big-score" id="bigScore">0 / 24</div>
+    <div class="grade" id="gradeText"></div>
+  </div>
+  <div class="results-body">
+    <h3>Результат по темам</h3>
+    <div id="sectionBars"></div>
+    <div class="results-advice" id="advice"></div>
+  </div>
+</div></div></div><div class="section" id="reading"><div class="tab">D</div><div class="content"><div class="actions-row"><button class="btn secondary small" id="playReadingBtn">🔊 Прослушать текст</button><button class="btn secondary stop-audio">Остановить</button></div><div class="eyebrow">Reading</div><h2>Welcome to Lakeside!</h2><div class="read-text"><p>Welcome to Lakeside! It's a small town, but there's a lot to do. There's a beautiful lake, and there are three parks.</p><p>Fifty years ago there wasn't a station here, and there were only two shops. Since then there have been a lot of changes.</p><p>Now there's a big shopping centre, and next year there will be a new museum. It's only two kilometres from the station to the lake, so it's easy to walk.</p><p>It's often sunny in summer, but it rains a lot in autumn. Is there a hotel? Yes, there are two!</p></div><h3>1 · True / False</h3><div id="tfList"></div><div class="fb-line" id="tfFeedback"></div><h3>2 · Ответьте или скажите о другом человеке</h3><div id="tomFillList"></div><div class="actions-row"><button class="btn small" id="checkTomBtn">Проверить</button><span class="fb-line" id="tomFeedback"></span></div><h3>3 · Слова из текста</h3><div id="readFillList"></div><div class="actions-row"><button class="btn small" id="checkReadFillBtn">Проверить</button><span class="fb-line" id="readFillFeedback"></span></div></div></div><div class="section" id="sounds">
+    <div class="tab">E</div>
+    <div class="content"><p class="mini-note">Синтезированный голос помогает прочитать фразы, но не гарантирует точную интонацию. Повторяйте за ним и сравнивайте.</p>
+      <div class="eyebrow">Sounds &amp; Speech</div>
+      <h2>there и it на слух</h2>
+      <p class="lead">Слушайте и повторяйте. Обычная и медленная скорость помогают разобрать фразу.</p>
+      <p class="tts-warn" id="ttsWarn"></p>
+      <div class="sound-block"><h3>1 · there is / there are</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">There's a man on the roof.</div><div class="sp-controls"><button class="play-btn" data-text="There&#x27;s a man on the roof." data-rate="1">🔊</button><button class="play-btn slow" data-text="There&#x27;s a man on the roof." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">Are there any cafés near here?</div><div class="sp-controls"><button class="play-btn" data-text="Are there any cafés near here?" data-rate="1">🔊</button><button class="play-btn slow" data-text="Are there any cafés near here?" data-rate="0.6">🐢</button></div></div></div></div><div class="sound-block"><h3>2 · there was / there's been</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">There was a train at eleven.</div><div class="sp-controls"><button class="play-btn" data-text="There was a train at eleven." data-rate="1">🔊</button><button class="play-btn slow" data-text="There was a train at eleven." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">Look! There's been an accident.</div><div class="sp-controls"><button class="play-btn" data-text="Look! There&#x27;s been an accident." data-rate="1">🔊</button><button class="play-btn slow" data-text="Look! There&#x27;s been an accident." data-rate="0.6">🐢</button></div></div></div></div><div class="sound-block"><h3>3 · there will be</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">There will be rain tomorrow.</div><div class="sp-controls"><button class="play-btn" data-text="There will be rain tomorrow." data-rate="1">🔊</button><button class="play-btn slow" data-text="There will be rain tomorrow." data-rate="0.6">🐢</button></div></div></div></div><div class="sound-block"><h3>4 · It …</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">It's half past ten.</div><div class="sp-controls"><button class="play-btn" data-text="It&#x27;s half past ten." data-rate="1">🔊</button><button class="play-btn slow" data-text="It&#x27;s half past ten." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">It isn't far.</div><div class="sp-controls"><button class="play-btn" data-text="It isn&#x27;t far." data-rate="1">🔊</button><button class="play-btn slow" data-text="It isn&#x27;t far." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">It's nice to see you.</div><div class="sp-controls"><button class="play-btn" data-text="It&#x27;s nice to see you." data-rate="1">🔊</button><button class="play-btn slow" data-text="It&#x27;s nice to see you." data-rate="0.6">🐢</button></div></div></div></div>
+      <div class="actions-row">
+        <button class="btn secondary small" id="playAllBtn">🔊 Прослушать всё подряд</button>
+      </div>
+    </div>
+  </div><div class="section alt" id="listening">
+    <div class="tab">F</div>
+    <div class="content">
+      <div class="eyebrow">Listening</div>
+      <h2>Слушаем вслепую</h2>
+      <p class="lead">Этого диалога вы ещё не видели. Выберите скорость, послушайте 1–2 раза и ответьте на вопросы. Скрипт открывайте только для проверки.</p>
+      <div class="speed-picker">
+        <label>Скорость:</label>
+        <div class="speed-btns">
+          <button class="speed-btn" data-rate="0.6">🐢 Медленно</button>
+          <button class="speed-btn active" data-rate="0.95">🔊 Обычно</button>
+        </div>
+      </div>
+      <div class="actions-row">
+        <button class="btn secondary stop-audio">Остановить</button>
+        <button class="btn" id="playListeningBtn">▶️ Слушать диалог</button>
+      </div>
+
+      <h3 style="font-size:14.5px; margin:18px 0 8px; color:var(--brick-dark);">Вопросы по прослушанному</h3>
+      <div id="lsList"></div>
+      <div class="actions-row"><span class="fb-line" id="lsFeedback"></span></div>
+      <div class="actions-row">
+        <button class="btn secondary small" id="toggleScriptBtn" disabled="">📜 Скрипт — после ответов на все вопросы</button>
+      </div>
+      <div class="reveal-box" id="scriptBox">Excuse me, is there a café near here?
+Yes, there's one on the corner. It isn't far.
+Thanks. Was there a market here last week?
+Yes, there was. There'll be another one on Saturday.
+What time is it now?
+It's half past two. And it's going to rain — there are black clouds!</div>
+    </div>
+  </div><div class="section" id="production"><div class="tab">G</div><div class="content"><div class="eyebrow">Production</div><h2>Свои предложения</h2><p class="lead">Напишите 6–8 предложений о своём городе: что там есть (there is/are), что было раньше (there was/were), что будет (there will be), и какая сегодня погода (it). Минимум 25 слов.</p><textarea id="writeArea" class="write-area"></textarea><div id="wordCount" class="word-count"></div><div class="actions-row"><button class="btn" id="finishBtn">Готово</button><button class="btn secondary" id="sampleBtn">Образец</button></div><div class="reveal-box" id="sampleBox">My city is big. There are a lot of parks and there's a beautiful river. Ten years ago there wasn't a metro, but now there is. There have been a lot of changes. Next year there will be a new bridge. Today it's cold and it's raining. It's ten kilometres from my house to the centre.</div></div></div><div class="section" id="homework"><div class="tab">H</div><div class="content"><div class="eyebrow">Homework</div><h2>Разбор ошибок</h2><div class="hw-list"><label class="hw-item"><input class="hw-check" type="checkbox"><span>1. Перепишите пять исправленных ответов.</span></label><label class="hw-item"><input class="hw-check" type="checkbox"><span>2. Объясните порядок слов в трёх вопросах.</span></label><label class="hw-item"><input class="hw-check" type="checkbox"><span>3. Повторите фразы из Sounds три раза.</span></label><label class="hw-item"><input class="hw-check" type="checkbox"><span>4. Перескажите текст про Нину.</span></label><label class="hw-item"><input class="hw-check" type="checkbox"><span>5. Повторите контрольную через два дня.</span></label></div><div id="hwFeedback"></div><button class="btn secondary" id="printHwBtn">Печать</button></div></div></div><div class="badge-final" id="finalBadge">Урок пройден!<span>Все обязательные задания выполнены.</span></div>
+
+
+
+<p class="footer-note">Итоговая проверка по модулю 9: Units 37–39 (Essential Grammar in Use, 4th Edition). Задания составлены отдельно для этой серии уроков.</p>
+
+
+
+
+<script src="../lesson-kit.js?v=20261018-games1"></script><script src="../lesson-template.js?v=20261018-games1"></script><script>window.lessonConfig={"section1": [{"sentence": "___ a man on the roof.", "answers": ["There's", "There is"]}, {"sentence": "There ___ seven days in a week.", "answers": ["are"]}, {"sentence": "___ there a bank near here?", "answers": ["Is"]}, {"sentence": "This café is quiet. There ___ many people here.", "answers": ["aren't", "are not"]}, {"sentence": "How many players ___ there in a football team?", "answers": ["are"]}], "section2": [{"type": "order", "words": "(there / any / are / near here / restaurants)", "answers": ["are there any restaurants near here"]}, {"type": "order", "words": "(is / far / how / it / to the station)", "answers": ["how far is it to the station"]}, {"type": "short", "sentence": "Is there a hotel near here? (Yes)", "answers": ["yes there is", "yes, there is"]}, {"type": "short", "sentence": "Were there any problems? (No)", "answers": ["no there werent", "no, there weren't", "no there were not", "no, there were not"]}], "section3": [{"sentence": "There ___ a train at 11 o'clock. (past)", "answers": ["was"]}, {"sentence": "We stayed at a big hotel. There ___ 550 rooms.", "answers": ["were"]}, {"sentence": "Look! There's ___ an accident.", "answers": ["been"]}, {"sentence": "There ___ an accident last night.", "answers": ["was"]}, {"sentence": "There ___ be rain tomorrow.", "answers": ["will"]}], "section4": [{"words": "What time is ___?", "answers": ["it"]}, {"words": "We can walk. It isn't ___.", "answers": ["far"]}, {"words": "It's a long ___ from here to the airport.", "answers": ["way"]}, {"words": "It's nice ___ see you again.", "answers": ["to"]}], "section5": [{"word": "___ a book on the table.", "opts": ["There's", "It's", "There are"], "correct": "There's"}, {"word": "I like this book. ___ interesting.", "opts": ["It's", "There's", "There is"], "correct": "It's"}, {"word": "___ raining again.", "opts": ["It's", "Is", "There's"], "correct": "It's"}, {"word": "___ snows a lot in winter.", "opts": ["It", "There", "This"], "correct": "It"}, {"word": "There ___ a lot of people at the party yesterday.", "opts": ["were", "was", "are"], "correct": "were"}, {"word": "There ___ time tomorrow. (negative)", "opts": ["won't be", "isn't be", "not will be"], "correct": "won't be"}], "slug": "itogovyi-test-there-it", "exam": true, "legacySignature": "", "legacyFields": [{"oldIndex": 0, "id": "", "tag": "INPUT", "type": "text", "list": "list1", "item": "0", "sec": "1", "text": " a man on the roof."}, {"oldIndex": 1, "id": "", "tag": "INPUT", "type": "text", "list": "list1", "item": "1", "sec": "1", "text": "There  seven days in a week."}, {"oldIndex": 2, "id": "", "tag": "INPUT", "type": "text", "list": "list1", "item": "2", "sec": "1", "text": " there a bank near here?"}, {"oldIndex": 3, "id": "", "tag": "INPUT", "type": "text", "list": "list1", "item": "3", "sec": "1", "text": "This café is quiet. There  many people here."}, {"oldIndex": 4, "id": "", "tag": "INPUT", "type": "text", "list": "list1", "item": "4", "sec": "1", "text": "How many players  there in a football team?"}, {"oldIndex": 5, "id": "", "tag": "INPUT", "type": "text", "list": "list2", "item": "0", "sec": "2", "text": "(there / any / are / near here / restaurants)"}, {"oldIndex": 6, "id": "", "tag": "INPUT", "type": "text", "list": "list2", "item": "1", "sec": "2", "text": "(is / far / how / it / to the station)"}, {"oldIndex": 7, "id": "", "tag": "INPUT", "type": "text", "list": "list2", "item": "2", "sec": "2", "text": "Is there a hotel near here? (Yes)"}, {"oldIndex": 8, "id": "", "tag": "INPUT", "type": "text", "list": "list2", "item": "3", "sec": "2", "text": "Were there any problems? (No)"}, {"oldIndex": 9, "id": "", "tag": "INPUT", "type": "text", "list": "list3", "item": "0", "sec": "3", "text": "There  a train at 11 o'clock. (past)"}, {"oldIndex": 10, "id": "", "tag": "INPUT", "type": "text", "list": "list3", "item": "1", "sec": "3", "text": "We stayed at a big hotel. There  550 rooms."}, {"oldIndex": 11, "id": "", "tag": "INPUT", "type": "text", "list": "list3", "item": "2", "sec": "3", "text": "Look! There's  an accident."}, {"oldIndex": 12, "id": "", "tag": "INPUT", "type": "text", "list": "list3", "item": "3", "sec": "3", "text": "There  an accident last night."}, {"oldIndex": 13, "id": "", "tag": "INPUT", "type": "text", "list": "list3", "item": "4", "sec": "3", "text": "There  be rain tomorrow."}, {"oldIndex": 14, "id": "", "tag": "INPUT", "type": "text", "list": "list4", "item": "0", "sec": "4", "text": "What time is ?"}, {"oldIndex": 15, "id": "", "tag": "INPUT", "type": "text", "list": "list4", "item": "1", "sec": "4", "text": "We can walk. It isn't ."}, {"oldIndex": 16, "id": "", "tag": "INPUT", "type": "text", "list": "list4", "item": "2", "sec": "4", "text": "It's a long  from here to the airport."}, {"oldIndex": 17, "id": "", "tag": "INPUT", "type": "text", "list": "list4", "item": "3", "sec": "4", "text": "It's nice  see you again."}], "questionTask": false, "vocabData": [{"word": "castle", "ipa": "/ˈkɑːsl/", "ru": "замок"}, {"word": "building", "ipa": "/ˈbɪldɪŋ/", "ru": "здание"}, {"word": "square", "ipa": "/skweə/", "ru": "площадь"}, {"word": "dangerous", "ipa": "/ˈdeɪndʒərəs/", "ru": "опасный"}, {"word": "empty", "ipa": "/ˈempti/", "ru": "пустой"}, {"word": "queue", "ipa": "/kjuː/", "ru": "очередь"}, {"word": "distance", "ipa": "/ˈdɪstəns/", "ru": "расстояние"}, {"word": "cloudy", "ipa": "/ˈklaʊdi/", "ru": "облачно"}, {"word": "windy", "ipa": "/ˈwɪndi/", "ru": "ветрено"}, {"word": "impossible", "ipa": "/ɪmˈpɒsəbl/", "ru": "невозможный"}, {"word": "wonderful", "ipa": "/ˈwʌndəfl/", "ru": "замечательный"}, {"word": "visitor", "ipa": "/ˈvɪzɪtə/", "ru": "посетитель"}], "chunkData": [{"en": "near here", "ipa": "", "ru": "поблизости"}, {"en": "in the corner", "ipa": "", "ru": "в углу"}, {"en": "a long way", "ipa": "", "ru": "далеко"}, {"en": "on foot", "ipa": "", "ru": "пешком"}, {"en": "half past two", "ipa": "", "ru": "половина третьего"}, {"en": "there's been an accident", "ipa": "", "ru": "произошла авария"}], "tfGroups": {"tfList": {"data": [{"text": "There are three parks in Lakeside.", "correct": true}, {"text": "Fifty years ago there was a station.", "correct": false}, {"text": "Next year there will be a new museum.", "correct": true}, {"text": "It's a long way from the station to the lake.", "correct": false}], "feedback": "tfFeedback"}, "lsList": {"data": [{"text": "There's a café on the corner.", "correct": true}, {"text": "The café is a long way.", "correct": false}, {"text": "There will be a market on Saturday.", "correct": true}, {"text": "It's sunny.", "correct": false}], "feedback": "lsFeedback"}}, "tfData": [{"text": "There are three parks in Lakeside.", "correct": true}, {"text": "Fifty years ago there was a station.", "correct": false}, {"text": "Next year there will be a new museum.", "correct": true}, {"text": "It's a long way from the station to the lake.", "correct": false}], "readFillData": [{"sentence": "There's a beautiful ___.", "answers": ["lake"]}, {"sentence": "Fifty years ago there wasn't a ___.", "answers": ["station"]}, {"sentence": "Next year there will be a new ___.", "answers": ["museum"]}], "tomData": [{"sentence": "There ___ three parks. (now)", "answers": ["are"]}, {"sentence": "Fifty years ago there ___ only two shops.", "answers": ["were"]}, {"sentence": "Next year there ___ a new museum.", "answers": ["will be"]}], "listeningLines": ["Excuse me, is there a café near here?", "Yes, there's one on the corner. It isn't far.", "Thanks. Was there a market here last week?", "Yes, there was. There'll be another one on Saturday.", "What time is it now?", "It's half past two. And it's going to rain — there are black clouds!"], "readingLines": ["Welcome to Lakeside! It's a small town, but there's a lot to do. There's a beautiful lake, and there are three parks.", "Fifty years ago there wasn't a station here, and there were only two shops. Since then there have been a lot of changes.", "Now there's a big shopping centre, and next year there will be a new museum. It's only two kilometres from the station to the lake, so it's easy to walk.", "It's often sunny in summer, but it rains a lot in autumn. Is there a hotel? Yes, there are two!"]};
+
+/* ---------------- DATA ---------------- */
+const section1 = [{"sentence": "___ a man on the roof.", "answers": ["There's", "There is"]}, {"sentence": "There ___ seven days in a week.", "answers": ["are"]}, {"sentence": "___ there a bank near here?", "answers": ["Is"]}, {"sentence": "This café is quiet. There ___ many people here.", "answers": ["aren't", "are not"]}, {"sentence": "How many players ___ there in a football team?", "answers": ["are"]}];
+const section2 = [{"type": "order", "words": "(there / any / are / near here / restaurants)", "answers": ["are there any restaurants near here"]}, {"type": "order", "words": "(is / far / how / it / to the station)", "answers": ["how far is it to the station"]}, {"type": "short", "sentence": "Is there a hotel near here? (Yes)", "answers": ["yes there is", "yes, there is"]}, {"type": "short", "sentence": "Were there any problems? (No)", "answers": ["no there werent", "no, there weren't", "no there were not", "no, there were not"]}];
+const section3 = [{"sentence": "There ___ a train at 11 o'clock. (past)", "answers": ["was"]}, {"sentence": "We stayed at a big hotel. There ___ 550 rooms.", "answers": ["were"]}, {"sentence": "Look! There's ___ an accident.", "answers": ["been"]}, {"sentence": "There ___ an accident last night.", "answers": ["was"]}, {"sentence": "There ___ be rain tomorrow.", "answers": ["will"]}];
+const section4 = [{"words": "What time is ___?", "answers": ["it"]}, {"words": "We can walk. It isn't ___.", "answers": ["far"]}, {"words": "It's a long ___ from here to the airport.", "answers": ["way"]}, {"words": "It's nice ___ see you again.", "answers": ["to"]}];
+const section5 = [{"word": "___ a book on the table.", "opts": ["There's", "It's", "There are"], "correct": "There's"}, {"word": "I like this book. ___ interesting.", "opts": ["It's", "There's", "There is"], "correct": "It's"}, {"word": "___ raining again.", "opts": ["It's", "Is", "There's"], "correct": "It's"}, {"word": "___ snows a lot in winter.", "opts": ["It", "There", "This"], "correct": "It"}, {"word": "There ___ a lot of people at the party yesterday.", "opts": ["were", "was", "are"], "correct": "were"}, {"word": "There ___ time tomorrow. (negative)", "opts": ["won't be", "isn't be", "not will be"], "correct": "won't be"}];
+
+function normalize(s){ return s.trim().toLowerCase().replace(/[’‘´`]/g,"'").replace(/[?.!,;:]/g,'').replace(/'/g,'').replace(/\s+/g,' '); }
+
+/* ---------------- RENDER SECTION 1 ---------------- */
+const list1 = document.getElementById('list1');
+section1.forEach((item, idx)=>{
+  const row = document.createElement('div');
+  row.className = 'q-item';
+  row.innerHTML = `<div class="q-num">${idx+1}</div><div class="q-body">
+    <div class="q-sentence">${item.sentence.replace('___', `<input type="text" class="q-input" data-sec="1" data-item="${idx}">`)}</div>
+    <div class="q-fb" id="fb-1-${idx}"></div></div>`;
+  list1.appendChild(row);
+});
+
+/* ---------------- RENDER SECTION 2 ---------------- */
+const list2 = document.getElementById('list2');
+section2.forEach((item, idx)=>{
+  const row = document.createElement('div');
+  row.className = 'q-item';
+  if(item.type === 'order'){
+    row.innerHTML = `<div class="q-num">${idx+1}</div><div class="q-body">
+      <div class="q-hint">${item.words}</div>
+      <input type="text" class="q-input wide" data-sec="2" data-item="${idx}" placeholder="Напишите вопрос целиком…">
+      <div class="q-fb" id="fb-2-${idx}"></div></div>`;
+  } else {
+    row.innerHTML = `<div class="q-num">${idx+1}</div><div class="q-body">
+      <div class="q-sentence">${item.sentence}</div>
+      <input type="text" class="q-input wide" data-sec="2" data-item="${idx}" placeholder="Краткий ответ…">
+      <div class="q-fb" id="fb-2-${idx}"></div></div>`;
+  }
+  list2.appendChild(row);
+});
+
+/* ---------------- RENDER SECTION 3 ---------------- */
+const list3 = document.getElementById('list3');
+section3.forEach((item, idx)=>{
+  const row = document.createElement('div');
+  row.className = 'q-item';
+  row.innerHTML = `<div class="q-num">${idx+1}</div><div class="q-body">
+    <div class="q-sentence">${item.sentence.replace('___', `<input type="text" class="q-input" data-sec="3" data-item="${idx}">`)}</div>
+    <div class="q-fb" id="fb-3-${idx}"></div></div>`;
+  list3.appendChild(row);
+});
+
+/* ---------------- RENDER SECTION 4 ---------------- */
+const list4 = document.getElementById('list4');
+section4.forEach((item, idx)=>{
+  const row = document.createElement('div');
+  row.className = 'q-item';
+  row.innerHTML = `<div class="q-num">${idx+1}</div><div class="q-body">
+    <div class="q-hint">${item.words}</div>
+    <input type="text" class="q-input wide" data-sec="4" data-item="${idx}" placeholder="for / since / ago">
+    <div class="q-fb" id="fb-4-${idx}"></div></div>`;
+  list4.appendChild(row);
+});
+
+/* ---------------- RENDER SECTION 5 ---------------- */
+const list5 = document.getElementById('list5');
+section5.forEach((item, idx)=>{
+  const row = document.createElement('div');
+  row.className = 'q-item';
+  row.innerHTML = `<div class="q-num">${idx+1}</div><div class="q-body">
+    <div class="q-sentence"><b>${item.word}</b></div>
+    <div class="mc-opts" data-sec="5" data-item="${idx}">
+      ${item.opts.map(o=>`<button type="button" class="mc-opt" data-val="${o}">${o}</button>`).join('')}
+    </div></div>`;
+  list5.appendChild(row);
+});
+document.querySelectorAll('#list5 .mc-opts').forEach(group=>{
+  group.querySelectorAll('.mc-opt').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      group.querySelectorAll('.mc-opt').forEach(b=>b.classList.remove('picked'));
+      btn.classList.add('picked');
+      updateAnsweredCount();
+    });
+  });
+});
+
+/* ---------------- ANSWERED COUNTER ---------------- */
+function updateAnsweredCount(){
+  let count = 0;
+  document.querySelectorAll('.q-input').forEach(i=>{ if(i.value.trim() !== '') count++; });
+  document.querySelectorAll('#list5 .mc-opts').forEach(g=>{ if(g.querySelector('.mc-opt.picked')) count++; });
+  document.getElementById('answeredCount').textContent = count;
+  document.getElementById('topProgress').style.width = Math.round((count/24)*100)+'%';
+}
+document.querySelectorAll('.q-input').forEach(i=>i.addEventListener('input', updateAnsweredCount));
+
+/* ---------------- SUBMIT & GRADE ---------------- */
+document.getElementById('submitTestBtn').addEventListener('click', ()=>{
+  if (Number(document.getElementById('answeredCount').textContent)<24) { alert('Сначала ответь на все 24 вопроса.'); return; }
+  let scores = { s1:0, s2:0, s3:0, s4:0, s5:0 };
+  let totals = { s1:section1.length, s2:section2.length, s3:section3.length, s4:section4.length, s5:section5.length };
+
+  section1.forEach((item, idx)=>{
+    const input = document.querySelector(`.q-input[data-sec="1"][data-item="${idx}"]`);
+    const ok = item.answers.some(a=>normalize(a)===normalize(input.value));
+    input.classList.remove('correct','wrong'); input.classList.add(ok?'correct':'wrong');
+    document.getElementById(`fb-1-${idx}`).textContent = ok ? '' : `верно: "${item.answers[0]}"`;
+    document.getElementById(`fb-1-${idx}`).className = ok ? 'q-fb' : 'q-fb wrong-fb';
+    if(ok) scores.s1++;
+  });
+
+  section2.forEach((item, idx)=>{
+    const input = document.querySelector(`.q-input[data-sec="2"][data-item="${idx}"]`);
+    const ok = item.answers.some(a=>normalize(a)===normalize(input.value));
+    input.classList.remove('correct','wrong'); input.classList.add(ok?'correct':'wrong');
+    document.getElementById(`fb-2-${idx}`).textContent = ok ? '' : `верно: "${item.answers[0]}"`;
+    document.getElementById(`fb-2-${idx}`).className = ok ? 'q-fb' : 'q-fb wrong-fb';
+    if(ok) scores.s2++;
+  });
+
+  section3.forEach((item, idx)=>{
+    const input = document.querySelector(`.q-input[data-sec="3"][data-item="${idx}"]`);
+    const ok = item.answers.some(a=>normalize(a)===normalize(input.value));
+    input.classList.remove('correct','wrong'); input.classList.add(ok?'correct':'wrong');
+    document.getElementById(`fb-3-${idx}`).textContent = ok ? '' : `верно: "${item.answers[0]}"`;
+    document.getElementById(`fb-3-${idx}`).className = ok ? 'q-fb' : 'q-fb wrong-fb';
+    if(ok) scores.s3++;
+  });
+
+  section4.forEach((item, idx)=>{
+    const input = document.querySelector(`.q-input[data-sec="4"][data-item="${idx}"]`);
+    const ok = item.answers.some(a=>normalize(a)===normalize(input.value));
+    input.classList.remove('correct','wrong'); input.classList.add(ok?'correct':'wrong');
+    document.getElementById(`fb-4-${idx}`).textContent = ok ? '' : `верно: "${item.answers[0]}"`;
+    document.getElementById(`fb-4-${idx}`).className = ok ? 'q-fb' : 'q-fb wrong-fb';
+    if(ok) scores.s4++;
+  });
+
+  section5.forEach((item, idx)=>{
+    const group = document.querySelector(`.mc-opts[data-sec="5"][data-item="${idx}"]`);
+    const picked = group.querySelector('.mc-opt.picked');
+    group.querySelectorAll('.mc-opt').forEach(b=>{
+      b.classList.remove('correct','incorrect');
+      if(b.dataset.val === item.correct) b.classList.add('correct');
+      if(picked && b === picked && b.dataset.val !== item.correct) b.classList.add('incorrect');
+    });
+    if(picked && picked.dataset.val === item.correct) scores.s5++;
+  });
+
+  const total = scores.s1+scores.s2+scores.s3+scores.s4+scores.s5;
+  const totalMax = totals.s1+totals.s2+totals.s3+totals.s4+totals.s5;
+  const pct = Math.round((total/totalMax)*100);
+
+  document.getElementById('bigScore').textContent = `${total} / ${totalMax}`;
+  let gradeMsg = '';
+  if(pct >= 90) gradeMsg = '🌟 Отлично! Материал усвоен уверенно.';
+  else if(pct >= 75) gradeMsg = '👍 Хорошо! Есть пара мест для повторения.';
+  else if(pct >= 50) gradeMsg = '📘 Неплохо, но стоит повторить некоторые темы.';
+  else gradeMsg = '🔁 Лучше вернуться к урокам и пройти их ещё раз.';
+  document.getElementById('gradeText').textContent = `${pct}% · ${gradeMsg}`;
+
+  const sectionLabels = [
+    { key:'s1', label:"there is / there are" },
+    { key:'s2', label:"Вопросы и ответы" },
+    { key:'s3', label:"there was / has been / will be" },
+    { key:'s4', label:"It …" },
+    { key:'s5', label:"there или it" },
+  ];
+  const barsEl = document.getElementById('sectionBars');
+  barsEl.innerHTML = '';
+  let weakest = null, weakestPct = 101;
+  sectionLabels.forEach(s=>{
+    const p = Math.round((scores[s.key]/totals[s.key])*100);
+    if(p < weakestPct){ weakestPct = p; weakest = s.label; }
+    const row = document.createElement('div');
+    row.className = 'rbar-row';
+    row.innerHTML = `<div class="rbar-label">${s.label}</div><div class="rbar-track"><div class="rbar-fill" style="width:${p}%"></div></div><div class="rbar-val">${scores[s.key]}/${totals[s.key]}</div>`;
+    barsEl.appendChild(row);
+  });
+  document.getElementById('advice').innerHTML = `<b>Совет:</b> сейчас слабее всего тема «${weakest}» (${weakestPct}%) — стоит вернуться к соответствующему уроку и пройти блок Practice ещё раз.`;
+
+  document.getElementById('resultsCard').classList.add('shown');
+  document.getElementById('resultsCard').scrollIntoView({behavior:'smooth', block:'start'});
+  updateAnsweredCount();
+});
+
+window.lessonResult=()=>{
+  const [score,maxScore]=document.getElementById('bigScore').textContent.split('/').map(Number);
+  return {score,maxScore,completed:document.getElementById('resultsCard').classList.contains('shown')};
+};
+updateAnsweredCount();
+
+LessonTemplate.mount(window.lessonConfig);</script></body></html>
