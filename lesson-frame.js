@@ -53,6 +53,7 @@
      
      if(blob.size>2000000||!/^image\/(png|jpeg|webp)$/.test(blob.type))continue;
      img.src=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=reject;reader.readAsDataURL(blob);});
+     if(img.parentElement?.classList.contains('lesson-panel-window'))img.parentElement.style.backgroundImage='url("'+img.src+'")';
      img.style.display='';const placeholder=doc.getElementById('picPh');if(placeholder)placeholder.style.display='none';
     }catch{}
    }
