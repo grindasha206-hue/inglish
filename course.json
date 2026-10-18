@@ -121,6 +121,19 @@
               "file": "lessons/itogovyi-test-present.html"
             }
           ]
+        },
+        {
+          "id": "modul-3",
+          "title": "Модуль 3",
+          "lessons": [
+            {
+              "id": "urok-was-were",
+              "unit": 1,
+              "title": "was / were",
+              "description": "Прошедшее время глагола to be: где и каким кто-то был",
+              "file": "lessons/urok-was-were.html"
+            }
+          ]
         }
       ]
     },

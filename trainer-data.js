@@ -184,6 +184,27 @@ const T=[
    O("She doesn't have a garden.",'She does not have a garden.'),
    O('Have you got a problem?')
   ]},
+  {id:10,title:'was / were',emoji:'🕰️',rule:'Прошедшее время to be: am/is → was, are → were. I/he/she/it was · we/you/they were. Отрицание: wasn\'t / weren\'t. Вопрос: Was he…? Were you…? Краткие ответы: Yes, I was. / No, they weren\'t.',
+  items:[
+   C('I ___ tired last night.','was','were','am'),
+   C('You ___ late yesterday.','were','was','are'),
+   C('Where ___ Kate yesterday?','was','were','is'),
+   C('My parents ___ in Paris last week.','were','was','are'),
+   C("It ___ cold yesterday. It was warm.","wasn't","weren't","isn't"),
+   C('___ you at home last night?','Were','Was','Are'),
+   C("'Was the exam difficult?' 'No, it ___.'","wasn't","weren't","was"),
+   C('Today the weather ___ nice.','is','was','were'),
+   C('Какое предложение правильное?','You were very kind.','You was very kind.','You were very kind yesterday is.'),
+   C('Last year she ___ 22, so she is 23 now.','was','is','were'),
+   F('We ___ (not) at home last Sunday.',"weren't",'were not'),
+   F('The film ___ (not) very good.',"wasn't",'was not'),
+   F("'Were you at work?' 'Yes, I ___.'",'was'),
+   F('Two weeks ___ I was on holiday.','ago'),
+   F('At midnight he was in bed. He was ___.','asleep'),
+   O('Why were you late this morning?'),
+   O("The hotel was comfortable, but it wasn't expensive.",'The hotel was comfortable, but it was not expensive.'),
+   O('Were they at the party?')
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),
