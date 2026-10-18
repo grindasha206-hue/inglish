@@ -235,6 +235,13 @@
               "title": "is done / was done — passive 1",
               "description": "Страдательный залог в present и past simple",
               "file": "lessons/urok-passive-1.html"
+            },
+            {
+              "id": "urok-passive-2",
+              "unit": 2,
+              "title": "is being done / has been done — passive 2",
+              "description": "Passive в present continuous и present perfect",
+              "file": "lessons/urok-passive-2.html"
             }
           ]
         }

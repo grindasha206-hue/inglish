@@ -457,6 +457,27 @@ const T=[
    O('The house was built in 1890.'),
    O('Where were you born?')
   ]},
+  {id:22,title:'Passive 2: is being done / has been done',emoji:'🚧',rule:'is/are being + past participle — делается сейчас: The door is being painted. has/have been + past participle — уже сделано, результат сейчас: The door has been painted. My keys have been stolen. С законченным временем — past: The room was cleaned yesterday.',
+  items:[
+   C('The door is ___ painted now.','being','been','be'),
+   C('The door has ___ painted.','been','being','be'),
+   C('My keys ___ been stolen.','have','has','are'),
+   C('The office is being cleaned ___.','at the moment','every day','yesterday'),
+   C('The room was cleaned ___.','yesterday','already','at the moment'),
+   C("I ___ been invited.","haven't","hasn't","wasn't"),
+   C('___ the shirt been washed?','Has','Is','Was'),
+   C('Some houses ___ built opposite the park.','are being','is being','has been'),
+   C('Какое предложение правильное?','My car is being repaired.','My car is been repaired.','My car being repaired.'),
+   C('My key ___ stolen.','has been','have been','is being'),
+   F('My car is at the garage. It ___ (repair).','is being repaired'),
+   F('My key ___ (steal).','has been stolen'),
+   F('I ___ (not/invite) to the party.',"haven't been invited",'have not been invited'),
+   F('The room ___ (clean) yesterday.','was cleaned'),
+   F('The office is being ___ at the moment.','cleaned'),
+   O('The door is being painted.'),
+   O('My keys have been stolen.'),
+   O("I haven't been invited to the party.","I have not been invited to the party.")
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),
