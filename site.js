@@ -84,7 +84,7 @@ function setSyncStatus(kind,message){
   }
   if (el) {
     el.hidden=false; el.textContent=message;
-    if(kind==='conflict'){
+    if(kind==='conflict'||(kind==='error'&&window.answerConflictMessage)){
       const uid=cloudUserId();
       const download=document.createElement('button');download.id='downloadConflict';download.textContent='Скачать копию ответов';
       download.onclick=()=>downloadJSON(Object.keys(localStorage).filter(k=>k.startsWith(accountKey('conflict.',uid))).map(k=>JSON.parse(localStorage.getItem(k))),'english-conflicting-answers.json');
@@ -92,7 +92,7 @@ function setSyncStatus(kind,message){
       close.onclick=()=>{window.answerConflictMessage='';syncState={kind:syncJobs.size?'pending':'saved',message:syncJobs.size?'Есть изменения для отправки в облако…':'Сохранено'};el.replaceChildren();el.hidden=true;};
       const hint=document.createElement('span');hint.textContent=' Копия также входит в резервную копию в настройках. ';
       for(const button of [download,close])button.style.cssText='font:inherit;margin:4px 0 4px 8px;padding:6px 12px;border:1px solid #E3C3CC;border-radius:16px;background:#FFFDFB;color:#8F2E52;cursor:pointer';
-      el.append(hint,download,close);
+      el.append(hint,download);if(kind==='conflict')el.append(close);
     }
   }
 }
