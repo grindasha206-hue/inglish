@@ -312,6 +312,33 @@
               "file": "lessons/itogovyi-test-future.html"
             }
           ]
+        },
+        {
+          "id": "modul-8",
+          "title": "Модуль 8",
+          "lessons": [
+            {
+              "id": "urok-might",
+              "unit": 1,
+              "title": "might",
+              "description": "Возможность: might, might not, may, May I…?",
+              "file": "lessons/urok-might.html"
+            },
+            {
+              "id": "urok-can-could",
+              "unit": 2,
+              "title": "can и could",
+              "description": "Умею, могу, мог; вежливые просьбы",
+              "file": "lessons/urok-can-could.html"
+            },
+            {
+              "id": "urok-must-mustnt",
+              "unit": 3,
+              "title": "must / mustn't / don't need to",
+              "description": "Нужно, нельзя, не нужно; had to для прошлого",
+              "file": "lessons/urok-must-mustnt.html"
+            }
+          ]
         }
       ]
     },
