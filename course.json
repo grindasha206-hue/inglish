@@ -834,6 +834,33 @@
               "file": "lessons/itogovyi-test-quantifiers.html"
             }
           ]
+        },
+        {
+          "id": "modul-18",
+          "title": "Модуль 18",
+          "lessons": [
+            {
+              "id": "urok-adjectives",
+              "unit": 1,
+              "title": "old/nice/interesting (adjectives)",
+              "description": "Прилагательные; look / smell / taste / sound + adjective",
+              "file": "lessons/urok-adjectives.html"
+            },
+            {
+              "id": "urok-adverbs",
+              "unit": 2,
+              "title": "quickly/badly/suddenly (adverbs)",
+              "description": "Наречия: -ly, hard/fast, good → well",
+              "file": "lessons/urok-adverbs.html"
+            },
+            {
+              "id": "urok-older",
+              "unit": 3,
+              "title": "old/older, expensive/more expensive",
+              "description": "Сравнительная степень",
+              "file": "lessons/urok-older.html"
+            }
+          ]
         }
       ]
     },
