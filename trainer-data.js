@@ -1052,6 +1052,18 @@ const T=[
    O('What do you do?'),
    O("I'm sorry, I made a mistake.")
   ]},
+  {id:58,title:'have / have got',emoji:'🍳',rule:"have = have got (есть, принадлежит): I have / I've got a car. Do you have? = Have you got? Болезни: I have / I've got a headache, a cold. Прошлое — had (без got). have breakfast / lunch / a shower / a party / a nice time / a look — только have, не have got: I'm having a shower.",
+  items:[
+   C('I ___ a shower every morning.','have','have got',"'ve got"),
+   C("He's ___ a shower now.",'having','got','have'),
+   C('When I met her, she ___ short hair.','had','had got','has'),
+   C('___ you got a cold?','Have','Do','Are'),
+   F("Tom doesn't ___ a job.",'have'),
+   F("She's ___ lunch.",'having'),
+   F('___ a nice time!','Have'),
+   O("I've got a headache."),
+   O("He's having a shower.")
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),

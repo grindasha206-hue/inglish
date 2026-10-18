@@ -597,6 +597,20 @@
               "title": "do and make",
               "description": "do и make; выражения",
               "file": "lessons/urok-do-make.html"
+            },
+            {
+              "id": "urok-have",
+              "unit": 4,
+              "title": "have",
+              "description": "have / have got; have breakfast, have a shower",
+              "file": "lessons/urok-have.html"
+            },
+            {
+              "id": "itogovyi-test-go-get-do",
+              "unit": 5,
+              "title": "Итоговый тест · модуль 14",
+              "description": "go, get, do/make, have",
+              "file": "lessons/itogovyi-test-go-get-do.html"
             }
           ]
         }
