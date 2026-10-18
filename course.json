@@ -572,6 +572,33 @@
               "file": "lessons/itogovyi-test-verbs.html"
             }
           ]
+        },
+        {
+          "id": "modul-14",
+          "title": "Модуль 14",
+          "lessons": [
+            {
+              "id": "urok-go-to-on-for",
+              "unit": 1,
+              "title": "go to… go on… go for… go -ing",
+              "description": "go to / go on / go for / go + -ing",
+              "file": "lessons/urok-go-to-on-for.html"
+            },
+            {
+              "id": "urok-get",
+              "unit": 2,
+              "title": "get",
+              "description": "get + noun / adjective, get to, get in/out/on/off",
+              "file": "lessons/urok-get.html"
+            },
+            {
+              "id": "urok-do-make",
+              "unit": 3,
+              "title": "do and make",
+              "description": "do и make; выражения",
+              "file": "lessons/urok-do-make.html"
+            }
+          ]
         }
       ]
     },

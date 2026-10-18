@@ -1016,6 +1016,42 @@ const T=[
    O('She went to the shop to get a newspaper.'),
    O('Please wait for me.')
   ]},
+  {id:55,title:'go to / go on / go for / go -ing',emoji:'🚶',rule:"go to + место: go to work / London / bed / the dentist. go home — без to. go to sleep = заснуть. go on holiday / a trip / a tour / a cruise / strike. go (out) for a walk / a run / a swim / a drink / a meal. go + -ing: go shopping / swimming / fishing / sailing / skiing / jogging.",
+  items:[
+   C("I'm going ___ now.",'home','to home','at home'),
+   C("We're going ___ holiday.",'on','to','for'),
+   C("She's gone ___ a walk.",'for','on','to'),
+   C("Let's go ___.",'swimming','to swim','swim'),
+   F("He's gone ___ bed.",'to'),
+   F('Workers have gone ___ strike.','on'),
+   F('Are you going ___? (shop)','shopping'),
+   O("I'm going home now."),
+   O("She's gone for a walk.")
+  ]},
+  {id:56,title:'get',emoji:'🎒',rule:"get + существительное = получить, купить, найти: I got an email. get a bus / taxi = поехать на. get + прилагательное = стать: get hungry / cold / wet / better, get married / dressed / lost. get to = добраться: get to work. Без to: get here / there / home. get in / out of (машина), get on / off (автобус, поезд).",
+  items:[
+   C('How did you get ___?','here','to here','at here'),
+   C('A man got out ___ the car.','of','from','off'),
+   C('We got ___ the bus.','on','in','at'),
+   C("It's getting ___.",'cold','to cold','colding'),
+   F('I usually get ___ work at 8.','to'),
+   F('We got ___ because we had no map.','lost'),
+   F('What time did you get ___?','home'),
+   O('We got on the bus.'),
+   O("It's getting cold.")
+  ]},
+  {id:57,title:'do and make',emoji:'🛠️',rule:"do — общее слово для действий: What are you doing? What do you do? (= кем работаешь). make — создать, произвести: make coffee / a cake; made in China. do: an exam, a course, homework, housework, a favour, exercises, the shopping / washing / cooking. make: a mistake, an appointment, a phone call, a list, a noise, a bed. make a film, но take a photo.",
+  items:[
+   C('What are you ___ this evening?','doing','making','do'),
+   C('I ___ a mistake.','made','did','done'),
+   C('Could you ___ me a favour?','do','make','give'),
+   C("Don't ___ a noise.",'make','do','have'),
+   F('I have to ___ my homework.','do'),
+   F('She is ___ coffee.','making'),
+   F('When was this photo ___?','taken'),
+   O('What do you do?'),
+   O("I'm sorry, I made a mistake.")
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),
