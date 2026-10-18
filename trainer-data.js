@@ -1100,6 +1100,42 @@ const T=[
    O("Whose phone is this? It's mine."),
    O('I went out to meet a friend of mine.')
   ]},
+  {id:62,title:'I / me / my / mine',emoji:'🧩',rule:"I know Tom (подлежащее) — Tom knows me (дополнение) — It's my car (+ сущ.) — It's mine (без сущ.). Так же: we/us/our/ours, you/you/your/yours, he/him/his/his, she/her/her/hers, they/them/their/theirs.",
+  items:[
+   C('___ know Tom.','They','Them','Their'),
+   C('Tom knows ___.','them','they','their'),
+   C("It's ___ car.",'their','theirs','them'),
+   C("Give me your number and I'll give you ___.",'mine','my','me'),
+   F("It's our car. It's ___.",'ours'),
+   F('She gave ___ her umbrella. (he)','him'),
+   F('a friend of ___ (I)','mine'),
+   O('I can see him, but he can\'t see me.'),
+   O("It's their car. It's theirs.")
+  ]},
+  {id:63,title:'myself / yourself / themselves',emoji:'🪞',rule:"myself, yourself, himself, herself, ourselves, yourselves, themselves — когда действие направлено на того же человека: He looked at himself. Разные люди — him/her/them: She is looking at him. by myself = один. each other = друг друга: They know each other.",
+  items:[
+   C("He's looking at ___.",'himself','him','hisself'),
+   C('We enjoyed ___.','ourselves','us','ourself'),
+   C('They know ___ well.','each other','themselves','them'),
+   C('Did I hurt ___?','you','yourself','your'),
+   F('Help ___! (one person)','yourself'),
+   F('I went there by ___.','myself'),
+   F('They paid for ___.','themselves'),
+   O('They enjoyed themselves.'),
+   O('They know each other well.')
+  ]},
+  {id:64,title:"-'s (Kate's camera)",emoji:'🏷️',rule:"-'s — для людей: Kate's camera, my sister's house (не the house of my sister). Можно без существительного: I was at Paul's. Один человек — friend's, mother's; несколько — friends', parents'. Для вещей и мест — of: the roof of the building, the capital of Spain.",
+  items:[
+   C('I stayed at ___ house.',"my sister's",'the house of my sister','my sister'),
+   C('my ___ car (two parents)',"parents'","parent's","parents"),
+   C('Look at the ___.','roof of that building',"that building's roof",'building roof'),
+   C('Madrid is the capital ___ Spain.','of',"'s",'from'),
+   F("This is Kate___ camera.","'s"),
+   F("I was at Paul___ last night.","'s"),
+   F('What\'s the name ___ this village?','of'),
+   O("I stayed at my sister's house."),
+   O('Madrid is the capital of Spain.')
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),

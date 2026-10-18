@@ -638,6 +638,34 @@
               "title": "Whose is this? It's mine…",
               "description": "mine, yours, hers…; a friend of mine; whose",
               "file": "lessons/urok-whose-mine.html"
+            },
+            {
+              "id": "urok-i-me-my-mine",
+              "unit": 4,
+              "title": "I/me/my/mine",
+              "description": "Все формы местоимений вместе",
+              "file": "lessons/urok-i-me-my-mine.html"
+            },
+            {
+              "id": "urok-myself",
+              "unit": 5,
+              "title": "myself/yourself/themselves",
+              "description": "Возвратные местоимения; by myself; each other",
+              "file": "lessons/urok-myself.html"
+            },
+            {
+              "id": "urok-kates-camera",
+              "unit": 6,
+              "title": "-'s (Kate's camera)",
+              "description": "Притяжательный -'s; of для вещей",
+              "file": "lessons/urok-kates-camera.html"
+            },
+            {
+              "id": "itogovyi-test-pronouns",
+              "unit": 7,
+              "title": "Итоговый тест · модуль 15",
+              "description": "I/me/my/mine, myself, each other, ’s",
+              "file": "lessons/itogovyi-test-pronouns.html"
             }
           ]
         }
