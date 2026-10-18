@@ -251,6 +251,19 @@
               "file": "lessons/itogovyi-test-passive.html"
             }
           ]
+        },
+        {
+          "id": "modul-6",
+          "title": "Модуль 6",
+          "lessons": [
+            {
+              "id": "urok-be-have-do",
+              "unit": 1,
+              "title": "be / have / do в настоящем и прошедшем",
+              "description": "Вспомогательные глаголы: повторяем все пройденные времена",
+              "file": "lessons/urok-be-have-do.html"
+            }
+          ]
         }
       ]
     },

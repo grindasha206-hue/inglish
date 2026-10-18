@@ -478,6 +478,27 @@ const T=[
    O('My keys have been stolen.'),
    O("I haven't been invited to the party.","I have not been invited to the party.")
   ]},
+  {id:23,title:'be / have / do',emoji:'🧩',rule:'be + -ing — continuous (I\'m working, I was working). be + V3 — passive (Butter is made, The house was built). have/has + V3 — present perfect (I\'ve cleaned). do/does/did + инфинитив — отрицания и вопросы в present/past simple (I don\'t like, Did you go?).',
+  items:[
+   C("What ___ you doing at 3 o'clock yesterday?",'were','did','was'),
+   C('___ Sam live alone?','Does','Is','Has'),
+   C('How ___ the window broken?','was','did','has'),
+   C('Kate ___ been to Canada.',"hasn't","didn't","isn't"),
+   C('It ___ rain last week.',"didn't","wasn't","hasn't"),
+   C('It ___ raining at the moment.',"isn't","doesn't","didn't"),
+   C('These offices ___ cleaned every day.',"aren't","don't","haven't"),
+   C('What time ___ they go out?','did','were','have'),
+   C('Какое предложение правильное?','Where were you born?','Where did you born?','Where are you born?'),
+   C('Where ___ Paul and Emma gone?','have','did','are'),
+   F('Please be quiet. I ___ working.','am',"'m"),
+   F('Tom ___ lost his passport.','has'),
+   F('Chris ___ go out very often.',"doesn't",'does not'),
+   F('These houses ___ built 100 years ago.','were'),
+   F('I ___ watch TV yesterday.',"didn't",'did not'),
+   O("I'm working at the moment.","I am working at the moment."),
+   O('Butter is made from milk.'),
+   O('What time did they go out?')
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),
