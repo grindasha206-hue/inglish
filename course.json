@@ -859,6 +859,27 @@
               "title": "old/older, expensive/more expensive",
               "description": "Сравнительная степень",
               "file": "lessons/urok-older.html"
+            },
+            {
+              "id": "urok-older-than",
+              "unit": 4,
+              "title": "older than…, more expensive than…",
+              "description": "than; a bit / much; more/less than",
+              "file": "lessons/urok-older-than.html"
+            },
+            {
+              "id": "urok-not-as-as",
+              "unit": 5,
+              "title": "not as … as",
+              "description": "not as … as; the same as",
+              "file": "lessons/urok-not-as-as.html"
+            },
+            {
+              "id": "urok-the-oldest",
+              "unit": 6,
+              "title": "the oldest, the most expensive",
+              "description": "Превосходная степень",
+              "file": "lessons/urok-the-oldest.html"
             }
           ]
         }
