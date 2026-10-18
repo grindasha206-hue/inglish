@@ -365,6 +365,20 @@
               "title": "Do this! Don't do that! Let's do this!",
               "description": "Повелительное наклонение, Don't…, Let's…",
               "file": "lessons/urok-imperative-lets.html"
+            },
+            {
+              "id": "urok-used-to",
+              "unit": 8,
+              "title": "I used to…",
+              "description": "Раньше было так, а сейчас нет",
+              "file": "lessons/urok-used-to.html"
+            },
+            {
+              "id": "itogovyi-test-modals",
+              "unit": 9,
+              "title": "Итоговый тест · модуль 8",
+              "description": "Модальные глаголы: might, can, must, have to, should, would like, let's, used to",
+              "file": "lessons/itogovyi-test-modals.html"
             }
           ]
         }

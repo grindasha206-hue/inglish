@@ -751,6 +751,27 @@ const T=[
    O("Don't be late."),
    O("Let's stay at home.")
   ]},
+  {id:36,title:'I used to…',emoji:'🕰️',rule:"used to + инфинитив — так было раньше, а сейчас нет: Dave used to work in a factory (now he works in a supermarket). Отрицание: didn't use to. Вопрос: Did you use to…? Только для прошлого: о настоящем — present simple (I play tennis, не I use to play).",
+  items:[
+   C('He ___ work in a factory.','used to','use to','uses to'),
+   C("I didn't ___ like fish.",'use to','used to','using to'),
+   C('Did you ___ live here?','use to','used to','using to'),
+   C('I used to ___ long hair.','have','having','had'),
+   C('She used to ___ very shy.','be','being','is'),
+   C('These days I ___ tennis.','play','used to play','use to play'),
+   C('Какое предложение правильное?','I used to live in Moscow.','I use to live in Moscow.','I used to lived in Moscow.'),
+   C('Where ___ you use to live?','did','do','were'),
+   C('We usually ___ up early.','get','use to get','used to get'),
+   C('He used to have a beard, but now he ___.',"doesn't","didn't","isn't"),
+   F('Dave ___ work in a factory.','used to'),
+   F('When I was a child, I ___ like tomatoes. (negative)',"didn't use to",'did not use to'),
+   F('Where ___ you use to live?','did'),
+   F('Lisa used to ___ long hair.','have'),
+   F('I used to play tennis. These days I ___ golf.','play'),
+   O('I used to work in a factory.'),
+   O("I didn't use to like tomatoes.","I did not use to like tomatoes."),
+   O('Where did you use to live?')
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),

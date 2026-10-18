@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 36 · I used to…</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Comfortaa:wght@500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --cream:#FDF4F1; --paper:#FFFDFB; --ink:#3A2E33; --ink-soft:#6B5A61;
+  --brick:#BE456F; --brick-dark:#8F2E52; --tab:#C4507A; --tab-dark:#9E3460;
+  --sage:#4F8F6D; --sage-bg:#E6F1EA; --coral:#D65B4A; --coral-bg:#FBE7E3;
+  --gold:#E8A0B4; --line:#F1D9DF; --shadow: 0 6px 18px rgba(150,80,100,0.10);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; background:radial-gradient(circle at 15% 8%, rgba(232,160,180,0.10), transparent 40%), var(--cream); color:var(--ink); font-family:'Nunito', sans-serif; line-height:1.55; padding-bottom:80px;}
+h1,h2,h3,.display{font-family:'Comfortaa',sans-serif;}
+
+.topbar{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:1px solid var(--line); padding:10px 18px; display:flex; align-items:center; gap:14px; box-shadow:0 2px 10px rgba(0,0,0,0.04);}
+.topbar .book-title{font-family:'Comfortaa',sans-serif; font-weight:700; font-size:15px; color:var(--brick-dark); white-space:nowrap;}
+.progress-steps{display:flex; gap:5px; flex:1; align-items:center;}
+.pstep{flex:1; height:8px; border-radius:6px; background:var(--line); position:relative; overflow:hidden;}
+.pstep i{display:block; height:100%; width:0%; border-radius:6px; background:linear-gradient(90deg, var(--tab), var(--brick)); transition:width .5s ease;}
+.score-pill{font-size:13px; font-weight:700; background:var(--sage-bg); color:var(--sage); padding:5px 12px; border-radius:20px; white-space:nowrap;}
+
+.page{max-width:900px; margin:26px auto; background:var(--paper); border-radius:4px; box-shadow:var(--shadow); border:1px solid var(--line); overflow:hidden;}
+
+.unit-banner{background:linear-gradient(135deg, var(--brick) 0%, var(--brick-dark) 100%); color:#fff; padding:26px 30px 22px 96px; position:relative;}
+.unit-tag{position:absolute; left:0; top:0; bottom:0; width:76px; background:var(--brick-dark); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Comfortaa',sans-serif; border-right:2px solid rgba(255,255,255,0.15);}
+.unit-tag .u{font-size:11px; letter-spacing:2px; opacity:.75;}
+.unit-tag .n{font-size:30px; font-weight:800;}
+.unit-banner h1{margin:0; font-size:27px; font-weight:800; letter-spacing:.3px;}
+.unit-banner p{margin:6px 0 0; opacity:.9; font-size:14.5px;}
+
+.section{display:flex; border-top:1px solid var(--line);}
+.section .tab{width:56px; flex-shrink:0; background:var(--tab); color:#fff; font-family:'Comfortaa',sans-serif; font-weight:800; font-size:20px; display:flex; align-items:flex-start; justify-content:center; padding-top:22px;}
+.section.alt .tab{background:var(--tab-dark);}
+.section .content{padding:24px 28px 30px; flex:1; min-width:0;}
+.section h2{margin:0 0 4px; font-size:22px; color:var(--brick-dark);}
+.eyebrow{font-size:11.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-soft); font-weight:700; margin-bottom:4px;}
+.section p.lead{color:var(--ink-soft); margin-top:4px; font-size:14.5px;}
+
+.dialog-wrap{display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; margin:18px 0 6px;}
+.dialog-figure{width:110px; text-align:center; flex-shrink:0;}
+.dialog-avatar{width:96px; height:120px; margin:0 auto;}
+.dialog-avatar svg{width:100%; height:100%;}
+.dialog-figure .name{font-family:'Comfortaa',sans-serif; font-weight:700; font-size:12.5px; letter-spacing:1px; color:var(--brick-dark); margin-top:4px;}
+.dialog-bubbles{display:flex; flex-direction:column; gap:8px; flex:1; min-width:260px; max-width:420px;}
+.d-bubble{background:#fff; border:1.5px solid var(--line); border-radius:16px; padding:8px 14px; font-size:13.5px; box-shadow:0 3px 8px rgba(0,0,0,0.05);}
+.d-bubble.q{border-color:var(--tab);}
+.d-bubble.a{align-self:flex-end; background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.d-bubble b{color:var(--brick-dark);}
+.d-bubble.a b{color:var(--sage);}
+
+.gram-tables{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:22px;}
+@media(max-width:620px){.gram-tables{grid-template-columns:1fr;}}
+.gram-box h3{font-size:13px; text-transform:uppercase; letter-spacing:1px; color:var(--ink-soft); margin:0 0 8px;}
+table.formtable{width:100%; border-collapse:collapse; font-size:13.5px; background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;}
+table.formtable td{padding:7px 10px; border-bottom:1px solid var(--line);}
+table.formtable tr:last-child td{border-bottom:none;}
+table.formtable td.pron{color:var(--ink-soft); width:34%;}
+table.formtable td.verb{font-weight:700; color:var(--brick-dark);}
+table.formtable td.short{color:var(--ink-soft); font-style:italic;}
+
+.chunk{background:linear-gradient(180deg, transparent 60%, rgba(196,80,122,0.35) 60%); font-weight:700; color:var(--brick-dark); padding:0 1px;}
+
+.mini-note{margin-top:16px; background:var(--sage-bg); border-left:3px solid var(--sage); padding:10px 14px; border-radius:6px; font-size:13.5px; color:#2f5741;}
+.mini-note b{color:var(--sage);}
+.mini-note i{color:var(--ink-soft); font-style:italic;}
+.mini-note.warn{background:var(--coral-bg); border-left-color:var(--coral); color:#7A2848;}
+.mini-note.warn b{color:var(--coral);}
+
+.vocab-table{margin-top:14px; display:flex; flex-direction:column; gap:8px;}
+.vocab-row{display:grid; grid-template-columns:auto 1fr auto auto; align-items:center; gap:12px; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:9px 14px;}
+@media(max-width:560px){.vocab-row{grid-template-columns:1fr; gap:4px;}}
+.vocab-word{font-weight:800; color:var(--brick-dark); font-size:14.5px; font-family:'Comfortaa',sans-serif;}
+.vocab-ipa{font-size:12.5px; color:var(--tab-dark); font-style:italic;}
+.vocab-ru{font-size:13.5px; color:var(--ink-soft);}
+.chunk-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px;}
+@media(max-width:600px){.chunk-grid{grid-template-columns:1fr;}}
+.chunk-row{display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--cream); border:1.5px dashed var(--gold); border-radius:10px; padding:9px 14px;}
+.chunk-en{font-weight:800; color:var(--brick-dark); font-size:14px; display:block;}
+.chunk-ipa{font-size:11.5px; color:var(--tab-dark); font-style:italic; display:block; margin-top:1px;}
+.chunk-ru{font-size:12.5px; color:var(--ink-soft); display:block; margin-top:1px; font-weight:400;}
+
+.game-tabs{display:flex; gap:8px; margin:18px 0 20px; flex-wrap:wrap;}
+.game-tab-btn{border:1.5px solid var(--line); background:#fff; color:var(--ink-soft); padding:8px 16px; border-radius:20px; font-family:'Nunito'; font-weight:700; font-size:13px; cursor:pointer; transition:.2s;}
+.game-tab-btn.active{background:var(--tab); color:#fff; border-color:var(--tab-dark);}
+.game-panel{display:none;}
+.game-panel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
+
+.fill-item{display:flex; align-items:flex-start; gap:10px; flex-wrap:wrap; padding:12px 4px; border-bottom:1px dashed var(--line);}
+.fill-item:last-child{border-bottom:none;}
+.fill-num{width:22px; height:22px; border-radius:50%; background:var(--cream); border:1px solid var(--line); font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; color:var(--ink-soft); flex-shrink:0; margin-top:3px;}
+.fill-body{flex:1; min-width:220px;}
+.fill-words{font-size:13px; color:var(--ink-soft); margin-bottom:6px; font-style:italic;}
+.blank-input{width:130px; padding:5px 8px; border:1.5px solid var(--line); border-radius:6px; font-family:'Nunito'; font-weight:700; font-size:14px; text-align:center; background:#FFFDFB; color:var(--brick-dark);}
+.blank-input:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.blank-input.correct{border-color:var(--sage); background:var(--sage-bg); color:#2f5741;}
+.blank-input.wrong{border-color:var(--coral); background:var(--coral-bg); color:var(--coral);}
+.fill-fb{font-size:16px; margin-top:6px;}
+
+.btn{border:none; cursor:pointer; font-family:'Nunito'; font-weight:800; padding:10px 20px; border-radius:24px; font-size:14px; letter-spacing:.2px; background:var(--brick); color:#fff; box-shadow:0 4px 10px rgba(190,69,111,0.25); transition:.15s;}
+.btn:hover{transform:translateY(-1px); box-shadow:0 6px 14px rgba(190,69,111,0.32);}
+.btn.secondary{background:transparent; color:var(--brick); border:1.5px solid var(--brick); box-shadow:none;}
+.btn.small{padding:6px 14px; font-size:12.5px;}
+.actions-row{display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; align-items:center;}
+.fb-line{font-size:13.5px; font-weight:700; color:var(--ink-soft);}
+
+.memo-wrap{display:flex; flex-direction:column; align-items:center; gap:14px;}
+.memo-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; max-width:520px; width:100%;}
+@media(max-width:500px){.memo-grid{grid-template-columns:repeat(3,1fr);}}
+.memo-card{aspect-ratio:1/1; border-radius:10px; cursor:pointer; position:relative; perspective:600px;}
+.memo-inner{width:100%; height:100%; position:relative; transform-style:preserve-3d; transition:transform .45s;}
+.memo-card.flipped .memo-inner, .memo-card.matched .memo-inner{transform:rotateY(180deg);}
+.memo-face{position:absolute; inset:0; border-radius:10px; display:flex; align-items:center; justify-content:center; backface-visibility:hidden; font-weight:800; text-align:center; padding:4px; font-size:12.5px;}
+.memo-face.back{background:linear-gradient(135deg, var(--tab), var(--tab-dark)); color:#fff; font-family:'Comfortaa',sans-serif; font-size:22px;}
+.memo-face.front{background:#fff; border:2px solid var(--line); color:var(--brick-dark); transform:rotateY(180deg);}
+.memo-card.matched .memo-face.front{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.memo-status{font-size:13.5px; color:var(--ink-soft); font-weight:700;}
+
+.quiz-q{margin-bottom:18px;}
+.quiz-q p{font-weight:700; margin:0 0 8px; font-size:14.5px;}
+.quiz-opts{display:flex; gap:8px; flex-wrap:wrap;}
+.quiz-opt{border:1.5px solid var(--line); background:#fff; padding:7px 15px; border-radius:20px; font-weight:700; font-size:13.5px; cursor:pointer; color:var(--ink);}
+.quiz-opt.sel-correct{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.quiz-opt.sel-wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+.quiz-opt.reveal-correct{border-color:var(--sage); box-shadow:inset 0 0 0 1px var(--sage);}
+
+.match-wrap{display:flex; gap:14px; max-width:520px; margin:0 auto;}
+.match-col{flex:1; display:flex; flex-direction:column; gap:8px;}
+.match-tile{background:#fff; border:1.5px solid var(--line); border-radius:8px; padding:9px 12px; font-size:13.5px; font-weight:700; cursor:pointer; text-align:center; color:var(--ink); transition:.15s;}
+.match-tile.selected{border-color:var(--tab); background:var(--cream); box-shadow:inset 0 0 0 1.5px var(--tab);}
+.match-tile.matched{background:var(--sage-bg); border-color:var(--sage); color:#2f5741; cursor:default;}
+.match-tile.wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+
+.read-text{background:#fff; border:1.5px solid var(--line); border-radius:14px; padding:18px 20px; margin:16px 0; font-size:14.5px;}
+.read-text p{margin:0 0 10px;}
+.read-text p:last-child{margin-bottom:0;}
+.tf-item{display:flex; align-items:center; justify-content:space-between; gap:10px; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:9px 14px; margin-bottom:8px;}
+.tf-text{font-size:13.5px; flex:1;}
+.tf-btns{display:flex; gap:6px; flex-shrink:0;}
+.tf-btn{border:1.5px solid var(--line); background:var(--cream); padding:5px 12px; border-radius:16px; font-weight:800; font-size:12.5px; cursor:pointer; color:var(--ink-soft);}
+.tf-btn.sel-correct{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.tf-btn.sel-wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+.tf-btn.reveal-correct{box-shadow:inset 0 0 0 1px var(--sage); border-color:var(--sage);}
+
+.tts-warn{display:none; font-size:12.5px; color:var(--coral); background:var(--coral-bg); padding:8px 12px; border-radius:6px; margin:8px 0 0;}
+.tts-warn.shown{display:block;}
+.voice-picker{display:flex; align-items:center; gap:8px; flex-wrap:wrap; background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:8px 12px; margin-top:10px; font-size:13px;}
+.voice-picker label{font-weight:700; color:var(--ink-soft);}
+.voice-picker select{border:1.5px solid var(--line); border-radius:6px; padding:4px 8px; font-family:'Nunito'; font-size:13px; background:#fff; color:var(--ink); max-width:220px;}
+.voice-hint{font-size:11.5px; color:var(--ink-soft); flex-basis:100%;}
+.sound-block{margin-top:22px; padding-top:16px; border-top:1px dashed var(--line);}
+.sound-block:first-of-type{border-top:none; margin-top:16px;}
+.sound-block h3{font-size:15.5px; margin:0 0 6px; color:var(--brick-dark); font-weight:700;}
+.ipa{font-family:'Nunito'; font-weight:500; font-size:12px; color:var(--ink-soft); font-style:italic;}
+.sound-note{font-size:13.5px; color:var(--ink-soft); margin:0 0 12px;}
+.sound-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+.sound-grid.three{grid-template-columns:repeat(3,1fr);}
+@media(max-width:600px){.sound-grid, .sound-grid.three{grid-template-columns:1fr;}}
+.sound-pair{background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px;}
+.sound-pair.wide{grid-column:1/-1;}
+.sp-text{font-size:14.5px; font-weight:600; flex:1;}
+.sp-text.big{font-size:19px; text-align:center; font-family:'Comfortaa',sans-serif; color:var(--brick-dark);}
+.sp-controls{display:flex; gap:6px; flex-shrink:0;}
+.play-btn{border:1.5px solid var(--line); background:var(--cream); cursor:pointer; border-radius:8px; padding:6px 10px; font-size:15px; line-height:1; transition:.15s;}
+.play-btn:hover{background:var(--tab); border-color:var(--tab-dark);}
+.play-btn.playing{background:var(--brick); border-color:var(--brick-dark);}
+b.stress{color:var(--brick-dark); text-decoration:underline; text-decoration-color:var(--gold); text-decoration-thickness:2px; text-underline-offset:3px;}
+
+.prompt-list{list-style:none; padding:0; margin:14px 0; display:grid; gap:8px;}
+.prompt-list li{background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:8px 12px; font-size:13.5px; display:flex; gap:8px; align-items:baseline;}
+.prompt-list li b{color:var(--brick-dark); font-family:'Comfortaa',sans-serif;}
+textarea.write-area{width:100%; min-height:140px; border:1.5px solid var(--line); border-radius:10px; padding:14px; font-family:'Nunito'; font-size:14.5px; color:var(--ink); background:#FFFDFB; resize:vertical;}
+textarea.write-area:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.word-count{font-size:12.5px; color:var(--ink-soft); margin-top:6px;}
+.cue-cards{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;}
+.cue-card{background:#fff; border:1.5px dashed var(--gold); border-radius:10px; padding:10px 14px; font-size:13px; width:160px; color:var(--ink-soft); font-style:italic;}
+.cue-card b{display:block; font-style:normal; color:var(--brick-dark); font-family:'Comfortaa',sans-serif; font-size:14px; margin-bottom:3px;}
+.reveal-box{margin-top:14px; border-left:3px solid var(--tab); background:var(--cream); padding:12px 16px; border-radius:6px; font-size:13.5px; display:none;}
+.reveal-box.shown{display:block;}
+
+.hw-list{display:flex; flex-direction:column; gap:10px; margin-top:16px;}
+.hw-item{display:flex; gap:10px; align-items:flex-start; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:11px 14px; font-size:13.5px; cursor:pointer; transition:.15s;}
+.hw-item:has(.hw-check:checked){background:var(--sage-bg); border-color:var(--sage);}
+.hw-check{margin-top:3px; width:16px; height:16px; accent-color:var(--sage); flex-shrink:0;}
+.hw-item b{color:var(--brick-dark); font-family:'Comfortaa',sans-serif;}
+.hw-item i{color:var(--ink-soft); font-style:italic;}
+
+@media print{
+  .topbar, .unit-banner, #presentation, #vocabulary, #practice, #reading, #sounds, #production, .badge-final, .footer-note, .no-print{ display:none !important; }
+  body{ background:#fff; padding:0; }
+  .page{ box-shadow:none; border:none; margin:0; max-width:100%; }
+  .section{ border-top:none; }
+  .section .tab{ display:none; }
+  .section .content{ padding:10px; }
+  .hw-item{ break-inside:avoid; }
+}
+
+.footer-note{text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:24px; padding:0 20px;}
+.badge-final{display:none; text-align:center; margin:26px auto 0; max-width:900px; background:linear-gradient(135deg, var(--sage), #3d7357); color:#fff; border-radius:14px; padding:22px; font-family:'Comfortaa',sans-serif; font-size:19px; font-weight:700; box-shadow:var(--shadow);}
+.badge-final.shown{display:block; animation:fadeIn .5s ease;}
+.badge-final span{display:block; font-family:'Nunito'; font-weight:500; font-size:13.5px; margin-top:6px; opacity:.9;}
+
+/* Generated textbook illustrations; contain each complete scene without cropping. */
+.dialog-figure.art-figure{width:148px}
+.lisa-figure.art-figure{width:164px}
+.dialog-avatar.art-avatar{width:144px;height:auto}
+.lisa-avatar.art-avatar{width:160px;height:auto}
+.art-avatar img.lesson-portrait{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--line);box-shadow:0 5px 16px rgba(150,80,100,.10)}
+.scene-box img.lesson-scene{display:block;width:100%;max-width:720px;height:auto;margin:0 auto;border-radius:10px}
+.pic-slot img.lesson-scene{display:block;width:100%;height:auto;max-height:none;object-fit:contain}
+@media(max-width:560px){
+ .dialog-wrap .art-figure{width:112px}
+ .dialog-avatar.art-avatar{width:108px}
+ .dialog-wrap .dialog-bubbles{min-width:0;flex-basis:100%;max-width:none;order:2}
+ .dialog-wrap .dialog-figure:last-child{order:1}
+ .dialog-wrap .dialog-figure:first-child{order:0}
+ .lisa-avatar.art-avatar{width:140px}
+ .scene-box{padding:10px}
+}
+
+</style>
+<link rel="stylesheet" href="../lesson-theme.css"></head>
+<body><div class="topbar">
+  <div class="book-title">Essential Grammar · Unit 36</div>
+  <div class="progress-steps">
+    <div class="pstep" id="step-p"><i id="bar-p"></i></div>
+    <div class="pstep" id="step-vocab"><i id="bar-vocab"></i></div>
+    <div class="pstep" id="step-pr"><i id="bar-pr"></i></div>
+    <div class="pstep" id="step-read"><i id="bar-read"></i></div>
+    <div class="pstep" id="step-sound"><i id="bar-sound"></i></div>
+    <div class="pstep" id="step-listen"><i id="bar-listen"></i></div>
+    <div class="pstep" id="step-prod"><i id="bar-prod"></i></div>
+    <div class="pstep" id="step-hw"><i id="bar-hw"></i></div>
+  </div>
+  <div class="score-pill">★ <span id="scoreDisplay">0</span>/20</div>
+</div>
+
+<div class="page"><div class="unit-banner">
+    <div class="unit-tag"><span class="u">UNIT</span><span class="n">36</span></div>
+    <h1>I used to …</h1>
+    <p>Раньше было так, а сейчас нет</p>
+  </div><div class="section" id="presentation">
+    <div class="tab">A</div>
+    <div class="content">
+      <div class="eyebrow">Presentation</div>
+      <h2>I used to … — раньше (а сейчас нет)</h2>
+      <div class="gram-box" style="margin:14px 0"><h3>A · Dave used to work in a factory</h3><div style="font-style:italic;color:#7A6A70;font-size:13px;margin-bottom:4px">DAVE a few years ago</div><div class="dialog-wrap"><div class="dialog-figure art-figure"><div class="dialog-avatar art-avatar"><img class="lesson-portrait" src="img/david-v1.webp" data-lesson-image="img/david-v1.webp" alt="Дэвид." width="480" height="600" decoding="async"></div><div class="name">DAVID</div></div><div class="dialog-bubbles"><div class="d-bubble q"><i>(думает)</i> I work in a factory.</div></div></div><div style="font-style:italic;color:#7A6A70;font-size:13px;margin-bottom:4px">DAVE today</div><div class="dialog-wrap"><div class="dialog-figure art-figure"><div class="dialog-avatar art-avatar"><img class="lesson-portrait" src="img/david-v1.webp" data-lesson-image="img/david-v1.webp" alt="Дэвид." width="480" height="600" decoding="async"></div><div class="name">DAVID</div></div><div class="dialog-bubbles"><div class="d-bubble q">I work in a supermarket. I <b>used to work</b> in a factory.</div></div></div><p>Dave <b>used to work</b> in a factory. Now he <b>works</b> in a supermarket.</p><div style="position:relative;height:96px;margin:14px 0;background:#FFFDFB;border:1.5px solid #F1D9DF;border-radius:16px">
+  <div style="position:absolute;left:4%;width:44%;top:14px;height:30px;background:linear-gradient(270deg,#FCE3C3,#F3B37A);clip-path:polygon(8% 0,100% 0,100% 100%,8% 100%,0 50%);display:flex;align-items:center;justify-content:center;font-size:14px">he <b>&nbsp;used to&nbsp;</b> work</div>
+  <div style="position:absolute;left:50%;right:4%;top:14px;height:30px;background:linear-gradient(90deg,#FCE3C3,#F3B37A);clip-path:polygon(0 0,92% 0,100% 50%,92% 100%,0 100%);display:flex;align-items:center;justify-content:center;font-size:14px">he works</div>
+  <div style="position:absolute;left:49.8%;top:6px;width:2px;height:58px;background:#3A2E33"></div>
+  <div style="position:absolute;left:3%;right:3%;top:62px;height:2px;background:#3A2E33"></div>
+  <div style="position:absolute;left:24%;top:70px;font-style:italic;font-size:12px;color:#7A6A70">past</div>
+  <div style="position:absolute;left:73%;top:70px;font-style:italic;font-size:12px;color:#7A6A70">now</div></div><p>Dave <b>used to work</b> in a factory = he worked in a factory before, but he doesn't work there now.</p></div>
+      <div class="gram-box" style="margin:14px 0"><h3>B · I used to work … / she used to have … / they used to be … etc.</h3><table style="border-collapse:collapse;margin:10px 14px 10px 0;background:#FFFDFB;display:inline-table"><tr><td style="border:1.5px solid #E8879F;padding:4px 12px;vertical-align:middle">I/you/we/they<br>he/she/it</td><td style="border:1.5px solid #E8879F;padding:4px 12px;vertical-align:middle">used to</td><td style="border:1.5px solid #E8879F;padding:4px 12px;vertical-align:middle">be<br>work<br>have<br>play <i>etc.</i></td></tr></table><div class="dialog-wrap"><div class="dialog-figure art-figure"><div class="dialog-avatar art-avatar"><img class="lesson-portrait" src="img/lisa-v1.webp" data-lesson-image="img/lisa-v1.webp" alt="Лиза." width="480" height="600" decoding="async"></div><div class="name">LISA</div></div><div class="dialog-bubbles"><div class="d-bubble q">I <b>used to have</b> very long hair.</div></div></div><ul class="prompt-list"><li>When I was a child, I <b>used to like</b> cartoons.</li><li>I <b>used to read</b> a lot of books, but I don't read much these days.</li><li>Olga has got short hair now, but it <b>used to be</b> very long.</li><li>They <b>used to live</b> near us, so we <b>used to see</b> them a lot. But we don't see them much these days.</li><li>Max <b>used to have</b> a guitar, but he sold it a few years ago.</li></ul><p>Отрицание — <b>I didn't use to …</b>:</p><ul class="prompt-list"><li>When I was a child, I <b>didn't use to like</b> fish.</li></ul><p>Вопрос — <b>did you use to …?</b>:</p><ul class="prompt-list"><li>Where <b>did</b> you <b>use to live</b> before you came here?</li></ul></div>
+      <div class="gram-box" style="margin:14px 0"><h3>C · used to — только для прошлого</h3><p>Нельзя сказать «I use to …» о настоящем:</p><ul class="prompt-list"><li>I <b>used to play</b> volleyball. These days I <b>play</b> tennis. <i>(не I use to play tennis)</i></li><li>We usually <b>get up</b> early. <i>(не We use to get up early)</i></li></ul></div>
+    </div>
+  </div><div class="section" id="vocabulary"><div class="tab">B</div><div class="content"><div class="eyebrow">Vocabulary</div><h2>Новые слова этого урока</h2><p class="lead">Нажмите на динамик, чтобы услышать слово. Все слова встретятся дальше в чтении и упражнениях.</p><div id="vocabTable" class="vocab-table"></div><h3>Соседи слов <span class="ipa">chunks / collocations</span></h3><p class="sound-note">Учите сочетаниями: так слова легче вспоминаются в речи.</p><div id="chunkGrid" class="chunk-grid"></div></div></div><div class="section" id="practice">
+    <div class="tab">C</div>
+    <div class="content">
+      <div class="eyebrow">Practice</div>
+      <h2>Тренируемся</h2>
+      <p class="lead">Выберите игру и заработайте звёзды ★. Ответы проверяются сразу.</p>
+      <div class="game-tabs">
+        <button class="game-tab-btn active" data-panel="panel-fill">✏️ used to</button>
+        <button class="game-tab-btn" data-panel="panel-memo">🃏 Мемо</button>
+        <button class="game-tab-btn" data-panel="panel-quiz">⚡ Квиз</button>
+        <button class="game-tab-btn" data-panel="panel-vocabmatch">📚 Лексика</button>
+      </div>
+      <div class="game-panel active" id="panel-fill">
+        <p class="lead" style="margin-top:0">Впишите used to, use to, didn't, did или глагол.</p>
+        <div id="fillList"></div>
+        <div class="actions-row">
+          <button class="btn" id="checkFillBtn">Проверить</button>
+          <button class="btn secondary small" id="resetFillBtn">Сбросить</button>
+          <span class="fb-line" id="fillFeedback"></span>
+        </div>
+      </div>
+      <div class="game-panel" id="panel-memo">
+        <p class="lead" style="margin-top:0">Найдите пары: английское слово и его русский перевод.</p>
+        <div class="memo-wrap">
+          <div class="memo-grid" id="memoGrid"></div>
+          <div class="memo-status" id="memoStatus">Найдено пар: 0 / 6</div>
+          <button class="btn secondary small" id="restartMemoBtn">Перемешать заново</button>
+        </div>
+      </div>
+      <div class="game-panel" id="panel-quiz">
+        <div id="quizList"></div>
+        <div class="actions-row"><span class="fb-line" id="quizFeedback"></span></div>
+      </div>
+      <div class="game-panel" id="panel-vocabmatch">
+        <p class="lead" style="margin-top:0">Нажмите на английское слово, затем на его перевод.</p>
+        <div class="match-wrap">
+          <div class="match-col" id="matchEnCol"></div>
+          <div class="match-col" id="matchRuCol"></div>
+        </div>
+        <div class="actions-row">
+          <span class="fb-line" id="matchStatus">Найдено пар: 0 / 10</span>
+          <button class="btn secondary small" id="restartMatchBtn">Перемешать заново</button>
+        </div>
+      </div>
+    </div>
+  </div><div class="section alt" id="reading">
+    <div class="tab">D</div>
+    <div class="content"><div class="actions-row"><button class="btn secondary small" id="playReadingBtn">🔊 Прослушать текст</button><button class="btn secondary stop-audio">Остановить</button></div>
+      <div class="eyebrow">Reading</div>
+      <h2>Grandma's young days</h2>
+      <p class="lead">Что бабушка делала раньше и что делает сейчас?</p>
+      <div class="read-text"><p>When my grandmother was young, life was very different. She used to live in a small <span class="chunk">village</span>, and she used to walk five kilometres to school every day.</p><p>There was no TV in the village, so in the evenings people used to sing songs and <span class="chunk">tell stories</span>. My grandmother used to play the guitar.</p><p>She didn't use to have a phone. When she wanted to talk to her friends, she used to write <span class="chunk">letters</span>.</p><p>Now she lives in the city, has a smartphone and watches TV every evening. 'Life is easier now,' she says, 'but people used to talk to <span class="chunk">each other</span> more.'</p></div>
+    <h3>1 · True / False</h3><div id="tfList"></div><div class="fb-line" id="tfFeedback"></div><h3>2 · Молодость бабушки</h3><p class="sound-note">Впишите used to / didn't use to или present simple.</p><div id="tomFillList"></div><div class="actions-row"><button class="btn small" id="checkTomBtn">Проверить</button><span class="fb-line" id="tomFeedback"></span></div><h3>3 · Слова из текста</h3><div id="readFillList"></div><div class="actions-row"><button class="btn small" id="checkReadFillBtn">Проверить</button><span class="fb-line" id="readFillFeedback"></span></div>
+  </div></div><div class="section" id="sounds">
+    <div class="tab">E</div>
+    <div class="content"><p class="mini-note">Синтезированный голос помогает прочитать фразы, но не гарантирует точную интонацию. Повторяйте за ним и сравнивайте.</p>
+      <div class="eyebrow">Sounds &amp; Speech</div>
+      <h2>used to на слух</h2>
+      <p class="lead">Слушайте и повторяйте.</p>
+      <p class="tts-warn" id="ttsWarn"></p>
+      <div class="sound-block"><h3>1 · used to /ˈjuːst tə/</h3><p class=sound-note>used to звучит как «юста»: s, а не z.</p><div class="sound-grid"><div class="sound-pair"><div class="sp-text">I used to work in a factory.</div><div class="sp-controls"><button class="play-btn" data-text="I used to work in a factory." data-rate="1">🔊</button><button class="play-btn slow" data-text="I used to work in a factory." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">She used to have long hair.</div><div class="sp-controls"><button class="play-btn" data-text="She used to have long hair." data-rate="1">🔊</button><button class="play-btn slow" data-text="She used to have long hair." data-rate="0.6">🐢</button></div></div></div></div><div class="sound-block"><h3>2 · didn't use to</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">I didn't use to like tomatoes.</div><div class="sp-controls"><button class="play-btn" data-text="I didn&#x27;t use to like tomatoes." data-rate="1">🔊</button><button class="play-btn slow" data-text="I didn&#x27;t use to like tomatoes." data-rate="0.6">🐢</button></div></div></div></div><div class="sound-block"><h3>3 · Did you use to…? ↗</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">Where did you use to live?</div><div class="sp-controls"><button class="play-btn" data-text="Where did you use to live?" data-rate="1">🔊</button><button class="play-btn slow" data-text="Where did you use to live?" data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">Did you use to play sports?</div><div class="sp-controls"><button class="play-btn" data-text="Did you use to play sports?" data-rate="1">🔊</button><button class="play-btn slow" data-text="Did you use to play sports?" data-rate="0.6">🐢</button></div></div></div></div>
+      <div class="actions-row">
+        <button class="btn secondary small" id="playAllBtn">🔊 Прослушать всё подряд</button>
+      </div>
+    </div>
+  </div><div class="section alt" id="listening">
+    <div class="tab">F</div>
+    <div class="content">
+      <div class="eyebrow">Listening</div>
+      <h2>Слушаем вслепую</h2>
+      <p class="lead">Подруги смотрят старую фотографию.</p>
+      <div class="speed-picker">
+        <label>Скорость:</label>
+        <div class="speed-btns">
+          <button class="speed-btn" data-rate="0.6">🐢 Медленно</button>
+          <button class="speed-btn active" data-rate="0.95">🔊 Обычно</button>
+        </div>
+      </div>
+      <div class="actions-row">
+        <button class="btn secondary stop-audio">Остановить</button>
+        <button class="btn" id="playListeningBtn">▶️ Слушать диалог</button>
+      </div>
+      <h3 style="font-size:14.5px; margin:18px 0 8px; color:var(--brick-dark);">Вопросы по прослушанному</h3>
+      <div id="lsList"></div>
+      <div class="actions-row"><span class="fb-line" id="lsFeedback"></span></div>
+      <div class="actions-row">
+        <button class="btn secondary small" id="toggleScriptBtn" disabled="">📜 Скрипт — после ответов на все вопросы</button>
+      </div>
+      <div class="reveal-box" id="scriptBox">Look at this old photo! Is that you?
+Yes, that&#x27;s me when I was ten. I used to have very long hair.
+And you used to wear glasses!
+Yes, I did. Now I wear contact lenses.
+Did you use to play any sports?
+I used to play volleyball every weekend. Now I just go to the gym.</div>
+    </div>
+  </div><div class="section alt" id="production">
+    <div class="tab">G</div>
+    <div class="content">
+      <div class="eyebrow">Production</div>
+      <h2>Раньше и сейчас</h2>
+      <p class="lead">Напишите 6–8 предложений о том, какой вы были раньше и какая сейчас: used to / didn't use to и present simple.</p>
+      <ul class="prompt-list"><li><b>When I was a child, I used to …</b></li><li><b>I didn't use to …</b></li><li><b>I used to …, but now I …</b></li><li><b>Did you use to …?</b></li></ul>
+      <textarea class="write-area" id="writeArea" placeholder="When I was a child, I used to..."></textarea>
+      <div class="word-count" id="wordCount">0 слов</div>
+      <div class="actions-row">
+        <button class="btn" id="finishBtn">Готово!</button>
+        <button class="btn secondary" id="sampleBtn">Показать пример</button>
+      </div>
+      <div class="reveal-box" id="sampleBox"><b>Пример:</b> When I was a child, I used to live in a small town. I used to play with my friends in the yard every day. I didn't use to like vegetables, but now I love them. I used to have long hair, but now it's short. I used to watch cartoons, but these days I watch the news. Did you use to have a pet?</div>
+      <div class="cue-cards">
+        <div class="cue-card"><b>Карточка 1</b>Покажите старое фото и расскажите: «I used to…».</div>
+        <div class="cue-card"><b>Карточка 2</b>Спросите партнёра: «Did you use to…?» — 5 вопросов о детстве.</div>
+        <div class="cue-card"><b>Карточка 3</b>Как изменился ваш город? «There used to be…»</div>
+      </div>
+    </div>
+  </div><div class="section" id="homework">
+    <div class="tab">H</div>
+    <div class="content">
+      <div class="eyebrow">Homework</div>
+      <h2>Домашнее задание</h2>
+      <p class="lead">Отметьте галочкой то, что выполнили. Можно распечатать этот блок.</p>
+      <div class="hw-list">
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>1. Письменно.</b> Напишите 8 предложений «раньше / сейчас». Используйте минимум 4 новых слова из блока B.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>2. Вопросы.</b> Напишите 5 вопросов «Did you use to…?» и ответьте на них.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>3. Слушаем и повторяем.</b> Откройте блок <i>E · Sounds</i> и повторите фразы по три раза.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>4. Ошибки.</b> Исправьте: «I use to play tennis now», «Did you used to live here?».</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>5. Повторение.</b> Вернитесь в блок <i>C · Practice</i> и пройдите квиз ещё раз без ошибок.</span></label>
+      </div>
+      <div class="actions-row">
+        <span class="fb-line" id="hwFeedback">Выполнено: 0 / 5</span>
+        <button class="btn secondary small no-print" id="printHwBtn">🖨️ Распечатать задание</button>
+      </div>
+    </div>
+  </div></div><div class="badge-final" id="finalBadge">Урок пройден!<span>Все обязательные задания выполнены.</span></div>
+
+<p class="footer-note">Based on Essential Grammar in Use, 4th Edition (Cambridge University Press, 2015), Unit 36 — original exercises created for this lesson.</p>
+<script src="../lesson-kit.js?v=20261018-games1"></script><script src="../lesson-template.js?v=20261018-games1"></script><script>window.lessonConfig={"vocabData": [{"word": "used to", "ipa": "/ˈjuːst tə/", "ru": "раньше (делал), бывало"}, {"word": "volleyball", "ipa": "/ˈvɒlibɔːl/", "ru": "волейбол"}, {"word": "musical instrument", "ipa": "/ˌmjuːzɪkl ˈɪnstrəmənt/", "ru": "музыкальный инструмент"}, {"word": "normally", "ipa": "/ˈnɔːməli/", "ru": "обычно"}, {"word": "manager", "ipa": "/ˈmænɪdʒə/", "ru": "менеджер, управляющий"}, {"word": "short", "ipa": "/ʃɔːt/", "ru": "короткий"}, {"word": "childhood", "ipa": "/ˈtʃaɪldhʊd/", "ru": "детство"}, {"word": "cartoon", "ipa": "/kɑːˈtuːn/", "ru": "мультфильм"}, {"word": "these days", "ipa": "/ðiːz deɪz/", "ru": "в наши дни, сейчас"}, {"word": "toy", "ipa": "/tɔɪ/", "ru": "игрушка"}, {"word": "tree", "ipa": "/triː/", "ru": "дерево"}, {"word": "beard", "ipa": "/bɪəd/", "ru": "борода"}], "chunkData": [{"en": "a few years ago", "ipa": "", "ru": "несколько лет назад"}, {"en": "these days", "ipa": "", "ru": "в наши дни"}, {"en": "when I was a child", "ipa": "", "ru": "когда я был(а) ребёнком"}, {"en": "play a musical instrument", "ipa": "", "ru": "играть на музыкальном инструменте"}, {"en": "have long hair", "ipa": "", "ru": "иметь длинные волосы"}, {"en": "wear glasses", "ipa": "", "ru": "носить очки"}, {"en": "tell stories", "ipa": "", "ru": "рассказывать истории"}, {"en": "each other", "ipa": "", "ru": "друг друга"}], "fillData": [{"sentence": "Dave ___ work in a factory. Now he works in a supermarket.", "answers": ["used to"]}, {"sentence": "When I was a child, I used to ___ (like) chocolate.", "answers": ["like"]}, {"sentence": "I ___ read a lot of books, but I don't read much these days.", "answers": ["used to"]}, {"sentence": "Lisa has got short hair now, but it used to ___ very long.", "answers": ["be"]}, {"sentence": "They used to ___ (live) in the same street as us.", "answers": ["live"]}, {"sentence": "Helen ___ have a piano, but she sold it.", "answers": ["used to"]}, {"sentence": "When I was a child, I ___ use to like tomatoes.", "answers": ["didn't", "did not"]}, {"sentence": "Where ___ you use to live before you came here?", "answers": ["did"]}, {"sentence": "Did you use ___ play sports?", "answers": ["to"]}, {"sentence": "I used to play tennis. These days I ___ golf.", "answers": ["play"]}, {"sentence": "We usually ___ up early. (present)", "answers": ["get"]}, {"sentence": "I didn't use ___ like fish.", "answers": ["to"]}], "memoPairs": [["volleyball", "волейбол"], ["childhood", "детство"], ["cartoon", "мультфильм"], ["toy", "игрушка"], ["tree", "дерево"], ["beard", "борода"]], "quizData": [{"q": "He ___ work in a factory.", "opts": ["used to", "use to"], "correct": "used to"}, {"q": "I didn't ___ like fish.", "opts": ["use to", "used to"], "correct": "use to"}, {"q": "Did you ___ live here?", "opts": ["use to", "used to"], "correct": "use to"}, {"q": "I used to ___ long hair.", "opts": ["have", "having"], "correct": "have"}, {"q": "We usually get up early. (now) — не ___", "opts": ["We use to get up early", "We get up early"], "correct": "We use to get up early"}, {"q": "She used to ___ very shy.", "opts": ["be", "being"], "correct": "be"}, {"q": "used to = раньше, а ___", "opts": ["сейчас нет", "сейчас тоже"], "correct": "сейчас нет"}, {"q": "These days I ___ tennis.", "opts": ["play", "used to play"], "correct": "play"}], "matchWords": [{"en": "used to", "ru": "раньше (делал), бывало"}, {"en": "volleyball", "ru": "волейбол"}, {"en": "musical instrument", "ru": "музыкальный инструмент"}, {"en": "normally", "ru": "обычно"}, {"en": "manager", "ru": "менеджер, управляющий"}, {"en": "short", "ru": "короткий"}, {"en": "childhood", "ru": "детство"}, {"en": "cartoon", "ru": "мультфильм"}, {"en": "these days", "ru": "в наши дни, сейчас"}, {"en": "toy", "ru": "игрушка"}], "tfGroups": {"tfList": {"data": [{"text": "Grandma used to live in a city.", "correct": false}, {"text": "She used to walk to school.", "correct": true}, {"text": "There was a TV in the village.", "correct": false}, {"text": "She used to play the guitar.", "correct": true}, {"text": "She used to have a phone.", "correct": false}, {"text": "Now she has a smartphone.", "correct": true}], "feedback": "tfFeedback"}, "lsList": {"data": [{"text": "She used to have long hair.", "correct": true}, {"text": "She never wore glasses.", "correct": false}, {"text": "Now she wears contact lenses.", "correct": true}, {"text": "She used to play tennis.", "correct": false}, {"text": "Now she goes to the gym.", "correct": true}], "feedback": "lsFeedback"}}, "readFillData": [{"sentence": "She used to live in a small ___.", "answers": ["village"]}, {"sentence": "She used to walk five ___ to school.", "answers": ["kilometres"]}, {"sentence": "People used to sing songs and tell ___.", "answers": ["stories"]}, {"sentence": "She used to play the ___.", "answers": ["guitar"]}, {"sentence": "She used to write ___.", "answers": ["letters"]}, {"sentence": "People used to talk to each ___ more.", "answers": ["other"]}], "tomData": [{"sentence": "She ___ live in a village.", "answers": ["used to"]}, {"sentence": "She ___ walk to school.", "answers": ["used to"]}, {"sentence": "People ___ sing songs.", "answers": ["used to"]}, {"sentence": "She ___ have a phone.", "answers": ["didn't use to", "did not use to"]}, {"sentence": "Now she ___ (live) in the city.", "answers": ["lives"]}, {"sentence": "She ___ (watch) TV every evening now.", "answers": ["watches"]}], "slug": "urok-used-to", "exam": false, "legacySignature": "", "legacyFields": [], "questionTask": false, "listeningLines": ["Look at this old photo! Is that you?", "Yes, that's me when I was ten. I used to have very long hair.", "And you used to wear glasses!", "Yes, I did. Now I wear contact lenses.", "Did you use to play any sports?", "I used to play volleyball every weekend. Now I just go to the gym."], "readingLines": ["When my grandmother was young, life was very different. She used to live in a small village, and she used to walk five kilometres to school every day.", "There was no TV in the village, so in the evenings people used to sing songs and tell stories. My grandmother used to play the guitar.", "She didn't use to have a phone. When she wanted to talk to her friends, she used to write letters.", "Now she lives in the city, has a smartphone and watches TV every evening. 'Life is easier now,' she says, 'but people used to talk to each other more.'"]};
+LessonTemplate.mount(window.lessonConfig);</script></body></html>
