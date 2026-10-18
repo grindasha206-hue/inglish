@@ -351,6 +351,20 @@
               "title": "I have to…",
               "description": "Необходимость: have to, had to, don't have to; must или have to",
               "file": "lessons/urok-have-to.html"
+            },
+            {
+              "id": "urok-would-you-like",
+              "unit": 6,
+              "title": "Would you like…? I'd like…",
+              "description": "Вежливые предложения, приглашения, просьбы",
+              "file": "lessons/urok-would-you-like.html"
+            },
+            {
+              "id": "urok-imperative-lets",
+              "unit": 7,
+              "title": "Do this! Don't do that! Let's do this!",
+              "description": "Повелительное наклонение, Don't…, Let's…",
+              "file": "lessons/urok-imperative-lets.html"
             }
           ]
         }
