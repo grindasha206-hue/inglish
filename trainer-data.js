@@ -310,6 +310,27 @@ const T=[
    O('She fell asleep while she was watching a film.'),
    O('What were you doing at ten o\'clock?')
   ]},
+  {id:15,title:'Present perfect 1',emoji:'✅',rule:'have/has + past participle (3-я форма): I have cleaned, she has gone. Отрицание: haven\'t/hasn\'t. Вопрос: Have you finished? Where has he gone? Используем, когда действие в прошлом даёт результат сейчас: I\'ve lost my keys (= я не могу их найти).',
+  items:[
+   C('He ___ cleaned his shoes.','has','have','is'),
+   C('They have ___ out.','gone','went','go'),
+   C("I've ___ my passport.",'lost','lose','losed'),
+   C('break → past participle','broken','broke','breaked'),
+   C('see → past participle','seen','saw','seed'),
+   C("'Where's Rebecca?' 'She's ___ to bed.'",'gone','went','go'),
+   C('___ you finished with the newspaper?','Have','Has','Did'),
+   C("I ___ bought her a present.","haven't","hasn't","didn't"),
+   C('Какое предложение правильное?','We have bought a new car.','We have buy a new car.','We has bought a new car.'),
+   C('Somebody ___ the window.','has broken','have broken','has broke'),
+   F('I ___ (lose) my keys.','have lost',"'ve lost"),
+   F('It ___ (stop) raining.','has stopped',"'s stopped"),
+   F('She ___ (not/see) this film.',"hasn't seen",'has not seen'),
+   F('Where ___ Bob gone?','has'),
+   F('We ___ (finish) our homework.','have finished',"'ve finished"),
+   O("I've lost my passport.",'I have lost my passport.'),
+   O('Where has she gone?'),
+   O("He hasn't finished his work.",'He has not finished his work.')
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),

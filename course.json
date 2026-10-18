@@ -169,6 +169,19 @@
               "file": "lessons/itogovyi-test-past.html"
             }
           ]
+        },
+        {
+          "id": "modul-4",
+          "title": "Модуль 4",
+          "lessons": [
+            {
+              "id": "urok-present-perfect-1",
+              "unit": 1,
+              "title": "I have done — present perfect 1",
+              "description": "Действие в прошлом — результат сейчас",
+              "file": "lessons/urok-present-perfect-1.html"
+            }
+          ]
         }
       ]
     },
