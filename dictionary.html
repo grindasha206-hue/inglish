@@ -98,6 +98,18 @@ mark{background:rgba(196,80,122,.35);color:inherit;border-radius:3px}
 .hint{font-size:12.5px;color:var(--ink-soft)}
 </style>
 <link rel="stylesheet" href="soft-theme.css">
+<style>
+.irr-wrap{overflow-x:auto;background:#FFFDFB;border:1.5px solid #F1D9DF;border-radius:16px;padding:6px 10px}
+.irr-table{width:100%;border-collapse:collapse;font-size:15px}
+.irr-table th{text-align:left;font-size:12px;letter-spacing:.5px;text-transform:uppercase;color:#7A6A70;padding:10px 8px;border-bottom:1.5px solid #F1D9DF}
+.irr-table td{padding:9px 8px;border-bottom:1.5px dashed #F3D6DE}
+.irr-table tr:last-child td{border-bottom:0}
+.irr-table td.f{font-weight:700;color:#8F2E52}
+.irr-table td.ru{color:#6B5A61}
+.irr-table td.hid{background:#FDEAEF;border-radius:8px;color:transparent;cursor:pointer;user-select:none}
+.irr-table td.hid.show{color:#8F2E52;background:transparent}
+.irr-say{border:1.5px solid #F3B3C5;background:#FDE6EC;border-radius:50%;width:34px;height:34px;cursor:pointer}
+</style>
 </head>
 <body>
 <header class="top"><div class="wrap">
@@ -110,6 +122,7 @@ mark{background:rgba(196,80,122,.35);color:inherit;border-radius:3px}
   <button class="tabbtn" data-view="vDict">Словарь</button>
   <button class="tabbtn" data-view="vCards">Карточки</button>
   <button class="tabbtn" data-view="vQuiz">Тест</button>
+  <button class="tabbtn" data-view="vIrr">Неправильные глаголы</button>
 </div></nav>
 
 <div class="wrap"><div class="voice-note" id="voiceNote" style="color:var(--ink-soft);margin-top:10px"></div></div>
@@ -200,6 +213,16 @@ mark{background:rgba(196,80,122,.35);color:inherit;border-radius:3px}
     <div class="actions"><button class="btn small hidden" id="qNext">Дальше →</button></div>
   </div>
   <div id="qDone" class="panel hidden"></div>
+</section>
+
+<section class="view" id="vIrr">
+  <p class="hint" style="margin:0 0 12px">66 базовых неправильных глаголов уровня A2. Учи по три формы: инфинитив → past simple → past participle (третья форма понадобится в present perfect). Отдельная тема для тренировки есть в <a href="trainer.html">тренажёре</a>.</p>
+  <div class="toolbar"><div class="row">
+    <label class="soft-q"><input id="irrQ" placeholder="поиск: go, пить…" autocomplete="off"></label>
+    <select id="irrHide" aria-label="Режим"><option value="">Показать всё</option><option value="1">Скрыть past simple</option><option value="2">Скрыть past participle</option><option value="12">Скрыть обе формы</option><option value="ru">Скрыть перевод</option></select>
+  </div></div>
+  <div class="count" id="irrCount"></div>
+  <div class="irr-wrap"><table class="irr-table"><thead><tr><th>инфинитив</th><th>past simple</th><th>past participle</th><th>перевод</th><th></th></tr></thead><tbody id="irrBody"></tbody></table></div>
 </section>
 
 </main>
@@ -508,6 +531,24 @@ function finishQuiz(){
 }
 
 setVoiceNote(); renderStats(); renderLessons(); renderList();
+})();
+</script>
+<script src="irregular-verbs.js"></script>
+<script>
+(function(){
+  const V=window.IRREGULAR_VERBS||[], body=document.getElementById('irrBody');
+  const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  function render(){
+    const q=document.getElementById('irrQ').value.trim().toLowerCase(), h=document.getElementById('irrHide').value;
+    const rows=V.filter(r=>!q||r.some(x=>x.toLowerCase().includes(q)));
+    const cell=(t,hide,cls)=>`<td class="${cls}${hide?' hid':''}">${esc(t)}</td>`;
+    body.innerHTML=rows.map(r=>`<tr>${cell(r[0],false,'f')}${cell(r[1],h.includes('1'),'f')}${cell(r[2],h.includes('2'),'f')}${cell(r[3],h==='ru','ru')}<td><button class="irr-say" aria-label="Озвучить" data-t="${esc(r[0]+', '+r[1]+', '+r[2])}">🔊</button></td></tr>`).join('');
+    document.getElementById('irrCount').textContent=rows.length+' глаголов'+(h?' · нажми на скрытую клетку, чтобы проверить себя':'');
+  }
+  body.addEventListener('click',e=>{const b=e.target.closest('.irr-say');if(b){speak(b.dataset.t.replace(' / ',' or '),.8);return;}const c=e.target.closest('.hid');if(c)c.classList.toggle('show');});
+  document.getElementById('irrQ').addEventListener('input',render);
+  document.getElementById('irrHide').addEventListener('change',render);
+  render();
 })();
 </script>
 </body>

@@ -226,6 +226,27 @@ const T=[
    O('The film started at seven and finished at ten.'),
    O('She bought a ticket for the next flight.')
   ]},
+  {id:99,max:150,title:'Неправильные глаголы',emoji:'🔁',rule:'66 базовых неправильных глаголов A2: три формы — инфинитив, past simple, past participle. go — went — gone, buy — bought — bought, see — saw — seen. Полная таблица — в Словаре, вкладка «Неправильные глаголы».',
+  items:[
+   C('go → past simple?','went','goed','gone'),
+   C('buy → past simple?','bought','buyed','brought'),
+   C('see → past simple?','saw','seen','seed'),
+   C('take → past simple?','took','taked','taken'),
+   C('write → past participle?','written','wrote','writed'),
+   C('eat → past participle?','eaten','ate','eated'),
+   C('think → past simple?','thought','thinked','taught'),
+   C('teach → past simple?','taught','teached','thought'),
+   C('Yesterday I ___ my keys.','lost','losed','lose'),
+   C('She ___ a beautiful song.','sang','singed','sung'),
+   F('We ___ (meet) at the station.','met'),
+   F('He ___ (drive) to work yesterday.','drove'),
+   F('I ___ (speak) to the manager.','spoke'),
+   F('They ___ (fly) to Rome last week.','flew'),
+   F('She ___ (wear) a red dress.','wore'),
+   O('I bought a new phone yesterday.'),
+   O('We swam in the sea last summer.'),
+   O('He forgot her name.')
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),
@@ -254,7 +275,7 @@ const T=[
     const seen=new Set(t.items.map(key)), cnt={C:0,F:0,O:0};
     t.items.forEach(it=>cnt[it.type]++);
     (X[t.id]||[]).forEach(it=>{
-      if(cnt[it.type]>=50||seen.has(key(it))) return;
+      if(cnt[it.type]>=(t.max||50)||seen.has(key(it))) return;
       seen.add(key(it)); cnt[it.type]++; t.items.push(it);
     });
   });
