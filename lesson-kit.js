@@ -3,7 +3,25 @@
  let generation=0,activeSequence=null,finishActive=null;
  const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
  function normalize(value){return String(value).trim().toLowerCase().replace(/[’‘´`]/g,"'").replace(/[?.!,;:]/g,'').replace(/'/g,'').replace(/\s+/g,' ');}
- function cancelSequence(){generation++;if(activeSequence){activeSequence.disabled=false;activeSequence.removeAttribute('aria-busy');activeSequence=null;}}
+ // Lessons accept both [English, Russian] entries and {en, ru} entries.
+function wordPairs(entries){
+ if(!Array.isArray(entries))throw Error('В игре отсутствует список слов');
+ return entries.map(entry=>{
+  const pair=Array.isArray(entry)?entry:[entry?.en??entry?.word,entry?.ru];
+  if(pair.length<2||pair.slice(0,2).some(text=>typeof text!=='string'||!text.trim()))throw Error('В игре есть слово без перевода');
+  return pair.slice(0,2).map(text=>text.trim());
+ });
+}
+function memoWords(pairs,vocabulary){
+ const current=wordPairs(pairs);
+ if(current.every(pair=>/[а-яё]/i.test(pair[1])))return {pairs:current,offset:0};
+ const words=wordPairs(vocabulary).filter(pair=>/[a-z]/i.test(pair[0])&&/[а-яё]/i.test(pair[1]));
+ const seenEn=new Set(),seenRu=new Set(),unique=words.filter(([en,ru])=>{if(seenEn.has(en.toLowerCase())||seenRu.has(ru.toLowerCase()))return false;seenEn.add(en.toLowerCase());seenRu.add(ru.toLowerCase());return true;});
+ if(unique.length<current.length)throw Error('Для мемо недостаточно разных слов с переводами');
+ // Old grammar pairs use IDs 0…; new word pairs use a separate numeric range.
+ return {pairs:unique.slice(0,current.length),offset:1000};
+}
+function cancelSequence(){generation++;if(activeSequence){activeSequence.disabled=false;activeSequence.removeAttribute('aria-busy');activeSequence=null;}}
  function stop(){if(finishActive){finishActive(false);finishActive=null;}root.speechSynthesis?.cancel();}
  function speak(text,rate,button){
   return new Promise(resolve=>{
@@ -81,5 +99,5 @@ function buildTF(listId, data, fbId, onFinish){
 }
 
 
- root.LessonKit={normalize,buildFill,checkFill,buildTF,speak,playSequence,cancelSequence,stop};
+ root.LessonKit={normalize,wordPairs,memoWords,buildFill,checkFill,buildTF,speak,playSequence,cancelSequence,stop};
 })(window);

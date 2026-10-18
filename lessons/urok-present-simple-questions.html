@@ -370,7 +370,7 @@ textarea.hw-area{min-height:78px; font-size:13.5px;}
 
       <div class="game-tabs">
         <button class="game-tab-btn active" data-panel="panel-fill">✏️ Впиши вопрос</button>
-        <button class="game-tab-btn" data-panel="panel-memo">🃏 Мемо: утверждение ↔ вопрос</button>
+        <button class="game-tab-btn" data-panel="panel-memo">🃏 Мемо</button>
         <button class="game-tab-btn" data-panel="panel-quiz">⚡ Квиз: do / does</button>
         <button class="game-tab-btn" data-panel="panel-vocabmatch">📚 Лексика</button>
       </div>
@@ -386,7 +386,7 @@ textarea.hw-area{min-height:78px; font-size:13.5px;}
       </div>
 
       <div class="game-panel" id="panel-memo">
-        <p class="lead" style="margin-top:0">Найдите пары: утверждение ↔ соответствующий вопрос.</p>
+        <p class="lead" style="margin-top:0">Найдите пары: английское слово и его русский перевод.</p>
         <div class="memo-wrap">
           <div class="memo-grid" id="memoGrid"></div>
           <div class="memo-status" id="memoStatus">Найдено пар: 0 / 6</div>
@@ -624,7 +624,7 @@ textarea.hw-area{min-height:78px; font-size:13.5px;}
 
 <p class="footer-note">Based on Essential Grammar in Use, 4th Edition (Cambridge University Press, 2015), Unit 7 — original exercises created for this lesson.</p>
 
-<script src="../lesson-kit.js"></script>
+<script src="../lesson-kit.js?v=20261018-games1"></script>
 <script>
 window.lessonStateVersion = "unit07-v1";
 /* ---------- state: score is a SUM of independent parts (each keeps its best attempt) ---------- */
@@ -640,7 +640,7 @@ window.lessonResult = ()=>({score:state.score,maxScore:state.maxScore,completed:
 window.getLessonState = ()=>({parts:{...parts},done:{...done},visited:{presentation:state.presDone,vocabulary:vocabularyVisited,sounds:soundsVisited}});
 window.restoreLessonState = saved=>{
   if(!saved)return;
-  for(const key of Object.keys(PART_MAX)){parts[key]=Math.max(parts[key],Math.min(PART_MAX[key],saved.parts?.[key]||0));done[key]=done[key]||saved.done?.[key]===true;}
+  for(const key of Object.keys(PART_MAX)){if(key==='memo')continue;parts[key]=Math.max(parts[key],Math.min(PART_MAX[key],saved.parts?.[key]||0));done[key]=done[key]||saved.done?.[key]===true;}
   state.presDone=state.presDone||saved.visited?.presentation===true;
   vocabularyVisited=vocabularyVisited||saved.visited?.vocabulary===true;
   soundsVisited=soundsVisited||saved.visited?.sounds===true;
@@ -732,8 +732,8 @@ document.getElementById('resetFillBtn').addEventListener('click', ()=>{
   document.getElementById('fillFeedback').textContent = '';
 });
 
-/* ---------------- MEMORY: statement <-> question ---------------- */
-const memoPairs = [["You play","Do you play"],["She works","Does she work"],["They live","Do they live"],["It costs","Does it cost"],["We want","Do we want"],["He sings","Does he sing"]];
+/* ---------------- MEMORY: English word <-> Russian translation ---------------- */
+const memoPairs = LessonKit.memoWords([["You play","Do you play"],["She works","Does she work"],["They live","Do they live"],["It costs","Does it cost"],["We want","Do we want"],["He sings","Does he sing"]],vocabData).pairs;
 let memoGeneration = 0;
 let flipped = [], matchedCount = 0, lockBoard = false;
 function renderMemo(){
@@ -742,7 +742,7 @@ function renderMemo(){
   grid.innerHTML = ''; flipped=[]; matchedCount=0; lockBoard=false;
   document.getElementById('memoStatus').textContent = `Найдено пар: 0 / ${memoPairs.length}`;
   const cards = [];
-  memoPairs.forEach((pair, i)=>{ cards.push({label:pair[0], pair:i}); cards.push({label:pair[1], pair:i}); });
+  memoPairs.forEach((pair, i)=>{ cards.push({label:pair[0], pair:1000+i}); cards.push({label:pair[1], pair:1000+i}); });
   shuffle(cards).forEach(c=>{
     const el = document.createElement('div');
     el.className = 'memo-card'; el.dataset.pair = c.pair;
