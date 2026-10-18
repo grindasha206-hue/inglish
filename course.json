@@ -744,6 +744,26 @@
               "file": "lessons/itogovyi-test-articles.html"
             }
           ]
+        },
+        {
+          "id": "modul-17",
+          "title": "Модуль 17",
+          "lessons": [
+            {
+              "id": "urok-this-that",
+              "unit": 1,
+              "title": "this/that/these/those",
+              "description": "this, that, these, those",
+              "file": "lessons/urok-this-that.html"
+            },
+            {
+              "id": "urok-one-ones",
+              "unit": 2,
+              "title": "one/ones",
+              "description": "one = a…; this one, the one, the brown one, some new ones",
+              "file": "lessons/urok-one-ones.html"
+            }
+          ]
         }
       ]
     },

@@ -1244,6 +1244,30 @@ const T=[
    O('Cairo is the capital of Egypt.'),
    O('I visited the Tower of London.')
   ]},
+  {id:74,title:'this / that / these / those',emoji:'👉',rule:"this (ед.) / these (мн.) — рядом, здесь: this picture, these flowers. that (ед.) / those (мн.) — далеко, там: that picture, those people. Можно без существительного: Is this your bag? that = то, что случилось или сказали: That's all right. That's right. По телефону: This is David. Is that Sarah? Знакомство: Ben, this is Chris.",
+  items:[
+   C('___ flowers are for you. (here)','These','Those','This'),
+   C('Who are ___ people? (there)','those','these','that'),
+   C('On the phone: Hi, ___ is David.','this','that','it'),
+   C("'I forgot.' '___'s all right.'",'That','This','It'),
+   F('Do you like ___ picture? (here)','this'),
+   F('Is ___ Sarah? (phone)','that'),
+   F('Ben, ___ is Chris.','this'),
+   O('These flowers are for you.'),
+   O('Who are those people?')
+  ]},
+  {id:75,title:'one / ones',emoji:'☝️',rule:"one = a/an + существительное, чтобы не повторять: I need a pen. Do you have one? ones — во множественном числе. Which one? Which ones? this one / that one, the one (opposite the station), the brown one, the green ones, a clean one, another one, some new ones.",
+  items:[
+   C('Would you like ___? (a chocolate)','one','ones','it'),
+   C('Which ___ do you want? (flowers)','ones','one','it'),
+   C('I like the green ___. (shoes)','ones','one','it'),
+   C('Can I have a clean ___? (cup)','one','ones','it'),
+   F('Is there a bank near here? — Yes, there\'s ___.','one'),
+   F("I'm going to buy some new ___. (shoes)",'ones'),
+   F("I'm going to have another ___.",'one'),
+   O('Which one do you want?'),
+   O('I like the brown one.')
+  ]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),
