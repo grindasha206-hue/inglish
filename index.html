@@ -413,7 +413,7 @@ function renderHome(view){
   const anchor = next || ALL_LESSONS[ALL_LESSONS.length-1];
   const home = anchor ? lessonHome(anchor.id) : null;
   const homeModule = home ? `<div class="sec-head"><h2>${esc(home.level.code)} · ${esc(home.level.name)}</h2><div class="sub">${esc(home.module.title.toLowerCase())} <span id="hwModSum"></span></div><a class="soft-all" href="#/level/${home.level.id}">все модули →</a></div>
-    <div class="card-list">${home.module.lessons.map(l => lessonRow(l, next)).join('')}</div>` : `<div class="sec-head"><h2>Уровни</h2></div><div class="level-grid">${levels}</div>`;
+    <div class="card-list">${home.module.lessons.map(l => lessonRow(l, next)).join('')}</div><div class="sec-head" style="margin-top:22px"><h2>Разделы</h2></div><div class="level-grid">${levels}</div>` : `<div class="sec-head"><h2>Уровни</h2></div><div class="level-grid">${levels}</div>`;
 
   view.innerHTML = `${hero}
     <div class="review-card">

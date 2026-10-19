@@ -1133,6 +1133,12 @@
       ]
     },
     {
+      "id": "vocab-a2",
+      "code": "VOC",
+      "name": "Vocabulary · Elementary",
+      "modules": []
+    },
+    {
       "id": "b1",
       "code": "B1",
       "name": "Intermediate",
