@@ -1284,6 +1284,13 @@
               "title": "Shops and shopping",
               "description": "Магазины и покупки",
               "file": "lessons/vocab-18-shops-and-shopping.html"
+            },
+            {
+              "id": "vocab-19-in-a-hotel",
+              "unit": 19,
+              "title": "In a hotel",
+              "description": "В отеле",
+              "file": "lessons/vocab-19-in-a-hotel.html"
             }
           ]
         }
