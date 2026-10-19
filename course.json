@@ -1066,6 +1066,27 @@
               "title": "on, at, by, with, about",
               "description": "on holiday, by bus, with a beard …",
               "file": "lessons/urok-on-at-by-with-about.html"
+            },
+            {
+              "id": "urok-afraid-of-good-at",
+              "unit": 10,
+              "title": "afraid of …, good at … etc.",
+              "description": "прилагательное + предлог; предлог + -ing",
+              "file": "lessons/urok-afraid-of-good-at.html"
+            },
+            {
+              "id": "urok-listen-to-look-at",
+              "unit": 11,
+              "title": "listen to …, look at … etc.",
+              "description": "глагол + предлог",
+              "file": "lessons/urok-listen-to-look-at.html"
+            },
+            {
+              "id": "itogovyi-test-final-m21",
+              "unit": 12,
+              "title": "Итоговый тест · модуль 21",
+              "description": "предлоги времени и места, движения; afraid of, look for",
+              "file": "lessons/itogovyi-test-final-m21.html"
             }
           ]
         }

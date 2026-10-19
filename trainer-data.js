@@ -1348,6 +1348,10 @@ const T=[
   items:[C('The dog swam ___ the river.','across','along','past'),C('We jumped ___ the water.','into','out of','off'),O('The bus stop is just round the corner.')]},
   {id:111,title:'on / at / by / with / about',emoji:'🚲',rule:"on holiday, on TV, on the radio, on the phone, on fire, on time. at 21 / at the age of 21, at 100 km an hour, at 100 degrees. by car/bus/train/bike, но on foot; a book by Dickens; пассив: bitten by a dog. with/without: with milk, with scissors, a man with a beard. talk/know about; a programme about …",
   items:[C('She goes to work ___ bike.','by','with','on'),C('Lisa got married ___ 21.','at','on','by'),C('a man ___ a beard','with','by','on'),O('The train was on time.')]},
+  {id:112,title:'afraid of / good at …',emoji:'😨',rule:"afraid/scared of, angry with somebody / about something, different from (to), fed up with, full of, good at, interested in, married to, kind of you to… / kind to somebody, sorry about/for, feel sorry for somebody. После предлога — глагол с -ing: good at telling, thank you for helping, without saying.",
+  items:[C('Are you afraid ___ dogs?','of','from','at'),C('I\'m good ___ maths.','at','in','on'),F('Thank you for ___ me.','helping'),O("I'm not interested in sport.")]},
+  {id:113,title:'listen to / look at …',emoji:'👂',rule:"ask for, belong to, happen to, listen to, talk/speak to (about), thank for, think about/of, wait for. call/phone/text/email somebody — без предлога. look at (смотреть), look for (искать), look after (присматривать). depend on: It depends on the restaurant.",
+  items:[C('Wait ___ me.','for','to','at'),C('She\'s looking ___ her key.','for','at','after'),C('It depends ___ the book.','on','of','from'),O('Listen to this music.')]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),
