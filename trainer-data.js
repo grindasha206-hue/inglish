@@ -1352,6 +1352,10 @@ const T=[
   items:[C('Are you afraid ___ dogs?','of','from','at'),C('I\'m good ___ maths.','at','in','on'),F('Thank you for ___ me.','helping'),O("I'm not interested in sport.")]},
   {id:113,title:'listen to / look at …',emoji:'👂',rule:"ask for, belong to, happen to, listen to, talk/speak to (about), thank for, think about/of, wait for. call/phone/text/email somebody — без предлога. look at (смотреть), look for (искать), look after (присматривать). depend on: It depends on the restaurant.",
   items:[C('Wait ___ me.','for','to','at'),C('She\'s looking ___ her key.','for','at','after'),C('It depends ___ the book.','on','of','from'),O('Listen to this music.')]},
+  {id:114,title:'phrasal verbs 1',emoji:'🏃',rule:"Фразовый глагол = глагол + in/out/on/off/up/down/away/back/over/round: go in, get out, get on, fall off, stand up, sit down, lie down, run away, come back, be away / be back, climb over, turn over, look round. Также wake up, hold on, slow down, give up, break down.",
+  items:[C('The bus came, and I got ___.','on','in','up'),C('Would you like to sit ___?','down','up','off'),O("He'll be back on Monday.")]},
+  {id:115,title:'phrasal verbs 2',emoji:'🧥',rule:"Фразовый глагол + дополнение: put on your coat = put your coat on; take off your shoes = take your shoes off. НО it/them — всегда перед частицей: put it on (не put on it), take them off. Также turn on/off, switch on/off, pick up, put down, bring/take/give/put back, fill in, look up, throw away, try on, turn down.",
+  items:[C('Here\'s your coat. ___','Put it on.','Put on it.','Put on.'),C('Your shoes are dirty. ___','Take them off.','Take off them.','Take off.'),O('I turned the light on.')]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),

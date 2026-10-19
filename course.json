@@ -1089,6 +1089,33 @@
               "file": "lessons/itogovyi-test-final-m21.html"
             }
           ]
+        },
+        {
+          "id": "modul-22",
+          "title": "Модуль 22",
+          "lessons": [
+            {
+              "id": "urok-go-in-fall-off",
+              "unit": 1,
+              "title": "go in, fall off, run away etc.",
+              "description": "фразовые глаголы 1",
+              "file": "lessons/urok-go-in-fall-off.html"
+            },
+            {
+              "id": "urok-put-on-your-shoes",
+              "unit": 2,
+              "title": "put on your shoes, put your shoes on",
+              "description": "фразовые глаголы 2",
+              "file": "lessons/urok-put-on-your-shoes.html"
+            },
+            {
+              "id": "itogovyi-test-final-m22",
+              "unit": 3,
+              "title": "Итоговый тест · модуль 22",
+              "description": "phrasal verbs: go in, fall off, put it on, turn off",
+              "file": "lessons/itogovyi-test-final-m22.html"
+            }
+          ]
         }
       ]
     },
