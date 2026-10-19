@@ -1189,6 +1189,13 @@
               "title": "Feelings",
               "description": "Чувства и состояния",
               "file": "lessons/vocab-7-feelings.html"
+            },
+            {
+              "id": "vocab-8-greetings-and-wishes",
+              "unit": 8,
+              "title": "Conversations 1: Greetings and wishes",
+              "description": "Приветствия и пожелания",
+              "file": "lessons/vocab-8-greetings-and-wishes.html"
             }
           ]
         }
