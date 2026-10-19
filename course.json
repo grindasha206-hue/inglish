@@ -928,6 +928,20 @@
               "title": "still, yet, already",
               "description": "still / yet / already",
               "file": "lessons/urok-still-yet-already.html"
+            },
+            {
+              "id": "urok-give-it-to-me",
+              "unit": 4,
+              "title": "Give it to me!",
+              "description": "give something to somebody / give somebody something",
+              "file": "lessons/urok-give-it-to-me.html"
+            },
+            {
+              "id": "itogovyi-test-word-order",
+              "unit": 5,
+              "title": "Итоговый тест · модуль 19",
+              "description": "word order, always/often, still/yet/already, give something to somebody",
+              "file": "lessons/itogovyi-test-word-order.html"
             }
           ]
         }
