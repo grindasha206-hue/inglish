@@ -1230,6 +1230,13 @@
               "title": "In the bedroom and bathroom",
               "description": "Спальня и ванная",
               "file": "lessons/vocab-12-bedroom-and-bathroom.html"
+            },
+            {
+              "id": "vocab-13-living-room",
+              "unit": 13,
+              "title": "In the living room",
+              "description": "Гостиная",
+              "file": "lessons/vocab-13-living-room.html"
             }
           ]
         }
