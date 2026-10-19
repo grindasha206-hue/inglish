@@ -1491,6 +1491,40 @@
               "title": "Everyday things",
               "description": "Повседневные дела",
               "file": "lessons/vocab-45-everyday-things.html"
+            },
+            {
+              "id": "vocab-46-talking",
+              "unit": 46,
+              "title": "Talking",
+              "description": "Глаголы речи: say, tell, ask, speak",
+              "file": "lessons/vocab-46-talking.html"
+            },
+            {
+              "id": "vocab-47-moving",
+              "unit": 47,
+              "title": "Moving",
+              "description": "Движение и транспорт",
+              "file": "lessons/vocab-47-moving.html"
+            }
+          ]
+        },
+        {
+          "id": "voc-modul-8",
+          "title": "Модуль 8 · Words and grammar",
+          "lessons": [
+            {
+              "id": "vocab-48-language",
+              "unit": 48,
+              "title": "Talking about language",
+              "description": "Грамматические термины",
+              "file": "lessons/vocab-48-language.html"
+            },
+            {
+              "id": "vocab-49-conjunctions",
+              "unit": 49,
+              "title": "Conjunctions and connecting words",
+              "description": "Союзы и связующие слова",
+              "file": "lessons/vocab-49-conjunctions.html"
             }
           ]
         }
