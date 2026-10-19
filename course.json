@@ -1257,6 +1257,13 @@
               "title": "At school and university",
               "description": "Школа и университет",
               "file": "lessons/vocab-15-school-and-university.html"
+            },
+            {
+              "id": "vocab-16-communications",
+              "unit": 16,
+              "title": "Communications",
+              "description": "Связь: письма, интернет, телефон",
+              "file": "lessons/vocab-16-communications.html"
             }
           ]
         }
