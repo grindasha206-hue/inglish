@@ -969,6 +969,27 @@
               "title": "If we go … If you see …",
               "description": "if + present; if и when",
               "file": "lessons/urok-if-we-go.html"
+            },
+            {
+              "id": "urok-if-i-had",
+              "unit": 4,
+              "title": "If I had … If we went …",
+              "description": "нереальное условие: if + past, would",
+              "file": "lessons/urok-if-i-had.html"
+            },
+            {
+              "id": "urok-a-person-who",
+              "unit": 5,
+              "title": "a person who … a thing that/which …",
+              "description": "who / that / which",
+              "file": "lessons/urok-a-person-who.html"
+            },
+            {
+              "id": "urok-the-people-we-met",
+              "unit": 6,
+              "title": "the people we met, the hotel you stayed at",
+              "description": "relative clauses 2",
+              "file": "lessons/urok-the-people-we-met.html"
             }
           ]
         }

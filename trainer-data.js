@@ -1324,6 +1324,12 @@ const T=[
   items:[C('It was hot, ___ I opened the window.','so','because','or'),C('I opened the window ___ it was hot.','because','so','but'),F('I bought it, ___ I didn\'t eat it.','but'),O('It was late and I was tired, so I went to bed.')]},
   {id:98,title:'when / before / while / until',emoji:'⏱️',rule:"When I went out, it was raining = It was raining when I went out. Если When… в начале — запятая. Так же before/while/after. О будущем после when/before/while/after/until — present: I'll call you when I get home (не when I will get). I'll wait until you come back.",
   items:[C("I'll wait until you ___ back.",'come','will come','came'),F('When I ___ home, I\'ll have a shower.','get'),O('When I went out, it was raining.')]},
+  {id:100,title:'If I had … I would …',emoji:'💭',rule:"Нереальное (воображаемое) сейчас: If + past (had/knew/lived/were/could), … would/could + глагол. If he had the money, he would buy a car (но денег нет). I'd = I would. If I were you / if I was you. Сравните: If I have time, I will go (может быть) — If I had time, I would go (времени нет).",
+  items:[C('If he ___ the money, he would buy a car.','had','has','will have'),F("I'd help you if I ___.",'could'),O("If I knew the answer, I'd tell you.")]},
+  {id:101,title:'who / that / which',emoji:'👤',rule:"Соединяем два предложения: I met a woman. She can speak six languages → I met a woman who can speak six languages. who — для людей; which — для вещей; that — для вещей и людей (для людей чаще who). Не говорим the woman which.",
+  items:[C('I met a woman ___ can speak six languages.','who','which','what'),C('An airplane is a machine ___ flies.','which','who','what'),O('A thief is a person who steals things.')]},
+  {id:102,title:'the people we met',emoji:'🏨',rule:"Когда who/that/which — дополнение, их можно опустить: the bag (that) he is carrying, the people (who) we met. Не повторяем it/them: The film we saw was good (не we saw it). Предлог в конце: the hotel we stayed at, the books I told you about. = the hotel where we stayed. Если подлежащее — who/that обязательны: a woman who can speak…",
+  items:[C('The hotel we stayed ___ was near the station.','at','in it','—'),O('The people we met were very friendly.')]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),
