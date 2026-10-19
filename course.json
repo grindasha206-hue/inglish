@@ -1239,6 +1239,19 @@
               "file": "lessons/vocab-13-living-room.html"
             }
           ]
+        },
+        {
+          "id": "voc-modul-3",
+          "title": "Модуль 3 · Work and study",
+          "lessons": [
+            {
+              "id": "vocab-14-jobs",
+              "unit": 14,
+              "title": "Jobs",
+              "description": "Профессии",
+              "file": "lessons/vocab-14-jobs.html"
+            }
+          ]
         }
       ]
     },
