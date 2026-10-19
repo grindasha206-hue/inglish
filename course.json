@@ -1339,6 +1339,34 @@
               "title": "Countries and nationalities",
               "description": "Страны и национальности",
               "file": "lessons/vocab-25-countries.html"
+            },
+            {
+              "id": "vocab-26-weather",
+              "unit": 26,
+              "title": "Weather",
+              "description": "Погода",
+              "file": "lessons/vocab-26-weather.html"
+            },
+            {
+              "id": "vocab-27-in-the-town",
+              "unit": 27,
+              "title": "In the town",
+              "description": "В городе",
+              "file": "lessons/vocab-27-in-the-town.html"
+            },
+            {
+              "id": "vocab-28-countryside",
+              "unit": 28,
+              "title": "In the countryside",
+              "description": "За городом",
+              "file": "lessons/vocab-28-countryside.html"
+            },
+            {
+              "id": "vocab-29-animals",
+              "unit": 29,
+              "title": "Animals",
+              "description": "Животные",
+              "file": "lessons/vocab-29-animals.html"
             }
           ]
         }

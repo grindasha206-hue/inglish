@@ -1,0 +1,203 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Vocabulary 28 · In the countryside</title>
+<link rel="stylesheet" href="../lesson-theme.css"><style>
+.vtop{position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 10px rgba(150,80,100,.08)}
+.vtop .t{font-family:Comfortaa;font-weight:700;color:var(--brick-dark);white-space:nowrap}
+.vbar{flex:1;height:8px;background:var(--line);border-radius:6px;overflow:hidden}.vbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--tab),var(--brick));transition:width .5s}
+.vscore{font-size:13px;font-weight:700;background:var(--sage-bg);color:var(--sage);padding:4px 12px;border-radius:20px}
+.vwrap{max-width:920px;margin:18px auto;padding:0 12px}
+.vsteps{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.vstep{border:1.5px solid var(--line);background:var(--paper);border-radius:20px;padding:5px 12px 5px 6px;font:600 13px Nunito;color:var(--ink-soft);cursor:pointer;display:flex;align-items:center;gap:6px}
+.vstep span{width:22px;height:22px;border-radius:50%;background:var(--line);display:inline-flex;align-items:center;justify-content:center;font-size:12px}
+.vstep.cur{border-color:var(--brick);color:var(--brick-dark)}.vstep.ok span{background:var(--sage);color:#fff}
+.vpanel{background:var(--paper);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:20px 22px;margin-bottom:16px}
+.vpanel h2{margin:0 0 4px;color:var(--brick-dark);font-size:22px}.eyebrow{font:700 12px Nunito;letter-spacing:.08em;text-transform:uppercase;color:var(--tab)}
+.lead{color:var(--ink-soft);margin:4px 0 14px}
+.w{font-weight:800;color:var(--brick-dark);cursor:pointer;border-bottom:2px dotted var(--gold);position:relative}
+.w .tip{display:none;align-items:center;gap:6px;position:absolute;left:0;top:120%;background:var(--ink);color:#fff;font:600 13px Nunito;padding:3px 9px;border-radius:6px;white-space:nowrap;z-index:5}
+.w.open .tip{display:inline-flex}
+.tree{display:grid;gap:8px;justify-items:center;margin:10px 0 16px}
+.trow3{display:flex;justify-content:center;gap:clamp(8px,4vw,40px);flex-wrap:wrap;width:100%}
+.node{text-align:center}.node .ph{width:132px;height:84px;border-radius:50%;border:2.5px solid var(--brick);background:linear-gradient(135deg,#FBE3EA,#FDF4F1);display:flex;align-items:center;justify-content:center;overflow:hidden;font-size:11px;color:var(--ink-soft);margin:0 auto 4px}
+.node .ph img{width:100%;height:100%;object-fit:cover}
+.pn{background:none;border:none;font:700 15px Nunito;color:var(--ink);cursor:pointer;padding:2px 4px;border-radius:6px}.pn:hover{background:var(--line)}
+.who{min-height:28px;text-align:center;font-weight:700;color:var(--brick-dark)}
+.facts p{margin:2px 0 2px 18px}.facts h4{margin:10px 0 2px}
+.err{background:#FDF0F3;color:var(--ink);border-left:5px solid var(--brick);border-radius:10px;padding:10px 16px;margin-top:14px;line-height:1.6}.err .err-t{font:700 13px Nunito;letter-spacing:.06em;text-transform:uppercase;color:var(--brick-dark);margin-bottom:4px}.err .err-t::before{content:'⚠️ '}.err.tip{background:var(--sage-bg);border-left-color:var(--sage)}.err.tip .err-t{color:var(--sage)}.err.tip .err-t::before{content:'💡 '}.err s{color:var(--coral)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:6px 18px}@media(max-width:640px){.two{grid-template-columns:1fr}}
+.btn{background:var(--brick);color:#fff;border:none;border-radius:22px;padding:9px 18px;font:700 14px Nunito;cursor:pointer}.btn:disabled{opacity:.5}
+.btn.ghost{background:var(--paper);color:var(--brick-dark);border:1.5px solid var(--brick)}.btn.xs{padding:4px 10px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}.res{font-weight:700;color:var(--sage)}
+.card{width:min(360px,100%);height:210px;margin:10px auto;position:relative;perspective:900px;cursor:pointer}
+.card .face{position:absolute;inset:0;border-radius:16px;border:2px solid var(--line);background:var(--paper);box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;justify-content:center;backface-visibility:hidden;transition:transform .5s;padding:12px;text-align:center}
+.card .back{transform:rotateY(180deg);background:#FDF0F3}.card.flip .front{transform:rotateY(180deg)}.card.flip .back{transform:rotateY(360deg)}
+.big{font:700 30px Comfortaa;color:var(--brick-dark)}.big.ru{color:var(--ink)}.ipa{color:var(--ink-soft)}.hint,.small{font-size:12px}.muted{color:var(--ink-soft)}.ex{margin-top:8px;font-style:italic;color:var(--ink-soft)}
+.done-card{display:flex;align-items:center;justify-content:center;flex-direction:column;border:2px dashed var(--line);border-radius:16px;height:180px;font-weight:700}
+.card-btns{display:flex;gap:10px;justify-content:center}.center{text-align:center}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.opt,.tile{border:2px solid var(--line);background:var(--paper);border-radius:12px;padding:12px;font:700 15px Nunito;cursor:pointer;color:var(--ink)}
+.opt.ok,.tile.done{background:var(--sage-bg);border-color:var(--sage);color:var(--sage)}.opt.bad{background:var(--coral-bg);border-color:var(--coral)}
+.big-play{font-size:18px;padding:14px 28px}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}.mgrid>div{display:flex;flex-direction:column;gap:8px}.tile.sel{border-color:var(--brick);background:#FDF0F3}.tile.done{opacity:.55;cursor:default}
+.shake{animation:sh .35s}@keyframes sh{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.timer{font:700 22px Comfortaa;color:var(--brick-dark)}
+.gap{max-width:100%;border:none;border-bottom:2px solid var(--gold);background:#FFF8FA;font:700 15px Nunito;color:var(--brick-dark);padding:2px 6px;margin:0 4px;text-align:center}.gap.ok{border-color:var(--sage);background:var(--sage-bg)}.gap.bad{border-color:var(--coral);background:var(--coral-bg)}
+.gap.wide{width:min(320px,90%);font-size:20px;margin:10px auto;display:block}
+.gap-row{display:flex;gap:8px;align-items:baseline;margin:6px 0;flex-wrap:wrap}.gap-row .num{color:var(--tab);min-width:20px}.fb{font-weight:800;color:var(--sage)}
+.cloze{line-height:2.3}
+.mask{font:700 22px monospace;letter-spacing:2px;margin:10px 0;color:var(--ink-soft)}.fbline.ok{color:var(--sage);font-weight:700}.fbline.bad{color:var(--coral);font-weight:700}
+textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:10px;font:15px Nunito;background:#FFFDFB}
+.trow{display:flex;gap:8px;margin:6px 0;flex-wrap:wrap}.tname{flex:1 1 160px;border:1.5px solid var(--line);border-radius:8px;padding:7px 10px;font:15px Nunito}.trel{flex:1 1 200px;border:1.5px solid var(--line);border-radius:8px;padding:7px;font:15px Nunito}
+.tout{margin-top:12px;background:#FDF0F3;border-radius:10px;padding:10px 14px}.tsent{margin:4px 0}.play{border:none;background:var(--line);border-radius:50%;width:30px;height:30px;cursor:pointer}.play.mini{width:26px;height:26px;font-size:12px}
+.qrow{display:flex;gap:10px;align-items:center;margin:6px 0}
+.vfinal{display:none;text-align:center;background:linear-gradient(135deg,var(--brick),var(--brick-dark));color:#fff;border-radius:12px;padding:18px;margin-bottom:16px}.vfinal.shown{display:block}
+.bubs{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0}.bub{display:inline-flex;align-items:center;gap:6px;background:#fff;border:2px solid var(--ink);border-radius:18px;padding:4px 12px;font-weight:700}.scene{background:#FDF0F3;border-radius:12px;padding:10px 12px;margin:8px 0}.scene .who{min-height:0;text-align:left;font-size:13px;color:var(--ink-soft)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:10px;margin:10px 0}.ptile{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:6px;text-align:center}.pimg{position:relative;height:84px;border-radius:8px;background:#FDF0F3;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--ink-soft);margin-bottom:4px;overflow:hidden}.pimg img{display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff}
+.next-row{text-align:right;margin-top:16px}
+.sideimg{float:right;width:min(300px,45%);margin:0 0 10px 14px}@media(max-width:640px){.sideimg{float:none;width:100%;margin:0 0 10px}}
+</style></head><body>
+<div class="vtop"><span class="t">Vocab 28 · In the countryside</span><div class="vbar"><i id="vBar"></i></div><span class="vscore" id="vScore">0</span></div>
+<div class="vwrap"><div class="vsteps" id="vSteps"></div><p class="tts-warn" id="ttsWarn"></p>
+<div class="vfinal" id="vFinal"><b style="font-size:20px">🎉 Урок пройден!</b><br>Слова урока добавлены в словарь — повторяйте их в разделе «Повторение».</div>
+<section class="vpanel" hidden><div class="eyebrow">A · Things we can see in the countryside</div><h2>Что можно увидеть за городом</h2><p class="lead">Нажмите на слово — перевод и 🔊.</p><p>The <span class="w" data-en="countryside">countryside<span class="tip">сельская местность <button class="play mini" data-text="countryside">🔊</button></span></span> and <span class="w" data-en="the country">the country<span class="tip">за городом <button class="play mini" data-text="the country">🔊</button></span></span> both mean 'not the city'. <b>Country</b> can also mean a nation (e.g. France, China).</p><div class="tiles"><div class="ptile"><div class="pimg"><span>mountains</span><img data-lesson-image="img/voc-28-mountains.webp" alt=""></div><span class="w" data-en="mountains">mountains<span class="tip">горы <button class="play mini" data-text="mountains">🔊</button></span></span></div><div class="ptile"><div class="pimg"><span>forest</span><img data-lesson-image="img/voc-28-forest.webp" alt=""></div><span class="w" data-en="forest">forest<span class="tip">лес <button class="play mini" data-text="forest">🔊</button></span></span></div><div class="ptile"><div class="pimg"><span>village</span><img data-lesson-image="img/voc-28-village.webp" alt=""></div><span class="w" data-en="village">village<span class="tip">деревня <button class="play mini" data-text="village">🔊</button></span></span></div><div class="ptile"><div class="pimg"><span>hills</span><img data-lesson-image="img/voc-28-hills.webp" alt=""></div><span class="w" data-en="hills">hills<span class="tip">холмы <button class="play mini" data-text="hills">🔊</button></span></span></div><div class="ptile"><div class="pimg"><span>wood</span><img data-lesson-image="img/voc-28-wood.webp" alt=""></div><span class="w" data-en="wood">wood<span class="tip">роща, лесок <button class="play mini" data-text="wood">🔊</button></span></span></div><div class="ptile"><div class="pimg"><span>lake</span><img data-lesson-image="img/voc-28-lake.webp" alt=""></div><span class="w" data-en="lake">lake<span class="tip">озеро <button class="play mini" data-text="lake">🔊</button></span></span></div><div class="ptile"><div class="pimg"><span>fields</span><img data-lesson-image="img/voc-28-fields.webp" alt=""></div><span class="w" data-en="fields">fields<span class="tip">поля <button class="play mini" data-text="fields">🔊</button></span></span></div><div class="ptile"><div class="pimg"><span>path</span><img data-lesson-image="img/voc-28-path.webp" alt=""></div><span class="w" data-en="path">path<span class="tip">тропинка <button class="play mini" data-text="path">🔊</button></span></span></div><div class="ptile"><div class="pimg"><span>country road</span><img data-lesson-image="img/voc-28-country-road.webp" alt=""></div><span class="w" data-en="country road">country road<span class="tip">просёлочная дорога <button class="play mini" data-text="country road">🔊</button></span></span></div><div class="ptile"><div class="pimg"><span>river</span><img data-lesson-image="img/voc-28-river.webp" alt=""></div><span class="w" data-en="river">river<span class="tip">река <button class="play mini" data-text="river">🔊</button></span></span></div><div class="ptile"><div class="pimg"><span>farm</span><img data-lesson-image="img/voc-28-farm.webp" alt=""></div><span class="w" data-en="farm">farm<span class="tip">ферма <button class="play mini" data-text="farm">🔊</button></span></span></div></div><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">B · Living and working in the countryside</div><h2>Жизнь за городом</h2><p class="lead"></p><p>In the countryside, people usually live in a <span class="w" data-en="small town">small town<span class="tip">небольшой город <button class="play mini" data-text="small town">🔊</button></span></span> (e.g. 6,000 people) or <span class="w" data-en="village">village<span class="tip">деревня <button class="play mini" data-text="village">🔊</button></span></span> /ˈvɪlɪdʒ/ (e.g. 700 people).</p><p>A <span class="w" data-en="farmer">farmer<span class="tip">фермер <button class="play mini" data-text="farmer">🔊</button></span></span> lives <b>on a farm</b> and works in the fields.</p><p>My friend lives in a <span class="w" data-en="cottage">cottage<span class="tip">коттедж, домик <button class="play mini" data-text="cottage">🔊</button></span></span>. /ˈkɒtɪdʒ/ [small house in a village or the countryside]</p><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">C · Nature and conservation</div><h2>Природа и её охрана</h2><p class="lead"></p><p><span class="w" data-en="nature">nature<span class="tip">природа <button class="play mini" data-text="nature">🔊</button></span></span> means 'everything in the natural world'. (= animals, birds, plants, etc.) (<span class="w" data-en="conservation">conservation<span class="tip">охрана природы <button class="play mini" data-text="conservation">🔊</button></span></span> /kɒnsəˈveɪʃn/)</p><div class="err" style="clear:both"><div class="err-t">Error warning</div>I love <b>nature</b> [NOT I love <s>the</s> nature]. I like walking <b>in the countryside</b> [NOT I like walking in the <s>nature</s>]. 'Nature' is not a place.</div><p>There is wonderful <span class="w" data-en="wildlife">wildlife<span class="tip">дикая природа, животные <button class="play mini" data-text="wildlife">🔊</button></span></span> in the north of the country. [animals, birds, fish and insects]</p><p>Near the village there is a <span class="w" data-en="conservation area">conservation area<span class="tip">заповедная зона <button class="play mini" data-text="conservation area">🔊</button></span></span>. [place where wildlife and nature are protected]</p><p>In the south of the country, there is a <span class="w" data-en="national park">national park<span class="tip">национальный парк <button class="play mini" data-text="national park">🔊</button></span></span>. [very big national conservation area]</p><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">D · Things to do in the countryside</div><h2>Что делать за городом</h2><p class="lead"></p><div class="sideimg" style=""><div class="ph" style="position:relative;width:100%;height:120px;border-radius:12px;border:2px dashed var(--line);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--ink-soft);background:#FDF0F3;text-align:center;padding:6px"><span>Пикник; лыжник в горах<br><small>lessons/img/voc-28-pic-1.webp</small></span><img data-lesson-image="img/voc-28-pic-1.webp" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:contain;border-radius:12px;background:#fff" alt=""></div></div><p>You can take food and drink and <span class="w" data-en="have a picnic">have a picnic<span class="tip">устроить пикник <button class="play mini" data-text="have a picnic">🔊</button></span></span>.</p><p>You can <span class="w" data-en="go walking">go walking<span class="tip">ходить в походы <button class="play mini" data-text="go walking">🔊</button></span></span> / skiing in the mountains.</p><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">Запоминаем</div><h2>Карточки</h2><p class="lead">Посмотрите слово, вспомните перевод и переверните карточку. «Ещё не помню» вернёт карточку в конец стопки.</p><div id="cardBox"></div><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">Exercise 28.1</div><h2>How many can you remember?</h2><p class="lead">Не подглядывая, подпишите номера на картинке. Образец: <i>1 → mountains</i>.</p><div class="" style="margin:10px 0"><div class="ph" style="position:relative;width:100%;height:160px;border-radius:12px;border:2px dashed var(--line);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--ink-soft);background:#FDF0F3;text-align:center;padding:6px"><span>Пейзаж с номерами 1–11<br><small>lessons/img/voc-28-pic-2.webp</small></span><img data-lesson-image="img/voc-28-pic-2.webp" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:contain;border-radius:12px;background:#fff" alt=""></div></div><div id="ex281"></div><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">Exercise 28.2</div><h2>Fill the gaps</h2><p class="lead">Образец: <i>My brother is a farmer. He lives on a farm.</i></p><div id="ex282"></div><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">Exercise 28.3</div><h2>Match the sentences</h2><p class="lead">Образец: <i>We went swimming in the lake. The water was warm.</i></p><div id="ex283"></div><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">Exercise 28.4</div><h2>the or nothing?</h2><p class="lead">Поставьте the или «-», если артикль не нужен. Образец: <i>My parents live in the countryside.</i></p><div id="ex284"></div><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">Тренируем</div><h2>Узнай на слух</h2><p class="lead">Нажмите «Слушать» и выберите перевод. Цель — 8 из 10.</p><div id="listenBox"></div><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">Тренируем</div><h2>Пары на время</h2><p class="lead">Соедините слово и перевод как можно быстрее.</p><div id="matchBox"></div><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">Тренируем</div><h2>Вспомни и напиши</h2><p class="lead">Перевод → напишите слово по-английски.</p><div id="spellBox"></div><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">Exercise 28.5</div><h2>Your countryside</h2><p class="lead">Опишите природу там, откуда вы, в 8 предложениях: woods or forests? hills or mountains? lakes or rivers? villages or small towns? farms? paths? skiing? wildlife? Образец: <i>There are some big forests.</i></p><textarea class="free" id="t285" data-step="desc" rows="6" placeholder="There are some big forests. …"></textarea><p class="small muted">Минимум 15 слов.</p></section></div>
+<script src="../lesson-kit.js?v=20261018-games1"></script>
+<script>window.VOC={"slug": "vocab-28-countryside", "unit": 228, "words": [{"en": "mountains", "ipa": "/ˈmaʊntənz/", "ru": "горы", "ex": "mountains"}, {"en": "forest", "ipa": "/ˈfɒrɪst/", "ru": "лес", "ex": "forest"}, {"en": "village", "ipa": "/ˈvɪlɪdʒ/", "ru": "деревня", "ex": "village"}, {"en": "hills", "ipa": "/hɪlz/", "ru": "холмы", "ex": "hills"}, {"en": "wood", "ipa": "/wʊd/", "ru": "роща, лесок", "ex": "wood"}, {"en": "lake", "ipa": "/leɪk/", "ru": "озеро", "ex": "lake"}, {"en": "fields", "ipa": "/fiːldz/", "ru": "поля", "ex": "fields"}, {"en": "path", "ipa": "/pɑːθ/", "ru": "тропинка", "ex": "path"}, {"en": "country road", "ipa": "/ˈkʌntri rəʊd/", "ru": "просёлочная дорога", "ex": "country road"}, {"en": "river", "ipa": "/ˈrɪvə/", "ru": "река", "ex": "river"}, {"en": "farm", "ipa": "/fɑːm/", "ru": "ферма", "ex": "farm"}, {"en": "countryside", "ipa": "/ˈkʌntrisaɪd/", "ru": "сельская местность", "ex": "The countryside means 'not the city'."}, {"en": "the country", "ipa": "/ðə ˈkʌntri/", "ru": "сельская местность (за городом)", "ex": "She wants to live in the country."}, {"en": "small town", "ipa": "/smɔːl taʊn/", "ru": "небольшой город", "ex": "a small town (e.g. 6,000 people)"}, {"en": "farmer", "ipa": "/ˈfɑːmə/", "ru": "фермер", "ex": "A farmer lives on a farm."}, {"en": "cottage", "ipa": "/ˈkɒtɪdʒ/", "ru": "коттедж, домик", "ex": "small house in a village"}, {"en": "nature", "ipa": "/ˈneɪtʃə/", "ru": "природа", "ex": "I love nature."}, {"en": "conservation", "ipa": "/ˌkɒnsəˈveɪʃn/", "ru": "охрана природы", "ex": "nature and conservation"}, {"en": "wildlife", "ipa": "/ˈwaɪldlaɪf/", "ru": "дикая природа, животные", "ex": "There is wonderful wildlife."}, {"en": "conservation area", "ipa": "/ˌkɒnsəˈveɪʃn ˈeəriə/", "ru": "заповедная зона", "ex": "place where wildlife is protected"}, {"en": "national park", "ipa": "/ˌnæʃnəl ˈpɑːk/", "ru": "национальный парк", "ex": "very big national conservation area"}, {"en": "have a picnic", "ipa": "/hæv ə ˈpɪknɪk/", "ru": "устроить пикник", "ex": "You can have a picnic."}, {"en": "go walking", "ipa": "/ɡəʊ ˈwɔːkɪŋ/", "ru": "ходить в походы", "ex": "You can go walking in the mountains."}], "exercises": [{"id": "ex281", "step": "exa", "numbered": true, "items": [{"q": "2 → ___", "a": ["forest"]}, {"q": "3 → ___", "a": ["village"]}, {"q": "4 → ___", "a": ["hills"]}, {"q": "5 → ___", "a": ["wood", "woods"]}, {"q": "6 → ___", "a": ["farm"]}, {"q": "7 → ___", "a": ["river"]}, {"q": "8 → ___", "a": ["country road"]}, {"q": "9 → ___", "a": ["path"]}, {"q": "10 → ___", "a": ["fields"]}, {"q": "11 → ___", "a": ["lake"]}]}, {"id": "ex282", "step": "exb", "numbered": true, "items": [{"q": "It's not a big house; it's just a ___.", "a": ["cottage"]}, {"q": "The farm is near a ___ which has 800 people.", "a": ["village"]}, {"q": "Twenty kilometres from the village there is a small ___. It has 9,000 people.", "a": ["town"]}]}, {"id": "ex283", "step": "exc", "numbered": true, "items": [{"q": "We went walking ___ (sitting by the river / in the national park / along a five-kilometre path / down the mountain)", "a": ["along a five-kilometre path"]}, {"q": "We went skiing ___", "a": ["down the mountain"]}, {"q": "We saw some wonderful wildlife ___", "a": ["in the national park"]}, {"q": "We had a picnic ___", "a": ["sitting by the river"]}]}, {"id": "ex284", "step": "exd", "numbered": true, "items": [{"q": "He loves ___ nature. (the или -)", "a": ["-", "—", "no", "nothing", "x"]}, {"q": "She wants to live in ___ country. (the или -)", "a": ["the"]}, {"q": "They are interested in ___ wildlife. (the или -)", "a": ["-", "—", "no", "nothing", "x"]}]}], "steps": [{"id": "a", "title": "A · Countryside", "auto": 1}, {"id": "b", "title": "B · Living", "auto": 1}, {"id": "c", "title": "C · Nature", "auto": 1}, {"id": "d", "title": "D · Things to do", "auto": 1}, {"id": "cards", "title": "Карточки"}, {"id": "exa", "title": "28.1"}, {"id": "exb", "title": "28.2"}, {"id": "exc", "title": "28.3"}, {"id": "exd", "title": "28.4"}, {"id": "listen", "title": "На слух"}, {"id": "match", "title": "Пары"}, {"id": "spell", "title": "Напиши"}, {"id": "desc", "title": "28.5"}]};</script>
+<script>/* Vocabulary lesson engine. Data comes from window.VOC. */
+(function(){
+const V=window.VOC, d=document, $=id=>d.getElementById(id);
+const norm=s=>String(s||'').trim().toLowerCase().replace(/[’‘`]/g,"'").replace(/[.!?,;:]/g,'').replace(/\s+/g,' ');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const say=(t,r,b)=>{try{return window.speak?window.speak(t,r||1,b):LessonKit.speak(t,r||1,b);}catch(e){}};
+window.speak=window.speak||((t,r,b)=>LessonKit.speak(t,r,b));
+const ST={done:{},cards:{},recall:null,best:0};
+const STEPS=V.steps;
+function mark(step){if(!ST.done[step]){ST.done[step]=1;renderNav();}}
+/* ---------- навигация ---------- */
+function renderNav(){
+  $('vSteps').innerHTML=STEPS.map((s,i)=>`<button class="vstep${ST.done[s.id]?' ok':''}${cur===i?' cur':''}" data-i="${i}"><span>${ST.done[s.id]?'✓':i+1}</span>${esc(s.title)}</button>`).join('');
+  const n=STEPS.filter(s=>ST.done[s.id]).length; $('vScore').textContent=`${n} / ${STEPS.length}`;
+  $('vBar').style.width=(100*n/STEPS.length)+'%';
+  if(n===STEPS.length)$('vFinal').classList.add('shown');
+}
+let cur=0;
+function go(i){cur=Math.max(0,Math.min(STEPS.length-1,i));d.querySelectorAll('.vpanel').forEach((p,k)=>p.hidden=k!==cur);renderNav();window.scrollTo(0,0);
+  const s=STEPS[cur];if(s.auto)mark(s.id);}
+d.addEventListener('click',e=>{const b=e.target.closest('.vstep');if(b)go(+b.dataset.i);const n=e.target.closest('[data-next]');if(n)go(cur+1);
+  const p=e.target.closest('.play');if(p){e.stopPropagation();say(p.dataset.text,+p.dataset.rate||1,p);return;}
+  const w=e.target.closest('.w');if(w){const tip=w.querySelector('.tip');d.querySelectorAll('.w.open').forEach(x=>x!==w&&x.classList.remove('open'));w.classList.toggle('open');}
+  const pn=e.target.closest('.pn');if(pn){const t=(V.who||{})[pn.dataset.p]||pn.dataset.p;d.querySelectorAll('.who').forEach(x=>x.innerHTML=esc(t)+` <button class="play mini" data-text="${esc(t.replace(' — ',', '))}">🔊</button>`);}
+});
+/* ---------- карточки ---------- */
+let deck=[],ci=0;
+function cardsInit(){deck=shuffle(V.words.map((_,i)=>i));ci=0;showCard();}
+function showCard(){
+  const box=$('cardBox');
+  if(ci>=deck.length){box.innerHTML=`<div class="card done-card">🎉 Все карточки пройдены!<br><small>Слов: ${V.words.length}</small></div><button class="btn" id="cardsAgain">Ещё раз</button>`;mark('cards');$('cardsAgain').onclick=cardsInit;return;}
+  const w=V.words[deck[ci]];
+  box.innerHTML=`<div class="card" id="theCard"><div class="face front"><div class="big">${esc(w.en)}</div><div class="ipa">${esc(w.ipa||'')}</div><button class="play" data-text="${esc(w.en)}">🔊</button><div class="hint">нажмите на карточку, чтобы перевернуть</div></div><div class="face back"><div class="big ru">${esc(w.ru)}</div><div class="ex">${esc(w.ex||'')}</div></div></div>
+  <div class="card-btns"><button class="btn ghost" id="cAgain">🔁 Ещё не помню</button><button class="btn" id="cKnow">✓ Знаю</button></div><div class="small muted">Осталось: ${deck.length-ci}</div>`;
+  const c=$('theCard');c.onclick=e=>{if(e.target.closest('.play'))return;c.classList.toggle('flip');};
+  $('cKnow').onclick=()=>{ST.cards[w.en]=(ST.cards[w.en]||0)+1;ci++;showCard();};
+  $('cAgain').onclick=()=>{deck.push(deck[ci]);ci++;showCard();};
+}
+/* ---------- упражнения с пропусками ---------- */
+function gapEx(ex){
+  const el=$(ex.id);
+  el.innerHTML=ex.items.map((it,i)=>{const parts=it.q.split('___');return `<div class="gap-row">${ex.numbered!==false?`<b class="num">${i+1}</b>`:''}<span>${esc(parts[0])}<input class="gap" id="g_${ex.id}_${i}" data-ex="${ex.id}" data-i="${i}" autocomplete="off" spellcheck="false" style="width:${Math.max(7,Math.max(...it.a.map(x=>x.length))+2)}ch">${esc(parts[1]||'')}</span><span class="fb"></span></div>`;}).join('')+
+   `<div class="actions"><button class="btn" data-check="${ex.id}">Проверить</button><button class="btn ghost" data-show="${ex.id}">Показать ответы</button><span class="res" id="${ex.id}Res"></span></div>`;
+  el.querySelectorAll('input').forEach(inp=>inp.addEventListener('input',()=>{inp.classList.remove('ok','bad');}));
+}
+function checkGap(id,show){
+  const ex=V.exercises.find(x=>x.id===id);let ok=0;
+  $(id).querySelectorAll('input').forEach(inp=>{const it=ex.items[+inp.dataset.i];if(show&&!it.a.some(a=>norm(a)===norm(inp.value))){inp.value=it.a[0];}
+    const good=it.a.some(a=>norm(a)===norm(inp.value));inp.classList.toggle('ok',good);inp.classList.toggle('bad',!good&&inp.value.trim()!=='');if(good)ok++;
+    inp.parentElement.nextElementSibling.textContent=good?'✓':(inp.value.trim()?'✗':'');});
+  $(id+'Res').textContent=`Правильно: ${ok} из ${ex.items.length}`;
+  if(ok>=Math.ceil(ex.items.length*.8))mark(ex.step);
+}
+d.addEventListener('click',e=>{const c=e.target.closest('[data-check]');if(c)checkGap(c.dataset.check,false);const s=e.target.closest('[data-show]');if(s)checkGap(s.dataset.show,true);});
+/* ---------- на слух ---------- */
+let lq=[],li=0,lok=0;
+function listenInit(){lq=shuffle(V.words.map((_,i)=>i)).slice(0,Math.min(10,V.words.length));li=0;lok=0;listenQ();}
+function listenQ(){
+  const box=$('listenBox');
+  if(li>=lq.length){box.innerHTML=`<div class="center"><div class="big">${lok} / ${lq.length}</div><p>${lok>=Math.ceil(lq.length*.8)?'Отлично!':'Попробуйте ещё раз, чтобы набрать 8 из 10.'}</p><button class="btn" id="lAgain">Ещё раз</button></div>`;if(lok>=Math.ceil(lq.length*.8))mark('listen');$('lAgain').onclick=listenInit;return;}
+  const w=V.words[lq[li]],opts=shuffle([w,...shuffle(V.words.filter(x=>x!==w)).slice(0,3)]);
+  box.innerHTML=`<div class="center"><button class="btn big-play" id="lPlay">🔊 Слушать</button><div class="small muted">${li+1} / ${lq.length}</div></div><div class="opts">${opts.map(o=>`<button class="opt" data-en="${esc(o.en)}">${esc(o.ru)}</button>`).join('')}</div>`;
+  const play=()=>say(w.en,1,$('lPlay'));$('lPlay').onclick=play;
+  box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const good=b.dataset.en===w.en;b.classList.add(good?'ok':'bad');if(good)lok++;else box.querySelector(`.opt[data-en="${CSS.escape(w.en)}"]`).classList.add('ok');box.querySelectorAll('.opt').forEach(x=>x.disabled=true);setTimeout(()=>{li++;listenQ();},good?700:1500);});
+}
+/* ---------- пары на время ---------- */
+let mt=0,mTimer=null,mSel=null,mLeft=0;
+function matchInit(){
+  const words=shuffle(V.words).slice(0,8);mLeft=words.length;mt=0;clearInterval(mTimer);mSel=null;
+  const box=$('matchBox');
+  box.innerHTML=`<div class="center"><span class="timer" id="mTime">0.0 с</span> <span class="small muted">таймер стартует с первого клика ·</span> <span class="small muted">рекорд: <b id="mBest">${ST.best?ST.best.toFixed(1)+' с':'—'}</b></span></div><div class="mgrid"><div>${shuffle(words).map(w=>`<button class="tile" data-k="${esc(w.en)}" data-side="en">${esc(w.en)}</button>`).join('')}</div><div>${shuffle(words).map(w=>`<button class="tile" data-k="${esc(w.en)}" data-side="ru">${esc(w.ru)}</button>`).join('')}</div></div>`;
+  box.querySelectorAll('.tile').forEach(t=>t.onclick=()=>{
+    if(t.classList.contains('done'))return;
+    if(!mt){mt=Date.now();mTimer=setInterval(()=>{$('mTime')&&($('mTime').textContent=((Date.now()-mt)/1000).toFixed(1)+' с');},100);}
+    if(!mSel||mSel.dataset.side===t.dataset.side){box.querySelectorAll('.tile.sel').forEach(x=>x.classList.remove('sel'));t.classList.add('sel');mSel=t;return;}
+    if(mSel.dataset.k===t.dataset.k){[mSel,t].forEach(x=>{x.classList.remove('sel');x.classList.add('done');});mLeft--;mSel=null;
+      if(!mLeft){clearInterval(mTimer);const sec=(Date.now()-mt)/1000;if(!ST.best||sec<ST.best)ST.best=sec;mark('match');box.insertAdjacentHTML('beforeend',`<div class="center"><p>Готово за <b>${sec.toFixed(1)} с</b>! ${ST.best===sec?'🏆 Новый рекорд!':''}</p><button class="btn" id="mAgain">Ещё раунд</button></div>`);$('mAgain').onclick=matchInit;}}
+    else{[mSel,t].forEach(x=>x.classList.add('shake'));const a=mSel;setTimeout(()=>{a.classList.remove('shake','sel');t.classList.remove('shake');},400);mSel=null;}
+  });
+}
+/* ---------- вспомни и напиши ---------- */
+let sq=[],si=0,sok=0,hint=0;
+function spellInit(){sq=shuffle(V.words.map((_,i)=>i).filter(i=>!/…/.test(V.words[i].en)&&V.words[i].en.length<=22)).slice(0,Math.min(10,V.words.length));si=0;sok=0;spellQ();}
+function spellQ(){
+  const box=$('spellBox');
+  if(si>=sq.length){box.innerHTML=`<div class="center"><div class="big">${sok} / ${sq.length}</div><p>${sok>=Math.ceil(sq.length*.7)?'Отлично!':'Повторите карточки и попробуйте снова.'}</p><button class="btn" id="sAgain">Ещё раз</button></div>`;if(sok>=Math.ceil(sq.length*.7))mark('spell');$('sAgain').onclick=spellInit;return;}
+  const w=V.words[sq[si]];hint=0;
+  box.innerHTML=`<div class="center"><div class="big ru">${esc(w.ru)}</div><div class="small muted">${si+1} / ${sq.length} · букв: ${w.en.replace(/[^a-z]/gi,'').length}</div><div class="mask" id="sMask"></div><input class="gap wide" id="sIn" autocomplete="off" spellcheck="false" placeholder="напишите по-английски"><div class="actions" style="justify-content:center"><button class="btn" id="sCheck">Проверить</button><button class="btn ghost" id="sHint">Подсказка</button></div><div id="sFb" class="fbline"></div></div>`;
+  const mask=()=>$('sMask').textContent=w.en.split('').map((c,i)=>/[a-z]/i.test(c)?(i<hint?c:'_'):c).join(' ');mask();
+  $('sIn').focus();
+  $('sHint').onclick=()=>{hint=Math.min(w.en.length,hint+1);mask();};
+  const check=()=>{const good=norm($('sIn').value)===norm(w.en);if(good&&hint<2)sok++;$('sFb').innerHTML=good?'✓ Верно!':`✗ Правильно: <b>${esc(w.en)}</b>`;$('sFb').className='fbline '+(good?'ok':'bad');$('sCheck').disabled=true;setTimeout(()=>{si++;spellQ();},good?900:2000);};
+  $('sCheck').onclick=check;$('sIn').onkeydown=e=>{if(e.key==='Enter')check();};
+}
+/* ---------- 2 минуты: сколько слов вспомните ---------- */
+let rTimer=null;
+function recallInit(){
+  if(!$('recallBox'))return;
+  const box=$('recallBox');
+  box.innerHTML=`<p>Не подглядывайте в урок! Нажмите «Старт» и пишите слова темы через запятую или с новой строки.</p><div class="center"><span class="timer" id="rTime">2:00</span></div><textarea id="rIn" rows="6" disabled placeholder="mother, father, …"></textarea><div class="actions"><button class="btn" id="rStart">Старт</button><button class="btn ghost" id="rStop" disabled>Готово</button></div><div id="rRes"></div>`;
+  $('rStart').onclick=()=>{let left=120;$('rIn').disabled=false;$('rIn').focus();$('rStart').disabled=true;$('rStop').disabled=false;clearInterval(rTimer);
+    rTimer=setInterval(()=>{left--;$('rTime').textContent=Math.floor(left/60)+':'+String(left%60).padStart(2,'0');if(left<=0)finish();},1000);};
+  const finish=()=>{clearInterval(rTimer);$('rIn').disabled=true;$('rStop').disabled=true;
+    const typed=new Set($('rIn').value.split(/[\n,;]+/).map(norm).filter(Boolean));
+    const list=V.recall;const got=list.filter(w=>typed.has(norm(w)));const miss=list.filter(w=>!typed.has(norm(w)));
+    const extra=[...typed].filter(t=>!list.some(w=>norm(w)===t));
+    ST.recall={got:got.length,total:list.length};
+    $('rRes').innerHTML=`<p class="big">${got.length} из ${list.length}</p><p><b>Вспомнили:</b> ${got.map(esc).join(', ')||'—'}</p><p><b>Забыли:</b> ${miss.map(w=>`<span class="w" data-en="${esc(w)}">${esc(w)}</span>`).join(', ')||'ничего! 🎉'}</p>${extra.length?`<p class="small muted">Проверьте написание: ${extra.map(esc).join(', ')}</p>`:''}<button class="btn" id="rAgain">Ещё раз</button>`;
+    $('rAgain').onclick=recallInit;mark('recall');};
+  $('rStop').onclick=finish;
+}
+/* ---------- follow-up: моё семейное дерево ---------- */
+const TROWS=8;
+function treeInit(){
+  if(!$('treeBox'))return;
+  const box=$('treeBox');
+  box.innerHTML=Array.from({length:TROWS},(_,i)=>`<div class="trow"${i>=4?' hidden':''}><input class="tname" id="tname${i}" placeholder="Имя, напр. Anna"><select class="trel" id="trel${i}">${V.relations.map(x=>`<option value="${esc(x[0])}">${esc(x[0])} — ${esc(x[1])}</option>`).join('')}</select></div>`).join('')+`<div class="actions"><button class="btn ghost" id="tAdd">+ Добавить родственника</button></div><div id="tOut" class="tout"></div>`;
+  box.addEventListener('input',treeUpd);box.addEventListener('change',treeUpd);
+  $('tAdd').onclick=()=>{const h=box.querySelector('.trow[hidden]');if(h)h.hidden=false;};
+  treeUpd();
+}
+function treeUpd(){
+  if(!$('treeBox'))return;
+  const rows=[...d.querySelectorAll('#treeBox .trow')];
+  rows.forEach(r=>{if(r.querySelector('.tname').value.trim())r.hidden=false;});
+  const ok=rows.map(r=>({n:r.querySelector('.tname').value.trim(),r:r.querySelector('.trel').value})).filter(x=>x.n);
+  $('tOut').innerHTML=ok.length?ok.map(x=>`<div class="tsent"><button class="play mini" data-text="${esc(x.n)} is my ${esc(x.r)}.">🔊</button> <b>${esc(x.n)}</b> is my <b>${esc(x.r)}</b>.</div>`).join(''):'<span class="muted">Впишите имена — предложения появятся здесь.</span>';
+  if(ok.length>=4)mark('tree');
+}
+/* ---------- состояние для облака ---------- */
+window.lessonStateVersion='vocab-'+V.slug+'-1';
+window.getLessonState=()=>({done:Object.fromEntries(Object.keys(ST.done).map(k=>[k,true])),parts:{best:Math.round((ST.best||0)*10),recall:ST.recall?ST.recall.got:0},visited:{}});
+window.restoreLessonState=s=>{if(!s)return;for(const k of Object.keys(s.done||{}))ST.done[k]=1;if(s.parts?.best)ST.best=s.parts.best/10;treeUpd();renderNav();};
+window.lessonResult=()=>{const n=STEPS.filter(s=>ST.done[s.id]).length;return {score:n,maxScore:STEPS.length,completed:n===STEPS.length};};
+/* ---------- старт ---------- */
+V.exercises.forEach(gapEx);cardsInit();listenInit();matchInit();spellInit();recallInit();treeInit();go(0);
+d.querySelectorAll('[data-start]').forEach(b=>b.addEventListener('click',()=>({cards:cardsInit,listen:listenInit,match:matchInit,spell:spellInit})[b.dataset.start]()));
+d.querySelectorAll('textarea.free').forEach(t=>t.addEventListener('input',()=>{if(t.value.trim().split(/\s+/).length>=15)mark(t.dataset.step);}));
+})();
+</script></body></html>
