@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Итоговый тест · союзы и if</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Comfortaa:wght@500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --cream:#FDF4F1; --paper:#FFFDFB; --ink:#3A2E33; --ink-soft:#6B5A61;
+  --brick:#BE456F; --brick-dark:#8F2E52; --tab:#C4507A; --tab-dark:#9E3460;
+  --sage:#4F8F6D; --sage-bg:#E6F1EA; --coral:#D65B4A; --coral-bg:#FBE7E3;
+  --gold:#E8A0B4; --line:#F1D9DF; --shadow: 0 6px 18px rgba(150,80,100,0.10);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; background:radial-gradient(circle at 15% 8%, rgba(232,160,180,0.10), transparent 40%), var(--cream); color:var(--ink); font-family:'Nunito', sans-serif; line-height:1.55; padding-bottom:80px;}
+h1,h2,h3,.display{font-family:'Comfortaa',sans-serif;}
+
+.topbar{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:1px solid var(--line); padding:10px 18px; display:flex; align-items:center; gap:14px; box-shadow:0 2px 10px rgba(0,0,0,0.04);}
+.topbar .book-title{font-family:'Comfortaa',sans-serif; font-weight:700; font-size:15px; color:var(--brick-dark); white-space:nowrap;}
+.topbar-progress{flex:1; height:8px; border-radius:6px; background:var(--line); position:relative; overflow:hidden;}
+.topbar-progress i{display:block; height:100%; width:0%; border-radius:6px; background:linear-gradient(90deg, var(--tab), var(--brick)); transition:width .4s ease;}
+.score-pill{font-size:13px; font-weight:700; background:var(--sage-bg); color:var(--sage); padding:5px 12px; border-radius:20px; white-space:nowrap;}
+
+.page{max-width:900px; margin:26px auto; background:var(--paper); border-radius:4px; box-shadow:var(--shadow); border:1px solid var(--line); overflow:hidden;}
+
+.unit-banner{background:linear-gradient(135deg, var(--brick) 0%, var(--brick-dark) 100%); color:#fff; padding:26px 30px 22px 96px; position:relative;}
+.unit-tag{position:absolute; left:0; top:0; bottom:0; width:76px; background:var(--brick-dark); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Comfortaa',sans-serif; border-right:2px solid rgba(255,255,255,0.15); text-align:center;}
+.unit-tag .u{font-size:10px; letter-spacing:1.5px; opacity:.75; padding:0 4px;}
+.unit-tag .n{font-size:26px; font-weight:800;}
+.unit-banner h1{margin:0; font-size:25px; font-weight:800; letter-spacing:.3px;}
+.unit-banner p{margin:6px 0 0; opacity:.9; font-size:14px;}
+
+.section{display:flex; border-top:1px solid var(--line);}
+.section .tab{width:56px; flex-shrink:0; background:var(--tab); color:#fff; font-family:'Comfortaa',sans-serif; font-weight:800; font-size:22px; display:flex; align-items:flex-start; justify-content:center; padding-top:22px;}
+.section.alt .tab{background:var(--tab-dark);}
+.section .content{padding:24px 28px 30px; flex:1; min-width:0;}
+.section h2{margin:0 0 4px; font-size:20px; color:var(--brick-dark);}
+.eyebrow{font-size:11.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-soft); font-weight:700; margin-bottom:4px;}
+.section p.lead{color:var(--ink-soft); margin-top:4px; font-size:14px;}
+
+.q-item{display:flex; align-items:flex-start; gap:10px; flex-wrap:wrap; padding:12px 4px; border-bottom:1px dashed var(--line);}
+.q-item:last-child{border-bottom:none;}
+.q-num{width:24px; height:24px; border-radius:50%; background:var(--cream); border:1px solid var(--line); font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; color:var(--ink-soft); flex-shrink:0; margin-top:2px;}
+.q-body{flex:1; min-width:220px;}
+.q-sentence{font-size:14.5px; margin-bottom:6px;}
+.q-hint{font-size:12px; color:var(--ink-soft); font-style:italic;}
+.q-input{width:150px; padding:6px 9px; border:1.5px solid var(--line); border-radius:6px; font-family:'Nunito'; font-weight:700; font-size:14px; text-align:center; background:#FFFDFB; color:var(--brick-dark);}
+.q-input.wide{width:100%;}
+.q-input:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.q-input.correct{border-color:var(--sage); background:var(--sage-bg); color:#2f5741;}
+.q-input.wrong{border-color:var(--coral); background:var(--coral-bg); color:var(--coral);}
+.q-fb{font-size:12.5px; color:var(--ink-soft); margin-top:5px;}
+.q-fb.wrong-fb{color:var(--coral);}
+
+.mc-opts{display:flex; gap:8px; flex-wrap:wrap; margin-top:4px;}
+.mc-opt{border:1.5px solid var(--line); background:#fff; padding:6px 14px; border-radius:18px; font-weight:700; font-size:13px; cursor:pointer; color:var(--ink);}
+.mc-opt.picked{border-color:var(--tab); background:var(--cream);}
+.mc-opt.correct{border-color:var(--sage); background:var(--sage-bg); color:#2f5741;}
+.mc-opt.incorrect{border-color:var(--coral); background:var(--coral-bg); color:var(--coral);}
+
+.btn{border:none; cursor:pointer; font-family:'Nunito'; font-weight:800; padding:12px 26px; border-radius:24px; font-size:15px; letter-spacing:.2px; background:var(--brick); color:#fff; box-shadow:0 4px 10px rgba(190,69,111,0.25); transition:.15s;}
+.btn:hover{transform:translateY(-1px); box-shadow:0 6px 14px rgba(190,69,111,0.32);}
+.btn.secondary{background:transparent; color:var(--brick); border:1.5px solid var(--brick); box-shadow:none;}
+.btn.small{padding:7px 16px; font-size:13px;}
+
+.submit-wrap{text-align:center; padding:30px 20px;}
+.submit-wrap p{color:var(--ink-soft); font-size:13.5px; margin-bottom:16px;}
+
+.results-card{display:none; margin:26px auto 0; max-width:900px; background:var(--paper); border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow); overflow:hidden;}
+.results-card.shown{display:block; animation:fadeIn .5s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+.results-hero{background:linear-gradient(135deg, var(--brick), var(--brick-dark)); color:#fff; padding:26px 28px; text-align:center;}
+.results-hero .big-score{font-family:'Comfortaa',sans-serif; font-size:44px; font-weight:800;}
+.results-hero .grade{font-size:15px; font-weight:700; margin-top:4px; opacity:.95;}
+.results-body{padding:22px 28px;}
+.results-body h3{font-size:13px; text-transform:uppercase; letter-spacing:1px; color:var(--ink-soft); margin:0 0 12px;}
+.rbar-row{display:flex; align-items:center; gap:10px; margin-bottom:10px; font-size:13.5px;}
+.rbar-label{width:180px; flex-shrink:0; color:var(--ink-soft); font-weight:600;}
+.rbar-track{flex:1; height:10px; background:var(--line); border-radius:6px; overflow:hidden;}
+.rbar-fill{height:100%; border-radius:6px; background:linear-gradient(90deg, var(--tab), var(--sage));}
+.rbar-val{width:44px; text-align:right; font-weight:700; color:var(--brick-dark); flex-shrink:0;}
+.results-advice{margin-top:18px; background:var(--sage-bg); border-left:3px solid var(--sage); padding:12px 16px; border-radius:6px; font-size:13.5px; color:#2f5741;}
+.results-advice b{color:var(--sage);}
+
+.footer-note{text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:24px; padding:0 20px;}
+</style>
+<link rel="stylesheet" href="../lesson-theme.css"><style id="exam-input-fix">
+.q-body .q-input.wide{display:block;width:100%;box-sizing:border-box;text-align:left!important;font-weight:600!important;font-size:16px!important;color:var(--brick-dark);padding:10px 14px!important;margin-top:6px;border:1.5px solid #F1D9DF!important;border-radius:12px!important;background:#FFFDFB!important}
+.q-body .q-input.wide::placeholder{font-weight:400;font-style:italic;color:#B9A5AC;opacity:1}
+.q-body .q-input.wide:focus{outline:none;border-color:#D9648A!important;box-shadow:0 0 0 3px rgba(217,100,138,.15)}
+.q-body .q-input.wide.correct{border-color:var(--sage)!important;background:var(--sage-bg)!important}
+.q-body .q-input.wide.wrong{border-color:var(--coral)!important;background:var(--coral-bg)!important}
+.q-sentence{font-size:16px;line-height:1.7}
+</style></head>
+<body><div class="topbar">
+  <div class="book-title">Итоговый тест · союзы и if</div>
+  <div class="progress-steps">
+    <div class="pstep" id="step-p"><i id="bar-p"></i></div>
+    <div class="pstep" id="step-vocab"><i id="bar-vocab"></i></div>
+    <div class="pstep" id="step-pr"><i id="bar-pr"></i></div>
+    <div class="pstep" id="step-read"><i id="bar-read"></i></div>
+    <div class="pstep" id="step-sound"><i id="bar-sound"></i></div>
+    <div class="pstep" id="step-listen"><i id="bar-listen"></i></div>
+    <div class="pstep" id="step-prod"><i id="bar-prod"></i></div>
+    <div class="pstep" id="step-hw"><i id="bar-hw"></i></div>
+  </div>
+  <div class="score-pill">★ <span id="scoreDisplay">0</span>/20</div>
+</div>
+
+
+
+<div class="page"><div class="unit-banner">
+    <div class="unit-tag"><span class="u">CHECK<br>POINT</span><span class="n">M20</span></div>
+    <h1>Итоговый тест: модуль 20 (союзы, if, who/which)</h1>
+    <p>Presentation → Vocabulary → Practice → Reading → Sounds → Listening → Production → Homework</p>
+  </div><div class="section" id="presentation"><div class="tab">A</div><div class="content"><div class="eyebrow">Presentation</div><h2>Перед контрольной работой</h2><p class="lead">Сначала выполните 24 контрольных задания в C без подсказок. Остальные разделы — дополнительное повторение.</p><div class="cue-cards"><div class="cue-card">If I were you, I’d go.</div><div class="cue-card">The hotel we stayed at was nice.</div></div></div></div><div class="section" id="vocabulary"><div class="tab">B</div><div class="content"><div class="eyebrow">Vocabulary</div><h2>Слова и сочетания</h2><p class="lead">Словарь для дополнительного повторения после контрольной.</p><div id="vocabTable" class="vocab-table"></div><h3>Соседи слов · chunks</h3><div id="chunkGrid" class="chunk-grid"></div></div></div><div class="section" id="practice"><div class="tab">C</div><div class="content"><div class="eyebrow">Practice</div><h2>Контрольная: 24 задания</h2><p class="lead">Заполнено: <span id="answeredCount">0</span>/24. Этот результат считается отдельно от дополнительного повторения.</p><div class="topbar-progress"><i id="topProgress"></i></div><div class="exam-block" id="s1">
+    <div class="tab">1</div>
+    <div class="content">
+      <div class="eyebrow">Units 97–98</div>
+      <h2>and / but / so / because · when</h2>
+      <p class="lead">Впишите одно слово.</p>
+      <div id="list1"></div>
+    </div>
+  </div><div class="exam-block" id="s2">
+    <div class="tab">2</div>
+    <div class="content">
+      <div class="eyebrow">Units 99–100</div>
+      <h2>if … / if I had …</h2>
+      <p class="lead">Впишите глагол в правильной форме.</p>
+      <div id="list2"></div>
+    </div>
+  </div><div class="exam-block" id="s3">
+    <div class="tab">3</div>
+    <div class="content">
+      <div class="eyebrow">Unit 101</div>
+      <h2>who / that / which</h2>
+      <p class="lead">Впишите одно слово.</p>
+      <div id="list3"></div>
+    </div>
+  </div><div class="exam-block" id="s4">
+    <div class="tab">4</div>
+    <div class="content">
+      <div class="eyebrow">Unit 102</div>
+      <h2>the hotel we stayed at</h2>
+      <p class="lead">Впишите at, about, to или where.</p>
+      <div id="list4"></div>
+    </div>
+  </div><div class="exam-block" id="s5">
+    <div class="tab">5</div>
+    <div class="content">
+      <div class="eyebrow">Units 97–102</div>
+      <h2>Выберите вариант</h2>
+      <p class="lead">Выберите правильный вариант.</p>
+      <div id="list5"></div>
+    </div>
+  </div><div class="submit-wrap">
+    <p>Ответьте на все вопросы, затем нажмите кнопку — результат покажет, что уже хорошо усвоено, а что стоит повторить.</p>
+    <button class="btn" id="submitTestBtn">Проверить тест и увидеть результат</button>
+  </div><div class="results-card" id="resultsCard">
+  <div class="results-hero">
+    <div class="big-score" id="bigScore">0 / 24</div>
+    <div class="grade" id="gradeText"></div>
+  </div>
+  <div class="results-body">
+    <h3>Результат по темам</h3>
+    <div id="sectionBars"></div>
+    <div class="results-advice" id="advice"></div>
+  </div>
+</div></div></div><div class="section" id="reading"><div class="tab">D</div><div class="content"><div class="actions-row"><button class="btn secondary small" id="playReadingBtn">🔊 Прослушать текст</button><button class="btn secondary stop-audio">Остановить</button></div><div class="eyebrow">Reading</div><h2>Sasha in London</h2><div class="read-text"><p>Last year my friend Sasha moved to London because she wanted to learn English. When she got there, she stayed with a family who lived near the station.</p><p>The family she stayed with were very friendly, but the room she had was very small, so she looked for a flat.</p><p>Now she lives in a flat which is near the river. 'If I had more money, I'd live in the centre,' she says.</p><p>I'll visit her when I have a holiday. If I go in summer, we'll have a picnic in the park where she runs every morning.</p></div><h3>1 · True / False</h3><div id="tfList"></div><div class="fb-line" id="tfFeedback"></div><h3>2 · Ответьте или скажите о другом человеке</h3><div id="tomFillList"></div><div class="actions-row"><button class="btn small" id="checkTomBtn">Проверить</button><span class="fb-line" id="tomFeedback"></span></div><h3>3 · Слова из текста</h3><div id="readFillList"></div><div class="actions-row"><button class="btn small" id="checkReadFillBtn">Проверить</button><span class="fb-line" id="readFillFeedback"></span></div></div></div><div class="section" id="sounds">
+    <div class="tab">E</div>
+    <div class="content"><p class="mini-note">Синтезированный голос помогает прочитать фразы, но не гарантирует точную интонацию. Повторяйте за ним и сравнивайте.</p>
+      <div class="eyebrow">Sounds &amp; Speech</div>
+      <h2>Вопросы на слух</h2>
+      <p class="lead">Слушайте и повторяйте. Обычная и медленная скорость помогают разобрать фразу.</p>
+      <p class="tts-warn" id="ttsWarn"></p>
+      <div class="sound-block"><h3>1 · so / because / when</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">It was very hot, so I opened the window.</div><div class="sp-controls"><button class="play-btn" data-text="It was very hot, so I opened the window." data-rate="1">🔊</button><button class="play-btn slow" data-text="It was very hot, so I opened the window." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">I'll call you when I get home.</div><div class="sp-controls"><button class="play-btn" data-text="I&#x27;ll call you when I get home." data-rate="1">🔊</button><button class="play-btn slow" data-text="I&#x27;ll call you when I get home." data-rate="0.6">🐢</button></div></div></div></div><div class="sound-block"><h3>2 · if</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">If I'm late, don't wait for me.</div><div class="sp-controls"><button class="play-btn" data-text="If I&#x27;m late, don&#x27;t wait for me." data-rate="1">🔊</button><button class="play-btn slow" data-text="If I&#x27;m late, don&#x27;t wait for me." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">If I had the money, I'd buy a car.</div><div class="sp-controls"><button class="play-btn" data-text="If I had the money, I&#x27;d buy a car." data-rate="1">🔊</button><button class="play-btn slow" data-text="If I had the money, I&#x27;d buy a car." data-rate="0.6">🐢</button></div></div></div></div><div class="sound-block"><h3>3 · who / which</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">A thief is a person who steals things.</div><div class="sp-controls"><button class="play-btn" data-text="A thief is a person who steals things." data-rate="1">🔊</button><button class="play-btn slow" data-text="A thief is a person who steals things." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">An airplane is a machine which flies.</div><div class="sp-controls"><button class="play-btn" data-text="An airplane is a machine which flies." data-rate="1">🔊</button><button class="play-btn slow" data-text="An airplane is a machine which flies." data-rate="0.6">🐢</button></div></div></div></div><div class="sound-block"><h3>4 · the hotel we stayed at</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">The hotel we stayed at was near the station.</div><div class="sp-controls"><button class="play-btn" data-text="The hotel we stayed at was near the station." data-rate="1">🔊</button><button class="play-btn slow" data-text="The hotel we stayed at was near the station." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">These are the books I told you about.</div><div class="sp-controls"><button class="play-btn" data-text="These are the books I told you about." data-rate="1">🔊</button><button class="play-btn slow" data-text="These are the books I told you about." data-rate="0.6">🐢</button></div></div></div></div>
+      <div class="actions-row">
+        <button class="btn secondary small" id="playAllBtn">🔊 Прослушать всё подряд</button>
+      </div>
+    </div>
+  </div><div class="section alt" id="listening">
+    <div class="tab">F</div>
+    <div class="content">
+      <div class="eyebrow">Listening</div>
+      <h2>Слушаем вслепую</h2>
+      <p class="lead">Этого диалога вы ещё не видели. Выберите скорость, послушайте 1–2 раза и ответьте на вопросы. Скрипт открывайте только для проверки.</p>
+      <div class="speed-picker">
+        <label>Скорость:</label>
+        <div class="speed-btns">
+          <button class="speed-btn" data-rate="0.6">🐢 Медленно</button>
+          <button class="speed-btn active" data-rate="0.95">🔊 Обычно</button>
+        </div>
+      </div>
+      <div class="actions-row">
+        <button class="btn secondary stop-audio">Остановить</button>
+        <button class="btn" id="playListeningBtn">▶️ Слушать диалог</button>
+      </div>
+
+      <h3 style="font-size:14.5px; margin:18px 0 8px; color:var(--brick-dark);">Вопросы по прослушанному</h3>
+      <div id="lsList"></div>
+      <div class="actions-row"><span class="fb-line" id="lsFeedback"></span></div>
+      <div class="actions-row">
+        <button class="btn secondary small" id="toggleScriptBtn" disabled="">📜 Скрипт — после ответов на все вопросы</button>
+      </div>
+      <div class="reveal-box" id="scriptBox">Where's the book I gave you?
+I'm still reading it. I'll give it back when I finish.
+Is it the book you told me about?
+Yes. If you like it, I'll give you another one.
+Great. And what would you do if you lost it?
+I'd buy you a new one, but I won't lose it!</div>
+    </div>
+  </div><div class="section" id="production"><div class="tab">G</div><div class="content"><div class="eyebrow">Production</div><h2>Свои предложения</h2><p class="lead">Напишите 6–8 предложений о поездке или мечте: and/but/so/because, when, if, if I had … I would, who/which, the place we stayed at. Минимум 25 слов.</p><textarea id="writeArea" class="write-area"></textarea><div id="wordCount" class="word-count"></div><div class="actions-row"><button class="btn" id="finishBtn">Готово</button><button class="btn secondary" id="sampleBtn">Образец</button></div><div class="reveal-box" id="sampleBox">Last summer I went to Kazan because I wanted to see the city. The hotel I stayed at was near the river. The people I met were very friendly, so I wasn’t lonely. When I have time, I’ll go again. If I had more money, I’d travel every month. I have a friend who lives there.</div></div></div><div class="section" id="homework"><div class="tab">H</div><div class="content"><div class="eyebrow">Homework</div><h2>Разбор ошибок</h2><div class="hw-list"><label class="hw-item"><input class="hw-check" type="checkbox"><span>1. Перепишите пять исправленных ответов.</span></label><label class="hw-item"><input class="hw-check" type="checkbox"><span>2. Объясните выбор if или when в трёх предложениях.</span></label><label class="hw-item"><input class="hw-check" type="checkbox"><span>3. Повторите фразы из Sounds три раза.</span></label><label class="hw-item"><input class="hw-check" type="checkbox"><span>4. Перескажите текст про Нину.</span></label><label class="hw-item"><input class="hw-check" type="checkbox"><span>5. Повторите контрольную через два дня.</span></label></div><div id="hwFeedback"></div><button class="btn secondary" id="printHwBtn">Печать</button></div></div></div><div class="badge-final" id="finalBadge">Урок пройден!<span>Все обязательные задания выполнены.</span></div>
+
+
+
+<p class="footer-note">Итоговая проверка по модулю 20: Units 97–102 (Essential Grammar in Use, 4th Edition). Задания составлены отдельно для этой серии уроков.</p>
+
+
+
+
+<script src="../lesson-kit.js?v=20261018-games1"></script><script src="../lesson-template.js?v=20261018-games1"></script><script>window.lessonConfig={"section1": [{"sentence": "It was very hot, ___ I opened the window.", "answers": ["so"]}, {"sentence": "I opened the window ___ it was very hot.", "answers": ["because"]}, {"sentence": "I bought a sandwich, ___ I didn't eat it.", "answers": ["but"]}, {"sentence": "When I ___ home this evening, I'll have a shower.", "answers": ["get"]}, {"sentence": "I'll wait here until you ___ back.", "answers": ["come"]}], "section2": [{"type": "short", "sentence": "If I ___ late this evening, don't wait for me. (be)", "answers": ["'m", "am", "’m"]}, {"type": "short", "sentence": "What shall we do if it ___? (rain)", "answers": ["rains"]}, {"type": "short", "sentence": "If he ___ the money, he would buy a fast car. (have)", "answers": ["had"]}, {"type": "short", "sentence": "I wouldn't go there if I ___ you.", "answers": ["were", "was"]}], "section3": [{"sentence": "I met a woman ___ can speak six languages.", "answers": ["who"]}, {"sentence": "An airplane is a machine ___ flies. (не who)", "answers": ["which"]}, {"sentence": "A thief is a person who ___ things.", "answers": ["steals"]}, {"sentence": "The man ___ phoned didn't give his name.", "answers": ["who"]}, {"sentence": "Where is the picture ___ was hanging on the wall?", "answers": ["which"]}], "section4": [{"words": "The hotel we stayed ___ was near the station.", "answers": ["at"]}, {"words": "These are the books I told you ___.", "answers": ["about"]}, {"words": "The hotel ___ we stayed was near the station.", "answers": ["where"]}, {"words": "Who are the people you were talking ___?", "answers": ["to"]}], "section5": [{"word": "I'm going to bed when I ___ my work.", "opts": ["finish", "'ll finish", "finished"], "correct": "finish"}, {"word": "If I have time, I ___ go today. (может быть)", "opts": ["will", "would", "am"], "correct": "will"}, {"word": "If I had time, I ___ go today. (времени нет)", "opts": ["would", "will", "had"], "correct": "would"}, {"word": "___ I'm late this evening, don't wait for me.", "opts": ["If", "When", "Because"], "correct": "If"}, {"word": "Which is right?", "opts": ["The film we saw was very good.", "The film we saw it was very good.", "The film we saw which was very good."], "correct": "The film we saw was very good."}, {"word": "Do you remember the woman ___ was playing the piano?", "opts": ["who", "which", "what"], "correct": "who"}], "slug": "itogovyi-test-final-m20", "exam": true, "legacySignature": "", "legacyFields": [{"oldIndex": 0, "id": "", "tag": "INPUT", "type": "text", "list": "list1", "item": "0", "sec": "1", "text": "It was very hot,  I opened the window."}, {"oldIndex": 1, "id": "", "tag": "INPUT", "type": "text", "list": "list1", "item": "1", "sec": "1", "text": "I opened the window  it was very hot."}, {"oldIndex": 2, "id": "", "tag": "INPUT", "type": "text", "list": "list1", "item": "2", "sec": "1", "text": "I bought a sandwich,  I didn't eat it."}, {"oldIndex": 3, "id": "", "tag": "INPUT", "type": "text", "list": "list1", "item": "3", "sec": "1", "text": "When I  home this evening, I'll have a shower."}, {"oldIndex": 4, "id": "", "tag": "INPUT", "type": "text", "list": "list1", "item": "4", "sec": "1", "text": "I'll wait here until you  back."}, {"oldIndex": 5, "id": "", "tag": "INPUT", "type": "text", "list": "list2", "item": "0", "sec": "2", "text": "If I  late this evening, don't wait for me. (be)"}, {"oldIndex": 6, "id": "", "tag": "INPUT", "type": "text", "list": "list2", "item": "1", "sec": "2", "text": "What shall we do if it ? (rain)"}, {"oldIndex": 7, "id": "", "tag": "INPUT", "type": "text", "list": "list2", "item": "2", "sec": "2", "text": "If he  the money, he would buy a fast car. (have)"}, {"oldIndex": 8, "id": "", "tag": "INPUT", "type": "text", "list": "list2", "item": "3", "sec": "2", "text": "I wouldn't go there if I  you."}, {"oldIndex": 9, "id": "", "tag": "INPUT", "type": "text", "list": "list3", "item": "0", "sec": "3", "text": "I met a woman  can speak six languages."}, {"oldIndex": 10, "id": "", "tag": "INPUT", "type": "text", "list": "list3", "item": "1", "sec": "3", "text": "An airplane is a machine  flies. (не who)"}, {"oldIndex": 11, "id": "", "tag": "INPUT", "type": "text", "list": "list3", "item": "2", "sec": "3", "text": "A thief is a person who  things."}, {"oldIndex": 12, "id": "", "tag": "INPUT", "type": "text", "list": "list3", "item": "3", "sec": "3", "text": "The man  phoned didn't give his name."}, {"oldIndex": 13, "id": "", "tag": "INPUT", "type": "text", "list": "list3", "item": "4", "sec": "3", "text": "Where is the picture  was hanging on the wall?"}, {"oldIndex": 14, "id": "", "tag": "INPUT", "type": "text", "list": "list4", "item": "0", "sec": "4", "text": "The hotel we stayed  was near the station."}, {"oldIndex": 15, "id": "", "tag": "INPUT", "type": "text", "list": "list4", "item": "1", "sec": "4", "text": "These are the books I told you ."}, {"oldIndex": 16, "id": "", "tag": "INPUT", "type": "text", "list": "list4", "item": "2", "sec": "4", "text": "The hotel  we stayed was near the station."}, {"oldIndex": 17, "id": "", "tag": "INPUT", "type": "text", "list": "list4", "item": "3", "sec": "4", "text": "Who are the people you were talking ?"}], "questionTask": false, "vocabData": [{"word": "because", "ipa": "/bɪˈkɒz/", "ru": "потому что"}, {"word": "so", "ipa": "/səʊ/", "ru": "поэтому"}, {"word": "while", "ipa": "/waɪl/", "ru": "пока"}, {"word": "until", "ipa": "/ənˈtɪl/", "ru": "пока не"}, {"word": "if", "ipa": "/ɪf/", "ru": "если"}, {"word": "would", "ipa": "/wʊd/", "ru": "бы"}, {"word": "if I were you", "ipa": "/ɪf aɪ wɜː juː/", "ru": "на твоём месте"}, {"word": "who", "ipa": "/huː/", "ru": "который (о людях)"}, {"word": "which", "ipa": "/wɪtʃ/", "ru": "который (о вещах)"}, {"word": "thief", "ipa": "/θiːf/", "ru": "вор"}, {"word": "where", "ipa": "/weə/", "ru": "где (в котором)"}, {"word": "comfortable", "ipa": "/ˈkʌmftəbl/", "ru": "удобный"}], "chunkData": [{"en": "…, so I opened the window", "ipa": "", "ru": "…, поэтому я открыл окно"}, {"en": "when I get home", "ipa": "", "ru": "когда я приду домой"}, {"en": "If I'm late, don't wait for me", "ipa": "", "ru": "если опоздаю, не жди"}, {"en": "If I had the money, I'd …", "ipa": "", "ru": "если бы у меня были деньги, я бы …"}, {"en": "a person who …", "ipa": "", "ru": "человек, который …"}, {"en": "the hotel we stayed at", "ipa": "", "ru": "отель, в котором мы жили"}], "tfGroups": {"tfList": {"data": [{"text": "Sasha moved to London because she wanted to learn English.", "correct": true}, {"text": "The family she stayed with were unfriendly.", "correct": false}, {"text": "Now she lives in a flat near the river.", "correct": true}, {"text": "She lives in the centre.", "correct": false}], "feedback": "tfFeedback"}, "lsList": {"data": [{"text": "The speaker is still reading the book.", "correct": true}, {"text": "The speaker has finished the book.", "correct": false}, {"text": "It's the book the friend told him about.", "correct": true}, {"text": "The speaker would not buy a new book.", "correct": false}], "feedback": "lsFeedback"}}, "tfData": [{"text": "Sasha moved to London because she wanted to learn English.", "correct": true}, {"text": "The family she stayed with were unfriendly.", "correct": false}, {"text": "Now she lives in a flat near the river.", "correct": true}, {"text": "She lives in the centre.", "correct": false}], "readFillData": [{"sentence": "Sasha moved to London ___ she wanted to learn English.", "answers": ["because"]}, {"sentence": "___ she got there, she stayed with a family.", "answers": ["When"]}, {"sentence": "a family ___ lived near the station", "answers": ["who"]}], "tomData": [{"sentence": "the room she had was very small, ___ she looked for a flat", "answers": ["so"]}, {"sentence": "a flat ___ is near the river", "answers": ["which"]}, {"sentence": "If I ___ more money, I'd live in the centre", "answers": ["had"]}], "listeningLines": ["Where's the book I gave you?", "I'm still reading it. I'll give it back when I finish.", "Is it the book you told me about?", "Yes. If you like it, I'll give you another one.", "Great. And what would you do if you lost it?", "I'd buy you a new one, but I won't lose it!"], "readingLines": ["Last year my friend Sasha moved to London because she wanted to learn English. When she got there, she stayed with a family who lived near the station.", "The family she stayed with were very friendly, but the room she had was very small, so she looked for a flat.", "Now she lives in a flat which is near the river. 'If I had more money, I'd live in the centre,' she says.", "I'll visit her when I have a holiday. If I go in summer, we'll have a picnic in the park where she runs every morning."]};
+
+/* ---------------- DATA ---------------- */
+const section1 = [{"sentence": "It was very hot, ___ I opened the window.", "answers": ["so"]}, {"sentence": "I opened the window ___ it was very hot.", "answers": ["because"]}, {"sentence": "I bought a sandwich, ___ I didn't eat it.", "answers": ["but"]}, {"sentence": "When I ___ home this evening, I'll have a shower.", "answers": ["get"]}, {"sentence": "I'll wait here until you ___ back.", "answers": ["come"]}];
+const section2 = [{"type": "short", "sentence": "If I ___ late this evening, don't wait for me. (be)", "answers": ["'m", "am", "’m"]}, {"type": "short", "sentence": "What shall we do if it ___? (rain)", "answers": ["rains"]}, {"type": "short", "sentence": "If he ___ the money, he would buy a fast car. (have)", "answers": ["had"]}, {"type": "short", "sentence": "I wouldn't go there if I ___ you.", "answers": ["were", "was"]}];
+const section3 = [{"sentence": "I met a woman ___ can speak six languages.", "answers": ["who"]}, {"sentence": "An airplane is a machine ___ flies. (не who)", "answers": ["which"]}, {"sentence": "A thief is a person who ___ things.", "answers": ["steals"]}, {"sentence": "The man ___ phoned didn't give his name.", "answers": ["who"]}, {"sentence": "Where is the picture ___ was hanging on the wall?", "answers": ["which"]}];
+const section4 = [{"words": "The hotel we stayed ___ was near the station.", "answers": ["at"]}, {"words": "These are the books I told you ___.", "answers": ["about"]}, {"words": "The hotel ___ we stayed was near the station.", "answers": ["where"]}, {"words": "Who are the people you were talking ___?", "answers": ["to"]}];
+const section5 = [{"word": "I'm going to bed when I ___ my work.", "opts": ["finish", "'ll finish", "finished"], "correct": "finish"}, {"word": "If I have time, I ___ go today. (может быть)", "opts": ["will", "would", "am"], "correct": "will"}, {"word": "If I had time, I ___ go today. (времени нет)", "opts": ["would", "will", "had"], "correct": "would"}, {"word": "___ I'm late this evening, don't wait for me.", "opts": ["If", "When", "Because"], "correct": "If"}, {"word": "Which is right?", "opts": ["The film we saw was very good.", "The film we saw it was very good.", "The film we saw which was very good."], "correct": "The film we saw was very good."}, {"word": "Do you remember the woman ___ was playing the piano?", "opts": ["who", "which", "what"], "correct": "who"}];
+
+function normalize(s){ return s.trim().toLowerCase().replace(/[’‘´`]/g,"'").replace(/[?.!,;:]/g,'').replace(/'/g,'').replace(/\s+/g,' '); }
+
+/* ---------------- RENDER SECTION 1 ---------------- */
+const list1 = document.getElementById('list1');
+section1.forEach((item, idx)=>{
+  const row = document.createElement('div');
+  row.className = 'q-item';
+  row.innerHTML = `<div class="q-num">${idx+1}</div><div class="q-body">
+    <div class="q-sentence">${item.sentence.replace('___', `<input type="text" class="q-input" data-sec="1" data-item="${idx}">`)}</div>
+    <div class="q-fb" id="fb-1-${idx}"></div></div>`;
+  list1.appendChild(row);
+});
+
+/* ---------------- RENDER SECTION 2 ---------------- */
+const list2 = document.getElementById('list2');
+section2.forEach((item, idx)=>{
+  const row = document.createElement('div');
+  row.className = 'q-item';
+  if(item.type === 'order'){
+    row.innerHTML = `<div class="q-num">${idx+1}</div><div class="q-body">
+      <div class="q-hint">${item.words}</div>
+      <input type="text" class="q-input wide" data-sec="2" data-item="${idx}" placeholder="Напишите вопрос целиком…">
+      <div class="q-fb" id="fb-2-${idx}"></div></div>`;
+  } else {
+    row.innerHTML = `<div class="q-num">${idx+1}</div><div class="q-body">
+      <div class="q-sentence">${item.sentence}</div>
+      <input type="text" class="q-input wide" data-sec="2" data-item="${idx}" placeholder="Краткий ответ…">
+      <div class="q-fb" id="fb-2-${idx}"></div></div>`;
+  }
+  list2.appendChild(row);
+});
+
+/* ---------------- RENDER SECTION 3 ---------------- */
+const list3 = document.getElementById('list3');
+section3.forEach((item, idx)=>{
+  const row = document.createElement('div');
+  row.className = 'q-item';
+  row.innerHTML = `<div class="q-num">${idx+1}</div><div class="q-body">
+    <div class="q-sentence">${item.sentence.replace('___', `<input type="text" class="q-input" data-sec="3" data-item="${idx}">`)}</div>
+    <div class="q-fb" id="fb-3-${idx}"></div></div>`;
+  list3.appendChild(row);
+});
+
+/* ---------------- RENDER SECTION 4 ---------------- */
+const list4 = document.getElementById('list4');
+section4.forEach((item, idx)=>{
+  const row = document.createElement('div');
+  row.className = 'q-item';
+  row.innerHTML = `<div class="q-num">${idx+1}</div><div class="q-body">
+    <div class="q-hint">${item.words}</div>
+    <input type="text" class="q-input wide" data-sec="4" data-item="${idx}" placeholder="for / since / ago">
+    <div class="q-fb" id="fb-4-${idx}"></div></div>`;
+  list4.appendChild(row);
+});
+
+/* ---------------- RENDER SECTION 5 ---------------- */
+const list5 = document.getElementById('list5');
+section5.forEach((item, idx)=>{
+  const row = document.createElement('div');
+  row.className = 'q-item';
+  row.innerHTML = `<div class="q-num">${idx+1}</div><div class="q-body">
+    <div class="q-sentence"><b>${item.word}</b></div>
+    <div class="mc-opts" data-sec="5" data-item="${idx}">
+      ${item.opts.map(o=>`<button type="button" class="mc-opt" data-val="${o}">${o}</button>`).join('')}
+    </div></div>`;
+  list5.appendChild(row);
+});
+document.querySelectorAll('#list5 .mc-opts').forEach(group=>{
+  group.querySelectorAll('.mc-opt').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      group.querySelectorAll('.mc-opt').forEach(b=>b.classList.remove('picked'));
+      btn.classList.add('picked');
+      updateAnsweredCount();
+    });
+  });
+});
+
+/* ---------------- ANSWERED COUNTER ---------------- */
+function updateAnsweredCount(){
+  let count = 0;
+  document.querySelectorAll('.q-input').forEach(i=>{ if(i.value.trim() !== '') count++; });
+  document.querySelectorAll('#list5 .mc-opts').forEach(g=>{ if(g.querySelector('.mc-opt.picked')) count++; });
+  document.getElementById('answeredCount').textContent = count;
+  document.getElementById('topProgress').style.width = Math.round((count/24)*100)+'%';
+}
+document.querySelectorAll('.q-input').forEach(i=>i.addEventListener('input', updateAnsweredCount));
+
+/* ---------------- SUBMIT & GRADE ---------------- */
+document.getElementById('submitTestBtn').addEventListener('click', ()=>{
+  if (Number(document.getElementById('answeredCount').textContent)<24) { alert('Сначала ответь на все 24 вопроса.'); return; }
+  let scores = { s1:0, s2:0, s3:0, s4:0, s5:0 };
+  let totals = { s1:section1.length, s2:section2.length, s3:section3.length, s4:section4.length, s5:section5.length };
+
+  section1.forEach((item, idx)=>{
+    const input = document.querySelector(`.q-input[data-sec="1"][data-item="${idx}"]`);
+    const ok = item.answers.some(a=>normalize(a)===normalize(input.value));
+    input.classList.remove('correct','wrong'); input.classList.add(ok?'correct':'wrong');
+    document.getElementById(`fb-1-${idx}`).textContent = ok ? '' : `верно: "${item.answers[0]}"`;
+    document.getElementById(`fb-1-${idx}`).className = ok ? 'q-fb' : 'q-fb wrong-fb';
+    if(ok) scores.s1++;
+  });
+
+  section2.forEach((item, idx)=>{
+    const input = document.querySelector(`.q-input[data-sec="2"][data-item="${idx}"]`);
+    const ok = item.answers.some(a=>normalize(a)===normalize(input.value));
+    input.classList.remove('correct','wrong'); input.classList.add(ok?'correct':'wrong');
+    document.getElementById(`fb-2-${idx}`).textContent = ok ? '' : `верно: "${item.answers[0]}"`;
+    document.getElementById(`fb-2-${idx}`).className = ok ? 'q-fb' : 'q-fb wrong-fb';
+    if(ok) scores.s2++;
+  });
+
+  section3.forEach((item, idx)=>{
+    const input = document.querySelector(`.q-input[data-sec="3"][data-item="${idx}"]`);
+    const ok = item.answers.some(a=>normalize(a)===normalize(input.value));
+    input.classList.remove('correct','wrong'); input.classList.add(ok?'correct':'wrong');
+    document.getElementById(`fb-3-${idx}`).textContent = ok ? '' : `верно: "${item.answers[0]}"`;
+    document.getElementById(`fb-3-${idx}`).className = ok ? 'q-fb' : 'q-fb wrong-fb';
+    if(ok) scores.s3++;
+  });
+
+  section4.forEach((item, idx)=>{
+    const input = document.querySelector(`.q-input[data-sec="4"][data-item="${idx}"]`);
+    const ok = item.answers.some(a=>normalize(a)===normalize(input.value));
+    input.classList.remove('correct','wrong'); input.classList.add(ok?'correct':'wrong');
+    document.getElementById(`fb-4-${idx}`).textContent = ok ? '' : `верно: "${item.answers[0]}"`;
+    document.getElementById(`fb-4-${idx}`).className = ok ? 'q-fb' : 'q-fb wrong-fb';
+    if(ok) scores.s4++;
+  });
+
+  section5.forEach((item, idx)=>{
+    const group = document.querySelector(`.mc-opts[data-sec="5"][data-item="${idx}"]`);
+    const picked = group.querySelector('.mc-opt.picked');
+    group.querySelectorAll('.mc-opt').forEach(b=>{
+      b.classList.remove('correct','incorrect');
+      if(b.dataset.val === item.correct) b.classList.add('correct');
+      if(picked && b === picked && b.dataset.val !== item.correct) b.classList.add('incorrect');
+    });
+    if(picked && picked.dataset.val === item.correct) scores.s5++;
+  });
+
+  const total = scores.s1+scores.s2+scores.s3+scores.s4+scores.s5;
+  const totalMax = totals.s1+totals.s2+totals.s3+totals.s4+totals.s5;
+  const pct = Math.round((total/totalMax)*100);
+
+  document.getElementById('bigScore').textContent = `${total} / ${totalMax}`;
+  let gradeMsg = '';
+  if(pct >= 90) gradeMsg = '🌟 Отлично! Материал усвоен уверенно.';
+  else if(pct >= 75) gradeMsg = '👍 Хорошо! Есть пара мест для повторения.';
+  else if(pct >= 50) gradeMsg = '📘 Неплохо, но стоит повторить некоторые темы.';
+  else gradeMsg = '🔁 Лучше вернуться к урокам и пройти их ещё раз.';
+  document.getElementById('gradeText').textContent = `${pct}% · ${gradeMsg}`;
+
+  const sectionLabels = [
+    { key:'s1', label:"so / when" },
+    { key:'s2', label:"if" },
+    { key:'s3', label:"who / which" },
+    { key:'s4', label:"we stayed at" },
+    { key:'s5', label:"Смешанное" },
+  ];
+  const barsEl = document.getElementById('sectionBars');
+  barsEl.innerHTML = '';
+  let weakest = null, weakestPct = 101;
+  sectionLabels.forEach(s=>{
+    const p = Math.round((scores[s.key]/totals[s.key])*100);
+    if(p < weakestPct){ weakestPct = p; weakest = s.label; }
+    const row = document.createElement('div');
+    row.className = 'rbar-row';
+    row.innerHTML = `<div class="rbar-label">${s.label}</div><div class="rbar-track"><div class="rbar-fill" style="width:${p}%"></div></div><div class="rbar-val">${scores[s.key]}/${totals[s.key]}</div>`;
+    barsEl.appendChild(row);
+  });
+  document.getElementById('advice').innerHTML = `<b>Совет:</b> сейчас слабее всего тема «${weakest}» (${weakestPct}%) — стоит вернуться к соответствующему уроку и пройти блок Practice ещё раз.`;
+
+  document.getElementById('resultsCard').classList.add('shown');
+  document.getElementById('resultsCard').scrollIntoView({behavior:'smooth', block:'start'});
+  updateAnsweredCount();
+});
+
+window.lessonResult=()=>{
+  const [score,maxScore]=document.getElementById('bigScore').textContent.split('/').map(Number);
+  return {score,maxScore,completed:document.getElementById('resultsCard').classList.contains('shown')};
+};
+updateAnsweredCount();
+
+LessonTemplate.mount(window.lessonConfig);</script></body></html>
