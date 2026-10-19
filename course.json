@@ -1291,6 +1291,13 @@
               "title": "In a hotel",
               "description": "В отеле",
               "file": "lessons/vocab-19-in-a-hotel.html"
+            },
+            {
+              "id": "vocab-20-eating-out",
+              "unit": 20,
+              "title": "Eating out",
+              "description": "Еда вне дома",
+              "file": "lessons/vocab-20-eating-out.html"
             }
           ]
         }
