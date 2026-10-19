@@ -1401,6 +1401,40 @@
               "title": "The media",
               "description": "СМИ: телевидение, газеты, журналы",
               "file": "lessons/vocab-33-the-media.html"
+            },
+            {
+              "id": "vocab-34-problems",
+              "unit": 34,
+              "title": "Problems at home and work",
+              "description": "Проблемы дома и на работе",
+              "file": "lessons/vocab-34-problems.html"
+            },
+            {
+              "id": "vocab-35-global-problems",
+              "unit": 35,
+              "title": "Global problems",
+              "description": "Глобальные проблемы",
+              "file": "lessons/vocab-35-global-problems.html"
+            }
+          ]
+        },
+        {
+          "id": "voc-modul-7",
+          "title": "Модуль 7 · Everyday verbs",
+          "lessons": [
+            {
+              "id": "vocab-36-have",
+              "unit": 36,
+              "title": "Have / had / had",
+              "description": "Глагол have",
+              "file": "lessons/vocab-36-have.html"
+            },
+            {
+              "id": "vocab-37-go",
+              "unit": 37,
+              "title": "Go / went / gone",
+              "description": "Глагол go",
+              "file": "lessons/vocab-37-go.html"
             }
           ]
         }
