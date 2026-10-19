@@ -1312,6 +1312,13 @@
               "title": "Cinema",
               "description": "Кино",
               "file": "lessons/vocab-22-cinema.html"
+            },
+            {
+              "id": "vocab-23-free-time-at-home",
+              "unit": 23,
+              "title": "Free time at home",
+              "description": "Свободное время дома",
+              "file": "lessons/vocab-23-free-time-at-home.html"
             }
           ]
         }
