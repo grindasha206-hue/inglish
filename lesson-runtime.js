@@ -166,6 +166,23 @@ const style=document.createElement('style');style.textContent=`
 :focus-visible{outline:3px solid #BE456F;outline-offset:3px}
 .table-scroll{max-width:100%;overflow-x:auto}
 @media(max-width:600px){input,textarea,select{font-size:16px!important}button,.match-tile,.memo-card{min-height:44px}.actions-row{flex-wrap:wrap}body{overflow-wrap:anywhere}.table-scroll table{min-width:320px}}
+/* Constrain columns, not the page: wide tables remain independently scrollable. */
+@media(max-width:640px){
+ .table-scroll{width:100%;min-width:0;max-width:100%;overscroll-behavior-x:contain}
+ .gram-tables{grid-template-columns:minmax(0,1fr)}
+ .gram-tables>*,.gram-box{min-width:0;max-width:100%}
+ .gram-box{padding:18px 14px!important}
+ .gram-box div{min-width:0;max-width:100%}
+ .section .content [style*="flex:"]{min-width:0!important;max-width:100%}
+ #presentation [style*="white-space:nowrap"]{white-space:normal!important}
+ .pic-slot,.cue-card{max-width:100%;transform:none!important}
+ .vtop{flex-wrap:wrap}
+ .vtop .t{white-space:normal;min-width:0;flex:1 1 180px;overflow-wrap:anywhere}
+ .vtop .vbar{min-width:0;flex:1 1 80px}
+ .vtop .vscore{flex-shrink:0}
+ .vpanel,.vwrap,.qrow>div{min-width:0;max-width:100%}
+ .vpanel [style*="min-width"]{min-width:0!important;max-width:100%}
+}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 `;document.head.appendChild(style);
 for(const table of document.querySelectorAll('table')){const wrap=document.createElement('div');wrap.className='table-scroll';table.replaceWith(wrap);wrap.appendChild(table);}
