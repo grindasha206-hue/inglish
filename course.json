@@ -903,6 +903,33 @@
               "file": "lessons/itogovyi-test-adjectives.html"
             }
           ]
+        },
+        {
+          "id": "modul-19",
+          "title": "Модуль 19",
+          "lessons": [
+            {
+              "id": "urok-word-order-1",
+              "unit": 1,
+              "title": "word order 1",
+              "description": "Глагол + дополнение; место + время",
+              "file": "lessons/urok-word-order-1.html"
+            },
+            {
+              "id": "urok-always-usually",
+              "unit": 2,
+              "title": "always/usually/often (word order 2)",
+              "description": "Где стоят always, never, often и др.",
+              "file": "lessons/urok-always-usually.html"
+            },
+            {
+              "id": "urok-still-yet-already",
+              "unit": 3,
+              "title": "still, yet, already",
+              "description": "still / yet / already",
+              "file": "lessons/urok-still-yet-already.html"
+            }
+          ]
         }
       ]
     },
