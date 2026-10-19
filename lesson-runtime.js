@@ -182,6 +182,8 @@ const style=document.createElement('style');style.textContent=`
  .vtop .vscore{flex-shrink:0}
  .vpanel,.vwrap,.qrow>div{min-width:0;max-width:100%}
  .vpanel [style*="min-width"]{min-width:0!important;max-width:100%}
+ .gap-row>span:not(.num){min-width:0;max-width:100%}
+ .gap-row .gap{max-width:calc(100% - 8px)}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 `;document.head.appendChild(style);
