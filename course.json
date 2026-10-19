@@ -1328,6 +1328,19 @@
               "file": "lessons/vocab-24-music.html"
             }
           ]
+        },
+        {
+          "id": "voc-modul-5",
+          "title": "Модуль 5 · The world",
+          "lessons": [
+            {
+              "id": "vocab-25-countries",
+              "unit": 25,
+              "title": "Countries and nationalities",
+              "description": "Страны и национальности",
+              "file": "lessons/vocab-25-countries.html"
+            }
+          ]
         }
       ]
     },
