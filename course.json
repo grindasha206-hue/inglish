@@ -1136,7 +1136,21 @@
       "id": "vocab-a2",
       "code": "VOC",
       "name": "Vocabulary · Elementary",
-      "modules": []
+      "modules": [
+        {
+          "id": "voc-modul-1",
+          "title": "Модуль 1 · People",
+          "lessons": [
+            {
+              "id": "vocab-1-family",
+              "unit": 1,
+              "title": "The family",
+              "description": "Семья: родственники, семейное дерево",
+              "file": "lessons/vocab-1-family.html"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "b1",
