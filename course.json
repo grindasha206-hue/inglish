@@ -1250,6 +1250,13 @@
               "title": "Jobs",
               "description": "Профессии",
               "file": "lessons/vocab-14-jobs.html"
+            },
+            {
+              "id": "vocab-15-school-and-university",
+              "unit": 15,
+              "title": "At school and university",
+              "description": "Школа и университет",
+              "file": "lessons/vocab-15-school-and-university.html"
             }
           ]
         }
