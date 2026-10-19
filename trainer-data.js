@@ -1330,6 +1330,12 @@ const T=[
   items:[C('I met a woman ___ can speak six languages.','who','which','what'),C('An airplane is a machine ___ flies.','which','who','what'),O('A thief is a person who steals things.')]},
   {id:102,title:'the people we met',emoji:'🏨',rule:"Когда who/that/which — дополнение, их можно опустить: the bag (that) he is carrying, the people (who) we met. Не повторяем it/them: The film we saw was good (не we saw it). Предлог в конце: the hotel we stayed at, the books I told you about. = the hotel where we stayed. Если подлежащее — who/that обязательны: a woman who can speak…",
   items:[C('The hotel we stayed ___ was near the station.','at','in it','—'),O('The people we met were very friendly.')]},
+  {id:103,title:'at / on / in (time)',emoji:'🕗',rule:"at + время (at 8 o'clock, at midnight); on + день/дата (on Friday, on 25 April, on Monday morning); in + месяц/год/сезон (in April, in 1995, in spring) и in the morning/evening. at the weekend, at night, at Christmas, at the end of, at the moment. Без предлога: this/last/next/every … in five minutes = через пять минут.",
+  items:[C("___ 8 o'clock",'at','on','in'),C('___ Friday','on','in','at'),C('___ April','in','on','at'),O("I'll see you on Friday.")]},
+  {id:104,title:'from … to / until / since / for',emoji:'📆',rule:"from … to (until) = с … до: I work from Monday to Friday. until/till = до (момента): Wait here until I come back. since + момент в прошлом (с present perfect): He has been here since Monday. for + период: for three days, for ten years (не since three days).",
+  items:[C('He has been in hospital ___ Monday.','since','for','until'),C('He has been in hospital ___ three days.','for','since','until'),O('Wait here until I come back.')]},
+  {id:105,title:'before / after / during / while',emoji:'🎬',rule:"before/during/after + существительное: during the film. while + глагол: while I'm reading (не during we were eating). for + период: for two hours (не during two hours). before/after + -ing: before going, after doing (не before to go).",
+  items:[C('I fell asleep ___ the film.','during','while','for'),C('I fell asleep ___ I was reading.','while','during','for'),O('After doing the shopping, they went home.')]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),

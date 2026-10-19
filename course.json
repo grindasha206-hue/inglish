@@ -999,6 +999,33 @@
               "file": "lessons/itogovyi-test-final-m20.html"
             }
           ]
+        },
+        {
+          "id": "modul-21",
+          "title": "Модуль 21",
+          "lessons": [
+            {
+              "id": "urok-at-on-in-time",
+              "unit": 1,
+              "title": "at 8 o'clock, on Monday, in April",
+              "description": "Предлоги времени at / on / in",
+              "file": "lessons/urok-at-on-in-time.html"
+            },
+            {
+              "id": "urok-from-until-since-for",
+              "unit": 2,
+              "title": "from … to, until, since, for",
+              "description": "Отрезки времени",
+              "file": "lessons/urok-from-until-since-for.html"
+            },
+            {
+              "id": "urok-before-after-during-while",
+              "unit": 3,
+              "title": "before, after, during, while",
+              "description": "during / while / for; before/after + -ing",
+              "file": "lessons/urok-before-after-during-while.html"
+            }
+          ]
         }
       ]
     },
