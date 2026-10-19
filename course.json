@@ -1298,6 +1298,13 @@
               "title": "Eating out",
               "description": "Еда вне дома",
               "file": "lessons/vocab-20-eating-out.html"
+            },
+            {
+              "id": "vocab-21-sports",
+              "unit": 21,
+              "title": "Sports",
+              "description": "Спорт",
+              "file": "lessons/vocab-21-sports.html"
             }
           ]
         }
