@@ -1342,6 +1342,12 @@ const T=[
   items:[C("She's ___ bed.",'in','at','on'),C("She's ___ work.",'at','in','on'),C('Did you come ___ the bus?','on','in','at'),O('I met Anna on the way home.')]},
   {id:108,title:'to / in / at (places 3)',emoji:'🧭',rule:"go/come/walk TO (движение): go to London, go to bed, go to work. be/stay/do IN/AT (место): in London, in bed, at work, at the airport. go home (без to), но stay at home. arrive in + страна/город; arrive at + другие места; get to + место; get home / arrive home без предлога.",
   items:[C('We are going ___ London.','to','in','at'),C('My brother lives ___ Italy.','in','to','at'),C("I'm going ___.",'home','to home','at home'),O('They arrived in this country last week.')]},
+  {id:109,title:'next to / between / opposite …',emoji:'🧍',rule:"next to = beside (рядом), between (между), in front of (перед), behind (позади), on the left/right, in the middle, opposite (напротив), by (= next to: by the window), under (под), above (выше), below (ниже).",
+  items:[C('B is ___ A and C.','between','behind','above'),C('The cat is ___ the table.','under','above','between'),O('A is sitting opposite C.')]},
+  {id:110,title:'up / over / through …',emoji:'🧭',rule:"Движение: to/from, into/out of (put in), on/off, up/down, over/under, through (сквозь), round/around (вокруг, за углом), along (вдоль), across (поперёк, на другую сторону), past (мимо).",
+  items:[C('The dog swam ___ the river.','across','along','past'),C('We jumped ___ the water.','into','out of','off'),O('The bus stop is just round the corner.')]},
+  {id:111,title:'on / at / by / with / about',emoji:'🚲',rule:"on holiday, on TV, on the radio, on the phone, on fire, on time. at 21 / at the age of 21, at 100 km an hour, at 100 degrees. by car/bus/train/bike, но on foot; a book by Dickens; пассив: bitten by a dog. with/without: with milk, with scissors, a man with a beard. talk/know about; a programme about …",
+  items:[C('She goes to work ___ bike.','by','with','on'),C('Lisa got married ___ 21.','at','on','by'),C('a man ___ a beard','with','by','on'),O('The train was on time.')]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),

@@ -1045,6 +1045,27 @@
               "title": "to, in, at (places 3)",
               "description": "to / in / at; home; arrive, get",
               "file": "lessons/urok-to-in-at.html"
+            },
+            {
+              "id": "urok-under-behind-opposite",
+              "unit": 7,
+              "title": "under, behind, opposite etc.",
+              "description": "Предлоги места: next to, between, opposite …",
+              "file": "lessons/urok-under-behind-opposite.html"
+            },
+            {
+              "id": "urok-up-over-through",
+              "unit": 8,
+              "title": "up, over, through etc.",
+              "description": "Предлоги движения",
+              "file": "lessons/urok-up-over-through.html"
+            },
+            {
+              "id": "urok-on-at-by-with-about",
+              "unit": 9,
+              "title": "on, at, by, with, about",
+              "description": "on holiday, by bus, with a beard …",
+              "file": "lessons/urok-on-at-by-with-about.html"
             }
           ]
         }
