@@ -1175,6 +1175,13 @@
               "title": "Describing people",
               "description": "Внешность: рост, вес, лицо, возраст",
               "file": "lessons/vocab-5-describing-people.html"
+            },
+            {
+              "id": "vocab-6-health-and-illness",
+              "unit": 6,
+              "title": "Health and illness",
+              "description": "Здоровье и болезни",
+              "file": "lessons/vocab-6-health-and-illness.html"
             }
           ]
         }
