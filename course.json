@@ -1277,6 +1277,13 @@
               "title": "Holidays",
               "description": "Отпуск и путешествия",
               "file": "lessons/vocab-17-holidays.html"
+            },
+            {
+              "id": "vocab-18-shops-and-shopping",
+              "unit": 18,
+              "title": "Shops and shopping",
+              "description": "Магазины и покупки",
+              "file": "lessons/vocab-18-shops-and-shopping.html"
             }
           ]
         }
