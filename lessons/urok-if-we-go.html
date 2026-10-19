@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 99 · If we go … If you see …</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Comfortaa:wght@500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --cream:#FDF4F1; --paper:#FFFDFB; --ink:#3A2E33; --ink-soft:#6B5A61;
+  --brick:#BE456F; --brick-dark:#8F2E52; --tab:#C4507A; --tab-dark:#9E3460;
+  --sage:#4F8F6D; --sage-bg:#E6F1EA; --coral:#D65B4A; --coral-bg:#FBE7E3;
+  --gold:#E8A0B4; --line:#F1D9DF; --shadow: 0 6px 18px rgba(150,80,100,0.10);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; background:radial-gradient(circle at 15% 8%, rgba(232,160,180,0.10), transparent 40%), var(--cream); color:var(--ink); font-family:'Nunito', sans-serif; line-height:1.55; padding-bottom:80px;}
+h1,h2,h3,.display{font-family:'Comfortaa',sans-serif;}
+
+.topbar{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:1px solid var(--line); padding:10px 18px; display:flex; align-items:center; gap:14px; box-shadow:0 2px 10px rgba(0,0,0,0.04);}
+.topbar .book-title{font-family:'Comfortaa',sans-serif; font-weight:700; font-size:15px; color:var(--brick-dark); white-space:nowrap;}
+.progress-steps{display:flex; gap:5px; flex:1; align-items:center;}
+.pstep{flex:1; height:8px; border-radius:6px; background:var(--line); position:relative; overflow:hidden;}
+.pstep i{display:block; height:100%; width:0%; border-radius:6px; background:linear-gradient(90deg, var(--tab), var(--brick)); transition:width .5s ease;}
+.score-pill{font-size:13px; font-weight:700; background:var(--sage-bg); color:var(--sage); padding:5px 12px; border-radius:20px; white-space:nowrap;}
+
+.page{max-width:900px; margin:26px auto; background:var(--paper); border-radius:4px; box-shadow:var(--shadow); border:1px solid var(--line); overflow:hidden;}
+
+.unit-banner{background:linear-gradient(135deg, var(--brick) 0%, var(--brick-dark) 100%); color:#fff; padding:26px 30px 22px 96px; position:relative;}
+.unit-tag{position:absolute; left:0; top:0; bottom:0; width:76px; background:var(--brick-dark); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Comfortaa',sans-serif; border-right:2px solid rgba(255,255,255,0.15);}
+.unit-tag .u{font-size:11px; letter-spacing:2px; opacity:.75;}
+.unit-tag .n{font-size:30px; font-weight:800;}
+.unit-banner h1{margin:0; font-size:27px; font-weight:800; letter-spacing:.3px;}
+.unit-banner p{margin:6px 0 0; opacity:.9; font-size:14.5px;}
+
+.section{display:flex; border-top:1px solid var(--line);}
+.section .tab{width:56px; flex-shrink:0; background:var(--tab); color:#fff; font-family:'Comfortaa',sans-serif; font-weight:800; font-size:20px; display:flex; align-items:flex-start; justify-content:center; padding-top:22px;}
+.section.alt .tab{background:var(--tab-dark);}
+.section .content{padding:24px 28px 30px; flex:1; min-width:0;}
+.section h2{margin:0 0 4px; font-size:22px; color:var(--brick-dark);}
+.eyebrow{font-size:11.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-soft); font-weight:700; margin-bottom:4px;}
+.section p.lead{color:var(--ink-soft); margin-top:4px; font-size:14.5px;}
+
+.dialog-wrap{display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; margin:18px 0 6px;}
+.dialog-figure{width:110px; text-align:center; flex-shrink:0;}
+.dialog-avatar{width:96px; height:120px; margin:0 auto;}
+.dialog-avatar svg{width:100%; height:100%;}
+.dialog-figure .name{font-family:'Comfortaa',sans-serif; font-weight:700; font-size:12.5px; letter-spacing:1px; color:var(--brick-dark); margin-top:4px;}
+.dialog-bubbles{display:flex; flex-direction:column; gap:8px; flex:1; min-width:260px; max-width:420px;}
+.d-bubble{background:#fff; border:1.5px solid var(--line); border-radius:16px; padding:8px 14px; font-size:13.5px; box-shadow:0 3px 8px rgba(0,0,0,0.05);}
+.d-bubble.q{border-color:var(--tab);}
+.d-bubble.a{align-self:flex-end; background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.d-bubble b{color:var(--brick-dark);}
+.d-bubble.a b{color:var(--sage);}
+
+.gram-tables{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:22px;}
+@media(max-width:620px){.gram-tables{grid-template-columns:1fr;}}
+.gram-box h3{font-size:13px; text-transform:uppercase; letter-spacing:1px; color:var(--ink-soft); margin:0 0 8px;}
+table.formtable{width:100%; border-collapse:collapse; font-size:13.5px; background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;}
+table.formtable td{padding:7px 10px; border-bottom:1px solid var(--line);}
+table.formtable tr:last-child td{border-bottom:none;}
+table.formtable td.pron{color:var(--ink-soft); width:34%;}
+table.formtable td.verb{font-weight:700; color:var(--brick-dark);}
+table.formtable td.short{color:var(--ink-soft); font-style:italic;}
+
+.chunk{background:linear-gradient(180deg, transparent 60%, rgba(196,80,122,0.35) 60%); font-weight:700; color:var(--brick-dark); padding:0 1px;}
+
+.mini-note{margin-top:16px; background:var(--sage-bg); border-left:3px solid var(--sage); padding:10px 14px; border-radius:6px; font-size:13.5px; color:#2f5741;}
+.mini-note b{color:var(--sage);}
+.mini-note i{color:var(--ink-soft); font-style:italic;}
+.mini-note.warn{background:var(--coral-bg); border-left-color:var(--coral); color:#7A2848;}
+.mini-note.warn b{color:var(--coral);}
+
+.vocab-table{margin-top:14px; display:flex; flex-direction:column; gap:8px;}
+.vocab-row{display:grid; grid-template-columns:auto 1fr auto auto; align-items:center; gap:12px; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:9px 14px;}
+@media(max-width:560px){.vocab-row{grid-template-columns:1fr; gap:4px;}}
+.vocab-word{font-weight:800; color:var(--brick-dark); font-size:14.5px; font-family:'Comfortaa',sans-serif;}
+.vocab-ipa{font-size:12.5px; color:var(--tab-dark); font-style:italic;}
+.vocab-ru{font-size:13.5px; color:var(--ink-soft);}
+.chunk-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px;}
+@media(max-width:600px){.chunk-grid{grid-template-columns:1fr;}}
+.chunk-row{display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--cream); border:1.5px dashed var(--gold); border-radius:10px; padding:9px 14px;}
+.chunk-en{font-weight:800; color:var(--brick-dark); font-size:14px; display:block;}
+.chunk-ipa{font-size:11.5px; color:var(--tab-dark); font-style:italic; display:block; margin-top:1px;}
+.chunk-ru{font-size:12.5px; color:var(--ink-soft); display:block; margin-top:1px; font-weight:400;}
+
+.game-tabs{display:flex; gap:8px; margin:18px 0 20px; flex-wrap:wrap;}
+.game-tab-btn{border:1.5px solid var(--line); background:#fff; color:var(--ink-soft); padding:8px 16px; border-radius:20px; font-family:'Nunito'; font-weight:700; font-size:13px; cursor:pointer; transition:.2s;}
+.game-tab-btn.active{background:var(--tab); color:#fff; border-color:var(--tab-dark);}
+.game-panel{display:none;}
+.game-panel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
+
+.fill-item{display:flex; align-items:flex-start; gap:10px; flex-wrap:wrap; padding:12px 4px; border-bottom:1px dashed var(--line);}
+.fill-item:last-child{border-bottom:none;}
+.fill-num{width:22px; height:22px; border-radius:50%; background:var(--cream); border:1px solid var(--line); font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; color:var(--ink-soft); flex-shrink:0; margin-top:3px;}
+.fill-body{flex:1; min-width:220px;}
+.fill-words{font-size:13px; color:var(--ink-soft); margin-bottom:6px; font-style:italic;}
+.blank-input{width:130px; padding:5px 8px; border:1.5px solid var(--line); border-radius:6px; font-family:'Nunito'; font-weight:700; font-size:14px; text-align:center; background:#FFFDFB; color:var(--brick-dark);}
+.blank-input:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.blank-input.correct{border-color:var(--sage); background:var(--sage-bg); color:#2f5741;}
+.blank-input.wrong{border-color:var(--coral); background:var(--coral-bg); color:var(--coral);}
+.fill-fb{font-size:16px; margin-top:6px;}
+
+.btn{border:none; cursor:pointer; font-family:'Nunito'; font-weight:800; padding:10px 20px; border-radius:24px; font-size:14px; letter-spacing:.2px; background:var(--brick); color:#fff; box-shadow:0 4px 10px rgba(190,69,111,0.25); transition:.15s;}
+.btn:hover{transform:translateY(-1px); box-shadow:0 6px 14px rgba(190,69,111,0.32);}
+.btn.secondary{background:transparent; color:var(--brick); border:1.5px solid var(--brick); box-shadow:none;}
+.btn.small{padding:6px 14px; font-size:12.5px;}
+.actions-row{display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; align-items:center;}
+.fb-line{font-size:13.5px; font-weight:700; color:var(--ink-soft);}
+
+.memo-wrap{display:flex; flex-direction:column; align-items:center; gap:14px;}
+.memo-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; max-width:520px; width:100%;}
+@media(max-width:500px){.memo-grid{grid-template-columns:repeat(3,1fr);}}
+.memo-card{aspect-ratio:1/1; border-radius:10px; cursor:pointer; position:relative; perspective:600px;}
+.memo-inner{width:100%; height:100%; position:relative; transform-style:preserve-3d; transition:transform .45s;}
+.memo-card.flipped .memo-inner, .memo-card.matched .memo-inner{transform:rotateY(180deg);}
+.memo-face{position:absolute; inset:0; border-radius:10px; display:flex; align-items:center; justify-content:center; backface-visibility:hidden; font-weight:800; text-align:center; padding:4px; font-size:12.5px;}
+.memo-face.back{background:linear-gradient(135deg, var(--tab), var(--tab-dark)); color:#fff; font-family:'Comfortaa',sans-serif; font-size:22px;}
+.memo-face.front{background:#fff; border:2px solid var(--line); color:var(--brick-dark); transform:rotateY(180deg);}
+.memo-card.matched .memo-face.front{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.memo-status{font-size:13.5px; color:var(--ink-soft); font-weight:700;}
+
+.quiz-q{margin-bottom:18px;}
+.quiz-q p{font-weight:700; margin:0 0 8px; font-size:14.5px;}
+.quiz-opts{display:flex; gap:8px; flex-wrap:wrap;}
+.quiz-opt{border:1.5px solid var(--line); background:#fff; padding:7px 15px; border-radius:20px; font-weight:700; font-size:13.5px; cursor:pointer; color:var(--ink);}
+.quiz-opt.sel-correct{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.quiz-opt.sel-wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+.quiz-opt.reveal-correct{border-color:var(--sage); box-shadow:inset 0 0 0 1px var(--sage);}
+
+.match-wrap{display:flex; gap:14px; max-width:520px; margin:0 auto;}
+.match-col{flex:1; display:flex; flex-direction:column; gap:8px;}
+.match-tile{background:#fff; border:1.5px solid var(--line); border-radius:8px; padding:9px 12px; font-size:13.5px; font-weight:700; cursor:pointer; text-align:center; color:var(--ink); transition:.15s;}
+.match-tile.selected{border-color:var(--tab); background:var(--cream); box-shadow:inset 0 0 0 1.5px var(--tab);}
+.match-tile.matched{background:var(--sage-bg); border-color:var(--sage); color:#2f5741; cursor:default;}
+.match-tile.wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+
+.read-text{background:#fff; border:1.5px solid var(--line); border-radius:14px; padding:18px 20px; margin:16px 0; font-size:14.5px;}
+.read-text p{margin:0 0 10px;}
+.read-text p:last-child{margin-bottom:0;}
+.tf-item{display:flex; align-items:center; justify-content:space-between; gap:10px; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:9px 14px; margin-bottom:8px;}
+.tf-text{font-size:13.5px; flex:1;}
+.tf-btns{display:flex; gap:6px; flex-shrink:0;}
+.tf-btn{border:1.5px solid var(--line); background:var(--cream); padding:5px 12px; border-radius:16px; font-weight:800; font-size:12.5px; cursor:pointer; color:var(--ink-soft);}
+.tf-btn.sel-correct{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.tf-btn.sel-wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+.tf-btn.reveal-correct{box-shadow:inset 0 0 0 1px var(--sage); border-color:var(--sage);}
+
+.tts-warn{display:none; font-size:12.5px; color:var(--coral); background:var(--coral-bg); padding:8px 12px; border-radius:6px; margin:8px 0 0;}
+.tts-warn.shown{display:block;}
+.voice-picker{display:flex; align-items:center; gap:8px; flex-wrap:wrap; background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:8px 12px; margin-top:10px; font-size:13px;}
+.voice-picker label{font-weight:700; color:var(--ink-soft);}
+.voice-picker select{border:1.5px solid var(--line); border-radius:6px; padding:4px 8px; font-family:'Nunito'; font-size:13px; background:#fff; color:var(--ink); max-width:220px;}
+.voice-hint{font-size:11.5px; color:var(--ink-soft); flex-basis:100%;}
+.sound-block{margin-top:22px; padding-top:16px; border-top:1px dashed var(--line);}
+.sound-block:first-of-type{border-top:none; margin-top:16px;}
+.sound-block h3{font-size:15.5px; margin:0 0 6px; color:var(--brick-dark); font-weight:700;}
+.ipa{font-family:'Nunito'; font-weight:500; font-size:12px; color:var(--ink-soft); font-style:italic;}
+.sound-note{font-size:13.5px; color:var(--ink-soft); margin:0 0 12px;}
+.sound-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+.sound-grid.three{grid-template-columns:repeat(3,1fr);}
+@media(max-width:600px){.sound-grid, .sound-grid.three{grid-template-columns:1fr;}}
+.sound-pair{background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px;}
+.sound-pair.wide{grid-column:1/-1;}
+.sp-text{font-size:14.5px; font-weight:600; flex:1;}
+.sp-text.big{font-size:19px; text-align:center; font-family:'Comfortaa',sans-serif; color:var(--brick-dark);}
+.sp-controls{display:flex; gap:6px; flex-shrink:0;}
+.play-btn{border:1.5px solid var(--line); background:var(--cream); cursor:pointer; border-radius:8px; padding:6px 10px; font-size:15px; line-height:1; transition:.15s;}
+.play-btn:hover{background:var(--tab); border-color:var(--tab-dark);}
+.play-btn.playing{background:var(--brick); border-color:var(--brick-dark);}
+b.stress{color:var(--brick-dark); text-decoration:underline; text-decoration-color:var(--gold); text-decoration-thickness:2px; text-underline-offset:3px;}
+
+.prompt-list{list-style:none; padding:0; margin:14px 0; display:grid; gap:8px;}
+.prompt-list li{background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:8px 12px; font-size:13.5px; display:flex; gap:8px; align-items:baseline;}
+.prompt-list li b{color:var(--brick-dark); font-family:'Comfortaa',sans-serif;}
+textarea.write-area{width:100%; min-height:140px; border:1.5px solid var(--line); border-radius:10px; padding:14px; font-family:'Nunito'; font-size:14.5px; color:var(--ink); background:#FFFDFB; resize:vertical;}
+textarea.write-area:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.word-count{font-size:12.5px; color:var(--ink-soft); margin-top:6px;}
+.cue-cards{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;}
+.cue-card{background:#fff; border:1.5px dashed var(--gold); border-radius:10px; padding:10px 14px; font-size:13px; width:160px; color:var(--ink-soft); font-style:italic;}
+.cue-card b{display:block; font-style:normal; color:var(--brick-dark); font-family:'Comfortaa',sans-serif; font-size:14px; margin-bottom:3px;}
+.reveal-box{margin-top:14px; border-left:3px solid var(--tab); background:var(--cream); padding:12px 16px; border-radius:6px; font-size:13.5px; display:none;}
+.reveal-box.shown{display:block;}
+
+.hw-list{display:flex; flex-direction:column; gap:10px; margin-top:16px;}
+.hw-item{display:flex; gap:10px; align-items:flex-start; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:11px 14px; font-size:13.5px; cursor:pointer; transition:.15s;}
+.hw-item:has(.hw-check:checked){background:var(--sage-bg); border-color:var(--sage);}
+.hw-check{margin-top:3px; width:16px; height:16px; accent-color:var(--sage); flex-shrink:0;}
+.hw-item b{color:var(--brick-dark); font-family:'Comfortaa',sans-serif;}
+.hw-item i{color:var(--ink-soft); font-style:italic;}
+
+@media print{
+  .topbar, .unit-banner, #presentation, #vocabulary, #practice, #reading, #sounds, #production, .badge-final, .footer-note, .no-print{ display:none !important; }
+  body{ background:#fff; padding:0; }
+  .page{ box-shadow:none; border:none; margin:0; max-width:100%; }
+  .section{ border-top:none; }
+  .section .tab{ display:none; }
+  .section .content{ padding:10px; }
+  .hw-item{ break-inside:avoid; }
+}
+
+.footer-note{text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:24px; padding:0 20px;}
+.badge-final{display:none; text-align:center; margin:26px auto 0; max-width:900px; background:linear-gradient(135deg, var(--sage), #3d7357); color:#fff; border-radius:14px; padding:22px; font-family:'Comfortaa',sans-serif; font-size:19px; font-weight:700; box-shadow:var(--shadow);}
+.badge-final.shown{display:block; animation:fadeIn .5s ease;}
+.badge-final span{display:block; font-family:'Nunito'; font-weight:500; font-size:13.5px; margin-top:6px; opacity:.9;}
+
+/* Generated textbook illustrations; contain each complete scene without cropping. */
+.dialog-figure.art-figure{width:148px}
+.lisa-figure.art-figure{width:164px}
+.dialog-avatar.art-avatar{width:144px;height:auto}
+.lisa-avatar.art-avatar{width:160px;height:auto}
+.art-avatar img.lesson-portrait{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--line);box-shadow:0 5px 16px rgba(150,80,100,.10)}
+.scene-box img.lesson-scene{display:block;width:100%;max-width:720px;height:auto;margin:0 auto;border-radius:10px}
+.pic-slot img.lesson-scene{display:block;width:100%;height:auto;max-height:none;object-fit:contain}
+@media(max-width:560px){
+ .dialog-wrap .art-figure{width:112px}
+ .dialog-avatar.art-avatar{width:108px}
+ .dialog-wrap .dialog-bubbles{min-width:0;flex-basis:100%;max-width:none;order:2}
+ .dialog-wrap .dialog-figure:last-child{order:1}
+ .dialog-wrap .dialog-figure:first-child{order:0}
+ .lisa-avatar.art-avatar{width:140px}
+ .scene-box{padding:10px}
+}
+
+</style>
+<link rel="stylesheet" href="../lesson-theme.css"></head>
+<body><div class="topbar">
+  <div class="book-title">Essential Grammar · Unit 99</div>
+  <div class="progress-steps">
+    <div class="pstep" id="step-p"><i id="bar-p"></i></div>
+    <div class="pstep" id="step-vocab"><i id="bar-vocab"></i></div>
+    <div class="pstep" id="step-pr"><i id="bar-pr"></i></div>
+    <div class="pstep" id="step-read"><i id="bar-read"></i></div>
+    <div class="pstep" id="step-sound"><i id="bar-sound"></i></div>
+    <div class="pstep" id="step-listen"><i id="bar-listen"></i></div>
+    <div class="pstep" id="step-prod"><i id="bar-prod"></i></div>
+    <div class="pstep" id="step-hw"><i id="bar-hw"></i></div>
+  </div>
+  <div class="score-pill">★ <span id="scoreDisplay">0</span>/20</div>
+</div>
+
+<div class="page"><div class="unit-banner">
+    <div class="unit-tag"><span class="u">UNIT</span><span class="n">99</span></div>
+    <h1>If we go … · If you see … etc.</h1>
+    <p>if + present; if и when</p>
+  </div><div class="section" id="presentation">
+    <div class="tab">A</div>
+    <div class="content">
+      <div class="eyebrow">Presentation</div>
+      <h2>If we go … · If you see … etc.</h2>
+      <div class="gram-box" style="margin:14px 0"><h3>A · if в начале или в середине</h3><div class="dialog-wrap"><div class="dialog-figure art-figure"><div class="dialog-avatar art-avatar"><img class="lesson-portrait" src="img/david-v1.webp" data-lesson-image="img/david-v1.webp" alt="Дэвид." width="480" height="600" decoding="async"></div><div class="name">DAVID</div></div><div class="dialog-bubbles"><div class="d-bubble q">Shall we go by bus or taxi?</div><div class="d-bubble a"><b>If we go by bus,</b> it will be cheaper.</div></div><div class="dialog-figure art-figure"><div class="dialog-avatar art-avatar"><img class="lesson-portrait" src="img/anna-v1.webp" data-lesson-image="img/anna-v1.webp" alt="Анна в зелёной блузке с кремовым воротником." width="480" height="600" decoding="async"></div><div class="name">ANNA</div></div></div><div class="dialog-wrap"><div class="dialog-figure art-figure"><div class="dialog-avatar art-avatar"><img class="lesson-portrait" src="img/james-v1.webp" data-lesson-image="img/james-v1.webp" alt="Джеймс в терракотовом свитере." width="480" height="600" decoding="async"></div><div class="name"></div></div><div class="dialog-bubbles"><div class="d-bubble q">We'll get there more quickly <b>if we go by taxi</b>.</div></div></div><p><b>If</b> может стоять в начале предложения или в середине:</p><p><b>If</b> в начале</p><div style="display:inline-block;border:1.5px solid #E8879F;padding:4px 8px;margin:6px 0"><div style="overflow-x:auto"><table style="border-collapse:collapse;margin:0;background:#FFFDFB;font-size:15px"><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none;text-align:right"><b>If</b> we go by bus,</td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none">it will be cheaper.</td></tr><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none;text-align:right"><b>If</b> you don't hurry,</td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none">you'll miss the train.</td></tr><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none;text-align:right"><b>If</b> you're hungry,</td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none">have something to eat.</td></tr><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none;text-align:right"><b>If</b> the phone rings,</td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none">can you answer it, please?</td></tr></table></div></div><p><b>if</b> в середине</p><div style="display:inline-block;border:1.5px solid #E8879F;padding:4px 8px;margin:6px 0"><div style="overflow-x:auto"><table style="border-collapse:collapse;margin:0;background:#FFFDFB;font-size:15px"><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;text-align:right;border:none;border-right:1.5px solid #E8879F">It will be cheaper</td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none"><b>if</b> we go by bus.</td></tr><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;text-align:right;border:none;border-right:1.5px solid #E8879F">You'll miss the train</td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none"><b>if</b> you don't hurry.</td></tr><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;text-align:right;border:none;border-right:1.5px solid #E8879F">I'm going to the concert</td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none"><b>if</b> I can get a ticket.</td></tr><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;text-align:right;border:none;border-right:1.5px solid #E8879F">Is it OK</td><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;border:none"><b>if</b> I use your phone?</td></tr></table></div></div><p>В разговоре часто используют только часть с <b>if</b>:</p><ul class="prompt-list"><li><span style="display:block">'Are you going to the concert?' 'Yes, <b>if I can get a ticket</b>.'</span></li></ul></div>
+      <div class="gram-box" style="margin:14px 0"><h3>B · If you see Ann tomorrow … etc.</h3><p>После <b>if</b> используем <b>present</b> (не <b>will</b>). Говорим '<b>if you see</b> …' <i>(не if you will see)</i>:</p><ul class="prompt-list"><li><span style="display:block"><b>If you see</b> Ann tomorrow, can you ask her to call me?</span></li><li><span style="display:block"><b>If I'm</b> late this evening, don't wait for me. <i>(не if I will be)</i></span></li><li><span style="display:block">What shall we do <b>if it rains</b>? <i>(не if it will rain)</i></span></li><li><span style="display:block"><b>If I don't feel</b> well tomorrow, I'll stay at home.</span></li></ul></div>
+      <div class="gram-box" style="margin:14px 0"><h3>C · if и when</h3><p><b>If I go out</b> = возможно, я выйду, но я не уверен:</p><div class="dialog-wrap"><div class="dialog-figure art-figure"><div class="dialog-avatar art-avatar"><img class="lesson-portrait" src="img/anna-v1.webp" data-lesson-image="img/anna-v1.webp" alt="Анна в зелёной блузке с кремовым воротником." width="480" height="600" decoding="async"></div><div class="name">ANNA</div></div><div class="dialog-bubbles"><div class="d-bubble q">Are you going out later?</div><div class="d-bubble a">Maybe. <b>If I go out</b>, I'll close the windows.</div></div><div class="dialog-figure art-figure"><div class="dialog-avatar art-avatar"><img class="lesson-portrait" src="img/tom-v1.webp" data-lesson-image="img/tom-v1.webp" alt="Том." width="480" height="600" decoding="async"></div><div class="name">TOM</div></div></div><p><b>When I go out</b> = я выхожу (точно):</p><div class="dialog-wrap"><div class="dialog-figure art-figure"><div class="dialog-avatar art-avatar"><img class="lesson-portrait" src="img/anna-v1.webp" data-lesson-image="img/anna-v1.webp" alt="Анна в зелёной блузке с кремовым воротником." width="480" height="600" decoding="async"></div><div class="name">ANNA</div></div><div class="dialog-bubbles"><div class="d-bubble q">Are you going out later?</div><div class="d-bubble a">Yes, I am. <b>When I go out</b>, I'll close the windows.</div></div><div class="dialog-figure art-figure"><div class="dialog-avatar art-avatar"><img class="lesson-portrait" src="img/tom-v1.webp" data-lesson-image="img/tom-v1.webp" alt="Том." width="480" height="600" decoding="async"></div><div class="name">TOM</div></div></div><p>Сравните <b>when</b> и <b>if</b>:</p><ul class="prompt-list"><li><span style="display:block"><b>When</b> I get home this evening, I'm going to have a shower.</span></li><li><span style="display:block"><b>If</b> I'm late this evening, don't wait for me. <i>(не When I'm late)</i></span></li><li><span style="display:block">We're going to play tennis <b>if</b> it doesn't rain. <i>(не when it doesn't rain)</i></span></li></ul><p><span style="color:#9A8790;font-size:13px;white-space:nowrap">→ when — Unit 98 · if I had / if we went … etc. — Unit 100</span></p></div>
+    </div>
+  </div><div class="section" id="vocabulary"><div class="tab">B</div><div class="content"><div class="eyebrow">Vocabulary</div><h2>Новые слова этого урока</h2><p class="lead">Нажмите на динамик, чтобы услышать слово. Все слова встретятся дальше в чтении и упражнениях.</p><div id="vocabTable" class="vocab-table"></div><h3>Соседи слов <span class="ipa">chunks / collocations</span></h3><p class="sound-note">Учите сочетаниями: так слова легче вспоминаются в речи.</p><div id="chunkGrid" class="chunk-grid"></div></div></div><div class="section" id="practice">
+    <div class="tab">C</div>
+    <div class="content">
+      <div class="eyebrow">Practice</div>
+      <h2>Тренируемся</h2>
+      <p class="lead">Выберите игру и заработайте звёзды ★. Ответы проверяются сразу.</p>
+      <div class="game-tabs">
+        <button class="game-tab-btn active" data-panel="panel-fill">✏️ if / when</button>
+        <button class="game-tab-btn" data-panel="panel-memo">🃏 Мемо</button>
+        <button class="game-tab-btn" data-panel="panel-quiz">⚡ Квиз</button>
+        <button class="game-tab-btn" data-panel="panel-vocabmatch">📚 Лексика</button>
+      </div>
+      <div class="game-panel active" id="panel-fill">
+        <p class="lead" style="margin-top:0">Впишите слово.</p>
+        <div id="fillList"></div>
+        <div class="actions-row">
+          <button class="btn" id="checkFillBtn">Проверить</button>
+          <button class="btn secondary small" id="resetFillBtn">Сбросить</button>
+          <span class="fb-line" id="fillFeedback"></span>
+        </div>
+      </div>
+      <div class="game-panel" id="panel-memo">
+        <p class="lead" style="margin-top:0">Найдите пары: английское слово и его русский перевод.</p>
+        <div class="memo-wrap">
+          <div class="memo-grid" id="memoGrid"></div>
+          <div class="memo-status" id="memoStatus">Найдено пар: 0 / 6</div>
+          <button class="btn secondary small" id="restartMemoBtn">Перемешать заново</button>
+        </div>
+      </div>
+      <div class="game-panel" id="panel-quiz">
+        <div id="quizList"></div>
+        <div class="actions-row"><span class="fb-line" id="quizFeedback"></span></div>
+      </div>
+      <div class="game-panel" id="panel-vocabmatch">
+        <p class="lead" style="margin-top:0">Нажмите на английское слово, затем на его перевод.</p>
+        <div class="match-wrap">
+          <div class="match-col" id="matchEnCol"></div>
+          <div class="match-col" id="matchRuCol"></div>
+        </div>
+        <div class="actions-row">
+          <span class="fb-line" id="matchStatus">Найдено пар: 0 / 10</span>
+          <button class="btn secondary small" id="restartMatchBtn">Перемешать заново</button>
+        </div>
+      </div>
+    </div>
+  </div><div class="section alt" id="reading">
+    <div class="tab">D</div>
+    <div class="content"><div class="actions-row"><button class="btn secondary small" id="playReadingBtn">🔊 Прослушать текст</button><button class="btn secondary stop-audio">Остановить</button></div>
+      <div class="eyebrow">Reading</div>
+      <h2>Tina's exam</h2>
+      <p class="lead">Найдите предложения с if и when.</p>
+      <div class="read-text"><p>Tina has an exam next week. If she passes it, she'll get a <span class="chunk">certificate</span>. If she fails, she can do it again in June.</p><p>Her friends want to have a <span class="chunk">picnic</span> on Saturday. 'We can go to the <span class="chunk">beach</span> tomorrow if the <span class="chunk">weather</span> is good,' says Mark.</p><p>'I'll come if I have time,' says Tina. 'But if I don't finish my homework, I'll stay at home.'</p><p>'When you finish the exam, we'll have a big party!' says Mark. 'And if it rains, we'll have it at my flat.'</p></div>
+    <h3>1 · True / False</h3><div id="tfList"></div><div class="fb-line" id="tfFeedback"></div><h3>2 · Экзамен Тины</h3><p class="sound-note">Впишите слово.</p><div id="tomFillList"></div><div class="actions-row"><button class="btn small" id="checkTomBtn">Проверить</button><span class="fb-line" id="tomFeedback"></span></div><h3>3 · Слова из текста</h3><div id="readFillList"></div><div class="actions-row"><button class="btn small" id="checkReadFillBtn">Проверить</button><span class="fb-line" id="readFillFeedback"></span></div>
+  </div></div><div class="section" id="sounds">
+    <div class="tab">E</div>
+    <div class="content"><p class="mini-note">Синтезированный голос помогает прочитать фразы, но не гарантирует точную интонацию. Повторяйте за ним и сравнивайте.</p>
+      <div class="eyebrow">Sounds &amp; Speech</div>
+      <h2>If … на слух</h2>
+      <p class="lead">Слушайте и повторяйте.</p>
+      <p class="tts-warn" id="ttsWarn"></p>
+      <div class="sound-block"><h3>1 · If …,</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">If we go by bus, it will be cheaper.</div><div class="sp-controls"><button class="play-btn" data-text="If we go by bus, it will be cheaper." data-rate="1">🔊</button><button class="play-btn slow" data-text="If we go by bus, it will be cheaper." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">If you don't hurry, you'll miss the train.</div><div class="sp-controls"><button class="play-btn" data-text="If you don&#x27;t hurry, you&#x27;ll miss the train." data-rate="1">🔊</button><button class="play-btn slow" data-text="If you don&#x27;t hurry, you&#x27;ll miss the train." data-rate="0.6">🐢</button></div></div></div></div><div class="sound-block"><h3>2 · if + present</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">If I'm late this evening, don't wait for me.</div><div class="sp-controls"><button class="play-btn" data-text="If I&#x27;m late this evening, don&#x27;t wait for me." data-rate="1">🔊</button><button class="play-btn slow" data-text="If I&#x27;m late this evening, don&#x27;t wait for me." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">What shall we do if it rains?</div><div class="sp-controls"><button class="play-btn" data-text="What shall we do if it rains?" data-rate="1">🔊</button><button class="play-btn slow" data-text="What shall we do if it rains?" data-rate="0.6">🐢</button></div></div></div></div><div class="sound-block"><h3>3 · if / when</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">If I go out, I'll close the windows.</div><div class="sp-controls"><button class="play-btn" data-text="If I go out, I&#x27;ll close the windows." data-rate="1">🔊</button><button class="play-btn slow" data-text="If I go out, I&#x27;ll close the windows." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">When I go out, I'll close the windows.</div><div class="sp-controls"><button class="play-btn" data-text="When I go out, I&#x27;ll close the windows." data-rate="1">🔊</button><button class="play-btn slow" data-text="When I go out, I&#x27;ll close the windows." data-rate="0.6">🐢</button></div></div></div></div>
+      <div class="actions-row">
+        <button class="btn secondary small" id="playAllBtn">🔊 Прослушать всё подряд</button>
+      </div>
+    </div>
+  </div><div class="section alt" id="listening">
+    <div class="tab">F</div>
+    <div class="content">
+      <div class="eyebrow">Listening</div>
+      <h2>Слушаем вслепую</h2>
+      <p class="lead">Концерт в пятницу.</p>
+      <div class="speed-picker">
+        <label>Скорость:</label>
+        <div class="speed-btns">
+          <button class="speed-btn" data-rate="0.6">🐢 Медленно</button>
+          <button class="speed-btn active" data-rate="0.95">🔊 Обычно</button>
+        </div>
+      </div>
+      <div class="actions-row">
+        <button class="btn secondary stop-audio">Остановить</button>
+        <button class="btn" id="playListeningBtn">▶️ Слушать диалог</button>
+      </div>
+      <h3 style="font-size:14.5px; margin:18px 0 8px; color:var(--brick-dark);">Вопросы по прослушанному</h3>
+      <div id="lsList"></div>
+      <div class="actions-row"><span class="fb-line" id="lsFeedback"></span></div>
+      <div class="actions-row">
+        <button class="btn secondary small" id="toggleScriptBtn" disabled="">📜 Скрипт — после ответов на все вопросы</button>
+      </div>
+      <div class="reveal-box" id="scriptBox">Are you going to the concert on Friday?
+Yes, if I can get a ticket.
+If you see Ann, can you ask her to call me?
+Sure. When I see her, I&#x27;ll tell her.
+And if I&#x27;m late, don&#x27;t wait for me.
+OK. But if you miss the train, call me.</div>
+    </div>
+  </div><div class="section alt" id="production">
+    <div class="tab">G</div>
+    <div class="content">
+      <div class="eyebrow">Production</div>
+      <h2>Если …</h2>
+      <p class="lead">Напишите 6–8 предложений с if: If I have time, … / If it rains, … / … if I can. После if — present!</p>
+      <ul class="prompt-list"><li><b>If I have time, I'll …</b></li><li><b>If it rains, …</b></li><li><b>I'll … if …</b></li><li><b>When I …, I'll …</b></li></ul>
+      <textarea class="write-area" id="writeArea" placeholder="If I have time tomorrow, I&#x27;ll..."></textarea>
+      <div class="word-count" id="wordCount">0 слов</div>
+      <div class="actions-row">
+        <button class="btn" id="finishBtn">Готово!</button>
+        <button class="btn secondary" id="sampleBtn">Показать пример</button>
+      </div>
+      <div class="reveal-box" id="sampleBox"><b>Пример:</b> If I have time tomorrow, I'll go to the park. If it rains, I'll stay at home and read. I'm going to the concert on Saturday if I can get a ticket. If I'm late for work, I'll take a taxi. When I get home this evening, I'll call my mother.</div>
+      <div class="cue-cards">
+        <div class="cue-card"><b>Карточка 1</b>Закончите: If I have time tomorrow, …</div>
+        <div class="cue-card"><b>Карточка 2</b>if или when? ___ I get home, I'll have dinner.</div>
+        <div class="cue-card"><b>Карточка 3</b>Исправьте: If it will rain, we'll stay at home.</div>
+      </div>
+    </div>
+  </div><div class="section" id="homework">
+    <div class="tab">H</div>
+    <div class="content">
+      <div class="eyebrow">Homework</div>
+      <h2>Домашнее задание</h2>
+      <p class="lead">Отметьте галочкой то, что выполнили. Можно распечатать этот блок.</p>
+      <div class="hw-list">
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>1. Письменно.</b> Напишите 4 предложения с If … в начале и 4 — в середине.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>2. if / when.</b> Напишите 3 пары, как в блоке C.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>3. Слушаем и повторяем.</b> Откройте блок <i>E · Sounds</i>.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>4. Слова.</b> Выучите 12 новых слов.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>5. Повторение.</b> Пройдите квиз ещё раз без ошибок.</span></label>
+      </div>
+      <div class="actions-row">
+        <span class="fb-line" id="hwFeedback">Выполнено: 0 / 5</span>
+        <button class="btn secondary small no-print" id="printHwBtn">🖨️ Распечатать задание</button>
+      </div>
+    </div>
+  </div></div><div class="badge-final" id="finalBadge">Урок пройден!<span>Все обязательные задания выполнены.</span></div>
+
+<p class="footer-note">Based on Essential Grammar in Use, 4th Edition (Cambridge University Press, 2015), Unit 99 — original exercises created for this lesson.</p>
+<script src="../lesson-kit.js?v=20261018-games1"></script><script src="../lesson-template.js?v=20261018-games1"></script><script>window.lessonConfig={"vocabData": [{"word": "if", "ipa": "/ɪf/", "ru": "если"}, {"word": "cheap", "ipa": "/tʃiːp/", "ru": "дешёвый"}, {"word": "hurry", "ipa": "/ˈhʌri/", "ru": "спешить"}, {"word": "miss the train", "ipa": "/mɪs ðə treɪn/", "ru": "опоздать на поезд"}, {"word": "ring", "ipa": "/rɪŋ/", "ru": "звонить (о телефоне)"}, {"word": "concert", "ipa": "/ˈkɒnsət/", "ru": "концерт"}, {"word": "pass an exam", "ipa": "/pɑːs ən ɪɡˈzæm/", "ru": "сдать экзамен"}, {"word": "fail", "ipa": "/feɪl/", "ru": "провалить"}, {"word": "certificate", "ipa": "/səˈtɪfɪkət/", "ru": "сертификат"}, {"word": "disturb", "ipa": "/dɪˈstɜːb/", "ru": "беспокоить"}, {"word": "picnic", "ipa": "/ˈpɪknɪk/", "ru": "пикник"}, {"word": "alarm", "ipa": "/əˈlɑːm/", "ru": "сигнализация, тревога"}], "chunkData": [{"en": "If we go by bus, …", "ipa": "", "ru": "если поедем на автобусе, …"}, {"en": "if you don't hurry", "ipa": "", "ru": "если не поторопишься"}, {"en": "if I can get a ticket", "ipa": "", "ru": "если достану билет"}, {"en": "Is it OK if I …?", "ipa": "", "ru": "Ничего, если я …?"}, {"en": "If I'm late, don't wait for me", "ipa": "", "ru": "если опоздаю, не жди меня"}, {"en": "What shall we do if it rains?", "ipa": "", "ru": "Что будем делать, если пойдёт дождь?"}], "fillData": [{"sentence": "___ we go by bus, it will be cheaper.", "answers": ["If"]}, {"sentence": "If you don't hurry, you'll ___ the train.", "answers": ["miss"]}, {"sentence": "If the phone ___, can you answer it?", "answers": ["rings"]}, {"sentence": "I'm going to the concert if I can get a ___.", "answers": ["ticket"]}, {"sentence": "Is it OK if I ___ your phone?", "answers": ["use"]}, {"sentence": "If you ___ Ann tomorrow, can you ask her to call me?", "answers": ["see"]}, {"sentence": "If I ___ late this evening, don't wait for me.", "answers": ["'m"]}, {"sentence": "What shall we do if it ___?", "answers": ["rains"]}, {"sentence": "If I don't ___ well tomorrow, I'll stay at home.", "answers": ["feel"]}, {"sentence": "Maybe. If I go out, I'll close the ___.", "answers": ["windows"]}, {"sentence": "We're going to play tennis ___ it doesn't rain.", "answers": ["if"]}, {"sentence": "___ I get home this evening, I'm going to have a shower. (точно)", "answers": ["When"]}], "memoPairs": [["if", "если"], ["hurry", "спешить"], ["fail", "провалить"], ["certificate", "сертификат"], ["disturb", "беспокоить"], ["picnic", "пикник"]], "quizData": [{"q": "If ___ late this evening, don't wait for me.", "opts": ["I'm", "I'll be"], "correct": "I'm"}, {"q": "Will you call me if I ___ you my phone number?", "opts": ["give", "'ll give"], "correct": "give"}, {"q": "If there ___ a fire, the alarm will ring.", "opts": ["is", "will be"], "correct": "is"}, {"q": "If I don't see you tomorrow morning, ___ you in the evening.", "opts": ["I'll call", "I call"], "correct": "I'll call"}, {"q": "___ surprised if Michael and Jane get married.", "opts": ["I'll be", "I'm"], "correct": "I'll be"}, {"q": "Will you go to the party if they ___ you?", "opts": ["invite", "'ll invite"], "correct": "invite"}, {"q": "___ I'm late this evening, don't wait for me.", "opts": ["If", "When"], "correct": "If"}, {"q": "We're going to play tennis ___ it doesn't rain.", "opts": ["if", "when"], "correct": "if"}], "matchWords": [{"en": "if", "ru": "если"}, {"en": "cheap", "ru": "дешёвый"}, {"en": "hurry", "ru": "спешить"}, {"en": "miss the train", "ru": "опоздать на поезд"}, {"en": "ring", "ru": "звонить (о телефоне)"}, {"en": "concert", "ru": "концерт"}, {"en": "pass an exam", "ru": "сдать экзамен"}, {"en": "fail", "ru": "провалить"}, {"en": "certificate", "ru": "сертификат"}, {"en": "disturb", "ru": "беспокоить"}], "tfGroups": {"tfList": {"data": [{"text": "Tina has an exam next week.", "correct": true}, {"text": "If she fails, she can't do it again.", "correct": false}, {"text": "The friends want a picnic on Saturday.", "correct": true}, {"text": "Tina will certainly come.", "correct": false}, {"text": "If it rains, the party will be at Mark's flat.", "correct": true}, {"text": "The party is before the exam.", "correct": false}], "feedback": "tfFeedback"}, "lsList": {"data": [{"text": "He'll go to the concert if he can get a ticket.", "correct": true}, {"text": "He already has a ticket.", "correct": false}, {"text": "The speaker wants Ann to call.", "correct": true}, {"text": "If he's late, they should wait for him.", "correct": false}], "feedback": "lsFeedback"}}, "readFillData": [{"sentence": "If she ___ it, she'll get a certificate.", "answers": ["passes"]}, {"sentence": "If she ___, she can do it again.", "answers": ["fails"]}, {"sentence": "if the weather ___ good", "answers": ["is"]}, {"sentence": "I'll come if I ___ time", "answers": ["have"]}, {"sentence": "if I don't ___ my homework", "answers": ["finish"]}, {"sentence": "And if it ___, we'll have it at my flat.", "answers": ["rains"]}], "tomData": [{"sentence": "she'll get a ___", "answers": ["certificate"]}, {"sentence": "do it again in ___", "answers": ["June"]}, {"sentence": "want to have a ___", "answers": ["picnic"]}, {"sentence": "go to the ___ tomorrow", "answers": ["beach"]}, {"sentence": "I'll stay at ___", "answers": ["home"]}, {"sentence": "we'll have a big ___", "answers": ["party"]}], "slug": "urok-if-we-go", "exam": false, "legacySignature": "", "legacyFields": [], "questionTask": false, "listeningLines": ["Are you going to the concert on Friday?", "Yes, if I can get a ticket.", "If you see Ann, can you ask her to call me?", "Sure. When I see her, I'll tell her.", "And if I'm late, don't wait for me.", "OK. But if you miss the train, call me."], "readingLines": ["Tina has an exam next week. If she passes it, she'll get a certificate. If she fails, she can do it again in June.", "Her friends want to have a picnic on Saturday. 'We can go to the beach tomorrow if the weather is good,' says Mark.", "'I'll come if I have time,' says Tina. 'But if I don't finish my homework, I'll stay at home.'", "'When you finish the exam, we'll have a big party!' says Mark. 'And if it rains, we'll have it at my flat.'"]};
+LessonTemplate.mount(window.lessonConfig);</script></body></html>

@@ -944,6 +944,33 @@
               "file": "lessons/itogovyi-test-word-order.html"
             }
           ]
+        },
+        {
+          "id": "modul-20",
+          "title": "Модуль 20",
+          "lessons": [
+            {
+              "id": "urok-and-but-or-so-because",
+              "unit": 1,
+              "title": "and, but, or, so, because",
+              "description": "Союзы: and / but / or / so / because",
+              "file": "lessons/urok-and-but-or-so-because.html"
+            },
+            {
+              "id": "urok-when",
+              "unit": 2,
+              "title": "When …",
+              "description": "when + present о будущем",
+              "file": "lessons/urok-when.html"
+            },
+            {
+              "id": "urok-if-we-go",
+              "unit": 3,
+              "title": "If we go … If you see …",
+              "description": "if + present; if и when",
+              "file": "lessons/urok-if-we-go.html"
+            }
+          ]
         }
       ]
     },
