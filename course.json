@@ -1024,6 +1024,27 @@
               "title": "before, after, during, while",
               "description": "during / while / for; before/after + -ing",
               "file": "lessons/urok-before-after-during-while.html"
+            },
+            {
+              "id": "urok-in-at-on-places-1",
+              "unit": 4,
+              "title": "in, at, on (places 1)",
+              "description": "Предлоги места 1",
+              "file": "lessons/urok-in-at-on-places-1.html"
+            },
+            {
+              "id": "urok-in-at-on-places-2",
+              "unit": 5,
+              "title": "in, at, on (places 2)",
+              "description": "Предлоги места 2",
+              "file": "lessons/urok-in-at-on-places-2.html"
+            },
+            {
+              "id": "urok-to-in-at",
+              "unit": 6,
+              "title": "to, in, at (places 3)",
+              "description": "to / in / at; home; arrive, get",
+              "file": "lessons/urok-to-in-at.html"
             }
           ]
         }

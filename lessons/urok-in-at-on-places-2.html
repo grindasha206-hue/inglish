@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 107 · in, at, on (places 2)</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Comfortaa:wght@500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --cream:#FDF4F1; --paper:#FFFDFB; --ink:#3A2E33; --ink-soft:#6B5A61;
+  --brick:#BE456F; --brick-dark:#8F2E52; --tab:#C4507A; --tab-dark:#9E3460;
+  --sage:#4F8F6D; --sage-bg:#E6F1EA; --coral:#D65B4A; --coral-bg:#FBE7E3;
+  --gold:#E8A0B4; --line:#F1D9DF; --shadow: 0 6px 18px rgba(150,80,100,0.10);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; background:radial-gradient(circle at 15% 8%, rgba(232,160,180,0.10), transparent 40%), var(--cream); color:var(--ink); font-family:'Nunito', sans-serif; line-height:1.55; padding-bottom:80px;}
+h1,h2,h3,.display{font-family:'Comfortaa',sans-serif;}
+
+.topbar{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:1px solid var(--line); padding:10px 18px; display:flex; align-items:center; gap:14px; box-shadow:0 2px 10px rgba(0,0,0,0.04);}
+.topbar .book-title{font-family:'Comfortaa',sans-serif; font-weight:700; font-size:15px; color:var(--brick-dark); white-space:nowrap;}
+.progress-steps{display:flex; gap:5px; flex:1; align-items:center;}
+.pstep{flex:1; height:8px; border-radius:6px; background:var(--line); position:relative; overflow:hidden;}
+.pstep i{display:block; height:100%; width:0%; border-radius:6px; background:linear-gradient(90deg, var(--tab), var(--brick)); transition:width .5s ease;}
+.score-pill{font-size:13px; font-weight:700; background:var(--sage-bg); color:var(--sage); padding:5px 12px; border-radius:20px; white-space:nowrap;}
+
+.page{max-width:900px; margin:26px auto; background:var(--paper); border-radius:4px; box-shadow:var(--shadow); border:1px solid var(--line); overflow:hidden;}
+
+.unit-banner{background:linear-gradient(135deg, var(--brick) 0%, var(--brick-dark) 100%); color:#fff; padding:26px 30px 22px 96px; position:relative;}
+.unit-tag{position:absolute; left:0; top:0; bottom:0; width:76px; background:var(--brick-dark); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Comfortaa',sans-serif; border-right:2px solid rgba(255,255,255,0.15);}
+.unit-tag .u{font-size:11px; letter-spacing:2px; opacity:.75;}
+.unit-tag .n{font-size:30px; font-weight:800;}
+.unit-banner h1{margin:0; font-size:27px; font-weight:800; letter-spacing:.3px;}
+.unit-banner p{margin:6px 0 0; opacity:.9; font-size:14.5px;}
+
+.section{display:flex; border-top:1px solid var(--line);}
+.section .tab{width:56px; flex-shrink:0; background:var(--tab); color:#fff; font-family:'Comfortaa',sans-serif; font-weight:800; font-size:20px; display:flex; align-items:flex-start; justify-content:center; padding-top:22px;}
+.section.alt .tab{background:var(--tab-dark);}
+.section .content{padding:24px 28px 30px; flex:1; min-width:0;}
+.section h2{margin:0 0 4px; font-size:22px; color:var(--brick-dark);}
+.eyebrow{font-size:11.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-soft); font-weight:700; margin-bottom:4px;}
+.section p.lead{color:var(--ink-soft); margin-top:4px; font-size:14.5px;}
+
+.dialog-wrap{display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; margin:18px 0 6px;}
+.dialog-figure{width:110px; text-align:center; flex-shrink:0;}
+.dialog-avatar{width:96px; height:120px; margin:0 auto;}
+.dialog-avatar svg{width:100%; height:100%;}
+.dialog-figure .name{font-family:'Comfortaa',sans-serif; font-weight:700; font-size:12.5px; letter-spacing:1px; color:var(--brick-dark); margin-top:4px;}
+.dialog-bubbles{display:flex; flex-direction:column; gap:8px; flex:1; min-width:260px; max-width:420px;}
+.d-bubble{background:#fff; border:1.5px solid var(--line); border-radius:16px; padding:8px 14px; font-size:13.5px; box-shadow:0 3px 8px rgba(0,0,0,0.05);}
+.d-bubble.q{border-color:var(--tab);}
+.d-bubble.a{align-self:flex-end; background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.d-bubble b{color:var(--brick-dark);}
+.d-bubble.a b{color:var(--sage);}
+
+.gram-tables{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:22px;}
+@media(max-width:620px){.gram-tables{grid-template-columns:1fr;}}
+.gram-box h3{font-size:13px; text-transform:uppercase; letter-spacing:1px; color:var(--ink-soft); margin:0 0 8px;}
+table.formtable{width:100%; border-collapse:collapse; font-size:13.5px; background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden;}
+table.formtable td{padding:7px 10px; border-bottom:1px solid var(--line);}
+table.formtable tr:last-child td{border-bottom:none;}
+table.formtable td.pron{color:var(--ink-soft); width:34%;}
+table.formtable td.verb{font-weight:700; color:var(--brick-dark);}
+table.formtable td.short{color:var(--ink-soft); font-style:italic;}
+
+.chunk{background:linear-gradient(180deg, transparent 60%, rgba(196,80,122,0.35) 60%); font-weight:700; color:var(--brick-dark); padding:0 1px;}
+
+.mini-note{margin-top:16px; background:var(--sage-bg); border-left:3px solid var(--sage); padding:10px 14px; border-radius:6px; font-size:13.5px; color:#2f5741;}
+.mini-note b{color:var(--sage);}
+.mini-note i{color:var(--ink-soft); font-style:italic;}
+.mini-note.warn{background:var(--coral-bg); border-left-color:var(--coral); color:#7A2848;}
+.mini-note.warn b{color:var(--coral);}
+
+.vocab-table{margin-top:14px; display:flex; flex-direction:column; gap:8px;}
+.vocab-row{display:grid; grid-template-columns:auto 1fr auto auto; align-items:center; gap:12px; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:9px 14px;}
+@media(max-width:560px){.vocab-row{grid-template-columns:1fr; gap:4px;}}
+.vocab-word{font-weight:800; color:var(--brick-dark); font-size:14.5px; font-family:'Comfortaa',sans-serif;}
+.vocab-ipa{font-size:12.5px; color:var(--tab-dark); font-style:italic;}
+.vocab-ru{font-size:13.5px; color:var(--ink-soft);}
+.chunk-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px;}
+@media(max-width:600px){.chunk-grid{grid-template-columns:1fr;}}
+.chunk-row{display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--cream); border:1.5px dashed var(--gold); border-radius:10px; padding:9px 14px;}
+.chunk-en{font-weight:800; color:var(--brick-dark); font-size:14px; display:block;}
+.chunk-ipa{font-size:11.5px; color:var(--tab-dark); font-style:italic; display:block; margin-top:1px;}
+.chunk-ru{font-size:12.5px; color:var(--ink-soft); display:block; margin-top:1px; font-weight:400;}
+
+.game-tabs{display:flex; gap:8px; margin:18px 0 20px; flex-wrap:wrap;}
+.game-tab-btn{border:1.5px solid var(--line); background:#fff; color:var(--ink-soft); padding:8px 16px; border-radius:20px; font-family:'Nunito'; font-weight:700; font-size:13px; cursor:pointer; transition:.2s;}
+.game-tab-btn.active{background:var(--tab); color:#fff; border-color:var(--tab-dark);}
+.game-panel{display:none;}
+.game-panel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
+
+.fill-item{display:flex; align-items:flex-start; gap:10px; flex-wrap:wrap; padding:12px 4px; border-bottom:1px dashed var(--line);}
+.fill-item:last-child{border-bottom:none;}
+.fill-num{width:22px; height:22px; border-radius:50%; background:var(--cream); border:1px solid var(--line); font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; color:var(--ink-soft); flex-shrink:0; margin-top:3px;}
+.fill-body{flex:1; min-width:220px;}
+.fill-words{font-size:13px; color:var(--ink-soft); margin-bottom:6px; font-style:italic;}
+.blank-input{width:130px; padding:5px 8px; border:1.5px solid var(--line); border-radius:6px; font-family:'Nunito'; font-weight:700; font-size:14px; text-align:center; background:#FFFDFB; color:var(--brick-dark);}
+.blank-input:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.blank-input.correct{border-color:var(--sage); background:var(--sage-bg); color:#2f5741;}
+.blank-input.wrong{border-color:var(--coral); background:var(--coral-bg); color:var(--coral);}
+.fill-fb{font-size:16px; margin-top:6px;}
+
+.btn{border:none; cursor:pointer; font-family:'Nunito'; font-weight:800; padding:10px 20px; border-radius:24px; font-size:14px; letter-spacing:.2px; background:var(--brick); color:#fff; box-shadow:0 4px 10px rgba(190,69,111,0.25); transition:.15s;}
+.btn:hover{transform:translateY(-1px); box-shadow:0 6px 14px rgba(190,69,111,0.32);}
+.btn.secondary{background:transparent; color:var(--brick); border:1.5px solid var(--brick); box-shadow:none;}
+.btn.small{padding:6px 14px; font-size:12.5px;}
+.actions-row{display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; align-items:center;}
+.fb-line{font-size:13.5px; font-weight:700; color:var(--ink-soft);}
+
+.memo-wrap{display:flex; flex-direction:column; align-items:center; gap:14px;}
+.memo-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; max-width:520px; width:100%;}
+@media(max-width:500px){.memo-grid{grid-template-columns:repeat(3,1fr);}}
+.memo-card{aspect-ratio:1/1; border-radius:10px; cursor:pointer; position:relative; perspective:600px;}
+.memo-inner{width:100%; height:100%; position:relative; transform-style:preserve-3d; transition:transform .45s;}
+.memo-card.flipped .memo-inner, .memo-card.matched .memo-inner{transform:rotateY(180deg);}
+.memo-face{position:absolute; inset:0; border-radius:10px; display:flex; align-items:center; justify-content:center; backface-visibility:hidden; font-weight:800; text-align:center; padding:4px; font-size:12.5px;}
+.memo-face.back{background:linear-gradient(135deg, var(--tab), var(--tab-dark)); color:#fff; font-family:'Comfortaa',sans-serif; font-size:22px;}
+.memo-face.front{background:#fff; border:2px solid var(--line); color:var(--brick-dark); transform:rotateY(180deg);}
+.memo-card.matched .memo-face.front{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.memo-status{font-size:13.5px; color:var(--ink-soft); font-weight:700;}
+
+.quiz-q{margin-bottom:18px;}
+.quiz-q p{font-weight:700; margin:0 0 8px; font-size:14.5px;}
+.quiz-opts{display:flex; gap:8px; flex-wrap:wrap;}
+.quiz-opt{border:1.5px solid var(--line); background:#fff; padding:7px 15px; border-radius:20px; font-weight:700; font-size:13.5px; cursor:pointer; color:var(--ink);}
+.quiz-opt.sel-correct{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.quiz-opt.sel-wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+.quiz-opt.reveal-correct{border-color:var(--sage); box-shadow:inset 0 0 0 1px var(--sage);}
+
+.match-wrap{display:flex; gap:14px; max-width:520px; margin:0 auto;}
+.match-col{flex:1; display:flex; flex-direction:column; gap:8px;}
+.match-tile{background:#fff; border:1.5px solid var(--line); border-radius:8px; padding:9px 12px; font-size:13.5px; font-weight:700; cursor:pointer; text-align:center; color:var(--ink); transition:.15s;}
+.match-tile.selected{border-color:var(--tab); background:var(--cream); box-shadow:inset 0 0 0 1.5px var(--tab);}
+.match-tile.matched{background:var(--sage-bg); border-color:var(--sage); color:#2f5741; cursor:default;}
+.match-tile.wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+
+.read-text{background:#fff; border:1.5px solid var(--line); border-radius:14px; padding:18px 20px; margin:16px 0; font-size:14.5px;}
+.read-text p{margin:0 0 10px;}
+.read-text p:last-child{margin-bottom:0;}
+.tf-item{display:flex; align-items:center; justify-content:space-between; gap:10px; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:9px 14px; margin-bottom:8px;}
+.tf-text{font-size:13.5px; flex:1;}
+.tf-btns{display:flex; gap:6px; flex-shrink:0;}
+.tf-btn{border:1.5px solid var(--line); background:var(--cream); padding:5px 12px; border-radius:16px; font-weight:800; font-size:12.5px; cursor:pointer; color:var(--ink-soft);}
+.tf-btn.sel-correct{background:var(--sage-bg); border-color:var(--sage); color:#2f5741;}
+.tf-btn.sel-wrong{background:var(--coral-bg); border-color:var(--coral); color:var(--coral);}
+.tf-btn.reveal-correct{box-shadow:inset 0 0 0 1px var(--sage); border-color:var(--sage);}
+
+.tts-warn{display:none; font-size:12.5px; color:var(--coral); background:var(--coral-bg); padding:8px 12px; border-radius:6px; margin:8px 0 0;}
+.tts-warn.shown{display:block;}
+.voice-picker{display:flex; align-items:center; gap:8px; flex-wrap:wrap; background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:8px 12px; margin-top:10px; font-size:13px;}
+.voice-picker label{font-weight:700; color:var(--ink-soft);}
+.voice-picker select{border:1.5px solid var(--line); border-radius:6px; padding:4px 8px; font-family:'Nunito'; font-size:13px; background:#fff; color:var(--ink); max-width:220px;}
+.voice-hint{font-size:11.5px; color:var(--ink-soft); flex-basis:100%;}
+.sound-block{margin-top:22px; padding-top:16px; border-top:1px dashed var(--line);}
+.sound-block:first-of-type{border-top:none; margin-top:16px;}
+.sound-block h3{font-size:15.5px; margin:0 0 6px; color:var(--brick-dark); font-weight:700;}
+.ipa{font-family:'Nunito'; font-weight:500; font-size:12px; color:var(--ink-soft); font-style:italic;}
+.sound-note{font-size:13.5px; color:var(--ink-soft); margin:0 0 12px;}
+.sound-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+.sound-grid.three{grid-template-columns:repeat(3,1fr);}
+@media(max-width:600px){.sound-grid, .sound-grid.three{grid-template-columns:1fr;}}
+.sound-pair{background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px;}
+.sound-pair.wide{grid-column:1/-1;}
+.sp-text{font-size:14.5px; font-weight:600; flex:1;}
+.sp-text.big{font-size:19px; text-align:center; font-family:'Comfortaa',sans-serif; color:var(--brick-dark);}
+.sp-controls{display:flex; gap:6px; flex-shrink:0;}
+.play-btn{border:1.5px solid var(--line); background:var(--cream); cursor:pointer; border-radius:8px; padding:6px 10px; font-size:15px; line-height:1; transition:.15s;}
+.play-btn:hover{background:var(--tab); border-color:var(--tab-dark);}
+.play-btn.playing{background:var(--brick); border-color:var(--brick-dark);}
+b.stress{color:var(--brick-dark); text-decoration:underline; text-decoration-color:var(--gold); text-decoration-thickness:2px; text-underline-offset:3px;}
+
+.prompt-list{list-style:none; padding:0; margin:14px 0; display:grid; gap:8px;}
+.prompt-list li{background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:8px 12px; font-size:13.5px; display:flex; gap:8px; align-items:baseline;}
+.prompt-list li b{color:var(--brick-dark); font-family:'Comfortaa',sans-serif;}
+textarea.write-area{width:100%; min-height:140px; border:1.5px solid var(--line); border-radius:10px; padding:14px; font-family:'Nunito'; font-size:14.5px; color:var(--ink); background:#FFFDFB; resize:vertical;}
+textarea.write-area:focus{outline:2px solid var(--tab); border-color:var(--tab);}
+.word-count{font-size:12.5px; color:var(--ink-soft); margin-top:6px;}
+.cue-cards{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;}
+.cue-card{background:#fff; border:1.5px dashed var(--gold); border-radius:10px; padding:10px 14px; font-size:13px; width:160px; color:var(--ink-soft); font-style:italic;}
+.cue-card b{display:block; font-style:normal; color:var(--brick-dark); font-family:'Comfortaa',sans-serif; font-size:14px; margin-bottom:3px;}
+.reveal-box{margin-top:14px; border-left:3px solid var(--tab); background:var(--cream); padding:12px 16px; border-radius:6px; font-size:13.5px; display:none;}
+.reveal-box.shown{display:block;}
+
+.hw-list{display:flex; flex-direction:column; gap:10px; margin-top:16px;}
+.hw-item{display:flex; gap:10px; align-items:flex-start; background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:11px 14px; font-size:13.5px; cursor:pointer; transition:.15s;}
+.hw-item:has(.hw-check:checked){background:var(--sage-bg); border-color:var(--sage);}
+.hw-check{margin-top:3px; width:16px; height:16px; accent-color:var(--sage); flex-shrink:0;}
+.hw-item b{color:var(--brick-dark); font-family:'Comfortaa',sans-serif;}
+.hw-item i{color:var(--ink-soft); font-style:italic;}
+
+@media print{
+  .topbar, .unit-banner, #presentation, #vocabulary, #practice, #reading, #sounds, #production, .badge-final, .footer-note, .no-print{ display:none !important; }
+  body{ background:#fff; padding:0; }
+  .page{ box-shadow:none; border:none; margin:0; max-width:100%; }
+  .section{ border-top:none; }
+  .section .tab{ display:none; }
+  .section .content{ padding:10px; }
+  .hw-item{ break-inside:avoid; }
+}
+
+.footer-note{text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:24px; padding:0 20px;}
+.badge-final{display:none; text-align:center; margin:26px auto 0; max-width:900px; background:linear-gradient(135deg, var(--sage), #3d7357); color:#fff; border-radius:14px; padding:22px; font-family:'Comfortaa',sans-serif; font-size:19px; font-weight:700; box-shadow:var(--shadow);}
+.badge-final.shown{display:block; animation:fadeIn .5s ease;}
+.badge-final span{display:block; font-family:'Nunito'; font-weight:500; font-size:13.5px; margin-top:6px; opacity:.9;}
+
+/* Generated textbook illustrations; contain each complete scene without cropping. */
+.dialog-figure.art-figure{width:148px}
+.lisa-figure.art-figure{width:164px}
+.dialog-avatar.art-avatar{width:144px;height:auto}
+.lisa-avatar.art-avatar{width:160px;height:auto}
+.art-avatar img.lesson-portrait{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--line);box-shadow:0 5px 16px rgba(150,80,100,.10)}
+.scene-box img.lesson-scene{display:block;width:100%;max-width:720px;height:auto;margin:0 auto;border-radius:10px}
+.pic-slot img.lesson-scene{display:block;width:100%;height:auto;max-height:none;object-fit:contain}
+@media(max-width:560px){
+ .dialog-wrap .art-figure{width:112px}
+ .dialog-avatar.art-avatar{width:108px}
+ .dialog-wrap .dialog-bubbles{min-width:0;flex-basis:100%;max-width:none;order:2}
+ .dialog-wrap .dialog-figure:last-child{order:1}
+ .dialog-wrap .dialog-figure:first-child{order:0}
+ .lisa-avatar.art-avatar{width:140px}
+ .scene-box{padding:10px}
+}
+
+</style>
+<link rel="stylesheet" href="../lesson-theme.css"></head>
+<body><div class="topbar">
+  <div class="book-title">Essential Grammar · Unit 107</div>
+  <div class="progress-steps">
+    <div class="pstep" id="step-p"><i id="bar-p"></i></div>
+    <div class="pstep" id="step-vocab"><i id="bar-vocab"></i></div>
+    <div class="pstep" id="step-pr"><i id="bar-pr"></i></div>
+    <div class="pstep" id="step-read"><i id="bar-read"></i></div>
+    <div class="pstep" id="step-sound"><i id="bar-sound"></i></div>
+    <div class="pstep" id="step-listen"><i id="bar-listen"></i></div>
+    <div class="pstep" id="step-prod"><i id="bar-prod"></i></div>
+    <div class="pstep" id="step-hw"><i id="bar-hw"></i></div>
+  </div>
+  <div class="score-pill">★ <span id="scoreDisplay">0</span>/20</div>
+</div>
+
+<div class="page"><div class="unit-banner">
+    <div class="unit-tag"><span class="u">UNIT</span><span class="n">107</span></div>
+    <h1>in · at · on (places 2)</h1>
+    <p>in bed, at work, on the bus …</p>
+  </div><div class="section" id="presentation">
+    <div class="tab">A</div>
+    <div class="content">
+      <div class="eyebrow">Presentation</div>
+      <h2>in · at · on (places 2)</h2>
+      <div class="gram-box" style="margin:14px 0"><h3>A · in</h3><div style="display:flex;gap:12px;flex-wrap:wrap;margin:12px 0"><div style="flex:1 1 240px"><div style="overflow-x:auto"><table style="border-collapse:collapse;margin:10px 0;background:#FFFDFB;font-size:15px"><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;"><b>in</b> bed</td></tr><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;"><b>in</b> hospital</td></tr><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;"><b>in</b> the sky</td></tr><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;"><b>in</b> the world</td></tr><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;"><b>in</b> a newspaper / <b>in</b> a book</td></tr><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;"><b>in</b> a photo(graph) / <b>in</b> a picture</td></tr><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;"><b>in</b> a car / <b>in</b> a taxi</td></tr><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;"><b>in</b> the middle (of …)</td></tr></table></div></div><div style="flex:1 1 240px"><ul class="prompt-list"><li><span style="display:block">'Where's Kate?' 'She's <b>in bed</b>.'</span></li><li><span style="display:block">David's father is ill. He's <b>in hospital</b>.</span></li><li><span style="display:block">I like to look at the stars <b>in the sky</b> at night.</span></li><li><span style="display:block">What's the largest city <b>in the world</b>?</span></li><li><span style="display:block">I read about the accident <b>in the newspaper</b>.</span></li><li><span style="display:block">You look sad <b>in this picture</b>.</span></li><li><span style="display:block">Did you come here <b>in your car</b>?</span></li><li><span style="display:block">There's a big tree <b>in the middle</b> of the garden.</span></li></ul></div></div></div>
+      <div class="gram-box" style="margin:14px 0"><h3>B · at</h3><div style="display:flex;gap:12px;flex-wrap:wrap;margin:12px 0"><div style="flex:1 1 240px"><div style="overflow-x:auto"><table style="border-collapse:collapse;margin:10px 0;background:#FFFDFB;font-size:15px"><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;"><b>at</b> home</td></tr><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;"><b>at</b> work / <b>at</b> school</td></tr><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;"><b>at</b> university / <b>at</b> college</td></tr><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;"><b>at</b> the station / <b>at</b> the airport</td></tr><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;"><b>at</b> Lisa's (house) / <b>at</b> my sister's (house) / <b>at</b> the doctor's / <b>at</b> the hairdresser's etc.</td></tr><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;"><b>at</b> a concert / <b>at</b> a party / <b>at</b> a football match etc.</td></tr></table></div></div><div style="flex:1 1 240px"><ul class="prompt-list"><li><span style="display:block">Will you be <b>at home</b> this evening?</span></li><li><span style="display:block">'Where's Kate?' 'She's <b>at work</b>.'</span></li><li><span style="display:block">Helen is studying law <b>at university</b>.</span></li><li><span style="display:block">I'll meet you <b>at the station</b>, OK?</span></li><li><span style="display:block">A: Where were you yesterday?<br>B: <b>At my sister's</b>.</span></li><li><span style="display:block">I saw Tom <b>at the doctor's</b>.</span></li><li><span style="display:block">There weren't many people <b>at the party</b>.</span></li></ul></div></div><p>Для зданий (hotels, restaurants etc.) часто можно <b>in</b> или <b>at</b>:</p><ul class="prompt-list"><li><span style="display:block">We stayed <b>at</b> a nice hotel. <i>or</i> We stayed <b>in</b> a nice hotel.</span></li></ul></div>
+      <div class="gram-box" style="margin:14px 0"><h3>C · on</h3><div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:10px 0"><div style="flex:0 1 170px;text-align:center"><figure class="pic-slot" style="margin:0;transform:none"><div class="pic-ph" style="display:flex;min-height:100px;height:100px;aspect-ratio:auto;overflow:hidden"><span>🖼️</span><div style="font-size:11px">Люди в автобусе (стрелка)</div><div style="font-size:10px;opacity:.7">lessons/img/unit-107-pic-1.webp</div></div></figure><div style="margin-top:4px;font-size:14px"><b>on</b> a bus</div></div><div style="flex:0 1 170px;text-align:center"><figure class="pic-slot" style="margin:0;transform:none"><div class="pic-ph" style="display:flex;min-height:100px;height:100px;aspect-ratio:auto;overflow:hidden"><span>🖼️</span><div style="font-size:11px">Здание, стрелка на первый этаж</div><div style="font-size:10px;opacity:.7">lessons/img/unit-107-pic-2.webp</div></div></figure><div style="margin-top:4px;font-size:14px"><b>on</b> the first floor</div></div><div style="flex:0 1 170px;text-align:center"><figure class="pic-slot" style="margin:0;transform:none"><div class="pic-ph" style="display:flex;min-height:100px;height:100px;aspect-ratio:auto;overflow:hidden"><span>🖼️</span><div style="font-size:11px">Человек идёт по дороге из A в B</div><div style="font-size:10px;opacity:.7">lessons/img/unit-107-pic-3.webp</div></div></figure><div style="margin-top:4px;font-size:14px"><b>on</b> the way from A to B</div></div></div><div style="display:flex;gap:12px;flex-wrap:wrap;margin:12px 0"><div style="flex:1 1 240px"><div style="overflow-x:auto"><table style="border-collapse:collapse;margin:10px 0;background:#FFFDFB;font-size:15px"><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;"><b>on</b> a bus / <b>on</b> a train / <b>on</b> a plane / <b>on</b> a ship</td></tr><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;"><b>on</b> the ground floor / <b>on</b> the first floor etc.</td></tr><tr><td rowspan="1" colspan="1" style="border:1.5px solid #E8879F;padding:5px 12px;vertical-align:middle;"><b>on</b> the way (to …) / <b>on</b> the way home</td></tr></table></div></div><div style="flex:1 1 240px"><ul class="prompt-list"><li><span style="display:block">Did you come here <b>on the bus</b>?</span></li><li><span style="display:block">The office is <b>on the first floor</b>.</span></li><li><span style="display:block">I met Anna <b>on the way</b> to work / <b>on the way</b> home.</span></li></ul></div></div><p><span style="color:#9A8790;font-size:13px;white-space:nowrap">→ in/at/on (places) — Unit 106 · to/in/at — Unit 108 · on the left/right — Unit 109</span></p></div>
+    </div>
+  </div><div class="section" id="vocabulary"><div class="tab">B</div><div class="content"><div class="eyebrow">Vocabulary</div><h2>Новые слова этого урока</h2><p class="lead">Нажмите на динамик, чтобы услышать слово. Все слова встретятся дальше в чтении и упражнениях.</p><div id="vocabTable" class="vocab-table"></div><h3>Соседи слов <span class="ipa">chunks / collocations</span></h3><p class="sound-note">Учите сочетаниями: так слова легче вспоминаются в речи.</p><div id="chunkGrid" class="chunk-grid"></div></div></div><div class="section" id="practice">
+    <div class="tab">C</div>
+    <div class="content">
+      <div class="eyebrow">Practice</div>
+      <h2>Тренируемся</h2>
+      <p class="lead">Выберите игру и заработайте звёзды ★. Ответы проверяются сразу.</p>
+      <div class="game-tabs">
+        <button class="game-tab-btn active" data-panel="panel-fill">✏️ in / at / on</button>
+        <button class="game-tab-btn" data-panel="panel-memo">🃏 Мемо</button>
+        <button class="game-tab-btn" data-panel="panel-quiz">⚡ Квиз</button>
+        <button class="game-tab-btn" data-panel="panel-vocabmatch">📚 Лексика</button>
+      </div>
+      <div class="game-panel active" id="panel-fill">
+        <p class="lead" style="margin-top:0">Впишите in, at или on.</p>
+        <div id="fillList"></div>
+        <div class="actions-row">
+          <button class="btn" id="checkFillBtn">Проверить</button>
+          <button class="btn secondary small" id="resetFillBtn">Сбросить</button>
+          <span class="fb-line" id="fillFeedback"></span>
+        </div>
+      </div>
+      <div class="game-panel" id="panel-memo">
+        <p class="lead" style="margin-top:0">Найдите пары: английское слово и его русский перевод.</p>
+        <div class="memo-wrap">
+          <div class="memo-grid" id="memoGrid"></div>
+          <div class="memo-status" id="memoStatus">Найдено пар: 0 / 6</div>
+          <button class="btn secondary small" id="restartMemoBtn">Перемешать заново</button>
+        </div>
+      </div>
+      <div class="game-panel" id="panel-quiz">
+        <div id="quizList"></div>
+        <div class="actions-row"><span class="fb-line" id="quizFeedback"></span></div>
+      </div>
+      <div class="game-panel" id="panel-vocabmatch">
+        <p class="lead" style="margin-top:0">Нажмите на английское слово, затем на его перевод.</p>
+        <div class="match-wrap">
+          <div class="match-col" id="matchEnCol"></div>
+          <div class="match-col" id="matchRuCol"></div>
+        </div>
+        <div class="actions-row">
+          <span class="fb-line" id="matchStatus">Найдено пар: 0 / 10</span>
+          <button class="btn secondary small" id="restartMatchBtn">Перемешать заново</button>
+        </div>
+      </div>
+    </div>
+  </div><div class="section alt" id="reading">
+    <div class="tab">D</div>
+    <div class="content"><div class="actions-row"><button class="btn secondary small" id="playReadingBtn">🔊 Прослушать текст</button><button class="btn secondary stop-audio">Остановить</button></div>
+      <div class="eyebrow">Reading</div>
+      <h2>A strange day</h2>
+      <p class="lead">Найдите in, at, on.</p>
+      <div class="read-text"><p>Yesterday was a strange day. In the morning my brother was in hospital — he had a small <span class="chunk">operation</span>.</p><p>I visited him and then I met Anna on the way home. She was at the <span class="chunk">hairdresser's</span>, and she was very happy.</p><p>'I'm going to a <span class="chunk">wedding</span> at the weekend,' she said. 'My <span class="chunk">cousin</span> is getting married. Look, here she is in this photo.'</p><p>In the evening I stayed at home and read the newspaper in bed. I fell asleep at ten!</p></div>
+    <h3>1 · True / False</h3><div id="tfList"></div><div class="fb-line" id="tfFeedback"></div><h3>2 · Странный день</h3><p class="sound-note">Впишите слово.</p><div id="tomFillList"></div><div class="actions-row"><button class="btn small" id="checkTomBtn">Проверить</button><span class="fb-line" id="tomFeedback"></span></div><h3>3 · Слова из текста</h3><div id="readFillList"></div><div class="actions-row"><button class="btn small" id="checkReadFillBtn">Проверить</button><span class="fb-line" id="readFillFeedback"></span></div>
+  </div></div><div class="section" id="sounds">
+    <div class="tab">E</div>
+    <div class="content"><p class="mini-note">Синтезированный голос помогает прочитать фразы, но не гарантирует точную интонацию. Повторяйте за ним и сравнивайте.</p>
+      <div class="eyebrow">Sounds &amp; Speech</div>
+      <h2>in / at / on на слух</h2>
+      <p class="lead">Слушайте и повторяйте.</p>
+      <p class="tts-warn" id="ttsWarn"></p>
+      <div class="sound-block"><h3>1 · in</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">She's in bed.</div><div class="sp-controls"><button class="play-btn" data-text="She&#x27;s in bed." data-rate="1">🔊</button><button class="play-btn slow" data-text="She&#x27;s in bed." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">He's in hospital.</div><div class="sp-controls"><button class="play-btn" data-text="He&#x27;s in hospital." data-rate="1">🔊</button><button class="play-btn slow" data-text="He&#x27;s in hospital." data-rate="0.6">🐢</button></div></div></div></div><div class="sound-block"><h3>2 · at</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">She's at work.</div><div class="sp-controls"><button class="play-btn" data-text="She&#x27;s at work." data-rate="1">🔊</button><button class="play-btn slow" data-text="She&#x27;s at work." data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">I saw Tom at the doctor's.</div><div class="sp-controls"><button class="play-btn" data-text="I saw Tom at the doctor&#x27;s." data-rate="1">🔊</button><button class="play-btn slow" data-text="I saw Tom at the doctor&#x27;s." data-rate="0.6">🐢</button></div></div></div></div><div class="sound-block"><h3>3 · on</h3><div class="sound-grid"><div class="sound-pair"><div class="sp-text">Did you come here on the bus?</div><div class="sp-controls"><button class="play-btn" data-text="Did you come here on the bus?" data-rate="1">🔊</button><button class="play-btn slow" data-text="Did you come here on the bus?" data-rate="0.6">🐢</button></div></div><div class="sound-pair"><div class="sp-text">I met Anna on the way home.</div><div class="sp-controls"><button class="play-btn" data-text="I met Anna on the way home." data-rate="1">🔊</button><button class="play-btn slow" data-text="I met Anna on the way home." data-rate="0.6">🐢</button></div></div></div></div>
+      <div class="actions-row">
+        <button class="btn secondary small" id="playAllBtn">🔊 Прослушать всё подряд</button>
+      </div>
+    </div>
+  </div><div class="section alt" id="listening">
+    <div class="tab">F</div>
+    <div class="content">
+      <div class="eyebrow">Listening</div>
+      <h2>Слушаем вслепую</h2>
+      <p class="lead">Где все?</p>
+      <div class="speed-picker">
+        <label>Скорость:</label>
+        <div class="speed-btns">
+          <button class="speed-btn" data-rate="0.6">🐢 Медленно</button>
+          <button class="speed-btn active" data-rate="0.95">🔊 Обычно</button>
+        </div>
+      </div>
+      <div class="actions-row">
+        <button class="btn secondary stop-audio">Остановить</button>
+        <button class="btn" id="playListeningBtn">▶️ Слушать диалог</button>
+      </div>
+      <h3 style="font-size:14.5px; margin:18px 0 8px; color:var(--brick-dark);">Вопросы по прослушанному</h3>
+      <div id="lsList"></div>
+      <div class="actions-row"><span class="fb-line" id="lsFeedback"></span></div>
+      <div class="actions-row">
+        <button class="btn secondary small" id="toggleScriptBtn" disabled="">📜 Скрипт — после ответов на все вопросы</button>
+      </div>
+      <div class="reveal-box" id="scriptBox">Where&#x27;s Kate?
+She&#x27;s at work. She works on the second floor.
+And Tom?
+He&#x27;s at the airport. He&#x27;s going to Italy on a plane today.
+Is Helen at home?
+No, she&#x27;s at university. She&#x27;s studying law.</div>
+    </div>
+  </div><div class="section alt" id="production">
+    <div class="tab">G</div>
+    <div class="content">
+      <div class="eyebrow">Production</div>
+      <h2>Где были мои близкие вчера</h2>
+      <p class="lead">Напишите 6–8 предложений: кто где был (at home, at work, in hospital, at the doctor's, on the bus, on the way …).</p>
+      <ul class="prompt-list"><li><b>… was at work.</b></li><li><b>… was at home.</b></li><li><b>I met … on the way …</b></li><li><b>… on the bus / in a taxi</b></li></ul>
+      <textarea class="write-area" id="writeArea" placeholder="Yesterday I was at work..."></textarea>
+      <div class="word-count" id="wordCount">0 слов</div>
+      <div class="actions-row">
+        <button class="btn" id="finishBtn">Готово!</button>
+        <button class="btn secondary" id="sampleBtn">Показать пример</button>
+      </div>
+      <div class="reveal-box" id="sampleBox"><b>Пример:</b> Yesterday I was at work all day. My office is on the second floor. My mother was at home. My brother was at university. In the evening I went to a concert. I met a friend on the way home. We came home in a taxi.</div>
+      <div class="cue-cards">
+        <div class="cue-card"><b>Карточка 1</b>Спросите: Where were you yesterday? — At …</div>
+        <div class="cue-card"><b>Карточка 2</b>in, at или on? ___ the plane / ___ hospital / ___ my sister's</div>
+        <div class="cue-card"><b>Карточка 3</b>Расскажите, где вы обычно читаете (in bed? on the bus?).</div>
+      </div>
+    </div>
+  </div><div class="section" id="homework">
+    <div class="tab">H</div>
+    <div class="content">
+      <div class="eyebrow">Homework</div>
+      <h2>Домашнее задание</h2>
+      <p class="lead">Отметьте галочкой то, что выполнили. Можно распечатать этот блок.</p>
+      <div class="hw-list">
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>1. Письменно.</b> По 3 предложения с in, at, on из таблиц.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>2. at …'s.</b> 3 предложения: at the doctor's / at my friend's …</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>3. Слушаем и повторяем.</b> Откройте блок <i>E · Sounds</i>.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>4. Слова.</b> Выучите 12 новых слов.</span></label>
+        <label class="hw-item"><input type="checkbox" class="hw-check"><span><b>5. Повторение.</b> Пройдите квиз ещё раз без ошибок.</span></label>
+      </div>
+      <div class="actions-row">
+        <span class="fb-line" id="hwFeedback">Выполнено: 0 / 5</span>
+        <button class="btn secondary small no-print" id="printHwBtn">🖨️ Распечатать задание</button>
+      </div>
+    </div>
+  </div></div><div class="badge-final" id="finalBadge">Урок пройден!<span>Все обязательные задания выполнены.</span></div>
+
+<p class="footer-note">Based on Essential Grammar in Use, 4th Edition (Cambridge University Press, 2015), Unit 107 — original exercises created for this lesson.</p>
+<script src="../lesson-kit.js?v=20261018-games1"></script><script src="../lesson-template.js?v=20261018-games1"></script><script>window.lessonConfig={"vocabData": [{"word": "in hospital", "ipa": "/ɪn ˈhɒspɪtl/", "ru": "в больнице"}, {"word": "the sky", "ipa": "/ðə skaɪ/", "ru": "небо"}, {"word": "the middle", "ipa": "/ðə ˈmɪdl/", "ru": "середина"}, {"word": "university", "ipa": "/ˌjuːnɪˈvɜːsəti/", "ru": "университет"}, {"word": "law", "ipa": "/lɔː/", "ru": "право, закон"}, {"word": "airport", "ipa": "/ˈeəpɔːt/", "ru": "аэропорт"}, {"word": "hairdresser's", "ipa": "/ˈheədresəz/", "ru": "парикмахерская"}, {"word": "ground floor", "ipa": "/ˌɡraʊnd ˈflɔː/", "ru": "первый (цокольный) этаж"}, {"word": "on the way", "ipa": "/ɒn ðə weɪ/", "ru": "по дороге"}, {"word": "operation", "ipa": "/ˌɒpəˈreɪʃn/", "ru": "операция"}, {"word": "wedding", "ipa": "/ˈwedɪŋ/", "ru": "свадьба"}, {"word": "journey", "ipa": "/ˈdʒɜːni/", "ru": "поездка, путешествие"}], "chunkData": [{"en": "in bed", "ipa": "", "ru": "в постели"}, {"en": "in this picture", "ipa": "", "ru": "на этой фотографии"}, {"en": "at my sister's", "ipa": "", "ru": "у сестры"}, {"en": "at the doctor's", "ipa": "", "ru": "у врача"}, {"en": "on the bus", "ipa": "", "ru": "в автобусе"}, {"en": "on the way home", "ipa": "", "ru": "по дороге домой"}], "fillData": [{"sentence": "'Where's Kate?' 'She's ___ bed.'", "answers": ["in"]}, {"sentence": "He's ___ hospital.", "answers": ["in"]}, {"sentence": "I like to look at the stars ___ the sky.", "answers": ["in"]}, {"sentence": "You look sad ___ this picture.", "answers": ["in"]}, {"sentence": "There's a big tree ___ the middle of the garden.", "answers": ["in"]}, {"sentence": "Will you be ___ home this evening?", "answers": ["at"]}, {"sentence": "Helen is studying law ___ university.", "answers": ["at"]}, {"sentence": "I'll meet you ___ the station.", "answers": ["at"]}, {"sentence": "I saw Tom ___ the doctor's.", "answers": ["at"]}, {"sentence": "Did you come here ___ the bus?", "answers": ["on"]}, {"sentence": "The office is ___ the first floor.", "answers": ["on"]}, {"sentence": "I met Anna ___ the way home.", "answers": ["on"]}], "memoPairs": [["hospital", "больница"], ["sky", "небо"], ["law", "право"], ["hairdresser's", "парикмахерская"], ["wedding", "свадьба"], ["on the way", "по дороге"]], "quizData": [{"q": "Where is she? — ___ hospital.", "opts": ["In", "At", "On"], "correct": "In"}, {"q": "Where are they? — ___ the airport.", "opts": ["At", "In", "On"], "correct": "At"}, {"q": "Where is he? — ___ bed.", "opts": ["In", "At", "On"], "correct": "In"}, {"q": "Where are they? — ___ a ship.", "opts": ["On", "In", "At"], "correct": "On"}, {"q": "Where are the stars? — ___ the sky.", "opts": ["In", "On", "At"], "correct": "In"}, {"q": "Where is Steve? — ___ the doctor's.", "opts": ["At", "In", "On"], "correct": "At"}, {"q": "Where is the restaurant? — ___ the second floor.", "opts": ["On", "In", "At"], "correct": "On"}, {"q": "Where are they? — ___ a taxi.", "opts": ["In", "On", "At"], "correct": "In"}], "matchWords": [{"en": "in hospital", "ru": "в больнице"}, {"en": "the sky", "ru": "небо"}, {"en": "the middle", "ru": "середина"}, {"en": "university", "ru": "университет"}, {"en": "law", "ru": "право, закон"}, {"en": "airport", "ru": "аэропорт"}, {"en": "hairdresser's", "ru": "парикмахерская"}, {"en": "ground floor", "ru": "первый (цокольный) этаж"}, {"en": "on the way", "ru": "по дороге"}, {"en": "operation", "ru": "операция"}], "tfGroups": {"tfList": {"data": [{"text": "The brother was in hospital in the morning.", "correct": true}, {"text": "The writer met Anna at the station.", "correct": false}, {"text": "Anna was at the hairdresser's.", "correct": true}, {"text": "Anna is going to a party at the weekend.", "correct": false}, {"text": "The cousin is in the photo.", "correct": true}, {"text": "The writer went out in the evening.", "correct": false}], "feedback": "tfFeedback"}, "lsList": {"data": [{"text": "Kate is at work.", "correct": true}, {"text": "Kate works on the first floor.", "correct": false}, {"text": "Tom is at the airport.", "correct": true}, {"text": "Helen is at home.", "correct": false}], "feedback": "lsFeedback"}}, "readFillData": [{"sentence": "my brother was ___ hospital", "answers": ["in"]}, {"sentence": "I met Anna ___ the way home", "answers": ["on"]}, {"sentence": "She was ___ the hairdresser's", "answers": ["at"]}, {"sentence": "a wedding ___ the weekend", "answers": ["at"]}, {"sentence": "here she is ___ this photo", "answers": ["in"]}, {"sentence": "I stayed ___ home", "answers": ["at"]}], "tomData": [{"sentence": "he had a small ___", "answers": ["operation"]}, {"sentence": "I ___ him", "answers": ["visited"]}, {"sentence": "I'm going to a ___", "answers": ["wedding"]}, {"sentence": "My cousin is getting ___", "answers": ["married"]}, {"sentence": "read the ___ in bed", "answers": ["newspaper"]}, {"sentence": "I fell asleep at ___!", "answers": ["ten"]}], "slug": "urok-in-at-on-places-2", "exam": false, "legacySignature": "", "legacyFields": [], "questionTask": false, "listeningLines": ["Where's Kate?", "She's at work. She works on the second floor.", "And Tom?", "He's at the airport. He's going to Italy on a plane today.", "Is Helen at home?", "No, she's at university. She's studying law."], "readingLines": ["Yesterday was a strange day. In the morning my brother was in hospital — he had a small operation.", "I visited him and then I met Anna on the way home. She was at the hairdresser's, and she was very happy.", "'I'm going to a wedding at the weekend,' she said. 'My cousin is getting married. Look, here she is in this photo.'", "In the evening I stayed at home and read the newspaper in bed. I fell asleep at ten!"]};
+LessonTemplate.mount(window.lessonConfig);</script></body></html>

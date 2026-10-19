@@ -1336,6 +1336,12 @@ const T=[
   items:[C('He has been in hospital ___ Monday.','since','for','until'),C('He has been in hospital ___ three days.','for','since','until'),O('Wait here until I come back.')]},
   {id:105,title:'before / after / during / while',emoji:'🎬',rule:"before/during/after + существительное: during the film. while + глагол: while I'm reading (не during we were eating). for + период: for two hours (не during two hours). before/after + -ing: before going, after doing (не before to go).",
   items:[C('I fell asleep ___ the film.','during','while','for'),C('I fell asleep ___ I was reading.','while','during','for'),O('After doing the shopping, they went home.')]},
+  {id:106,title:'in / at / on (places 1)',emoji:'📍',rule:"in — внутри: in a room, in the water, in London, in the north of Italy. at — в точке: at the bus stop, at the door, at the traffic lights, at her desk, at the top/bottom/end of. on — на поверхности: on a shelf, on the wall, on the ceiling, on the floor; on a horse/bicycle/motorbike.",
+  items:[C('There are some pictures ___ the wall.','on','in','at'),C("There's somebody ___ the door.",'at','on','in'),C('Rachel works ___ a bank.','in','on','at'),O('My house is at the end of the street.')]},
+  {id:107,title:'in / at / on (places 2)',emoji:'🏥',rule:"in bed, in hospital, in the sky, in the world, in a newspaper/book/picture, in a car/taxi, in the middle. at home, at work/school, at university, at the station/airport, at Lisa's, at the doctor's, at a party/concert. on a bus/train/plane/ship, on the first floor, on the way home. Отель/ресторан — in или at.",
+  items:[C("She's ___ bed.",'in','at','on'),C("She's ___ work.",'at','in','on'),C('Did you come ___ the bus?','on','in','at'),O('I met Anna on the way home.')]},
+  {id:108,title:'to / in / at (places 3)',emoji:'🧭',rule:"go/come/walk TO (движение): go to London, go to bed, go to work. be/stay/do IN/AT (место): in London, in bed, at work, at the airport. go home (без to), но stay at home. arrive in + страна/город; arrive at + другие места; get to + место; get home / arrive home без предлога.",
+  items:[C('We are going ___ London.','to','in','at'),C('My brother lives ___ Italy.','in','to','at'),C("I'm going ___.",'home','to home','at home'),O('They arrived in this country last week.')]},
   {id:0,title:'Микс: что выбрать?',emoji:'🎲',rule:'am/is/are — состояние и описание · Present Continuous — действие прямо сейчас (look! now) · Present Simple — привычки и факты (every day, usually).',
   items:[
    C('Look! The baby ___.','is sleeping','sleeps','sleep'),
