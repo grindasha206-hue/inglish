@@ -1205,6 +1205,19 @@
               "file": "lessons/vocab-9-useful-expressions.html"
             }
           ]
+        },
+        {
+          "id": "voc-modul-2",
+          "title": "Модуль 2 · Food and home",
+          "lessons": [
+            {
+              "id": "vocab-10-food-and-drink",
+              "unit": 10,
+              "title": "Food and drink",
+              "description": "Еда и напитки",
+              "file": "lessons/vocab-10-food-and-drink.html"
+            }
+          ]
         }
       ]
     },
