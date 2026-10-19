@@ -1581,6 +1581,27 @@
               "title": "Words and prepositions",
               "description": "Слова и предлоги",
               "file": "lessons/vocab-57-words-and-prepositions.html"
+            },
+            {
+              "id": "vocab-58-prefixes",
+              "unit": 58,
+              "title": "Prefixes",
+              "description": "Приставки",
+              "file": "lessons/vocab-58-prefixes.html"
+            },
+            {
+              "id": "vocab-59-suffixes",
+              "unit": 59,
+              "title": "Suffixes",
+              "description": "Суффиксы",
+              "file": "lessons/vocab-59-suffixes.html"
+            },
+            {
+              "id": "vocab-60-words-you-may-confuse",
+              "unit": 60,
+              "title": "Words you may confuse",
+              "description": "Слова, которые легко перепутать",
+              "file": "lessons/vocab-60-words-you-may-confuse.html"
             }
           ]
         }
