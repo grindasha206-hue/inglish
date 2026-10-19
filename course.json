@@ -1116,6 +1116,19 @@
               "file": "lessons/itogovyi-test-final-m22.html"
             }
           ]
+        },
+        {
+          "id": "modul-25",
+          "title": "Модуль 25",
+          "lessons": [
+            {
+              "id": "itogovyi-test-a2",
+              "unit": 1,
+              "title": "Итоговый тест · A2 Elementary",
+              "description": "Большой тест по всему курсу A2: Units 1–115",
+              "file": "lessons/itogovyi-test-a2.html"
+            }
+          ]
         }
       ]
     },
