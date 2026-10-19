@@ -1367,6 +1367,40 @@
               "title": "Animals",
               "description": "Животные",
               "file": "lessons/vocab-29-animals.html"
+            },
+            {
+              "id": "vocab-30-travelling",
+              "unit": 30,
+              "title": "Travelling",
+              "description": "Путешествия и транспорт",
+              "file": "lessons/vocab-30-travelling.html"
+            }
+          ]
+        },
+        {
+          "id": "voc-modul-6",
+          "title": "Модуль 6 · Society",
+          "lessons": [
+            {
+              "id": "vocab-31-uk-culture",
+              "unit": 31,
+              "title": "UK culture",
+              "description": "Культура Великобритании",
+              "file": "lessons/vocab-31-uk-culture.html"
+            },
+            {
+              "id": "vocab-32-crime",
+              "unit": 32,
+              "title": "Crime",
+              "description": "Преступность",
+              "file": "lessons/vocab-32-crime.html"
+            },
+            {
+              "id": "vocab-33-the-media",
+              "unit": 33,
+              "title": "The media",
+              "description": "СМИ: телевидение, газеты, журналы",
+              "file": "lessons/vocab-33-the-media.html"
             }
           ]
         }
