@@ -1608,6 +1608,389 @@
       ]
     },
     {
+      "id": "reading",
+      "code": "READ",
+      "name": "Reading · Test-English",
+      "modules": [
+        {
+          "id": "read-a1",
+          "title": "Reading A1",
+          "lessons": [
+            {
+              "id": "read-a1-01-guess-who",
+              "unit": 1,
+              "title": "Guess who?",
+              "description": "Reading A1 · 8 вопросов",
+              "file": "lessons/read-a1-01-guess-who.html"
+            },
+            {
+              "id": "read-a1-02-about-my-family",
+              "unit": 2,
+              "title": "About my family (Describing people)",
+              "description": "Reading A1 · 9 вопросов",
+              "file": "lessons/read-a1-02-about-my-family.html"
+            },
+            {
+              "id": "read-a1-03-neighborhood",
+              "unit": 3,
+              "title": "My neighborhood",
+              "description": "Reading A1 · 8 вопросов",
+              "file": "lessons/read-a1-03-neighborhood.html"
+            },
+            {
+              "id": "read-a1-04-the-british-ways",
+              "unit": 4,
+              "title": "The British ways",
+              "description": "Reading A1 · 8 вопросов",
+              "file": "lessons/read-a1-04-the-british-ways.html"
+            },
+            {
+              "id": "read-a1-05-my-life-abroad",
+              "unit": 5,
+              "title": "My life abroad",
+              "description": "Reading A1 · 8 вопросов",
+              "file": "lessons/read-a1-05-my-life-abroad.html"
+            },
+            {
+              "id": "read-a1-06-top-things-that-i-do",
+              "unit": 6,
+              "title": "Top things that I do",
+              "description": "Reading A1 · 10 вопросов",
+              "file": "lessons/read-a1-06-top-things-that-i-do.html"
+            },
+            {
+              "id": "read-a1-07-a-day-in-the-life-of-an-airline-pilot",
+              "unit": 7,
+              "title": "A day in the life of an airline pilot",
+              "description": "Reading A1 · 7 вопросов",
+              "file": "lessons/read-a1-07-a-day-in-the-life-of-an-airline-pilot.html"
+            },
+            {
+              "id": "read-a1-08-daily-routines-sportswoman",
+              "unit": 8,
+              "title": "The daily routines of a sportswoman",
+              "description": "Reading A1 · 6 вопросов",
+              "file": "lessons/read-a1-08-daily-routines-sportswoman.html"
+            },
+            {
+              "id": "read-a1-09-what-do-you-do-with-free-time",
+              "unit": 9,
+              "title": "What do you do with your free time?",
+              "description": "Reading A1 · 7 вопросов",
+              "file": "lessons/read-a1-09-what-do-you-do-with-free-time.html"
+            },
+            {
+              "id": "read-a1-10-my-first-day-at-school",
+              "unit": 10,
+              "title": "Memories of my first day at school",
+              "description": "Reading A1 · 6 вопросов",
+              "file": "lessons/read-a1-10-my-first-day-at-school.html"
+            },
+            {
+              "id": "read-a1-11-email-to-a-friend-im-confined-at-home",
+              "unit": 11,
+              "title": "Email to a friend: I'm confined at home",
+              "description": "Reading A1 · 10 вопросов",
+              "file": "lessons/read-a1-11-email-to-a-friend-im-confined-at-home.html"
+            },
+            {
+              "id": "read-a1-12-around-the-world-traditions",
+              "unit": 12,
+              "title": "Traditions around the world",
+              "description": "Reading A1 · 8 вопросов",
+              "file": "lessons/read-a1-12-around-the-world-traditions.html"
+            },
+            {
+              "id": "read-a1-13-thanksgiving",
+              "unit": 13,
+              "title": "Thanksgiving",
+              "description": "Reading A1 · 6 вопросов",
+              "file": "lessons/read-a1-13-thanksgiving.html"
+            },
+            {
+              "id": "read-a1-14-pancake-day",
+              "unit": 14,
+              "title": "Pancake Day (British traditions)",
+              "description": "Reading A1 · 8 вопросов",
+              "file": "lessons/read-a1-14-pancake-day.html"
+            },
+            {
+              "id": "read-a1-15-tips-for-visiting-london-with-young-chil",
+              "unit": 15,
+              "title": "Tips for visiting London with young children",
+              "description": "Reading A1 · 6 вопросов",
+              "file": "lessons/read-a1-15-tips-for-visiting-london-with-young-chil.html"
+            },
+            {
+              "id": "read-a1-16-looking-for-the-perfect-home",
+              "unit": 16,
+              "title": "Looking for the perfect home",
+              "description": "Reading A1 · 6 вопросов",
+              "file": "lessons/read-a1-16-looking-for-the-perfect-home.html"
+            },
+            {
+              "id": "read-a1-17-online-shopping",
+              "unit": 17,
+              "title": "Online shopping",
+              "description": "Reading A1 · 7 вопросов",
+              "file": "lessons/read-a1-17-online-shopping.html"
+            },
+            {
+              "id": "read-a1-18-future-retirement-plans",
+              "unit": 18,
+              "title": "Future retirement plans",
+              "description": "Reading A1 · 6 вопросов",
+              "file": "lessons/read-a1-18-future-retirement-plans.html"
+            },
+            {
+              "id": "read-a1-19-where-are-you-going-to-shop",
+              "unit": 19,
+              "title": "Where are you going to shop?",
+              "description": "Reading A1 · 8 вопросов",
+              "file": "lessons/read-a1-19-where-are-you-going-to-shop.html"
+            },
+            {
+              "id": "read-a1-20-my-next-summer-holiday-plan",
+              "unit": 20,
+              "title": "My next summer holiday plan",
+              "description": "Reading A1 · 10 вопросов",
+              "file": "lessons/read-a1-20-my-next-summer-holiday-plan.html"
+            },
+            {
+              "id": "read-a1-21-a-trip-around-the-usa",
+              "unit": 21,
+              "title": "A trip around the USA",
+              "description": "Reading A1 · 6 вопросов",
+              "file": "lessons/read-a1-21-a-trip-around-the-usa.html"
+            },
+            {
+              "id": "read-a1-22-three-american-festivals",
+              "unit": 22,
+              "title": "Three American festivals",
+              "description": "Reading A1 · 7 вопросов",
+              "file": "lessons/read-a1-22-three-american-festivals.html"
+            },
+            {
+              "id": "read-a1-23-famous-peoples-first-jobs",
+              "unit": 23,
+              "title": "Famous people’s first jobs",
+              "description": "Reading A1 · 6 вопросов",
+              "file": "lessons/read-a1-23-famous-peoples-first-jobs.html"
+            },
+            {
+              "id": "read-a1-24-tips-travelling-alone",
+              "unit": 24,
+              "title": "Tips for travelling alone",
+              "description": "Reading A1 · 6 вопросов",
+              "file": "lessons/read-a1-24-tips-travelling-alone.html"
+            },
+            {
+              "id": "read-a1-25-going-to-the-mall",
+              "unit": 25,
+              "title": "Going to the mall",
+              "description": "Reading A1 · 7 вопросов",
+              "file": "lessons/read-a1-25-going-to-the-mall.html"
+            },
+            {
+              "id": "read-a1-26-what-is-wearable-technology",
+              "unit": 26,
+              "title": "What is wearable technology?",
+              "description": "Reading A1 · 8 вопросов",
+              "file": "lessons/read-a1-26-what-is-wearable-technology.html"
+            }
+          ]
+        },
+        {
+          "id": "read-a2",
+          "title": "Reading A2",
+          "lessons": [
+            {
+              "id": "read-a2-01-should-i-tell-my-neighbour",
+              "unit": 1,
+              "title": "Should I tell my neighbour?",
+              "description": "Reading A2 · 6 вопросов",
+              "file": "lessons/read-a2-01-should-i-tell-my-neighbour.html"
+            },
+            {
+              "id": "read-a2-02-the-girl-who-saved-100-lives",
+              "unit": 2,
+              "title": "The girl who saved 100 lives",
+              "description": "Reading A2 · 10 вопросов",
+              "file": "lessons/read-a2-02-the-girl-who-saved-100-lives.html"
+            },
+            {
+              "id": "read-a2-03-living-in-a-small-town-vs-a-big-city",
+              "unit": 3,
+              "title": "Living in a small town vs a big city",
+              "description": "Reading A2 · 5 вопросов",
+              "file": "lessons/read-a2-03-living-in-a-small-town-vs-a-big-city.html"
+            },
+            {
+              "id": "read-a2-04-what-rainbows-mean-around-the-world",
+              "unit": 4,
+              "title": "What rainbows mean around the world",
+              "description": "Reading A2 · 8 вопросов",
+              "file": "lessons/read-a2-04-what-rainbows-mean-around-the-world.html"
+            },
+            {
+              "id": "read-a2-05-should-kids-help-with-household-chores",
+              "unit": 5,
+              "title": "Should kids help with household chores?",
+              "description": "Reading A2 · 8 вопросов",
+              "file": "lessons/read-a2-05-should-kids-help-with-household-chores.html"
+            },
+            {
+              "id": "read-a2-06-three-popular-inventions-from-the-1920s",
+              "unit": 6,
+              "title": "Three popular inventions from the 1920s",
+              "description": "Reading A2 · 10 вопросов",
+              "file": "lessons/read-a2-06-three-popular-inventions-from-the-1920s.html"
+            },
+            {
+              "id": "read-a2-07-a-really-popular-summer-festival-in-the",
+              "unit": 7,
+              "title": "A really popular summer festival in the UK",
+              "description": "Reading A2 · 10 вопросов",
+              "file": "lessons/read-a2-07-a-really-popular-summer-festival-in-the.html"
+            },
+            {
+              "id": "read-a2-08-three-experiences-i-have-had",
+              "unit": 8,
+              "title": "Three experiences I've had",
+              "description": "Reading A2 · 10 вопросов",
+              "file": "lessons/read-a2-08-three-experiences-i-have-had.html"
+            },
+            {
+              "id": "read-a2-09-how-my-life-has-changed",
+              "unit": 9,
+              "title": "How my life has changed",
+              "description": "Reading A2 · 8 вопросов",
+              "file": "lessons/read-a2-09-how-my-life-has-changed.html"
+            },
+            {
+              "id": "read-a2-10-hobbies-people-collect",
+              "unit": 10,
+              "title": "Hobbies: Why do people collect?",
+              "description": "Reading A2 · 8 вопросов",
+              "file": "lessons/read-a2-10-hobbies-people-collect.html"
+            },
+            {
+              "id": "read-a2-11-man-with-most-world-records",
+              "unit": 11,
+              "title": "The man with the most world records",
+              "description": "Reading A2 · 6 вопросов",
+              "file": "lessons/read-a2-11-man-with-most-world-records.html"
+            },
+            {
+              "id": "read-a2-12-why-arent-babies-born-on-certain-days",
+              "unit": 12,
+              "title": "Why aren't babies born on certain days?",
+              "description": "Reading A2 · 8 вопросов",
+              "file": "lessons/read-a2-12-why-arent-babies-born-on-certain-days.html"
+            },
+            {
+              "id": "read-a2-13-diva-of-magic",
+              "unit": 13,
+              "title": "Diva of magic",
+              "description": "Reading A2 · 7 вопросов",
+              "file": "lessons/read-a2-13-diva-of-magic.html"
+            },
+            {
+              "id": "read-a2-14-how-will-life-be-different-after-covid-1",
+              "unit": 14,
+              "title": "How will life be different after Covid-19?",
+              "description": "Reading A2 · 10 вопросов",
+              "file": "lessons/read-a2-14-how-will-life-be-different-after-covid-1.html"
+            },
+            {
+              "id": "read-a2-15-frogs-in-love-romeo-and-juliet",
+              "unit": 15,
+              "title": "Frogs in love: Romeo and Juliet",
+              "description": "Reading A2 · 8 вопросов",
+              "file": "lessons/read-a2-15-frogs-in-love-romeo-and-juliet.html"
+            },
+            {
+              "id": "read-a2-16-ancient-robots",
+              "unit": 16,
+              "title": "Ancient robots",
+              "description": "Reading A2 · 9 вопросов",
+              "file": "lessons/read-a2-16-ancient-robots.html"
+            },
+            {
+              "id": "read-a2-17-how-to-play-carrom",
+              "unit": 17,
+              "title": "How to play carrom",
+              "description": "Reading A2 · 5 вопросов",
+              "file": "lessons/read-a2-17-how-to-play-carrom.html"
+            },
+            {
+              "id": "read-a2-18-travelling-rock-garden-chandigarh",
+              "unit": 18,
+              "title": "Travel: The Rock Garden of Chandigarh",
+              "description": "Reading A2 · 5 вопросов",
+              "file": "lessons/read-a2-18-travelling-rock-garden-chandigarh.html"
+            },
+            {
+              "id": "read-a2-19-growing-up-poor",
+              "unit": 19,
+              "title": "Growing up poor",
+              "description": "Reading A2 · 7 вопросов",
+              "file": "lessons/read-a2-19-growing-up-poor.html"
+            },
+            {
+              "id": "read-a2-20-accommodation",
+              "unit": 20,
+              "title": "Accommodation",
+              "description": "Reading A2 · 10 вопросов",
+              "file": "lessons/read-a2-20-accommodation.html"
+            },
+            {
+              "id": "read-a2-21-its-in-the-news",
+              "unit": 21,
+              "title": "It's in the news",
+              "description": "Reading A2 · 5 вопросов",
+              "file": "lessons/read-a2-21-its-in-the-news.html"
+            },
+            {
+              "id": "read-a2-22-chinese-new-year",
+              "unit": 22,
+              "title": "Chinese New Year",
+              "description": "Reading A2 · 6 вопросов",
+              "file": "lessons/read-a2-22-chinese-new-year.html"
+            },
+            {
+              "id": "read-a2-23-black-friday",
+              "unit": 23,
+              "title": "Black Friday",
+              "description": "Reading A2 · 5 вопросов",
+              "file": "lessons/read-a2-23-black-friday.html"
+            },
+            {
+              "id": "read-a2-24-archaeologists-identify-mummy-lost-egypt",
+              "unit": 24,
+              "title": "Mummy of a lost Egyptian queen identified",
+              "description": "Reading A2 · 8 вопросов",
+              "file": "lessons/read-a2-24-archaeologists-identify-mummy-lost-egypt.html"
+            },
+            {
+              "id": "read-a2-25-benefits-of-nuts",
+              "unit": 25,
+              "title": "The benefits of nuts",
+              "description": "Reading A2 · 5 вопросов",
+              "file": "lessons/read-a2-25-benefits-of-nuts.html"
+            },
+            {
+              "id": "read-a2-26-how-to-buy-tickets-glastonbury-festival",
+              "unit": 26,
+              "title": "How to buy tickets for Glastonbury Festival",
+              "description": "Reading A2 · 8 вопросов",
+              "file": "lessons/read-a2-26-how-to-buy-tickets-glastonbury-festival.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "b1",
       "code": "B1",
       "name": "Intermediate",
