@@ -1,0 +1,201 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Vocabulary 2 · Birth, marriage and death</title>
+<link rel="stylesheet" href="../lesson-theme.css"><style>
+.vtop{position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 10px rgba(150,80,100,.08)}
+.vtop .t{font-family:Comfortaa;font-weight:700;color:var(--brick-dark);white-space:nowrap}
+.vbar{flex:1;height:8px;background:var(--line);border-radius:6px;overflow:hidden}.vbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--tab),var(--brick));transition:width .5s}
+.vscore{font-size:13px;font-weight:700;background:var(--sage-bg);color:var(--sage);padding:4px 12px;border-radius:20px}
+.vwrap{max-width:920px;margin:18px auto;padding:0 12px}
+.vsteps{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.vstep{border:1.5px solid var(--line);background:var(--paper);border-radius:20px;padding:5px 12px 5px 6px;font:600 13px Nunito;color:var(--ink-soft);cursor:pointer;display:flex;align-items:center;gap:6px}
+.vstep span{width:22px;height:22px;border-radius:50%;background:var(--line);display:inline-flex;align-items:center;justify-content:center;font-size:12px}
+.vstep.cur{border-color:var(--brick);color:var(--brick-dark)}.vstep.ok span{background:var(--sage);color:#fff}
+.vpanel{background:var(--paper);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:20px 22px;margin-bottom:16px}
+.vpanel h2{margin:0 0 4px;color:var(--brick-dark);font-size:22px}.eyebrow{font:700 12px Nunito;letter-spacing:.08em;text-transform:uppercase;color:var(--tab)}
+.lead{color:var(--ink-soft);margin:4px 0 14px}
+.w{font-weight:800;color:var(--brick-dark);cursor:pointer;border-bottom:2px dotted var(--gold);position:relative}
+.w .tip{display:none;align-items:center;gap:6px;position:absolute;left:0;top:120%;background:var(--ink);color:#fff;font:600 13px Nunito;padding:3px 9px;border-radius:6px;white-space:nowrap;z-index:5}
+.w.open .tip{display:inline-flex}
+.tree{display:grid;gap:8px;justify-items:center;margin:10px 0 16px}
+.trow3{display:flex;justify-content:center;gap:clamp(8px,4vw,40px);flex-wrap:wrap;width:100%}
+.node{text-align:center}.node .ph{width:132px;height:84px;border-radius:50%;border:2.5px solid var(--brick);background:linear-gradient(135deg,#FBE3EA,#FDF4F1);display:flex;align-items:center;justify-content:center;overflow:hidden;font-size:11px;color:var(--ink-soft);margin:0 auto 4px}
+.node .ph img{width:100%;height:100%;object-fit:cover}
+.pn{background:none;border:none;font:700 15px Nunito;color:var(--ink);cursor:pointer;padding:2px 4px;border-radius:6px}.pn:hover{background:var(--line)}
+.who{min-height:28px;text-align:center;font-weight:700;color:var(--brick-dark)}
+.facts p{margin:2px 0 2px 18px}.facts h4{margin:10px 0 2px}
+.err{background:var(--brick);color:#fff;border-radius:10px;padding:10px 14px;margin-top:14px}.err b{font-family:Caveat;font-size:22px;display:block}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:6px 18px}@media(max-width:640px){.two{grid-template-columns:1fr}}
+.btn{background:var(--brick);color:#fff;border:none;border-radius:22px;padding:9px 18px;font:700 14px Nunito;cursor:pointer}.btn:disabled{opacity:.5}
+.btn.ghost{background:var(--paper);color:var(--brick-dark);border:1.5px solid var(--brick)}.btn.xs{padding:4px 10px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}.res{font-weight:700;color:var(--sage)}
+.card{width:min(360px,100%);height:210px;margin:10px auto;position:relative;perspective:900px;cursor:pointer}
+.card .face{position:absolute;inset:0;border-radius:16px;border:2px solid var(--line);background:var(--paper);box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;justify-content:center;backface-visibility:hidden;transition:transform .5s;padding:12px;text-align:center}
+.card .back{transform:rotateY(180deg);background:#FDF0F3}.card.flip .front{transform:rotateY(180deg)}.card.flip .back{transform:rotateY(360deg)}
+.big{font:700 30px Comfortaa;color:var(--brick-dark)}.big.ru{color:var(--ink)}.ipa{color:var(--ink-soft)}.hint,.small{font-size:12px}.muted{color:var(--ink-soft)}.ex{margin-top:8px;font-style:italic;color:var(--ink-soft)}
+.done-card{display:flex;align-items:center;justify-content:center;flex-direction:column;border:2px dashed var(--line);border-radius:16px;height:180px;font-weight:700}
+.card-btns{display:flex;gap:10px;justify-content:center}.center{text-align:center}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.opt,.tile{border:2px solid var(--line);background:var(--paper);border-radius:12px;padding:12px;font:700 15px Nunito;cursor:pointer;color:var(--ink)}
+.opt.ok,.tile.done{background:var(--sage-bg);border-color:var(--sage);color:var(--sage)}.opt.bad{background:var(--coral-bg);border-color:var(--coral)}
+.big-play{font-size:18px;padding:14px 28px}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}.mgrid>div{display:flex;flex-direction:column;gap:8px}.tile.sel{border-color:var(--brick);background:#FDF0F3}.tile.done{opacity:.55;cursor:default}
+.shake{animation:sh .35s}@keyframes sh{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.timer{font:700 22px Comfortaa;color:var(--brick-dark)}
+.gap{max-width:100%;border:none;border-bottom:2px solid var(--gold);background:#FFF8FA;font:700 15px Nunito;color:var(--brick-dark);padding:2px 6px;margin:0 4px;text-align:center}.gap.ok{border-color:var(--sage);background:var(--sage-bg)}.gap.bad{border-color:var(--coral);background:var(--coral-bg)}
+.gap.wide{width:min(320px,90%);font-size:20px;margin:10px auto;display:block}
+.gap-row{display:flex;gap:8px;align-items:baseline;margin:6px 0;flex-wrap:wrap}.gap-row .num{color:var(--tab);min-width:20px}.fb{font-weight:800;color:var(--sage)}
+.cloze{line-height:2.3}
+.mask{font:700 22px monospace;letter-spacing:2px;margin:10px 0;color:var(--ink-soft)}.fbline.ok{color:var(--sage);font-weight:700}.fbline.bad{color:var(--coral);font-weight:700}
+textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:10px;font:15px Nunito;background:#FFFDFB}
+.trow{display:flex;gap:8px;margin:6px 0;flex-wrap:wrap}.tname{flex:1 1 160px;border:1.5px solid var(--line);border-radius:8px;padding:7px 10px;font:15px Nunito}.trel{flex:1 1 200px;border:1.5px solid var(--line);border-radius:8px;padding:7px;font:15px Nunito}
+.tout{margin-top:12px;background:#FDF0F3;border-radius:10px;padding:10px 14px}.tsent{margin:4px 0}.play{border:none;background:var(--line);border-radius:50%;width:30px;height:30px;cursor:pointer}.play.mini{width:26px;height:26px;font-size:12px}
+.qrow{display:flex;gap:10px;align-items:center;margin:6px 0}
+.vfinal{display:none;text-align:center;background:linear-gradient(135deg,var(--brick),var(--brick-dark));color:#fff;border-radius:12px;padding:18px;margin-bottom:16px}.vfinal.shown{display:block}
+.next-row{text-align:right;margin-top:16px}
+.sideimg{float:right;width:min(300px,45%);margin:0 0 10px 14px}@media(max-width:640px){.sideimg{float:none;width:100%;margin:0 0 10px}}
+</style></head><body>
+<div class="vtop"><span class="t">Vocab 2 · Birth, marriage and death</span><div class="vbar"><i id="vBar"></i></div><span class="vscore" id="vScore">0</span></div>
+<div class="vwrap"><div class="vsteps" id="vSteps"></div><p class="tts-warn" id="ttsWarn"></p>
+<div class="vfinal" id="vFinal"><b style="font-size:20px">🎉 Урок пройден!</b><br>Слова урока добавлены в словарь — повторяйте их в разделе «Повторение».</div>
+<section class="vpanel" hidden><div class="eyebrow">A · Birth</div><h2>Рождение</h2><p class="lead">Нажимайте на выделенные слова — появится перевод и кнопка 🔊.</p><div class="sideimg"><div class="ph" style="position:relative;width:100%;height:150px;border-radius:12px;border:2px dashed var(--line);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--ink-soft);background:#FDF0F3;text-align:center;padding:6px"><span>Мама держит новорождённого<br><small>lessons/img/voc-2-pic-1.webp</small></span><img data-lesson-image="img/voc-2-pic-1.webp" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:12px" alt=""></div></div><p>Anna <span class="w" data-en="had a baby">had a baby<span class="tip"> <button class="play mini" data-text="had a baby">🔊</button></span></span> yesterday.</p><p>He <span class="w" data-en="was born">was born<span class="tip"> <button class="play mini" data-text="was born">🔊</button></span></span> at 1.15 yesterday morning.</p><p>He <span class="w" data-en="weighed">weighed<span class="tip">весил <button class="play mini" data-text="weighed">🔊</button></span></span> 3 kilograms.</p><div style="clear:both"></div><p>They are going to <span class="w" data-en="call">call<span class="tip">назвать <button class="play mini" data-text="call">🔊</button></span></span> him John – <span class="w" data-en="after">after<span class="tip">в честь <button class="play mini" data-text="after">🔊</button></span></span> John, his grandfather. His grandfather's <span class="w" data-en="birthday">birthday<span class="tip">день рождения <button class="play mini" data-text="birthday">🔊</button></span></span> is June 16th too – but he was born in 1945!</p><p>The baby's parents <span class="w" data-en="were born">were born<span class="tip">родились <button class="play mini" data-text="were born">🔊</button></span></span> in 1974.</p><div class="err" style="clear:both"><b>Error warning</b>We say: Anna <b>had a baby</b> [NOT Anna <s>got</s> a baby]. We say: He/She <b>was born</b> [NOT He/She <s>born</s> or He/She <s>is born</s>].</div><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">B · Marriage</div><h2>Брак</h2><p class="lead"></p><p>If you do not have a <span class="w" data-en="partner">partner<span class="tip">партнёр <button class="play mini" data-text="partner">🔊</button></span></span>, you are <span class="w" data-en="single">single<span class="tip">не женат / не замужем <button class="play mini" data-text="single">🔊</button></span></span>.</p><p>If you have a husband or wife, you are <span class="w" data-en="married">married<span class="tip">женат / замужем <button class="play mini" data-text="married">🔊</button></span></span>.</p><p>If your husband or wife dies, you are <span class="w" data-en="widowed">widowed<span class="tip">овдовевший <button class="play mini" data-text="widowed">🔊</button></span></span>.</p><p>If your marriage breaks up, you are <span class="w" data-en="separated">separated<span class="tip">живущие раздельно <button class="play mini" data-text="separated">🔊</button></span></span> / <span class="w" data-en="divorced">divorced<span class="tip">разведённый <button class="play mini" data-text="divorced">🔊</button></span></span>. (the marriage has legally ended)</p><div class="sideimg"><div class="ph" style="position:relative;width:100%;height:170px;border-radius:12px;border:2px dashed var(--line);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--ink-soft);background:#FDF0F3;text-align:center;padding:6px"><span>Свадьба: невеста (bride) и жених (groom)<br><small>lessons/img/voc-2-pic-2.webp</small></span><img data-lesson-image="img/voc-2-pic-2.webp" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:12px" alt=""></div></div><p>Bill and Sarah <span class="w" data-en="got married">got married<span class="tip"> <button class="play mini" data-text="got married">🔊</button></span></span>.</p><p>The <span class="w" data-en="wedding">wedding<span class="tip">свадьба <button class="play mini" data-text="wedding">🔊</button></span></span>: <span class="w" data-en="bride">bride<span class="tip">невеста <button class="play mini" data-text="bride">🔊</button></span></span>, (bride) <span class="w" data-en="groom">groom<span class="tip">жених <button class="play mini" data-text="groom">🔊</button></span></span></p><div class="err" style="clear:both"><b>Error warning</b>Sarah got married <b>to</b> Bill [NOT <s>with</s> Bill].</div><p>They (got) married in 1988. (<i>married</i> without <i>got</i> is more formal)</p><p>They went on their <span class="w" data-en="honeymoon">honeymoon<span class="tip">медовый месяц <button class="play mini" data-text="honeymoon">🔊</button></span></span> to Italy.</p><p>They were married for 20 years.</p><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">C · Death</div><h2>Смерть</h2><p class="lead"></p><div class="sideimg"><div class="ph" style="position:relative;width:100%;height:160px;border-radius:12px;border:2px dashed var(--line);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--ink-soft);background:#FDF0F3;text-align:center;padding:6px"><span>Похороны (the funeral)<br><small>lessons/img/voc-2-pic-3.webp</small></span><img data-lesson-image="img/voc-2-pic-3.webp" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:12px" alt=""></div></div><p>Then Bill became <span class="w" data-en="ill">ill<span class="tip">больной <button class="play mini" data-text="ill">🔊</button></span></span>.</p><p>He <span class="w" data-en="died">died<span class="tip"> <button class="play mini" data-text="died">🔊</button></span></span> last year.</p><p>He <span class="w" data-en="died of">died of<span class="tip"> <button class="play mini" data-text="died of">🔊</button></span></span> a <span class="w" data-en="heart attack">heart attack<span class="tip">сердечный приступ <button class="play mini" data-text="heart attack">🔊</button></span></span>.</p><div class="err" style="clear:both"><b>Error warning</b>Bill <b>is dead</b> [NOT Bill <s>is died</s> or Bill <s>is death</s>].</div><p>The <span class="w" data-en="funeral">funeral<span class="tip">похороны <button class="play mini" data-text="funeral">🔊</button></span></span></p><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">Запоминаем</div><h2>Карточки</h2><p class="lead">Посмотрите слово, вспомните перевод и переверните карточку. «Ещё не помню» вернёт карточку в конец стопки.</p><div id="cardBox"></div><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">Exercise 2.1</div><h2>Where were they born? When?</h2><p class="lead">Вспомните людей, которых знаете. Где и когда они родились? Напишите 5 предложений.</p><textarea class="free" id="t21" data-step="write" rows="6" placeholder="My mother was born in Oryol on July 4th 1970."></textarea><p class="small muted">Образец: <i>My mother was born in Scotland on July 4th 1957.</i> Минимум 15 слов.</p><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">Exercise 2.2</div><h2>Find a word</h2><p class="lead">Найдите слово из урока, которое означает…</p><div id="ex22"></div><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">Exercise 2.3</div><h2>Complete the sentences</h2><p class="lead">Слова для вставки: <b>in · after · of · to · born · on</b>.</p><div id="ex23"></div><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">Exercise 2.4</div><h2>When were they born and when did they die?</h2><p class="lead">Напишите предложение по образцу: <i>Genghis Khan (1162–1227) → Genghis Khan was born in 1162 and died in 1227.</i></p><div id="ex24"></div><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">Exercise 2.5</div><h2>died, dead or death?</h2><p class="lead">Вставьте <b>died</b>, <b>dead</b> или <b>death</b>.</p><div id="ex25"></div><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">Тренируем</div><h2>Узнай на слух</h2><p class="lead">Нажмите «Слушать» и выберите перевод. Цель — 8 из 10.</p><div id="listenBox"></div><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">Тренируем</div><h2>Пары на время</h2><p class="lead">Соедините слово и перевод как можно быстрее.</p><div id="matchBox"></div><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">Тренируем</div><h2>Вспомни и напиши</h2><p class="lead">Перевод → напишите слово по-английски.</p><div id="spellBox"></div><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">Exercise 2.6</div><h2>Write about your family</h2><p class="lead">Напишите о своей семье, используя слова урока. Идеи: <i>I have … . I/my … got married in … (year). For my/his/her honeymoon, I/he/she went to … . I have / my … has … children. They were born in … and … (years).</i></p><textarea class="free" id="t26" data-step="family" rows="7" placeholder="My parents got married in 1990…"></textarea><p class="small muted">Минимум 15 слов. Образец: <i>My parents got married in 1990. For their honeymoon, they went to Sochi. They have two children. My brother was born in 1992 and I was born in 1995. My grandfather died in 2015.</i></p></section></div>
+<script src="../lesson-kit.js?v=20261018-games1"></script>
+<script>window.VOC={"slug": "vocab-2-birth-marriage-death", "unit": 202, "words": [{"en": "birth", "ipa": "/bɜːθ/", "ru": "рождение", "ex": "Birth, marriage and death"}, {"en": "have a baby", "ipa": "/hæv ə ˈbeɪbi/", "ru": "родить ребёнка", "ex": "Anna had a baby yesterday."}, {"en": "be born", "ipa": "/bi bɔːn/", "ru": "родиться", "ex": "He was born at 1.15 yesterday morning."}, {"en": "weigh", "ipa": "/weɪ/", "ru": "весить", "ex": "He weighed 3 kilograms."}, {"en": "call … after …", "ipa": "/kɔːl ˈɑːftə/", "ru": "назвать в честь", "ex": "They are going to call him John – after his grandfather."}, {"en": "birthday", "ipa": "/ˈbɜːθdeɪ/", "ru": "день рождения", "ex": "His grandfather's birthday is June 16th too."}, {"en": "marriage", "ipa": "/ˈmærɪdʒ/", "ru": "брак", "ex": "If your marriage breaks up …"}, {"en": "partner", "ipa": "/ˈpɑːtnə/", "ru": "партнёр", "ex": "If you do not have a partner, you are single."}, {"en": "single", "ipa": "/ˈsɪŋɡl/", "ru": "не женат / не замужем", "ex": "If you do not have a partner, you are single."}, {"en": "married", "ipa": "/ˈmærid/", "ru": "женат / замужем", "ex": "If you have a husband or wife, you are married."}, {"en": "widowed", "ipa": "/ˈwɪdəʊd/", "ru": "овдовевший", "ex": "If your husband or wife dies, you are widowed."}, {"en": "separated", "ipa": "/ˈsepəreɪtɪd/", "ru": "живущие раздельно", "ex": "If your marriage breaks up, you are separated."}, {"en": "divorced", "ipa": "/dɪˈvɔːst/", "ru": "разведённый", "ex": "The marriage has legally ended – you are divorced."}, {"en": "get married", "ipa": "/ɡet ˈmærid/", "ru": "пожениться", "ex": "Bill and Sarah got married."}, {"en": "wedding", "ipa": "/ˈwedɪŋ/", "ru": "свадьба", "ex": "The wedding"}, {"en": "bride", "ipa": "/braɪd/", "ru": "невеста", "ex": "bride"}, {"en": "groom", "ipa": "/ɡruːm/", "ru": "жених", "ex": "(bride)groom"}, {"en": "honeymoon", "ipa": "/ˈhʌnimuːn/", "ru": "медовый месяц", "ex": "They went on their honeymoon to Italy."}, {"en": "death", "ipa": "/deθ/", "ru": "смерть", "ex": "His death made her very sad."}, {"en": "ill", "ipa": "/ɪl/", "ru": "больной", "ex": "Then Bill became ill."}, {"en": "die", "ipa": "/daɪ/", "ru": "умирать", "ex": "He died last year."}, {"en": "die of", "ipa": "/daɪ əv/", "ru": "умереть от", "ex": "He died of a heart attack."}, {"en": "heart attack", "ipa": "/ˈhɑːt əˌtæk/", "ru": "сердечный приступ", "ex": "He died of a heart attack."}, {"en": "dead", "ipa": "/ded/", "ru": "мёртвый", "ex": "Bill is dead."}, {"en": "funeral", "ipa": "/ˈfjuːnərəl/", "ru": "похороны", "ex": "The funeral"}, {"en": "old age", "ipa": "/əʊld eɪdʒ/", "ru": "старость", "ex": "She died of old age."}], "exercises": [{"id": "ex22", "step": "exb", "numbered": true, "items": [{"q": "the name for a woman on her wedding day: ___", "a": ["bride"]}, {"q": "the name for a man on his wedding day: ___", "a": ["groom", "bridegroom"]}, {"q": "what you are if you haven't got a partner: ___", "a": ["single"]}, {"q": "to be 57 kilograms: to ___ 57 kilograms", "a": ["weigh"]}, {"q": "what you are if your marriage has legally ended: ___", "a": ["divorced"]}, {"q": "a religious service for a dead person: ___", "a": ["funeral"]}, {"q": "a holiday after a wedding: ___", "a": ["honeymoon"]}, {"q": "what you are if your husband or wife dies: ___", "a": ["widowed"]}]}, {"id": "ex23", "step": "exc", "numbered": true, "items": [{"q": "___ 2003 Anne got married …", "a": ["In"]}, {"q": "… got married ___ Robert Smith.", "a": ["to"]}, {"q": "Robert's grandmother, Rosemary Smith, died ___ old age …", "a": ["of"]}, {"q": "Robert and Anne were ___ their honeymoon when she died.", "a": ["on"]}, {"q": "Anne's baby daughter was ___ two years later.", "a": ["born"]}, {"q": "They called the baby Rosemary, ___ Robert's grandmother.", "a": ["after"]}]}, {"id": "ex24", "step": "exd", "numbered": true, "items": [{"q": "Christopher Columbus (1451–1506) → ___", "a": ["Christopher Columbus was born in 1451 and died in 1506", "Columbus was born in 1451 and died in 1506"]}, {"q": "Leonardo da Vinci (1452–1519) → ___", "a": ["Leonardo da Vinci was born in 1452 and died in 1519", "Vinci was born in 1452 and died in 1519"]}, {"q": "Princess Diana (1961–1997) → ___", "a": ["Princess Diana was born in 1961 and died in 1997", "Diana was born in 1961 and died in 1997"]}, {"q": "Heath Ledger (1979–2008) → ___", "a": ["Heath Ledger was born in 1979 and died in 2008", "Ledger was born in 1979 and died in 2008"]}]}, {"id": "ex25", "step": "exe", "numbered": true, "items": [{"q": "Jill's grandfather ___ last year.", "a": ["died"]}, {"q": "His ___ made her very sad.", "a": ["death"]}, {"q": "Her grandmother has been ___ for five years now.", "a": ["dead"]}, {"q": "She ___ of a heart attack.", "a": ["died"]}, {"q": "Now all Jill's grandparents are ___.", "a": ["dead"]}]}], "steps": [{"id": "a", "title": "A · Birth", "auto": 1}, {"id": "b", "title": "B · Marriage", "auto": 1}, {"id": "c", "title": "C · Death", "auto": 1}, {"id": "cards", "title": "Карточки"}, {"id": "write", "title": "2.1"}, {"id": "exb", "title": "2.2"}, {"id": "exc", "title": "2.3"}, {"id": "exd", "title": "2.4"}, {"id": "exe", "title": "2.5"}, {"id": "listen", "title": "На слух"}, {"id": "match", "title": "Пары"}, {"id": "spell", "title": "Напиши"}, {"id": "family", "title": "2.6"}]};</script>
+<script>/* Vocabulary lesson engine. Data comes from window.VOC. */
+(function(){
+const V=window.VOC, d=document, $=id=>d.getElementById(id);
+const norm=s=>String(s||'').trim().toLowerCase().replace(/[’‘`]/g,"'").replace(/[.!?,;:]/g,'').replace(/\s+/g,' ');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const say=(t,r,b)=>{try{return window.speak?window.speak(t,r||1,b):LessonKit.speak(t,r||1,b);}catch(e){}};
+window.speak=window.speak||((t,r,b)=>LessonKit.speak(t,r,b));
+const ST={done:{},cards:{},recall:null,best:0};
+const STEPS=V.steps;
+function mark(step){if(!ST.done[step]){ST.done[step]=1;renderNav();}}
+/* ---------- навигация ---------- */
+function renderNav(){
+  $('vSteps').innerHTML=STEPS.map((s,i)=>`<button class="vstep${ST.done[s.id]?' ok':''}${cur===i?' cur':''}" data-i="${i}"><span>${ST.done[s.id]?'✓':i+1}</span>${esc(s.title)}</button>`).join('');
+  const n=STEPS.filter(s=>ST.done[s.id]).length; $('vScore').textContent=`${n} / ${STEPS.length}`;
+  $('vBar').style.width=(100*n/STEPS.length)+'%';
+  if(n===STEPS.length)$('vFinal').classList.add('shown');
+}
+let cur=0;
+function go(i){cur=Math.max(0,Math.min(STEPS.length-1,i));d.querySelectorAll('.vpanel').forEach((p,k)=>p.hidden=k!==cur);renderNav();window.scrollTo(0,0);
+  const s=STEPS[cur];if(s.auto)mark(s.id);}
+d.addEventListener('click',e=>{const b=e.target.closest('.vstep');if(b)go(+b.dataset.i);const n=e.target.closest('[data-next]');if(n)go(cur+1);
+  const p=e.target.closest('.play');if(p){e.stopPropagation();say(p.dataset.text,+p.dataset.rate||1,p);return;}
+  const w=e.target.closest('.w');if(w){const tip=w.querySelector('.tip');d.querySelectorAll('.w.open').forEach(x=>x!==w&&x.classList.remove('open'));w.classList.toggle('open');}
+  const pn=e.target.closest('.pn');if(pn){const t=(V.who||{})[pn.dataset.p]||pn.dataset.p;d.querySelectorAll('.who').forEach(x=>x.innerHTML=esc(t)+` <button class="play mini" data-text="${esc(t.replace(' — ',', '))}">🔊</button>`);}
+});
+/* ---------- карточки ---------- */
+let deck=[],ci=0;
+function cardsInit(){deck=shuffle(V.words.map((_,i)=>i));ci=0;showCard();}
+function showCard(){
+  const box=$('cardBox');
+  if(ci>=deck.length){box.innerHTML=`<div class="card done-card">🎉 Все карточки пройдены!<br><small>Слов: ${V.words.length}</small></div><button class="btn" id="cardsAgain">Ещё раз</button>`;mark('cards');$('cardsAgain').onclick=cardsInit;return;}
+  const w=V.words[deck[ci]];
+  box.innerHTML=`<div class="card" id="theCard"><div class="face front"><div class="big">${esc(w.en)}</div><div class="ipa">${esc(w.ipa||'')}</div><button class="play" data-text="${esc(w.en)}">🔊</button><div class="hint">нажмите на карточку, чтобы перевернуть</div></div><div class="face back"><div class="big ru">${esc(w.ru)}</div><div class="ex">${esc(w.ex||'')}</div></div></div>
+  <div class="card-btns"><button class="btn ghost" id="cAgain">🔁 Ещё не помню</button><button class="btn" id="cKnow">✓ Знаю</button></div><div class="small muted">Осталось: ${deck.length-ci}</div>`;
+  const c=$('theCard');c.onclick=e=>{if(e.target.closest('.play'))return;c.classList.toggle('flip');};
+  $('cKnow').onclick=()=>{ST.cards[w.en]=(ST.cards[w.en]||0)+1;ci++;showCard();};
+  $('cAgain').onclick=()=>{deck.push(deck[ci]);ci++;showCard();};
+}
+/* ---------- упражнения с пропусками ---------- */
+function gapEx(ex){
+  const el=$(ex.id);
+  el.innerHTML=ex.items.map((it,i)=>{const parts=it.q.split('___');return `<div class="gap-row">${ex.numbered!==false?`<b class="num">${i+1}</b>`:''}<span>${esc(parts[0])}<input class="gap" id="g_${ex.id}_${i}" data-ex="${ex.id}" data-i="${i}" autocomplete="off" spellcheck="false" style="width:${Math.max(7,Math.max(...it.a.map(x=>x.length))+2)}ch">${esc(parts[1]||'')}</span><span class="fb"></span></div>`;}).join('')+
+   `<div class="actions"><button class="btn" data-check="${ex.id}">Проверить</button><button class="btn ghost" data-show="${ex.id}">Показать ответы</button><span class="res" id="${ex.id}Res"></span></div>`;
+  el.querySelectorAll('input').forEach(inp=>inp.addEventListener('input',()=>{inp.classList.remove('ok','bad');}));
+}
+function checkGap(id,show){
+  const ex=V.exercises.find(x=>x.id===id);let ok=0;
+  $(id).querySelectorAll('input').forEach(inp=>{const it=ex.items[+inp.dataset.i];if(show&&!it.a.some(a=>norm(a)===norm(inp.value))){inp.value=it.a[0];}
+    const good=it.a.some(a=>norm(a)===norm(inp.value));inp.classList.toggle('ok',good);inp.classList.toggle('bad',!good&&inp.value.trim()!=='');if(good)ok++;
+    inp.parentElement.nextElementSibling.textContent=good?'✓':(inp.value.trim()?'✗':'');});
+  $(id+'Res').textContent=`Правильно: ${ok} из ${ex.items.length}`;
+  if(ok>=Math.ceil(ex.items.length*.8))mark(ex.step);
+}
+d.addEventListener('click',e=>{const c=e.target.closest('[data-check]');if(c)checkGap(c.dataset.check,false);const s=e.target.closest('[data-show]');if(s)checkGap(s.dataset.show,true);});
+/* ---------- на слух ---------- */
+let lq=[],li=0,lok=0;
+function listenInit(){lq=shuffle(V.words.map((_,i)=>i)).slice(0,Math.min(10,V.words.length));li=0;lok=0;listenQ();}
+function listenQ(){
+  const box=$('listenBox');
+  if(li>=lq.length){box.innerHTML=`<div class="center"><div class="big">${lok} / ${lq.length}</div><p>${lok>=Math.ceil(lq.length*.8)?'Отлично!':'Попробуйте ещё раз, чтобы набрать 8 из 10.'}</p><button class="btn" id="lAgain">Ещё раз</button></div>`;if(lok>=Math.ceil(lq.length*.8))mark('listen');$('lAgain').onclick=listenInit;return;}
+  const w=V.words[lq[li]],opts=shuffle([w,...shuffle(V.words.filter(x=>x!==w)).slice(0,3)]);
+  box.innerHTML=`<div class="center"><button class="btn big-play" id="lPlay">🔊 Слушать</button><div class="small muted">${li+1} / ${lq.length}</div></div><div class="opts">${opts.map(o=>`<button class="opt" data-en="${esc(o.en)}">${esc(o.ru)}</button>`).join('')}</div>`;
+  const play=()=>say(w.en,1,$('lPlay'));$('lPlay').onclick=play;
+  box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const good=b.dataset.en===w.en;b.classList.add(good?'ok':'bad');if(good)lok++;else box.querySelector(`.opt[data-en="${CSS.escape(w.en)}"]`).classList.add('ok');box.querySelectorAll('.opt').forEach(x=>x.disabled=true);setTimeout(()=>{li++;listenQ();},good?700:1500);});
+}
+/* ---------- пары на время ---------- */
+let mt=0,mTimer=null,mSel=null,mLeft=0;
+function matchInit(){
+  const words=shuffle(V.words).slice(0,8);mLeft=words.length;mt=0;clearInterval(mTimer);mSel=null;
+  const box=$('matchBox');
+  box.innerHTML=`<div class="center"><span class="timer" id="mTime">0.0 с</span> <span class="small muted">таймер стартует с первого клика ·</span> <span class="small muted">рекорд: <b id="mBest">${ST.best?ST.best.toFixed(1)+' с':'—'}</b></span></div><div class="mgrid"><div>${shuffle(words).map(w=>`<button class="tile" data-k="${esc(w.en)}" data-side="en">${esc(w.en)}</button>`).join('')}</div><div>${shuffle(words).map(w=>`<button class="tile" data-k="${esc(w.en)}" data-side="ru">${esc(w.ru)}</button>`).join('')}</div></div>`;
+  box.querySelectorAll('.tile').forEach(t=>t.onclick=()=>{
+    if(t.classList.contains('done'))return;
+    if(!mt){mt=Date.now();mTimer=setInterval(()=>{$('mTime')&&($('mTime').textContent=((Date.now()-mt)/1000).toFixed(1)+' с');},100);}
+    if(!mSel||mSel.dataset.side===t.dataset.side){box.querySelectorAll('.tile.sel').forEach(x=>x.classList.remove('sel'));t.classList.add('sel');mSel=t;return;}
+    if(mSel.dataset.k===t.dataset.k){[mSel,t].forEach(x=>{x.classList.remove('sel');x.classList.add('done');});mLeft--;mSel=null;
+      if(!mLeft){clearInterval(mTimer);const sec=(Date.now()-mt)/1000;if(!ST.best||sec<ST.best)ST.best=sec;mark('match');box.insertAdjacentHTML('beforeend',`<div class="center"><p>Готово за <b>${sec.toFixed(1)} с</b>! ${ST.best===sec?'🏆 Новый рекорд!':''}</p><button class="btn" id="mAgain">Ещё раунд</button></div>`);$('mAgain').onclick=matchInit;}}
+    else{[mSel,t].forEach(x=>x.classList.add('shake'));const a=mSel;setTimeout(()=>{a.classList.remove('shake','sel');t.classList.remove('shake');},400);mSel=null;}
+  });
+}
+/* ---------- вспомни и напиши ---------- */
+let sq=[],si=0,sok=0,hint=0;
+function spellInit(){sq=shuffle(V.words.map((_,i)=>i)).slice(0,Math.min(10,V.words.length));si=0;sok=0;spellQ();}
+function spellQ(){
+  const box=$('spellBox');
+  if(si>=sq.length){box.innerHTML=`<div class="center"><div class="big">${sok} / ${sq.length}</div><p>${sok>=Math.ceil(sq.length*.7)?'Отлично!':'Повторите карточки и попробуйте снова.'}</p><button class="btn" id="sAgain">Ещё раз</button></div>`;if(sok>=Math.ceil(sq.length*.7))mark('spell');$('sAgain').onclick=spellInit;return;}
+  const w=V.words[sq[si]];hint=0;
+  box.innerHTML=`<div class="center"><div class="big ru">${esc(w.ru)}</div><div class="small muted">${si+1} / ${sq.length} · букв: ${w.en.replace(/[^a-z]/gi,'').length}</div><div class="mask" id="sMask"></div><input class="gap wide" id="sIn" autocomplete="off" spellcheck="false" placeholder="напишите по-английски"><div class="actions" style="justify-content:center"><button class="btn" id="sCheck">Проверить</button><button class="btn ghost" id="sHint">Подсказка</button></div><div id="sFb" class="fbline"></div></div>`;
+  const mask=()=>$('sMask').textContent=w.en.split('').map((c,i)=>/[a-z]/i.test(c)?(i<hint?c:'_'):c).join(' ');mask();
+  $('sIn').focus();
+  $('sHint').onclick=()=>{hint=Math.min(w.en.length,hint+1);mask();};
+  const check=()=>{const good=norm($('sIn').value)===norm(w.en);if(good&&hint<2)sok++;$('sFb').innerHTML=good?'✓ Верно!':`✗ Правильно: <b>${esc(w.en)}</b>`;$('sFb').className='fbline '+(good?'ok':'bad');$('sCheck').disabled=true;setTimeout(()=>{si++;spellQ();},good?900:2000);};
+  $('sCheck').onclick=check;$('sIn').onkeydown=e=>{if(e.key==='Enter')check();};
+}
+/* ---------- 2 минуты: сколько слов вспомните ---------- */
+let rTimer=null;
+function recallInit(){
+  if(!$('recallBox'))return;
+  const box=$('recallBox');
+  box.innerHTML=`<p>Не подглядывайте в урок! Нажмите «Старт» и пишите слова темы через запятую или с новой строки.</p><div class="center"><span class="timer" id="rTime">2:00</span></div><textarea id="rIn" rows="6" disabled placeholder="mother, father, …"></textarea><div class="actions"><button class="btn" id="rStart">Старт</button><button class="btn ghost" id="rStop" disabled>Готово</button></div><div id="rRes"></div>`;
+  $('rStart').onclick=()=>{let left=120;$('rIn').disabled=false;$('rIn').focus();$('rStart').disabled=true;$('rStop').disabled=false;clearInterval(rTimer);
+    rTimer=setInterval(()=>{left--;$('rTime').textContent=Math.floor(left/60)+':'+String(left%60).padStart(2,'0');if(left<=0)finish();},1000);};
+  const finish=()=>{clearInterval(rTimer);$('rIn').disabled=true;$('rStop').disabled=true;
+    const typed=new Set($('rIn').value.split(/[\n,;]+/).map(norm).filter(Boolean));
+    const list=V.recall;const got=list.filter(w=>typed.has(norm(w)));const miss=list.filter(w=>!typed.has(norm(w)));
+    const extra=[...typed].filter(t=>!list.some(w=>norm(w)===t));
+    ST.recall={got:got.length,total:list.length};
+    $('rRes').innerHTML=`<p class="big">${got.length} из ${list.length}</p><p><b>Вспомнили:</b> ${got.map(esc).join(', ')||'—'}</p><p><b>Забыли:</b> ${miss.map(w=>`<span class="w" data-en="${esc(w)}">${esc(w)}</span>`).join(', ')||'ничего! 🎉'}</p>${extra.length?`<p class="small muted">Проверьте написание: ${extra.map(esc).join(', ')}</p>`:''}<button class="btn" id="rAgain">Ещё раз</button>`;
+    $('rAgain').onclick=recallInit;mark('recall');};
+  $('rStop').onclick=finish;
+}
+/* ---------- follow-up: моё семейное дерево ---------- */
+const TROWS=8;
+function treeInit(){
+  if(!$('treeBox'))return;
+  const box=$('treeBox');
+  box.innerHTML=Array.from({length:TROWS},(_,i)=>`<div class="trow"${i>=4?' hidden':''}><input class="tname" id="tname${i}" placeholder="Имя, напр. Anna"><select class="trel" id="trel${i}">${V.relations.map(x=>`<option value="${esc(x[0])}">${esc(x[0])} — ${esc(x[1])}</option>`).join('')}</select></div>`).join('')+`<div class="actions"><button class="btn ghost" id="tAdd">+ Добавить родственника</button></div><div id="tOut" class="tout"></div>`;
+  box.addEventListener('input',treeUpd);box.addEventListener('change',treeUpd);
+  $('tAdd').onclick=()=>{const h=box.querySelector('.trow[hidden]');if(h)h.hidden=false;};
+  treeUpd();
+}
+function treeUpd(){
+  if(!$('treeBox'))return;
+  const rows=[...d.querySelectorAll('#treeBox .trow')];
+  rows.forEach(r=>{if(r.querySelector('.tname').value.trim())r.hidden=false;});
+  const ok=rows.map(r=>({n:r.querySelector('.tname').value.trim(),r:r.querySelector('.trel').value})).filter(x=>x.n);
+  $('tOut').innerHTML=ok.length?ok.map(x=>`<div class="tsent"><button class="play mini" data-text="${esc(x.n)} is my ${esc(x.r)}.">🔊</button> <b>${esc(x.n)}</b> is my <b>${esc(x.r)}</b>.</div>`).join(''):'<span class="muted">Впишите имена — предложения появятся здесь.</span>';
+  if(ok.length>=4)mark('tree');
+}
+/* ---------- состояние для облака ---------- */
+window.lessonStateVersion='vocab-'+V.slug+'-1';
+window.getLessonState=()=>({done:Object.fromEntries(Object.keys(ST.done).map(k=>[k,true])),parts:{best:Math.round((ST.best||0)*10),recall:ST.recall?ST.recall.got:0},visited:{}});
+window.restoreLessonState=s=>{if(!s)return;for(const k of Object.keys(s.done||{}))ST.done[k]=1;if(s.parts?.best)ST.best=s.parts.best/10;treeUpd();renderNav();};
+window.lessonResult=()=>{const n=STEPS.filter(s=>ST.done[s.id]).length;return {score:n,maxScore:STEPS.length,completed:n===STEPS.length};};
+/* ---------- старт ---------- */
+V.exercises.forEach(gapEx);cardsInit();listenInit();matchInit();spellInit();recallInit();treeInit();go(0);
+d.querySelectorAll('[data-start]').forEach(b=>b.addEventListener('click',()=>({cards:cardsInit,listen:listenInit,match:matchInit,spell:spellInit})[b.dataset.start]()));
+d.querySelectorAll('textarea.free').forEach(t=>t.addEventListener('input',()=>{if(t.value.trim().split(/\s+/).length>=15)mark(t.dataset.step);}));
+})();
+</script></body></html>

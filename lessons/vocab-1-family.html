@@ -39,9 +39,9 @@
 .mgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}.mgrid>div{display:flex;flex-direction:column;gap:8px}.tile.sel{border-color:var(--brick);background:#FDF0F3}.tile.done{opacity:.55;cursor:default}
 .shake{animation:sh .35s}@keyframes sh{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
 .timer{font:700 22px Comfortaa;color:var(--brick-dark)}
-.gap{border:none;border-bottom:2px solid var(--gold);background:#FFF8FA;font:700 15px Nunito;color:var(--brick-dark);padding:2px 6px;margin:0 4px;text-align:center}.gap.ok{border-color:var(--sage);background:var(--sage-bg)}.gap.bad{border-color:var(--coral);background:var(--coral-bg)}
+.gap{max-width:100%;border:none;border-bottom:2px solid var(--gold);background:#FFF8FA;font:700 15px Nunito;color:var(--brick-dark);padding:2px 6px;margin:0 4px;text-align:center}.gap.ok{border-color:var(--sage);background:var(--sage-bg)}.gap.bad{border-color:var(--coral);background:var(--coral-bg)}
 .gap.wide{width:min(320px,90%);font-size:20px;margin:10px auto;display:block}
-.gap-row{display:flex;gap:8px;align-items:baseline;margin:6px 0}.gap-row .num{color:var(--tab);min-width:20px}.fb{font-weight:800;color:var(--sage)}
+.gap-row{display:flex;gap:8px;align-items:baseline;margin:6px 0;flex-wrap:wrap}.gap-row .num{color:var(--tab);min-width:20px}.fb{font-weight:800;color:var(--sage)}
 .cloze{line-height:2.3}
 .mask{font:700 22px monospace;letter-spacing:2px;margin:10px 0;color:var(--ink-soft)}.fbline.ok{color:var(--sage);font-weight:700}.fbline.bad{color:var(--coral);font-weight:700}
 textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:10px;font:15px Nunito;background:#FFFDFB}
@@ -164,6 +164,7 @@ function spellQ(){
 /* ---------- 2 минуты: сколько слов вспомните ---------- */
 let rTimer=null;
 function recallInit(){
+  if(!$('recallBox'))return;
   const box=$('recallBox');
   box.innerHTML=`<p>Не подглядывайте в урок! Нажмите «Старт» и пишите слова темы через запятую или с новой строки.</p><div class="center"><span class="timer" id="rTime">2:00</span></div><textarea id="rIn" rows="6" disabled placeholder="mother, father, …"></textarea><div class="actions"><button class="btn" id="rStart">Старт</button><button class="btn ghost" id="rStop" disabled>Готово</button></div><div id="rRes"></div>`;
   $('rStart').onclick=()=>{let left=120;$('rIn').disabled=false;$('rIn').focus();$('rStart').disabled=true;$('rStop').disabled=false;clearInterval(rTimer);
@@ -180,6 +181,7 @@ function recallInit(){
 /* ---------- follow-up: моё семейное дерево ---------- */
 const TROWS=8;
 function treeInit(){
+  if(!$('treeBox'))return;
   const box=$('treeBox');
   box.innerHTML=Array.from({length:TROWS},(_,i)=>`<div class="trow"${i>=4?' hidden':''}><input class="tname" id="tname${i}" placeholder="Имя, напр. Anna"><select class="trel" id="trel${i}">${V.relations.map(x=>`<option value="${esc(x[0])}">${esc(x[0])} — ${esc(x[1])}</option>`).join('')}</select></div>`).join('')+`<div class="actions"><button class="btn ghost" id="tAdd">+ Добавить родственника</button></div><div id="tOut" class="tout"></div>`;
   box.addEventListener('input',treeUpd);box.addEventListener('change',treeUpd);
@@ -187,6 +189,7 @@ function treeInit(){
   treeUpd();
 }
 function treeUpd(){
+  if(!$('treeBox'))return;
   const rows=[...d.querySelectorAll('#treeBox .trow')];
   rows.forEach(r=>{if(r.querySelector('.tname').value.trim())r.hidden=false;});
   const ok=rows.map(r=>({n:r.querySelector('.tname').value.trim(),r:r.querySelector('.trel').value})).filter(x=>x.n);

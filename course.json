@@ -1147,6 +1147,13 @@
               "title": "The family",
               "description": "Семья: родственники, семейное дерево",
               "file": "lessons/vocab-1-family.html"
+            },
+            {
+              "id": "vocab-2-birth-marriage-death",
+              "unit": 2,
+              "title": "Birth, marriage and death",
+              "description": "Рождение, свадьба, смерть",
+              "file": "lessons/vocab-2-birth-marriage-death.html"
             }
           ]
         }
