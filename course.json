@@ -1182,6 +1182,13 @@
               "title": "Health and illness",
               "description": "Здоровье и болезни",
               "file": "lessons/vocab-6-health-and-illness.html"
+            },
+            {
+              "id": "vocab-7-feelings",
+              "unit": 7,
+              "title": "Feelings",
+              "description": "Чувства и состояния",
+              "file": "lessons/vocab-7-feelings.html"
             }
           ]
         }
