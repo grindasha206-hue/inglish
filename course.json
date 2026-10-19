@@ -1319,6 +1319,13 @@
               "title": "Free time at home",
               "description": "Свободное время дома",
               "file": "lessons/vocab-23-free-time-at-home.html"
+            },
+            {
+              "id": "vocab-24-music",
+              "unit": 24,
+              "title": "Music and musical instruments",
+              "description": "Музыка и инструменты",
+              "file": "lessons/vocab-24-music.html"
             }
           ]
         }
