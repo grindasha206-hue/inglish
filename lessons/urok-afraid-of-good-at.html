@@ -223,6 +223,14 @@ textarea.write-area:focus{outline:2px solid var(--tab); border-color:var(--tab);
  .scene-box{padding:10px}
 }
 
+
+/* Keep textbook columns and cross-references inside narrow lesson frames. */
+@media(max-width:600px){
+ #presentation .content [style*="flex:"]{min-width:0!important;max-width:100%}
+ #presentation .content [style*="white-space:nowrap"]{white-space:normal!important}
+ #presentation .table-scroll{max-width:100%;overflow-x:auto}
+ #presentation .content{padding-left:12px!important;padding-right:12px!important}
+}
 </style>
 <link rel="stylesheet" href="../lesson-theme.css"></head>
 <body><div class="topbar">
