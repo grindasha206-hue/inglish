@@ -1305,6 +1305,13 @@
               "title": "Sports",
               "description": "Спорт",
               "file": "lessons/vocab-21-sports.html"
+            },
+            {
+              "id": "vocab-22-cinema",
+              "unit": 22,
+              "title": "Cinema",
+              "description": "Кино",
+              "file": "lessons/vocab-22-cinema.html"
             }
           ]
         }

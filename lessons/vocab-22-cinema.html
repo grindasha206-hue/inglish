@@ -1,0 +1,203 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Vocabulary 22 · Cinema</title>
+<link rel="stylesheet" href="../lesson-theme.css"><style>
+.vtop{position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 10px rgba(150,80,100,.08)}
+.vtop .t{font-family:Comfortaa;font-weight:700;color:var(--brick-dark);white-space:nowrap}
+.vbar{flex:1;height:8px;background:var(--line);border-radius:6px;overflow:hidden}.vbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--tab),var(--brick));transition:width .5s}
+.vscore{font-size:13px;font-weight:700;background:var(--sage-bg);color:var(--sage);padding:4px 12px;border-radius:20px}
+.vwrap{max-width:920px;margin:18px auto;padding:0 12px}
+.vsteps{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.vstep{border:1.5px solid var(--line);background:var(--paper);border-radius:20px;padding:5px 12px 5px 6px;font:600 13px Nunito;color:var(--ink-soft);cursor:pointer;display:flex;align-items:center;gap:6px}
+.vstep span{width:22px;height:22px;border-radius:50%;background:var(--line);display:inline-flex;align-items:center;justify-content:center;font-size:12px}
+.vstep.cur{border-color:var(--brick);color:var(--brick-dark)}.vstep.ok span{background:var(--sage);color:#fff}
+.vpanel{background:var(--paper);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:20px 22px;margin-bottom:16px}
+.vpanel h2{margin:0 0 4px;color:var(--brick-dark);font-size:22px}.eyebrow{font:700 12px Nunito;letter-spacing:.08em;text-transform:uppercase;color:var(--tab)}
+.lead{color:var(--ink-soft);margin:4px 0 14px}
+.w{font-weight:800;color:var(--brick-dark);cursor:pointer;border-bottom:2px dotted var(--gold);position:relative}
+.w .tip{display:none;align-items:center;gap:6px;position:absolute;left:0;top:120%;background:var(--ink);color:#fff;font:600 13px Nunito;padding:3px 9px;border-radius:6px;white-space:nowrap;z-index:5}
+.w.open .tip{display:inline-flex}
+.tree{display:grid;gap:8px;justify-items:center;margin:10px 0 16px}
+.trow3{display:flex;justify-content:center;gap:clamp(8px,4vw,40px);flex-wrap:wrap;width:100%}
+.node{text-align:center}.node .ph{width:132px;height:84px;border-radius:50%;border:2.5px solid var(--brick);background:linear-gradient(135deg,#FBE3EA,#FDF4F1);display:flex;align-items:center;justify-content:center;overflow:hidden;font-size:11px;color:var(--ink-soft);margin:0 auto 4px}
+.node .ph img{width:100%;height:100%;object-fit:cover}
+.pn{background:none;border:none;font:700 15px Nunito;color:var(--ink);cursor:pointer;padding:2px 4px;border-radius:6px}.pn:hover{background:var(--line)}
+.who{min-height:28px;text-align:center;font-weight:700;color:var(--brick-dark)}
+.facts p{margin:2px 0 2px 18px}.facts h4{margin:10px 0 2px}
+.err{background:#FDF0F3;color:var(--ink);border-left:5px solid var(--brick);border-radius:10px;padding:10px 16px;margin-top:14px;line-height:1.6}.err .err-t{font:700 13px Nunito;letter-spacing:.06em;text-transform:uppercase;color:var(--brick-dark);margin-bottom:4px}.err .err-t::before{content:'⚠️ '}.err.tip{background:var(--sage-bg);border-left-color:var(--sage)}.err.tip .err-t{color:var(--sage)}.err.tip .err-t::before{content:'💡 '}.err s{color:var(--coral)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:6px 18px}@media(max-width:640px){.two{grid-template-columns:1fr}}
+.btn{background:var(--brick);color:#fff;border:none;border-radius:22px;padding:9px 18px;font:700 14px Nunito;cursor:pointer}.btn:disabled{opacity:.5}
+.btn.ghost{background:var(--paper);color:var(--brick-dark);border:1.5px solid var(--brick)}.btn.xs{padding:4px 10px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}.res{font-weight:700;color:var(--sage)}
+.card{width:min(360px,100%);height:210px;margin:10px auto;position:relative;perspective:900px;cursor:pointer}
+.card .face{position:absolute;inset:0;border-radius:16px;border:2px solid var(--line);background:var(--paper);box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;justify-content:center;backface-visibility:hidden;transition:transform .5s;padding:12px;text-align:center}
+.card .back{transform:rotateY(180deg);background:#FDF0F3}.card.flip .front{transform:rotateY(180deg)}.card.flip .back{transform:rotateY(360deg)}
+.big{font:700 30px Comfortaa;color:var(--brick-dark)}.big.ru{color:var(--ink)}.ipa{color:var(--ink-soft)}.hint,.small{font-size:12px}.muted{color:var(--ink-soft)}.ex{margin-top:8px;font-style:italic;color:var(--ink-soft)}
+.done-card{display:flex;align-items:center;justify-content:center;flex-direction:column;border:2px dashed var(--line);border-radius:16px;height:180px;font-weight:700}
+.card-btns{display:flex;gap:10px;justify-content:center}.center{text-align:center}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.opt,.tile{border:2px solid var(--line);background:var(--paper);border-radius:12px;padding:12px;font:700 15px Nunito;cursor:pointer;color:var(--ink)}
+.opt.ok,.tile.done{background:var(--sage-bg);border-color:var(--sage);color:var(--sage)}.opt.bad{background:var(--coral-bg);border-color:var(--coral)}
+.big-play{font-size:18px;padding:14px 28px}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}.mgrid>div{display:flex;flex-direction:column;gap:8px}.tile.sel{border-color:var(--brick);background:#FDF0F3}.tile.done{opacity:.55;cursor:default}
+.shake{animation:sh .35s}@keyframes sh{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.timer{font:700 22px Comfortaa;color:var(--brick-dark)}
+.gap{max-width:100%;border:none;border-bottom:2px solid var(--gold);background:#FFF8FA;font:700 15px Nunito;color:var(--brick-dark);padding:2px 6px;margin:0 4px;text-align:center}.gap.ok{border-color:var(--sage);background:var(--sage-bg)}.gap.bad{border-color:var(--coral);background:var(--coral-bg)}
+.gap.wide{width:min(320px,90%);font-size:20px;margin:10px auto;display:block}
+.gap-row{display:flex;gap:8px;align-items:baseline;margin:6px 0;flex-wrap:wrap}.gap-row .num{color:var(--tab);min-width:20px}.fb{font-weight:800;color:var(--sage)}
+.cloze{line-height:2.3}
+.mask{font:700 22px monospace;letter-spacing:2px;margin:10px 0;color:var(--ink-soft)}.fbline.ok{color:var(--sage);font-weight:700}.fbline.bad{color:var(--coral);font-weight:700}
+textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:10px;font:15px Nunito;background:#FFFDFB}
+.trow{display:flex;gap:8px;margin:6px 0;flex-wrap:wrap}.tname{flex:1 1 160px;border:1.5px solid var(--line);border-radius:8px;padding:7px 10px;font:15px Nunito}.trel{flex:1 1 200px;border:1.5px solid var(--line);border-radius:8px;padding:7px;font:15px Nunito}
+.tout{margin-top:12px;background:#FDF0F3;border-radius:10px;padding:10px 14px}.tsent{margin:4px 0}.play{border:none;background:var(--line);border-radius:50%;width:30px;height:30px;cursor:pointer}.play.mini{width:26px;height:26px;font-size:12px}
+.qrow{display:flex;gap:10px;align-items:center;margin:6px 0}
+.vfinal{display:none;text-align:center;background:linear-gradient(135deg,var(--brick),var(--brick-dark));color:#fff;border-radius:12px;padding:18px;margin-bottom:16px}.vfinal.shown{display:block}
+.bubs{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0}.bub{display:inline-flex;align-items:center;gap:6px;background:#fff;border:2px solid var(--ink);border-radius:18px;padding:4px 12px;font-weight:700}.scene{background:#FDF0F3;border-radius:12px;padding:10px 12px;margin:8px 0}.scene .who{min-height:0;text-align:left;font-size:13px;color:var(--ink-soft)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:10px;margin:10px 0}.ptile{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:6px;text-align:center}.pimg{position:relative;height:84px;border-radius:8px;background:#FDF0F3;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--ink-soft);margin-bottom:4px;overflow:hidden}.pimg img{display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff}
+.next-row{text-align:right;margin-top:16px}
+.sideimg{float:right;width:min(300px,45%);margin:0 0 10px 14px}@media(max-width:640px){.sideimg{float:none;width:100%;margin:0 0 10px}}
+</style></head><body>
+<div class="vtop"><span class="t">Vocab 22 · Cinema</span><div class="vbar"><i id="vBar"></i></div><span class="vscore" id="vScore">0</span></div>
+<div class="vwrap"><div class="vsteps" id="vSteps"></div><p class="tts-warn" id="ttsWarn"></p>
+<div class="vfinal" id="vFinal"><b style="font-size:20px">🎉 Урок пройден!</b><br>Слова урока добавлены в словарь — повторяйте их в разделе «Повторение».</div>
+<section class="vpanel" hidden><div class="eyebrow">A · Types of films</div><h2>Жанры фильмов</h2><p class="lead">Нажмите на слово — перевод и 🔊.</p><div class="tiles"><div class="ptile"><div class="pimg"><span>western</span><img data-lesson-image="img/voc-22-western.webp" alt=""></div><span class="w" data-en="western">western<span class="tip">вестерн <button class="play mini" data-text="western">🔊</button></span></span></div><div class="ptile"><div class="pimg"><span>horror film</span><img data-lesson-image="img/voc-22-horror-film.webp" alt=""></div><span class="w" data-en="horror film">horror film<span class="tip">фильм ужасов <button class="play mini" data-text="horror film">🔊</button></span></span></div><div class="ptile"><div class="pimg"><span>action film</span><img data-lesson-image="img/voc-22-action-film.webp" alt=""></div><span class="w" data-en="action film">action film<span class="tip">боевик <button class="play mini" data-text="action film">🔊</button></span></span></div><div class="ptile"><div class="pimg"><span>musical</span><img data-lesson-image="img/voc-22-musical.webp" alt=""></div><span class="w" data-en="musical">musical<span class="tip">мюзикл <button class="play mini" data-text="musical">🔊</button></span></span></div><div class="ptile"><div class="pimg"><span>cartoon</span><img data-lesson-image="img/voc-22-cartoon.webp" alt=""></div><span class="w" data-en="cartoon">cartoon<span class="tip">мультфильм <button class="play mini" data-text="cartoon">🔊</button></span></span></div><div class="ptile"><div class="pimg"><span>comedy</span><img data-lesson-image="img/voc-22-comedy.webp" alt=""></div><span class="w" data-en="comedy">comedy<span class="tip">комедия <button class="play mini" data-text="comedy">🔊</button></span></span></div><div class="ptile"><div class="pimg"><span>thriller</span><img data-lesson-image="img/voc-22-thriller.webp" alt=""></div><span class="w" data-en="thriller">thriller<span class="tip">триллер <button class="play mini" data-text="thriller">🔊</button></span></span></div><div class="ptile"><div class="pimg"><span>science fiction film</span><img data-lesson-image="img/voc-22-science-fiction-film.webp" alt=""></div><span class="w" data-en="science fiction film">science fiction film<span class="tip">научная фантастика <button class="play mini" data-text="science fiction film">🔊</button></span></span></div><div class="ptile"><div class="pimg"><span>romantic comedy</span><img data-lesson-image="img/voc-22-romantic-comedy.webp" alt=""></div><span class="w" data-en="romantic comedy">romantic comedy<span class="tip">романтическая комедия <button class="play mini" data-text="romantic comedy">🔊</button></span></span></div></div><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">B · People in films</div><h2>Люди в кино</h2><p class="lead"></p><div class="sideimg" style=""><div class="ph" style="position:relative;width:100%;height:140px;border-radius:12px;border:2px dashed var(--line);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--ink-soft);background:#FDF0F3;text-align:center;padding:6px"><span>Кинозвезда и фотографы; режиссёр с камерой<br><small>lessons/img/voc-22-pic-1.webp</small></span><img data-lesson-image="img/voc-22-pic-1.webp" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:contain;border-radius:12px;background:#fff" alt=""></div></div><p>Zelda Glitzberg is a <span class="w" data-en="film star">film star<span class="tip">кинозвезда <button class="play mini" data-text="film star">🔊</button></span></span>.</p><p>She lives in Hollywood.</p><p>She is <b>in</b> the new James Bond film. (<span class="w" data-en="be in a film">be in a film<span class="tip">сниматься в фильме <button class="play mini" data-text="be in a film">🔊</button></span></span>)</p><p>Daniel Radcliffe <b>played</b> Harry Potter in the Harry Potter films. (<span class="w" data-en="play">play<span class="tip">играть (роль) <button class="play mini" data-text="play">🔊</button></span></span>)</p><p>I like films by Italian <span class="w" data-en="directors">directors<span class="tip">режиссёры <button class="play mini" data-text="directors">🔊</button></span></span>.</p><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">C · Expressions</div><h2>Выражения</h2><p class="lead"></p><div class="err" style="clear:both"><div class="err-t">Error warning</div>Do you <b>go to the cinema</b> often? [NOT <s>Do you go to cinema often?</s>]<br>Yes, I go every week. No, I <b>watch DVDs</b> at home.</div><div class="err" style="clear:both"><div class="err-t">Error warning</div><b>What's on</b> at the cinema this week? [NOT <s>What's on the cinema this week?</s>]<br>There's a comedy with Cameron Diaz.</div><p>Фразы: <span class="w" data-en="go to the cinema">go to the cinema<span class="tip">ходить в кино <button class="play mini" data-text="go to the cinema">🔊</button></span></span>, <span class="w" data-en="watch DVDs">watch DVDs<span class="tip">смотреть DVD <button class="play mini" data-text="watch DVDs">🔊</button></span></span>, <span class="w" data-en="What&#x27;s on?">What&#x27;s on?<span class="tip">Что идёт? <button class="play mini" data-text="What&#x27;s on?">🔊</button></span></span></p><div class="qrow"><button class="play mini" data-text="Have you seen the latest James Bond film? Yes, I saw it on TV.">🔊</button><div><b>A:</b> Have you <b>seen</b> the latest James Bond film?<br><b>B:</b> Yes, I saw it <span class="w" data-en="on TV">on TV<span class="tip">по телевизору <button class="play mini" data-text="on TV">🔊</button></span></span>.</div></div><div class="qrow"><button class="play mini" data-text="Did you like the new Batman film? Yes, I loved it / enjoyed it (enjoy). / No, it was boring.">🔊</button><div><b>A:</b> Did you like the new <i>Batman</i> film?<br><b>B:</b> Yes, I loved it / <b>enjoyed</b> it (<span class="w" data-en="enjoy">enjoy<span class="tip">получать удовольствие <button class="play mini" data-text="enjoy">🔊</button></span></span>). / No, it was <span class="w" data-en="boring">boring<span class="tip">скучный <button class="play mini" data-text="boring">🔊</button></span></span>.</div></div><div class="qrow"><button class="play mini" data-text="Do you like westerns? No, I like science fiction films best.">🔊</button><div><b>A:</b> Do you like westerns?<br><b>B:</b> No, I like science fiction films best.</div></div><p>The best action film I've seen was <i>Quantum of Solace</i> with Daniel Craig.</p><p>If I see a horror film, I can't sleep.</p><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">Запоминаем</div><h2>Карточки</h2><p class="lead">Посмотрите слово, вспомните перевод и переверните карточку. «Ещё не помню» вернёт карточку в конец стопки.</p><div id="cardBox"></div><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">Exercise 22.1</div><h2>What types of films are these?</h2><p class="lead">Образец: <i>Some cowboys rob a train. → western</i></p><div id="ex221"></div><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">Exercise 22.2</div><h2>Name a film of each type</h2><p class="lead">science fiction, romantic comedy, thriller, western, musical, cartoon. Образец: <i>science fiction – War of the Worlds</i></p><textarea class="free" id="t222" data-step="films" rows="6" placeholder="science fiction – War of the Worlds, …"></textarea><p class="small muted">Минимум 15 слов.</p><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">Exercise 22.3</div><h2>Word puzzle</h2><p class="lead">Жанры фильмов, в каждом есть буква из слова ROMANTIC. Образец: <i>TH_ILLE_ → thriller</i>.</p><div id="ex223"></div><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">Exercise 22.4</div><h2>Fill the gaps</h2><p class="lead">Образец: <i>Do you prefer going to the cinema or watching TV?</i></p><div id="ex224"></div><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">Тренируем</div><h2>Узнай на слух</h2><p class="lead">Нажмите «Слушать» и выберите перевод. Цель — 8 из 10.</p><div id="listenBox"></div><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">Тренируем</div><h2>Пары на время</h2><p class="lead">Соедините слово и перевод как можно быстрее.</p><div id="matchBox"></div><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">Тренируем</div><h2>Вспомни и напиши</h2><p class="lead">Перевод → напишите слово по-английски.</p><div id="spellBox"></div><div class="next-row"><button class="btn ghost" data-next>Дальше →</button></div></section><section class="vpanel" hidden><div class="eyebrow">Exercise 22.5</div><h2>Answer the questions</h2><p class="lead">1 What is your favourite type of film? 2 Who is your favourite film star? 3 Do you prefer going to the cinema or watching DVDs? 4 What was the last film you saw? 5 How can you find out what is on at the cinema?</p><textarea class="free" id="t225" data-step="ans" rows="6" placeholder="My favourite type of film is …"></textarea><p class="small muted">Минимум 15 слов.</p></section></div>
+<script src="../lesson-kit.js?v=20261018-games1"></script>
+<script>window.VOC={"slug": "vocab-22-cinema", "unit": 222, "words": [{"en": "western", "ipa": "/ˈwestən/", "ru": "вестерн", "ex": "western"}, {"en": "horror film", "ipa": "/ˈhɒrə fɪlm/", "ru": "фильм ужасов", "ex": "horror film"}, {"en": "action film", "ipa": "/ˈækʃn fɪlm/", "ru": "боевик", "ex": "action film"}, {"en": "musical", "ipa": "/ˈmjuːzɪkl/", "ru": "мюзикл", "ex": "musical"}, {"en": "cartoon", "ipa": "/kɑːˈtuːn/", "ru": "мультфильм", "ex": "cartoon"}, {"en": "comedy", "ipa": "/ˈkɒmədi/", "ru": "комедия", "ex": "comedy"}, {"en": "thriller", "ipa": "/ˈθrɪlə/", "ru": "триллер", "ex": "thriller"}, {"en": "science fiction film", "ipa": "/ˌsaɪəns ˈfɪkʃn fɪlm/", "ru": "научная фантастика", "ex": "science fiction film"}, {"en": "romantic comedy", "ipa": "/rəʊˌmæntɪk ˈkɒmədi/", "ru": "романтическая комедия", "ex": "romantic comedy"}, {"en": "film star", "ipa": "/ˈfɪlm stɑː/", "ru": "кинозвезда", "ex": "Zelda Glitzberg is a film star."}, {"en": "be in a film", "ipa": "/bi ɪn ə fɪlm/", "ru": "сниматься в фильме", "ex": "She is in the new James Bond film."}, {"en": "play", "ipa": "/pleɪ/", "ru": "играть (роль)", "ex": "Daniel Radcliffe played Harry Potter."}, {"en": "director", "ipa": "/dəˈrektə/", "ru": "режиссёр", "ex": "I like films by Italian directors."}, {"en": "go to the cinema", "ipa": "/ɡəʊ tə ðə ˈsɪnəmə/", "ru": "ходить в кино", "ex": "Do you go to the cinema often?"}, {"en": "watch DVDs", "ipa": "/wɒtʃ ˌdiː viː ˈdiːz/", "ru": "смотреть DVD", "ex": "I watch DVDs at home."}, {"en": "What's on?", "ipa": "/wɒts ɒn/", "ru": "Что идёт?", "ex": "What's on at the cinema this week?"}, {"en": "on TV", "ipa": "/ɒn ˌtiːˈviː/", "ru": "по телевизору", "ex": "I saw it on TV."}, {"en": "enjoy", "ipa": "/ɪnˈdʒɔɪ/", "ru": "получать удовольствие", "ex": "I enjoyed it."}, {"en": "boring", "ipa": "/ˈbɔːrɪŋ/", "ru": "скучный", "ex": "No, it was boring."}], "exercises": [{"id": "ex221", "step": "exa", "numbered": true, "items": [{"q": "A flying saucer lands from Mars. → ___", "a": ["science fiction", "science fiction film"]}, {"q": "A dead person comes back to life. → ___", "a": ["horror", "horror film"]}, {"q": "James Bond saves the world. → ___", "a": ["action", "action film"]}, {"q": "Mickey Mouse goes on a picnic. → ___", "a": ["cartoon"]}, {"q": "A man falls in love with his teacher. → ___", "a": ["romantic comedy"]}, {"q": "A dead body is found in the river. → ___", "a": ["thriller"]}, {"q": "There are lots of songs and dancing. → ___", "a": ["musical"]}]}, {"id": "ex223", "step": "exb", "numbered": true, "items": [{"q": "_ O _ _ R → ___", "a": ["horror"]}, {"q": "C _ M _ _ Y → ___", "a": ["comedy"]}, {"q": "A _ T _ _ N → ___", "a": ["action"]}, {"q": "S _ _ _ N C _ F _ _ _ _ _ N → ___", "a": ["science fiction"]}, {"q": "W _ _ T _ _ N → ___", "a": ["western"]}, {"q": "M _ _ I C _ L → ___", "a": ["musical"]}, {"q": "C A _ _ O O _ → ___", "a": ["cartoon"]}]}, {"id": "ex224", "step": "exc", "numbered": true, "items": [{"q": "We ___ a DVD last night.", "a": ["watched", "saw"]}, {"q": "Who ___ James Bond in You Only Live Twice?", "a": ["played"]}, {"q": "Was Matt Damon ___ The Bourne Ultimatum?", "a": ["in"]}, {"q": "Lots of big ___ live in Hollywood.", "a": ["film stars"]}, {"q": "Steven Spielberg is a famous American film ___.", "a": ["director"]}]}], "steps": [{"id": "a", "title": "A · Types", "auto": 1}, {"id": "b", "title": "B · People", "auto": 1}, {"id": "c", "title": "C · Фразы", "auto": 1}, {"id": "cards", "title": "Карточки"}, {"id": "exa", "title": "22.1"}, {"id": "films", "title": "22.2"}, {"id": "exb", "title": "22.3"}, {"id": "exc", "title": "22.4"}, {"id": "listen", "title": "На слух"}, {"id": "match", "title": "Пары"}, {"id": "spell", "title": "Напиши"}, {"id": "ans", "title": "22.5"}]};</script>
+<script>/* Vocabulary lesson engine. Data comes from window.VOC. */
+(function(){
+const V=window.VOC, d=document, $=id=>d.getElementById(id);
+const norm=s=>String(s||'').trim().toLowerCase().replace(/[’‘`]/g,"'").replace(/[.!?,;:]/g,'').replace(/\s+/g,' ');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const say=(t,r,b)=>{try{return window.speak?window.speak(t,r||1,b):LessonKit.speak(t,r||1,b);}catch(e){}};
+window.speak=window.speak||((t,r,b)=>LessonKit.speak(t,r,b));
+const ST={done:{},cards:{},recall:null,best:0};
+const STEPS=V.steps;
+function mark(step){if(!ST.done[step]){ST.done[step]=1;renderNav();}}
+/* ---------- навигация ---------- */
+function renderNav(){
+  $('vSteps').innerHTML=STEPS.map((s,i)=>`<button class="vstep${ST.done[s.id]?' ok':''}${cur===i?' cur':''}" data-i="${i}"><span>${ST.done[s.id]?'✓':i+1}</span>${esc(s.title)}</button>`).join('');
+  const n=STEPS.filter(s=>ST.done[s.id]).length; $('vScore').textContent=`${n} / ${STEPS.length}`;
+  $('vBar').style.width=(100*n/STEPS.length)+'%';
+  if(n===STEPS.length)$('vFinal').classList.add('shown');
+}
+let cur=0;
+function go(i){cur=Math.max(0,Math.min(STEPS.length-1,i));d.querySelectorAll('.vpanel').forEach((p,k)=>p.hidden=k!==cur);renderNav();window.scrollTo(0,0);
+  const s=STEPS[cur];if(s.auto)mark(s.id);}
+d.addEventListener('click',e=>{const b=e.target.closest('.vstep');if(b)go(+b.dataset.i);const n=e.target.closest('[data-next]');if(n)go(cur+1);
+  const p=e.target.closest('.play');if(p){e.stopPropagation();say(p.dataset.text,+p.dataset.rate||1,p);return;}
+  const w=e.target.closest('.w');if(w){const tip=w.querySelector('.tip');d.querySelectorAll('.w.open').forEach(x=>x!==w&&x.classList.remove('open'));w.classList.toggle('open');}
+  const pn=e.target.closest('.pn');if(pn){const t=(V.who||{})[pn.dataset.p]||pn.dataset.p;d.querySelectorAll('.who').forEach(x=>x.innerHTML=esc(t)+` <button class="play mini" data-text="${esc(t.replace(' — ',', '))}">🔊</button>`);}
+});
+/* ---------- карточки ---------- */
+let deck=[],ci=0;
+function cardsInit(){deck=shuffle(V.words.map((_,i)=>i));ci=0;showCard();}
+function showCard(){
+  const box=$('cardBox');
+  if(ci>=deck.length){box.innerHTML=`<div class="card done-card">🎉 Все карточки пройдены!<br><small>Слов: ${V.words.length}</small></div><button class="btn" id="cardsAgain">Ещё раз</button>`;mark('cards');$('cardsAgain').onclick=cardsInit;return;}
+  const w=V.words[deck[ci]];
+  box.innerHTML=`<div class="card" id="theCard"><div class="face front"><div class="big">${esc(w.en)}</div><div class="ipa">${esc(w.ipa||'')}</div><button class="play" data-text="${esc(w.en)}">🔊</button><div class="hint">нажмите на карточку, чтобы перевернуть</div></div><div class="face back"><div class="big ru">${esc(w.ru)}</div><div class="ex">${esc(w.ex||'')}</div></div></div>
+  <div class="card-btns"><button class="btn ghost" id="cAgain">🔁 Ещё не помню</button><button class="btn" id="cKnow">✓ Знаю</button></div><div class="small muted">Осталось: ${deck.length-ci}</div>`;
+  const c=$('theCard');c.onclick=e=>{if(e.target.closest('.play'))return;c.classList.toggle('flip');};
+  $('cKnow').onclick=()=>{ST.cards[w.en]=(ST.cards[w.en]||0)+1;ci++;showCard();};
+  $('cAgain').onclick=()=>{deck.push(deck[ci]);ci++;showCard();};
+}
+/* ---------- упражнения с пропусками ---------- */
+function gapEx(ex){
+  const el=$(ex.id);
+  el.innerHTML=ex.items.map((it,i)=>{const parts=it.q.split('___');return `<div class="gap-row">${ex.numbered!==false?`<b class="num">${i+1}</b>`:''}<span>${esc(parts[0])}<input class="gap" id="g_${ex.id}_${i}" data-ex="${ex.id}" data-i="${i}" autocomplete="off" spellcheck="false" style="width:${Math.max(7,Math.max(...it.a.map(x=>x.length))+2)}ch">${esc(parts[1]||'')}</span><span class="fb"></span></div>`;}).join('')+
+   `<div class="actions"><button class="btn" data-check="${ex.id}">Проверить</button><button class="btn ghost" data-show="${ex.id}">Показать ответы</button><span class="res" id="${ex.id}Res"></span></div>`;
+  el.querySelectorAll('input').forEach(inp=>inp.addEventListener('input',()=>{inp.classList.remove('ok','bad');}));
+}
+function checkGap(id,show){
+  const ex=V.exercises.find(x=>x.id===id);let ok=0;
+  $(id).querySelectorAll('input').forEach(inp=>{const it=ex.items[+inp.dataset.i];if(show&&!it.a.some(a=>norm(a)===norm(inp.value))){inp.value=it.a[0];}
+    const good=it.a.some(a=>norm(a)===norm(inp.value));inp.classList.toggle('ok',good);inp.classList.toggle('bad',!good&&inp.value.trim()!=='');if(good)ok++;
+    inp.parentElement.nextElementSibling.textContent=good?'✓':(inp.value.trim()?'✗':'');});
+  $(id+'Res').textContent=`Правильно: ${ok} из ${ex.items.length}`;
+  if(ok>=Math.ceil(ex.items.length*.8))mark(ex.step);
+}
+d.addEventListener('click',e=>{const c=e.target.closest('[data-check]');if(c)checkGap(c.dataset.check,false);const s=e.target.closest('[data-show]');if(s)checkGap(s.dataset.show,true);});
+/* ---------- на слух ---------- */
+let lq=[],li=0,lok=0;
+function listenInit(){lq=shuffle(V.words.map((_,i)=>i)).slice(0,Math.min(10,V.words.length));li=0;lok=0;listenQ();}
+function listenQ(){
+  const box=$('listenBox');
+  if(li>=lq.length){box.innerHTML=`<div class="center"><div class="big">${lok} / ${lq.length}</div><p>${lok>=Math.ceil(lq.length*.8)?'Отлично!':'Попробуйте ещё раз, чтобы набрать 8 из 10.'}</p><button class="btn" id="lAgain">Ещё раз</button></div>`;if(lok>=Math.ceil(lq.length*.8))mark('listen');$('lAgain').onclick=listenInit;return;}
+  const w=V.words[lq[li]],opts=shuffle([w,...shuffle(V.words.filter(x=>x!==w)).slice(0,3)]);
+  box.innerHTML=`<div class="center"><button class="btn big-play" id="lPlay">🔊 Слушать</button><div class="small muted">${li+1} / ${lq.length}</div></div><div class="opts">${opts.map(o=>`<button class="opt" data-en="${esc(o.en)}">${esc(o.ru)}</button>`).join('')}</div>`;
+  const play=()=>say(w.en,1,$('lPlay'));$('lPlay').onclick=play;
+  box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const good=b.dataset.en===w.en;b.classList.add(good?'ok':'bad');if(good)lok++;else box.querySelector(`.opt[data-en="${CSS.escape(w.en)}"]`).classList.add('ok');box.querySelectorAll('.opt').forEach(x=>x.disabled=true);setTimeout(()=>{li++;listenQ();},good?700:1500);});
+}
+/* ---------- пары на время ---------- */
+let mt=0,mTimer=null,mSel=null,mLeft=0;
+function matchInit(){
+  const words=shuffle(V.words).slice(0,8);mLeft=words.length;mt=0;clearInterval(mTimer);mSel=null;
+  const box=$('matchBox');
+  box.innerHTML=`<div class="center"><span class="timer" id="mTime">0.0 с</span> <span class="small muted">таймер стартует с первого клика ·</span> <span class="small muted">рекорд: <b id="mBest">${ST.best?ST.best.toFixed(1)+' с':'—'}</b></span></div><div class="mgrid"><div>${shuffle(words).map(w=>`<button class="tile" data-k="${esc(w.en)}" data-side="en">${esc(w.en)}</button>`).join('')}</div><div>${shuffle(words).map(w=>`<button class="tile" data-k="${esc(w.en)}" data-side="ru">${esc(w.ru)}</button>`).join('')}</div></div>`;
+  box.querySelectorAll('.tile').forEach(t=>t.onclick=()=>{
+    if(t.classList.contains('done'))return;
+    if(!mt){mt=Date.now();mTimer=setInterval(()=>{$('mTime')&&($('mTime').textContent=((Date.now()-mt)/1000).toFixed(1)+' с');},100);}
+    if(!mSel||mSel.dataset.side===t.dataset.side){box.querySelectorAll('.tile.sel').forEach(x=>x.classList.remove('sel'));t.classList.add('sel');mSel=t;return;}
+    if(mSel.dataset.k===t.dataset.k){[mSel,t].forEach(x=>{x.classList.remove('sel');x.classList.add('done');});mLeft--;mSel=null;
+      if(!mLeft){clearInterval(mTimer);const sec=(Date.now()-mt)/1000;if(!ST.best||sec<ST.best)ST.best=sec;mark('match');box.insertAdjacentHTML('beforeend',`<div class="center"><p>Готово за <b>${sec.toFixed(1)} с</b>! ${ST.best===sec?'🏆 Новый рекорд!':''}</p><button class="btn" id="mAgain">Ещё раунд</button></div>`);$('mAgain').onclick=matchInit;}}
+    else{[mSel,t].forEach(x=>x.classList.add('shake'));const a=mSel;setTimeout(()=>{a.classList.remove('shake','sel');t.classList.remove('shake');},400);mSel=null;}
+  });
+}
+/* ---------- вспомни и напиши ---------- */
+let sq=[],si=0,sok=0,hint=0;
+function spellInit(){sq=shuffle(V.words.map((_,i)=>i).filter(i=>!/…/.test(V.words[i].en)&&V.words[i].en.length<=22)).slice(0,Math.min(10,V.words.length));si=0;sok=0;spellQ();}
+function spellQ(){
+  const box=$('spellBox');
+  if(si>=sq.length){box.innerHTML=`<div class="center"><div class="big">${sok} / ${sq.length}</div><p>${sok>=Math.ceil(sq.length*.7)?'Отлично!':'Повторите карточки и попробуйте снова.'}</p><button class="btn" id="sAgain">Ещё раз</button></div>`;if(sok>=Math.ceil(sq.length*.7))mark('spell');$('sAgain').onclick=spellInit;return;}
+  const w=V.words[sq[si]];hint=0;
+  box.innerHTML=`<div class="center"><div class="big ru">${esc(w.ru)}</div><div class="small muted">${si+1} / ${sq.length} · букв: ${w.en.replace(/[^a-z]/gi,'').length}</div><div class="mask" id="sMask"></div><input class="gap wide" id="sIn" autocomplete="off" spellcheck="false" placeholder="напишите по-английски"><div class="actions" style="justify-content:center"><button class="btn" id="sCheck">Проверить</button><button class="btn ghost" id="sHint">Подсказка</button></div><div id="sFb" class="fbline"></div></div>`;
+  const mask=()=>$('sMask').textContent=w.en.split('').map((c,i)=>/[a-z]/i.test(c)?(i<hint?c:'_'):c).join(' ');mask();
+  $('sIn').focus();
+  $('sHint').onclick=()=>{hint=Math.min(w.en.length,hint+1);mask();};
+  const check=()=>{const good=norm($('sIn').value)===norm(w.en);if(good&&hint<2)sok++;$('sFb').innerHTML=good?'✓ Верно!':`✗ Правильно: <b>${esc(w.en)}</b>`;$('sFb').className='fbline '+(good?'ok':'bad');$('sCheck').disabled=true;setTimeout(()=>{si++;spellQ();},good?900:2000);};
+  $('sCheck').onclick=check;$('sIn').onkeydown=e=>{if(e.key==='Enter')check();};
+}
+/* ---------- 2 минуты: сколько слов вспомните ---------- */
+let rTimer=null;
+function recallInit(){
+  if(!$('recallBox'))return;
+  const box=$('recallBox');
+  box.innerHTML=`<p>Не подглядывайте в урок! Нажмите «Старт» и пишите слова темы через запятую или с новой строки.</p><div class="center"><span class="timer" id="rTime">2:00</span></div><textarea id="rIn" rows="6" disabled placeholder="mother, father, …"></textarea><div class="actions"><button class="btn" id="rStart">Старт</button><button class="btn ghost" id="rStop" disabled>Готово</button></div><div id="rRes"></div>`;
+  $('rStart').onclick=()=>{let left=120;$('rIn').disabled=false;$('rIn').focus();$('rStart').disabled=true;$('rStop').disabled=false;clearInterval(rTimer);
+    rTimer=setInterval(()=>{left--;$('rTime').textContent=Math.floor(left/60)+':'+String(left%60).padStart(2,'0');if(left<=0)finish();},1000);};
+  const finish=()=>{clearInterval(rTimer);$('rIn').disabled=true;$('rStop').disabled=true;
+    const typed=new Set($('rIn').value.split(/[\n,;]+/).map(norm).filter(Boolean));
+    const list=V.recall;const got=list.filter(w=>typed.has(norm(w)));const miss=list.filter(w=>!typed.has(norm(w)));
+    const extra=[...typed].filter(t=>!list.some(w=>norm(w)===t));
+    ST.recall={got:got.length,total:list.length};
+    $('rRes').innerHTML=`<p class="big">${got.length} из ${list.length}</p><p><b>Вспомнили:</b> ${got.map(esc).join(', ')||'—'}</p><p><b>Забыли:</b> ${miss.map(w=>`<span class="w" data-en="${esc(w)}">${esc(w)}</span>`).join(', ')||'ничего! 🎉'}</p>${extra.length?`<p class="small muted">Проверьте написание: ${extra.map(esc).join(', ')}</p>`:''}<button class="btn" id="rAgain">Ещё раз</button>`;
+    $('rAgain').onclick=recallInit;mark('recall');};
+  $('rStop').onclick=finish;
+}
+/* ---------- follow-up: моё семейное дерево ---------- */
+const TROWS=8;
+function treeInit(){
+  if(!$('treeBox'))return;
+  const box=$('treeBox');
+  box.innerHTML=Array.from({length:TROWS},(_,i)=>`<div class="trow"${i>=4?' hidden':''}><input class="tname" id="tname${i}" placeholder="Имя, напр. Anna"><select class="trel" id="trel${i}">${V.relations.map(x=>`<option value="${esc(x[0])}">${esc(x[0])} — ${esc(x[1])}</option>`).join('')}</select></div>`).join('')+`<div class="actions"><button class="btn ghost" id="tAdd">+ Добавить родственника</button></div><div id="tOut" class="tout"></div>`;
+  box.addEventListener('input',treeUpd);box.addEventListener('change',treeUpd);
+  $('tAdd').onclick=()=>{const h=box.querySelector('.trow[hidden]');if(h)h.hidden=false;};
+  treeUpd();
+}
+function treeUpd(){
+  if(!$('treeBox'))return;
+  const rows=[...d.querySelectorAll('#treeBox .trow')];
+  rows.forEach(r=>{if(r.querySelector('.tname').value.trim())r.hidden=false;});
+  const ok=rows.map(r=>({n:r.querySelector('.tname').value.trim(),r:r.querySelector('.trel').value})).filter(x=>x.n);
+  $('tOut').innerHTML=ok.length?ok.map(x=>`<div class="tsent"><button class="play mini" data-text="${esc(x.n)} is my ${esc(x.r)}.">🔊</button> <b>${esc(x.n)}</b> is my <b>${esc(x.r)}</b>.</div>`).join(''):'<span class="muted">Впишите имена — предложения появятся здесь.</span>';
+  if(ok.length>=4)mark('tree');
+}
+/* ---------- состояние для облака ---------- */
+window.lessonStateVersion='vocab-'+V.slug+'-1';
+window.getLessonState=()=>({done:Object.fromEntries(Object.keys(ST.done).map(k=>[k,true])),parts:{best:Math.round((ST.best||0)*10),recall:ST.recall?ST.recall.got:0},visited:{}});
+window.restoreLessonState=s=>{if(!s)return;for(const k of Object.keys(s.done||{}))ST.done[k]=1;if(s.parts?.best)ST.best=s.parts.best/10;treeUpd();renderNav();};
+window.lessonResult=()=>{const n=STEPS.filter(s=>ST.done[s.id]).length;return {score:n,maxScore:STEPS.length,completed:n===STEPS.length};};
+/* ---------- старт ---------- */
+V.exercises.forEach(gapEx);cardsInit();listenInit();matchInit();spellInit();recallInit();treeInit();go(0);
+d.querySelectorAll('[data-start]').forEach(b=>b.addEventListener('click',()=>({cards:cardsInit,listen:listenInit,match:matchInit,spell:spellInit})[b.dataset.start]()));
+d.querySelectorAll('textarea.free').forEach(t=>t.addEventListener('input',()=>{if(t.value.trim().split(/\s+/).length>=15)mark(t.dataset.step);}));
+})();
+</script></body></html>
