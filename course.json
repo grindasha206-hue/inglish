@@ -1266,6 +1266,19 @@
               "file": "lessons/vocab-16-communications.html"
             }
           ]
+        },
+        {
+          "id": "voc-modul-4",
+          "title": "Модуль 4 · Holidays and free time",
+          "lessons": [
+            {
+              "id": "vocab-17-holidays",
+              "unit": 17,
+              "title": "Holidays",
+              "description": "Отпуск и путешествия",
+              "file": "lessons/vocab-17-holidays.html"
+            }
+          ]
         }
       ]
     },
