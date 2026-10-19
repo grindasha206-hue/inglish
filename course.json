@@ -1196,6 +1196,13 @@
               "title": "Conversations 1: Greetings and wishes",
               "description": "Приветствия и пожелания",
               "file": "lessons/vocab-8-greetings-and-wishes.html"
+            },
+            {
+              "id": "vocab-9-useful-expressions",
+              "unit": 9,
+              "title": "Conversations 2: Useful words and expressions",
+              "description": "Полезные слова и выражения",
+              "file": "lessons/vocab-9-useful-expressions.html"
             }
           ]
         }
