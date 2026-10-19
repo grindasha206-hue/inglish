@@ -1168,6 +1168,13 @@
               "title": "Clothes",
               "description": "Одежда",
               "file": "lessons/vocab-4-clothes.html"
+            },
+            {
+              "id": "vocab-5-describing-people",
+              "unit": 5,
+              "title": "Describing people",
+              "description": "Внешность: рост, вес, лицо, возраст",
+              "file": "lessons/vocab-5-describing-people.html"
             }
           ]
         }

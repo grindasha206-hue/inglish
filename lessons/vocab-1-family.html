@@ -149,7 +149,7 @@ function matchInit(){
 }
 /* ---------- вспомни и напиши ---------- */
 let sq=[],si=0,sok=0,hint=0;
-function spellInit(){sq=shuffle(V.words.map((_,i)=>i)).slice(0,Math.min(10,V.words.length));si=0;sok=0;spellQ();}
+function spellInit(){sq=shuffle(V.words.map((_,i)=>i).filter(i=>!/…/.test(V.words[i].en)&&V.words[i].en.length<=22)).slice(0,Math.min(10,V.words.length));si=0;sok=0;spellQ();}
 function spellQ(){
   const box=$('spellBox');
   if(si>=sq.length){box.innerHTML=`<div class="center"><div class="big">${sok} / ${sq.length}</div><p>${sok>=Math.ceil(sq.length*.7)?'Отлично!':'Повторите карточки и попробуйте снова.'}</p><button class="btn" id="sAgain">Ещё раз</button></div>`;if(sok>=Math.ceil(sq.length*.7))mark('spell');$('sAgain').onclick=spellInit;return;}
