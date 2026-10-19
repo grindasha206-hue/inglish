@@ -1463,6 +1463,34 @@
               "title": "Take / took / taken",
               "description": "Глагол take",
               "file": "lessons/vocab-41-take.html"
+            },
+            {
+              "id": "vocab-42-bring",
+              "unit": 42,
+              "title": "Bring / brought / brought",
+              "description": "Глагол bring",
+              "file": "lessons/vocab-42-bring.html"
+            },
+            {
+              "id": "vocab-43-get",
+              "unit": 43,
+              "title": "Get / got / got",
+              "description": "Глагол get",
+              "file": "lessons/vocab-43-get.html"
+            },
+            {
+              "id": "vocab-44-phrasal-verbs",
+              "unit": 44,
+              "title": "Phrasal verbs",
+              "description": "Фразовые глаголы",
+              "file": "lessons/vocab-44-phrasal-verbs.html"
+            },
+            {
+              "id": "vocab-45-everyday-things",
+              "unit": 45,
+              "title": "Everyday things",
+              "description": "Повседневные дела",
+              "file": "lessons/vocab-45-everyday-things.html"
             }
           ]
         }
