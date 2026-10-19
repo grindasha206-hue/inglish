@@ -1553,6 +1553,34 @@
               "title": "Manner",
               "description": "Образ действия",
               "file": "lessons/vocab-53-manner.html"
+            },
+            {
+              "id": "vocab-54-uncountable-nouns",
+              "unit": 54,
+              "title": "Common uncountable nouns",
+              "description": "Неисчисляемые существительные",
+              "file": "lessons/vocab-54-uncountable-nouns.html"
+            },
+            {
+              "id": "vocab-55-good-bad-adjectives",
+              "unit": 55,
+              "title": "Common adjectives 1: Good and bad things",
+              "description": "Хорошее и плохое",
+              "file": "lessons/vocab-55-good-bad-adjectives.html"
+            },
+            {
+              "id": "vocab-56-people-adjectives",
+              "unit": 56,
+              "title": "Common adjectives 2: People",
+              "description": "Прилагательные о людях",
+              "file": "lessons/vocab-56-people-adjectives.html"
+            },
+            {
+              "id": "vocab-57-words-and-prepositions",
+              "unit": 57,
+              "title": "Words and prepositions",
+              "description": "Слова и предлоги",
+              "file": "lessons/vocab-57-words-and-prepositions.html"
             }
           ]
         }
