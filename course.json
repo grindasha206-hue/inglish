@@ -1223,6 +1223,13 @@
               "title": "In the kitchen",
               "description": "Кухня",
               "file": "lessons/vocab-11-in-the-kitchen.html"
+            },
+            {
+              "id": "vocab-12-bedroom-and-bathroom",
+              "unit": 12,
+              "title": "In the bedroom and bathroom",
+              "description": "Спальня и ванная",
+              "file": "lessons/vocab-12-bedroom-and-bathroom.html"
             }
           ]
         }
