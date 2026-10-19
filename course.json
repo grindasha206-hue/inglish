@@ -1525,6 +1525,34 @@
               "title": "Conjunctions and connecting words",
               "description": "Союзы и связующие слова",
               "file": "lessons/vocab-49-conjunctions.html"
+            },
+            {
+              "id": "vocab-50-days-months-seasons",
+              "unit": 50,
+              "title": "Days, months, seasons",
+              "description": "Дни, месяцы, времена года",
+              "file": "lessons/vocab-50-days-months-seasons.html"
+            },
+            {
+              "id": "vocab-51-time-words",
+              "unit": 51,
+              "title": "Time words",
+              "description": "Слова о времени",
+              "file": "lessons/vocab-51-time-words.html"
+            },
+            {
+              "id": "vocab-52-places",
+              "unit": 52,
+              "title": "Places",
+              "description": "Места",
+              "file": "lessons/vocab-52-places.html"
+            },
+            {
+              "id": "vocab-53-manner",
+              "unit": 53,
+              "title": "Manner",
+              "description": "Образ действия",
+              "file": "lessons/vocab-53-manner.html"
             }
           ]
         }
