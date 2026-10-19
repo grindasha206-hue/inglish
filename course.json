@@ -1161,6 +1161,13 @@
               "title": "Parts of the body",
               "description": "Части тела",
               "file": "lessons/vocab-3-parts-of-the-body.html"
+            },
+            {
+              "id": "vocab-4-clothes",
+              "unit": 4,
+              "title": "Clothes",
+              "description": "Одежда",
+              "file": "lessons/vocab-4-clothes.html"
             }
           ]
         }
