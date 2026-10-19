@@ -1154,6 +1154,13 @@
               "title": "Birth, marriage and death",
               "description": "Рождение, свадьба, смерть",
               "file": "lessons/vocab-2-birth-marriage-death.html"
+            },
+            {
+              "id": "vocab-3-parts-of-the-body",
+              "unit": 3,
+              "title": "Parts of the body",
+              "description": "Части тела",
+              "file": "lessons/vocab-3-parts-of-the-body.html"
             }
           ]
         }
