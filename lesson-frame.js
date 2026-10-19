@@ -43,16 +43,25 @@
    for(const external of doc.querySelectorAll('script[src]')){const localSource=external.getAttribute('src').split('?')[0];if(localSource==='../lesson-kit.js'){external.removeAttribute('src');external.textContent=kit;}else if(localSource==='../lesson-template.js'){external.removeAttribute('src');external.textContent=template;}}
    for(const link of doc.querySelectorAll('link[rel=stylesheet]'))if(link.getAttribute('href')==='../lesson-theme.css'){const style=doc.createElement('style');style.textContent=theme;link.replaceWith(style);}
    // Inline only raster assets under this lesson's directory; the sandbox keeps connect-src none.
+   const rasterCache=new Map();
    for(const img of doc.querySelectorAll('img[data-lesson-image]')){
     const relative=img.dataset.lessonImage;
     if(!/^img\/[a-zA-Z0-9][a-zA-Z0-9_-]{0,119}\.(png|jpg|jpeg|webp)$/.test(relative))continue;
     try{
-     const imageController=new AbortController(),imageTimer=setTimeout(()=>imageController.abort(),5000);
-     let response,blob;try{response=await fetch('lessons/'+relative,{redirect:'error',signal:imageController.signal});if(response.ok)blob=await response.blob();}finally{clearTimeout(imageTimer);}
-     if(!response.ok)continue;
-     
-     if(blob.size>2000000||!/^image\/(png|jpeg|webp)$/.test(blob.type))continue;
-     img.src=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=reject;reader.readAsDataURL(blob);});
+     if(!rasterCache.has(relative)){
+      const imageController=new AbortController(),imageTimer=setTimeout(()=>imageController.abort(),5000);
+      let response,blob;try{response=await fetch('lessons/'+relative,{redirect:'error',signal:imageController.signal});if(response.ok)blob=await response.blob();}finally{clearTimeout(imageTimer);}
+      if(!response.ok||blob.size>2000000||!/^image\/(png|jpeg|webp)$/.test(blob.type)){rasterCache.set(relative,null);continue;}
+      const data=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=reject;reader.readAsDataURL(blob);});
+      rasterCache.set(relative,{data,variable:'--lesson-raster-'+rasterCache.size});
+     }
+     const raster=rasterCache.get(relative);if(!raster)continue;
+     // Vocabulary atlas cells share one data URL instead of copying the full sheet into every cell.
+     if(img.parentElement?.classList.contains('vocab-art-window')){
+      doc.documentElement.style.setProperty(raster.variable,'url("'+raster.data+'")');
+      img.parentElement.style.backgroundImage='var('+raster.variable+')';img.remove();continue;
+     }
+     img.src=raster.data;
      if(img.parentElement?.classList.contains('lesson-panel-window'))img.parentElement.style.backgroundImage='url("'+img.src+'")';
      img.style.display='';const placeholder=doc.getElementById('picPh');if(placeholder)placeholder.style.display='none';
     }catch{}
