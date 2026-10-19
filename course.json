@@ -1216,6 +1216,13 @@
               "title": "Food and drink",
               "description": "Еда и напитки",
               "file": "lessons/vocab-10-food-and-drink.html"
+            },
+            {
+              "id": "vocab-11-in-the-kitchen",
+              "unit": 11,
+              "title": "In the kitchen",
+              "description": "Кухня",
+              "file": "lessons/vocab-11-in-the-kitchen.html"
             }
           ]
         }
