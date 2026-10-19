@@ -1435,6 +1435,34 @@
               "title": "Go / went / gone",
               "description": "Глагол go",
               "file": "lessons/vocab-37-go.html"
+            },
+            {
+              "id": "vocab-38-do",
+              "unit": 38,
+              "title": "Do / did / done",
+              "description": "Глагол do",
+              "file": "lessons/vocab-38-do.html"
+            },
+            {
+              "id": "vocab-39-make",
+              "unit": 39,
+              "title": "Make / made / made",
+              "description": "Глагол make",
+              "file": "lessons/vocab-39-make.html"
+            },
+            {
+              "id": "vocab-40-come",
+              "unit": 40,
+              "title": "Come / came / come",
+              "description": "Глагол come",
+              "file": "lessons/vocab-40-come.html"
+            },
+            {
+              "id": "vocab-41-take",
+              "unit": 41,
+              "title": "Take / took / taken",
+              "description": "Глагол take",
+              "file": "lessons/vocab-41-take.html"
             }
           ]
         }
